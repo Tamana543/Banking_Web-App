@@ -1,0 +1,189 @@
+Bankist Pro TODO:
+
+Phase 1 — Project Foundation
+
+* Create new Bankist Pro repository
+* Setup React frontend
+* Setup Node.js + Express backend
+* Connect MongoDB Atlas database
+* Configure environment variables
+* Setup project folder structure
+* Configure GitHub repository
+* Configure Vercel deployment
+* Configure Render deployment
+
+Phase 2 — Core Integration
+
+* Merge Landing Page + Banking App
+* Connect "Open Account" button to banking system
+* Create separate Login page
+* Create separate Register page
+* Create separate Dashboard page
+* Create protected routes
+* Create responsive navigation
+
+Phase 3 — Authentication
+
+* User registration system
+* Login system
+* JWT authentication
+* Password hashing with bcrypt
+* Remember logged-in user
+* Logout system
+* Auto logout timer improvements
+* Wrong login attempt validation
+* Account lock after multiple failed attempts
+* Password reset functionality
+* Email verification system
+
+Phase 4 — Banking Dashboard
+
+* Dashboard redesign
+* Current balance card
+* Recent transactions card
+* Statistics summary cards
+* Quick actions section
+* Financial overview section
+* Better responsive layout
+* User welcome section
+
+Phase 5 — Transactions
+
+* Transaction history
+* Search transactions
+* Filter transactions (deposit/withdrawal/loan/transfer)
+* Sort transactions (newest/oldest/highest)
+* Transaction details modal
+* Transaction categories
+* Transaction persistence
+* Transaction timestamps
+* Transaction status indicators
+
+Phase 6 — Transfers
+
+* Transfer money between users
+* Transfer validation improvements
+* Prevent self-transfer
+* Balance validation
+* Transfer success notifications
+* Transfer history tracking
+* Transfer receipt generation
+* Transfer confirmation modal
+
+Phase 7 — Loans
+
+* Loan request system
+* Loan request improvements
+* Loan history section
+* Loan approval/loading animation
+* Loan eligibility display
+* Pending loan status
+* Approved loan status
+* Rejected loan status
+* Loan repayment tracking
+
+Phase 8 — Account Management
+
+* Profile page
+* Edit profile
+* Change password
+* Change PIN
+* User avatar upload
+* Account settings page
+* Delete account confirmation modal
+* Account information management
+
+Phase 9 — Notifications & UX
+
+* Toast notifications
+* Loading spinners
+* Success messages
+* Error handling messages
+* Empty state screens
+* Skeleton loading effects
+* Better mobile responsiveness
+* Dark mode
+* Theme persistence
+
+Phase 10 — Analytics
+
+* Income vs Expense chart
+* Monthly spending chart
+* Balance growth chart
+* Financial summary section
+* Transaction insights
+* Monthly reports
+* Spending analytics dashboard
+
+Phase 11 — Savings Features
+
+* Savings goals
+* Create savings targets
+* Goal progress bars
+* Savings milestones
+* Savings analytics
+* Goal completion notifications
+
+Phase 12 — Security
+
+* Session management
+* PIN validation
+* Protected API routes
+* Secure password storage
+* Authentication middleware
+* User authorization
+* Role-based access (User/Admin)
+
+Phase 13 — Admin Dashboard
+
+* Admin authentication
+* View all users
+* View all transactions
+* View all loans
+* User management
+* Account management
+* Dashboard statistics
+* Platform analytics
+
+Phase 14 — Export Features
+
+* Download account statement
+* Export transactions as CSV
+* Generate PDF statement
+* Download transaction history
+* Print account summary
+
+Phase 15 — Landing Page Improvements
+
+* Modern homepage redesign
+* Real testimonials
+* FAQ section
+* Pricing section
+* Features section redesign
+* Contact form
+* Newsletter subscription
+* Improved footer
+* Call-to-action sections
+
+Phase 16 — Advanced Features
+
+* Multi-currency support
+* Currency converter
+* Financial insights
+* Smart account recommendations
+* Scheduled transfers
+* Transaction tagging
+* Advanced filtering
+
+Phase 17 — Portfolio Features
+
+* README redesign
+* Project architecture documentation
+* API documentation
+* Screenshots section
+* Live demo deployment
+* Technical documentation
+* Installation guide
+* Feature showcase
+* LinkedIn project post
+* Portfolio integration
