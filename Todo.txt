@@ -2,7 +2,7 @@ Bankist Pro TODO:
 
 Phase 1 — Project Foundation
 
-* Create new Bankist Pro repository
+* Create new Bankist Pro repository ✔️
 * Setup React frontend
 * Setup Node.js + Express backend
 * Connect MongoDB Atlas database
