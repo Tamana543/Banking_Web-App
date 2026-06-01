@@ -1,5 +1,6 @@
 Bankist Pro TODO:
-
+Keep in mind: 
+do not forget to update the IP access of the MongoDB
 Phase 1 — Project Foundation
 
 * Connect MongoDB Atlas database
