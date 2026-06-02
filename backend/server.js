@@ -1,6 +1,9 @@
 import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./config/db.js"
+import dns from 'node:dns'; // for error "Error from db.js : querySrv ECONNREFUSED _mongodb._tcp.cluster0.ufecoqb.mongodb.net" "
+dns.setServers(['1.1.1.1', '8.8.8.8']);
+
 
 dotenv.config()
 

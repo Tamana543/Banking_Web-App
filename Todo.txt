@@ -3,12 +3,13 @@ Keep in mind:
 do not forget to update the IP access of the MongoDB
 Phase 1 — Project Foundation
 
-* Connect MongoDB Atlas database
-* Configure environment variables
-* Setup project folder structure
-* Configure GitHub repository
 * Configure Vercel deployment
-* Configure Render deployment
+* Configure Render deployment 
+
+* Connect MongoDB Atlas database✔️
+* Configure environment variables ✔️
+* Setup project folder structure ✔️
+* Configure GitHub repository✔️
 * Setup Node.js + Express backend✔️
 * Create new Bankist Pro repository ✔️
 * Setup React frontend (React Setup, React Router, Pages Created, Protected Routes)✔️
@@ -22,6 +23,7 @@ Phase 2 — Core Integration
 * Create separate Dashboard page
 * Create protected routes
 * Create responsive navigation
+* Finalize Protected Routes
 
 Phase 3 — Authentication
 
