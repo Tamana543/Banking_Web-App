@@ -10,8 +10,9 @@
   "keywords": [],
   "author": "Tamana Frazami",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongoose": "^9.6.3"
   },
