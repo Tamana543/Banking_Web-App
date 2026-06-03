@@ -18,10 +18,10 @@ Phase 2 — Core Integration
 
 * Merge Landing Page + Banking App ( fixt the structure it is a mass)
 * Connect "Open Account" button to banking system
-* Create separate Login page
-* Create separate Register page
-* Create separate Dashboard page
-* Create protected routes
+* Create separate Login page ✔️
+* Create separate Register page ✔️
+* Create separate Dashboard page✔️
+* Create protected routes✔️
 * Create responsive navigation
 * Finalize Protected Routes
 
