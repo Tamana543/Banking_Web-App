@@ -16,12 +16,12 @@ Phase 1 — Project Foundation
 
 Phase 2 — Core Integration
 
-* Merge Landing Page + Banking App ( fixt the structure it is a mass)
-* Connect "Open Account" button to banking system
 * Create separate Login page ✔️
 * Create separate Register page ✔️
 * Create separate Dashboard page✔️
 * Create protected routes✔️
+* Merge Landing Page + Banking App 
+* Connect "Open Account" button to banking system
 * Create responsive navigation
 * Finalize Protected Routes
 
