@@ -11,16 +11,13 @@ return (
         /> */}
         <ul class="nav__link s">
           <li class="nav__item">
-            <link class="nav__link " href="#section--1">Features</link >
+            <link class="nav__link " to="/">Home</link >
           </li>
           <li class="nav__item">
-            <link class="nav__link " href="#section--2">Operations</link >
+            <link class="nav__link " to="/login">Login</link >
           </li>
           <li class="nav__item">
-            <link class="nav__link " href="#section--3">Testimonials</link >
-          </li>
-          <li class="nav__item">
-            <link class="nav__link  nav__link --btn btn--show-modal" href="#"
+            <link class="nav__link  nav__link --btn btn--show-modal" to="#"
               >Open account</link >
           </li>
         </ul>

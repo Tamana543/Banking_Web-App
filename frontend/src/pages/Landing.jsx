@@ -3,15 +3,18 @@ import Features from "../components/home/Features";
 import CTA from "../components/home/CTA";
 import Testimonials from "../components/home/Testimonials";
 import Operations from "../components/home/Operations";
-
+import Navbar from "../components/layout/Navbar";
 function Landing() {
   return(
      <div>
-     <Hero/>
-     <Features/>
-     <Operations/>
-     <Testimonials/>
-     <CTA/>
+          <Navbar/>
+          
+          
+          <Hero/>
+          <Features/>
+          <Operations/>
+          <Testimonials/>
+          <CTA/>
      </div>
   );
 }
