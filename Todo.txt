@@ -20,7 +20,7 @@ Phase 2 — Core Integration
 * Create separate Register page ✔️
 * Create separate Dashboard page✔️
 * Create protected routes✔️
-* Merge Landing Page + Banking App 
+* Merge Landing Page + Banking App ( check the step to the navigation)
 * Connect "Open Account" button to banking system
 * Create responsive navigation
 * Finalize Protected Routes

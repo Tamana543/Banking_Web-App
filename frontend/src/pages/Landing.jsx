@@ -3,7 +3,7 @@ import Features from "../components/Landing/Features";
 import CTA from "../components/Landing/CTA";
 import Testimonials from "../components/Landing/Testimonials";
 import Operations from "../components/Landing/Operations";
-import Footer from "../components/layout/Footer";
+import Footer from "../components/Landing/Footer";
 import Navbar from "../components/Landing/Navbar";
 function Landing() {
   return(
