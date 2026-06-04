@@ -1,10 +1,10 @@
-import Hero from "../components/home/Hero";
-import Features from "../components/home/Features";
-import CTA from "../components/home/CTA";
-import Testimonials from "../components/home/Testimonials";
-import Operations from "../components/home/Operations";
-// import Navbar from "../components/layout/Navbar";
-import Navbar from "../components/Navbar";
+import Hero from "../components/Landing/Hero"
+import Features from "../components/Landing/Features";
+import CTA from "../components/Landing/CTA";
+import Testimonials from "../components/Landing/Testimonials";
+import Operations from "../components/Landing/Operations";
+import Footer from "../components/layout/Footer";
+import Navbar from "../components/Landing/Navbar";
 function Landing() {
   return(
      <div>
@@ -16,6 +16,7 @@ function Landing() {
           <Operations/>
           <Testimonials/>
           <CTA/>
+          <Footer/>
      </div>
   );
 }
