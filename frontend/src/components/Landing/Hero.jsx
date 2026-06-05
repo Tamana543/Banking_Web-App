@@ -1,4 +1,5 @@
 import hero from "../../assets/images/hero.png";
+import "../../styles/landing/hero.css";
 
 function Hero() {
   return (
