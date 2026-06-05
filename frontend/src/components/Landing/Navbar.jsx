@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
+
 function Navbar() {
   return (
     <header className="header">
