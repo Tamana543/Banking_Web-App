@@ -9,8 +9,6 @@ function Landing() {
   return(
      <div>
           <Navbar/>
-          
-
           <Hero/>
           <Features/>
           <Operations/>
