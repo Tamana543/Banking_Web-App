@@ -1,36 +1,53 @@
 import { Link } from "react-router-dom";
-import "../../styles/landing/navbar.css";
+import logo from "../../assets/images/logo.png";
+
 function Navbar() {
   return (
-    <nav className="nav">
-      <div className="nav__logo">
-        <h2>Bankist Pro</h2>
-      </div>
+    <header className="header">
+      <nav className="nav">
+        <img
+          src={logo}
+          alt="Bankist logo"
+          className="nav__logo"
+          id="logo"
+        />
 
-      <ul className="nav__links">
-        <li>
-          <a href="#features">Features</a>
-        </li>
+        <ul className="nav__links">
+          <li className="nav__item">
+            <a className="nav__link" href="#features">
+              Features
+            </a>
+          </li>
 
-        <li>
-          <a href="#operations">Operations</a>
-        </li>
+          <li className="nav__item">
+            <a className="nav__link" href="#operations">
+              Operations
+            </a>
+          </li>
 
-        <li>
-          <a href="#testimonials">Testimonials</a>
-        </li>
+          <li className="nav__item">
+            <a className="nav__link" href="#testimonials">
+              Testimonials
+            </a>
+          </li>
 
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+          <li className="nav__item">
+            <Link className="nav__link" to="/login">
+              Login
+            </Link>
+          </li>
 
-        <li>
-          <Link to="/register" className="nav__btn">
-            Open Account
-          </Link>
-        </li>
-      </ul>
-    </nav>
+          <li className="nav__item">
+            <Link
+              to="/register"
+              className="nav__link nav__link--btn"
+            >
+              Open Account
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 }
 
