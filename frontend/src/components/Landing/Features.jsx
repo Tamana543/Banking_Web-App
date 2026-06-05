@@ -1,7 +1,8 @@
 import digital from "../../assets/images/digital-lazy.jpg"
 import grow from "../../assets/images/grow-lazy.jpg"
 import card from "../../assets/images/card-lazy.jpg"
-
+import icons from "../../assets/images/icons.svg";
+import "../../styles/landing/features.css";
 
 
 function Features() {
@@ -17,7 +18,6 @@ function Features() {
       <div className="features">
         <img
           src={digital}
-          data-src="img/digital.jpg"
           alt="Computer"
           className="features__img lazy-img"
         />
@@ -25,7 +25,7 @@ function Features() {
           <div className="features__icon">
             <svg>
               {/* <!-- <use xlink:href="img/icons.svg#icon-monitor"></use> --> */}
-              <use xlink:href="img\icons.svg#icon-monitor"></use>
+               <use href={`${icons}#icon-monitor`}></use>
             </svg>
           </div>
           <h5 className="features__header">100% digital bank</h5>
@@ -38,9 +38,11 @@ function Features() {
 
         <div className="features__feature" id="feature-2">
           <div className="features__icon">
-            <svg>
-              <use xlink:href="img/icons.svg#icon-trending-up"></use>
+            
+             <svg>
+                <use href={`${icons}#icon-trending-up`}></use>
             </svg>
+           
           </div>
           <h5 className="features__header">Watch your money grow</h5>
           <p>
@@ -51,21 +53,19 @@ function Features() {
         </div>
         <img
           src={grow}
-          data-src="img/grow.jpg"
           alt="Plant"
           className="features__img lazy-img"
         />
 
         <img
           src={card}
-          data-src="img/card.jpg"
           alt="Credit card"
           className="features__img lazy-img"
         />
         <div className="features__feature" id="feature-3">
           <div className="features__icon">
             <svg>
-              <use xlink:href="img/icons.svg#icon-credit-card"></use>
+              <use href={`${icons}#icon-credit-card`}></use>
             </svg>
           </div>
           <h5 className="features__header">Free debit card included</h5>

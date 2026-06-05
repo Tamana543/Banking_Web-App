@@ -5,6 +5,7 @@ Phase 1 — Project Foundation
 
 * Configure Vercel deployment
 * Configure Render deployment 
+* lazyloading feature
 
 * Connect MongoDB Atlas database✔️
 * Configure environment variables ✔️
