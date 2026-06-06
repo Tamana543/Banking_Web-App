@@ -13,9 +13,9 @@ function CTA() {
           today!
         </h3>
       </div>
-      <button onClick={() => navigate("/register")}>
-        Open Account
-      </button>
+       <Link to="/register" className="btn">
+        Open your free account today!
+      </Link>
     </section>
     
   );

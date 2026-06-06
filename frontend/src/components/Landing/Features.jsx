@@ -1,7 +1,7 @@
 import digital from "../../assets/images/digital-lazy.jpg"
 import grow from "../../assets/images/grow-lazy.jpg"
 import card from "../../assets/images/card-lazy.jpg"
-import icons from "../../assets/images/icons.svg";
+import icons from "../../assets/icons/icons.svg";
 import "../../styles/landing/features.css";
 
 
