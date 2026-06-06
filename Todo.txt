@@ -17,28 +17,32 @@ Phase 1 — Project Foundation
 
 Phase 2 — Core Integration
 
+* Create responsive navigation
+* Finalize Protected Routes
 * Create separate Login page ✔️
 * Create separate Register page ✔️
 * Create separate Dashboard page✔️
 * Create protected routes✔️
 * Merge Landing Page + Banking App ✔️
 * Connect "Open Account" button to banking system ✔️
-* Create responsive navigation
-* Finalize Protected Routes
 
 Phase 3 — Authentication
 
-* User registration system
-* Login system
-* JWT authentication
-* Password hashing with bcrypt
-* Remember logged-in user
-* Logout system
-* Auto logout timer improvements
-* Wrong login attempt validation
-* Account lock after multiple failed attempts
-* Password reset functionality
-* Email verification system
+* Create User Model
+* Create Auth Controller
+* Create Auth Routes
+* Create Registration API
+* Hash Passwords (bcrypt)
+* Create Login API
+* Generate JWT Token
+* Save JWT on Frontend
+* Remember Logged-in User
+* Logout System
+* Auto Logout
+* Wrong Login Validation
+* Account Lock
+* Password Reset
+* Email Verification
 
 Phase 4 — Banking Dashboard
 
