@@ -49,6 +49,8 @@ function Navbar() {
           </li>
         </ul>
       </nav>
+       <button id="nav-open">|||</button>
+      <button id="nav-close">X</button>
     </header>
   );
 }

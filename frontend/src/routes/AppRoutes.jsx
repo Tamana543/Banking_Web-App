@@ -4,7 +4,7 @@ import Landing from "../pages/Landing";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
-
+import NotFound from "../pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
@@ -26,6 +26,7 @@ function AppRoutes() {
           }
         />
       </Routes>
+      <Route path="*" element={<NotFound />} />
     </BrowserRouter>
   );
 }
