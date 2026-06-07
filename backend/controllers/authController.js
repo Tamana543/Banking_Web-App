@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User";
+import generateToken from "../utils/generatToked";
 
 export const registerUser = async (req,res)=>{
      try {
@@ -45,3 +46,4 @@ export const registerUser = async (req,res)=>{
     });
      }
 }
+

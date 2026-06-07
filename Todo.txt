@@ -28,9 +28,9 @@ Phase 2 — Core Integration
 
 Phase 3 — Authentication
 
-* Create User Model
-* Create Auth Controller
-* Create Auth Routes
+* Create User Model ✔️
+* Create Register Controller ✔️
+* Create Register Routes✔️
 * Create Registration API
 * Hash Passwords (bcrypt)
 * Create Login API
