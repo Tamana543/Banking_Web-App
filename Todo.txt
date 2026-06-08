@@ -31,6 +31,7 @@ Phase 3 — Authentication
 * Create User Model ✔️
 * Create Register Controller ✔️
 * Create Register Routes✔️
+* JWT utility (created) ✔️
 * Create Registration API
 * Hash Passwords (bcrypt)
 * Create Login API
