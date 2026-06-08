@@ -1,5 +1,5 @@
 import validator from "validator"
-import User from "../models/User";
+import User from "../models/User.js";
 
 const validateRegister = async (req,res,next)=>{
      const {firstName,lastName,email,password,pin} = req.body;

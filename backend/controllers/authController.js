@@ -1,12 +1,13 @@
 import bcrypt from "bcryptjs";
-import User from "../models/User";
-import generateToken from "../utils/generatToked";
+import User from "../models/User.js";
+import generateToken from "../utils/generateToken.js";
 
 export const registerUser = async (req,res)=>{
      try {
           const {firstName,lastName,email,password,pin} = req.body;
           // passwrd hash generator
           const hashedPassword = await bcrypt.hash(password,10) ;
+          
 
           // User Creation 
           const user = await User.create({
