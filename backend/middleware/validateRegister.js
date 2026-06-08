@@ -1,6 +1,7 @@
 import validator from "validator"
+import User from "../models/User";
 
-const validateRegister = (req,res,next)=>{
+const validateRegister = async (req,res,next)=>{
      const {firstName,lastName,email,password,pin} = req.body;
 
      if (!firstName || firstName.trim().length < 2) {
@@ -62,6 +63,20 @@ const validateRegister = (req,res,next)=>{
           return res.status(400).json({
                success: false,
                message: "PIN must contain exactly 4 digits.",
+          });
+     }
+     const existingUser = await User.findOne({
+          email: email?.toLowerCase().trim(),
+     });
+
+     if (existingUser) {
+          errors.push("An account with this email already exists.");
+     }
+     // in case there are many errors: 
+     if (errors.length > 0) {
+          return res.status(400).json({
+               success: false,
+               errors,
           });
      }
 

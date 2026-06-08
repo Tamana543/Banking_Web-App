@@ -5,17 +5,6 @@ import generateToken from "../utils/generatToked";
 export const registerUser = async (req,res)=>{
      try {
           const {firstName,lastName,email,password,pin} = req.body;
-
-          //User existance checker
-          const existingUser = await User.findOne({email});
-
-          if (existingUser){
-               return res.status(400).json({
-                    success : false,
-                    message : "User already exists"
-               })
-          }
-
           // passwrd hash generator
           const hashedPassword = await bcrypt.hash(password,10) ;
 
