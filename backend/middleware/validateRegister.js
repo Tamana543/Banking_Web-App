@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 const validateRegister = async (req, res, next) => {
   const { firstName, lastName, email, password, pin } = req.body;
-  
+
   const cleanFirstName = firstName?.trim();
   const cleanLastName = lastName?.trim();
   const cleanEmail = email?.toLowerCase().trim();
@@ -46,19 +46,37 @@ const validateRegister = async (req, res, next) => {
   }
 
   
-  if (!password || password.length < 8) {
-    return res.status(400).json({
-      success: false,
-      message: "Password must be at least 8 characters.",
-    });
-  }
+  if (!password) {
+  return res.status(400).json({
+    success: false,
+    message: "Password is required.",
+  });
+}
 
-  if (password.length > 50) {
-    return res.status(400).json({
-      success: false,
-      message: "Password cannot exceed 50 characters.",
-    });
-  }
+if (password.length < 8) {
+  return res.status(400).json({
+    success: false,
+    message: "Password must be at least 8 characters long.",
+  });
+}
+
+if (password.length > 50) {
+  return res.status(400).json({
+    success: false,
+    message: "Password cannot exceed 50 characters.",
+  });
+}
+
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_\-+=])[A-Za-z\d@$!%*?&^#()_\-+=]+$/;
+
+if (!passwordRegex.test(password)) {
+  return res.status(400).json({
+    success: false,
+    message:
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+  });
+}
 
   // PIN
   if (!pin) {
