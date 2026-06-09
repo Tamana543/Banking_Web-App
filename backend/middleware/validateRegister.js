@@ -2,7 +2,7 @@ import validator from "validator";
 import User from "../models/User.js";
 
 const validateRegister = async (req, res, next) => {
-  const { firstName, lastName, email, password, pin } = req.body;
+  const { firstName, lastName, email, password,  confirmPassword, pin } = req.body;
 
   const cleanFirstName = firstName?.trim();
   const cleanLastName = lastName?.trim();
@@ -77,7 +77,19 @@ if (!passwordRegex.test(password)) {
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
   });
 }
+if (!confirmPassword) {
+  return res.status(400).json({
+    success: false,
+    message: "Please confirm your password.",
+  });
+}
 
+if (password !== confirmPassword) {
+  return res.status(400).json({
+    success: false,
+    message: "Passwords do not match.",
+  });
+}
   // PIN
   if (!pin) {
     return res.status(400).json({

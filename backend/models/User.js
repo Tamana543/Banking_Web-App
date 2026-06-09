@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
           },
 
           pin: {
-               type: Number,
+               type: String,
                required: true,
                min: 1000,
                max: 9999,
