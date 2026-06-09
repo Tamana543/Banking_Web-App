@@ -7,7 +7,7 @@ export const registerUser = async (req,res)=>{
           const {firstName,lastName,email,password,pin} = req.body;
           // passwrd hash generator
           const hashedPassword = await bcrypt.hash(password,10) ;
-          
+           const hashedPin = await bcrypt.hash(String(pin), 12);
 
           // User Creation 
           const user = await User.create({
@@ -15,8 +15,10 @@ export const registerUser = async (req,res)=>{
                lastName,
                email, 
                password: hashedPassword,
-               pin
+               pin : hashedPin,
           })
+
+          const token = generateToken(user._id)
           res.status(201).json({
                success : true,
                message : "Account created successfully.",
@@ -25,6 +27,11 @@ export const registerUser = async (req,res)=>{
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
+                    balance: user.balance,
+                    currency: user.currency,
+                    role: user.role,
+                    avatar: user.avatar,
+                    isVerified: user.isVerified,
                },
 
           });
