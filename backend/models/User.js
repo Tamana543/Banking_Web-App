@@ -1,5 +1,4 @@
-import mongoose, { mongo } from "mongoose";
-
+import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
      {
           firstName :{
@@ -27,6 +26,8 @@ const userSchema = new mongoose.Schema(
           pin: {
                type: Number,
                required: true,
+               min: 1000,
+               max: 9999,
           },
 
           balance: {
@@ -62,6 +63,10 @@ const userSchema = new mongoose.Schema(
            isLocked: {
                type: Boolean,
                default: false,
+          },
+          lockUntil: {
+               type: Date,
+               default: null,
           },
      }, {
           timestamps :true
