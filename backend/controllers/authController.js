@@ -46,47 +46,89 @@ export const registerUser = async (req,res)=>{
 
 export const loginUser = async (req, res) => {
   try {
-          const { email, password } = req.body;
+    const { email, password } = req.body;
 
-          // Find user
-          const user = await User.findOne({ email });
+    // Check required fields
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required.",
+      });
+    }
 
-          if (!user) {
-               return res.status(401).json({
-               success: false,
-               message: "Invalid email or password.",
-               });
-          }
+    // Find user
+    const user = await User.findOne({
+      email: email.toLowerCase().trim(),
+    });
 
-          // Compare password
-          const isMatch = await bcrypt.compare(password, user.password);
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
 
-          if (!isMatch) {
-               return res.status(401).json({
-               success: false,
-               message: "Invalid email or password.",
-               });
-          }
+    // Check if account is locked
+    if (user.isLocked && user.lockUntil && user.lockUntil > new Date()) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Your account is temporarily locked. Please try again later.",
+      });
+    }
 
-          res.status(200).json({
-               success: true,
-               message: "Login successful.",
+    // Compare password
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-               token: generateToken(user._id),
+    if (!passwordMatch) {
+      user.failedLoginAttempts += 1;
 
-               user: {
-               id: user._id,
-               firstName: user.firstName,
-               lastName: user.lastName,
-               email: user.email,
-               },
-          });
-          } catch (error) {
-          console.error(error);
+      // Lock account after 5 failed attempts
+      if (user.failedLoginAttempts >= 5) {
+        user.isLocked = true;
+        user.lockUntil = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
+      }
 
-          res.status(500).json({
-               success: false,
-               message: "Server Error",
-          });
+      await user.save();
+
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    // Reset failed attempts
+    user.failedLoginAttempts = 0;
+    user.isLocked = false;
+    user.lockUntil = null;
+
+    await user.save();
+
+    // Generate JWT
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful.",
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        balance: user.balance,
+        currency: user.currency,
+        role: user.role,
+        avatar: user.avatar,
+        isVerified: user.isVerified,
+      },
+    });
+  } catch (error) {
+    console.error("Login Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
   }
 };
