@@ -32,15 +32,15 @@ Phase 3 — Authentication
 * Create Register Controller ✔️
 * Create Register Routes✔️
 * JWT utility (created) ✔️
-* Create Registration API
-* Hash Passwords (bcrypt)
-* Create Login API
-* Generate JWT Token
+* Create Registration API ✔️ (test)
+* Hash Passwords (bcrypt) ✔️
+* Create Login API ✔️ (test)
+* Generate JWT Token ✔️
 * Save JWT on Frontend
 * Remember Logged-in User
 * Logout System
 * Auto Logout
-* Wrong Login Validation
+* Wrong Login Validation ✔️
 * Account Lock
 * Password Reset
 * Email Verification
