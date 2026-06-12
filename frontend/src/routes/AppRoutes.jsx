@@ -25,8 +25,8 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-      </Routes>
       <Route path="*" element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }
