@@ -36,11 +36,11 @@ Phase 3 — Authentication
 * Hash Passwords (bcrypt) ✔️
 * Create Login API ✔️ (test)
 * Generate JWT Token ✔️
-* Save JWT on Frontend
-* Remember Logged-in User
+* Save JWT on Frontend ✔️
+* Remember Logged-in User✔️
+* Wrong Login Validation ✔️
 * Logout System
 * Auto Logout
-* Wrong Login Validation ✔️
 * Account Lock
 * Password Reset
 * Email Verification
