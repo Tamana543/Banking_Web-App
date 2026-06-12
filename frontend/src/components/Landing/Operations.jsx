@@ -1,38 +1,38 @@
 import "../../styles/landing/operations.css";
 function Operations() {
   return (
-   <section class="section" id="section--2">
-      <div class="section__title">
-        <h2 class="section__description">Operations</h2>
-        <h3 class="section__header">
+   <section className="section" id="section--2">
+      <div className="section__title">
+        <h2 className="section__description">Operations</h2>
+        <h3 className="section__header">
           Everything as simple as possible, but no simpler.
         </h3>
       </div>
 
-      <div class="operations">
-        <div class="operations__tab-container">
+      <div className="operations">
+        <div className="operations__tab-container">
           <button
-            class="btn operations__tab operations__tab--1 operations__tab--active"
+            className="btn operations__tab operations__tab--1 operations__tab--active"
             data-tab="1"
           >
             <span>01</span>Instant Transfers
           </button>
-          <button class="btn operations__tab operations__tab--2" data-tab="2">
+          <button className="btn operations__tab operations__tab--2" data-tab="2">
             <span>02</span>Instant Loans
           </button>
-          <button class="btn operations__tab operations__tab--3" data-tab="3">
+          <button className="btn operations__tab operations__tab--3" data-tab="3">
             <span>03</span>Instant Closing
           </button>
         </div>
         <div
-          class="operations__content operations__content--1 operations__content--active"
+          className="operations__content operations__content--1 operations__content--active"
         >
-          <div class="operations__icon operations__icon--1">
+          <div className="operations__icon operations__icon--1">
             <svg>
-              <use xlink:href="img/icons.svg#icon-upload"></use>
+              <use xlinkHref="img/icons.svg#icon-upload"></use>
             </svg>
           </div>
-          <h5 class="operations__header">
+          <h5 className="operations__header">
             Tranfser money to anyone, instantly! No fees, no BS.
           </h5>
           <p>
@@ -43,13 +43,13 @@ function Operations() {
           </p>
         </div>
 
-        <div class="operations__content operations__content--2">
-          <div class="operations__icon operations__icon--2">
+        <div className="operations__content operations__content--2">
+          <div className="operations__icon operations__icon--2">
             <svg>
-              <use xlink:href="img/icons.svg#icon-home"></use>
+              <use xlinkHref="img/icons.svg#icon-home"></use>
             </svg>
           </div>
-          <h5 class="operations__header">
+          <h5 className="operations__header">
             Buy a home or make your dreams come true, with instant loans.
           </h5>
           <p>
@@ -59,13 +59,13 @@ function Operations() {
             anim id est laborum.
           </p>
         </div>
-        <div class="operations__content operations__content--3">
-          <div class="operations__icon operations__icon--3">
+        <div className="operations__content operations__content--3">
+          <div className="operations__icon operations__icon--3">
             <svg>
-              <use xlink:href="img/icons.svg#icon-user-x"></use>
+              <use xlinkHref="img/icons.svg#icon-user-x"></use>
             </svg>
           </div>
-          <h5 class="operations__header">
+          <h5 className="operations__header">
             No longer need your account? No problem! Close it instantly.
           </h5>
           <p>
