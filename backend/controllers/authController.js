@@ -44,11 +44,12 @@ export const registerUser = async (req,res)=>{
      }
 }
 
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check required fields
+    // Check for missing fields
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -68,48 +69,22 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    // Check if account is locked
-    if (user.isLocked && user.lockUntil && user.lockUntil > new Date()) {
-      return res.status(403).json({
-        success: false,
-        message:
-          "Your account is temporarily locked. Please try again later.",
-      });
-    }
-
     // Compare password
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!passwordMatch) {
-      user.failedLoginAttempts += 1;
-
-      // Lock account after 5 failed attempts
-      if (user.failedLoginAttempts >= 5) {
-        user.isLocked = true;
-        user.lockUntil = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
-      }
-
-      await user.save();
-
+    if (!isMatch) {
       return res.status(401).json({
         success: false,
         message: "Invalid email or password.",
       });
     }
 
-    // Reset failed attempts
-    user.failedLoginAttempts = 0;
-    user.isLocked = false;
-    user.lockUntil = null;
-
-    await user.save();
-
     // Generate JWT
     const token = generateToken(user._id);
 
+    // Send response
     res.status(200).json({
       success: true,
-      message: "Login successful.",
       token,
       user: {
         id: user._id,
@@ -119,8 +94,6 @@ export const loginUser = async (req, res) => {
         balance: user.balance,
         currency: user.currency,
         role: user.role,
-        avatar: user.avatar,
-        isVerified: user.isVerified,
       },
     });
   } catch (error) {
@@ -128,7 +101,7 @@ export const loginUser = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: "Internal server error.",
+      message: "Server error.",
     });
   }
 };
