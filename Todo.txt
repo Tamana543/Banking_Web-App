@@ -39,7 +39,7 @@ Phase 3 — Authentication
 * Save JWT on Frontend ✔️
 * Remember Logged-in User✔️
 * Wrong Login Validation ✔️
-* Logout System
+* Logout System ✔️
 * Auto Logout
 * Account Lock
 * Password Reset
