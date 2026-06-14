@@ -40,8 +40,8 @@ Phase 3 — Authentication
 * Remember Logged-in User✔️
 * Wrong Login Validation ✔️
 * Logout System ✔️
-* Auto Logout
-* Account Lock
+* Auto Logout ✔️
+* Account Lock ✔️
 * Password Reset
 * Email Verification
 
