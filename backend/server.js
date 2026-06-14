@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import dns from "node:dns";
 import authRouter from "./routes/authRoutes.js";
+import cors from "cors"
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
