@@ -42,6 +42,7 @@ Phase 3 — Authentication
 * Logout System ✔️
 * Auto Logout ✔️
 * Account Lock ✔️
+* fix the running error 
 * Password Reset
 * Email Verification
 
