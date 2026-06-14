@@ -62,7 +62,13 @@ export const loginUser = async (req, res) => {
     const user = await User.findOne({
       email: email.toLowerCase().trim(),
     });
-
+    if (user && user.isLocked) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Your account has been locked after multiple failed login attempts.",
+  });
+}
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -74,14 +80,27 @@ export const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid email or password.",
-      });
-    }
+  user.failedLoginAttempts += 1;
+
+  if (user.failedLoginAttempts >= 5) {
+    user.isLocked = true;
+  }
+
+  await user.save();
+
+  return res.status(401).json({
+    success: false,
+    message: user.isLocked
+      ? "Your account has been locked after 5 failed login attempts."
+      : "Invalid email or password.",
+  });
+}
 
     // Generate JWT
     const token = generateToken(user._id);
+    user.failedLoginAttempts = 0;
+    user.isLocked = false;
+    await user.save();
 
     // Send response
     res.status(200).json({
