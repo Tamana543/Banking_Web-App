@@ -28,6 +28,8 @@ Phase 2 — Core Integration
 
 Phase 3 — Authentication
 
+* Password Reset
+* Email Verification
 * Create User Model ✔️
 * Create Register Controller ✔️
 * Create Register Routes✔️
@@ -42,9 +44,8 @@ Phase 3 — Authentication
 * Logout System ✔️
 * Auto Logout ✔️
 * Account Lock ✔️
-* fix the running error 
-* Password Reset
-* Email Verification
+* fix the running error ✔️
+
 
 Phase 4 — Banking Dashboard
 
