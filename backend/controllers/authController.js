@@ -59,6 +59,8 @@ export const loginUser = async (req, res) => {
     }
 
     // Find user
+    console.log("USER FROM DATABASE:");
+console.log(user);
     const user = await User.findOne({
       email: email.toLowerCase().trim(),
     });
@@ -100,6 +102,7 @@ export const loginUser = async (req, res) => {
     const token = generateToken(user._id);
     user.failedLoginAttempts = 0;
     user.isLocked = false;
+    console.log(user);
     await user.save();
 
     // Send response

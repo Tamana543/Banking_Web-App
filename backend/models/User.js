@@ -24,11 +24,9 @@ const userSchema = new mongoose.Schema(
           },
 
           pin: {
-               type: String,
-               required: true,
-               min: 1000,
-               max: 9999,
-          },
+                    type: String,
+                    required: true,
+               },
 
           balance: {
                type: Number,
