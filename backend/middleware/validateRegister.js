@@ -109,7 +109,7 @@ if (password !== confirmPassword) {
   const existingUser = await User.findOne({
     email: cleanEmail,
   });
-
+    console.log("Existing user:", existingUser);
   if (existingUser) {
     return res.status(400).json({
       success: false,
