@@ -25,7 +25,7 @@ Phase 2 — Core Integration
 * Create protected routes✔️
 * Merge Landing Page + Banking App ✔️
 * Connect "Open Account" button to banking system ✔️
-* check the login process again 
+* check the login process again , and experiment the POSTMAN you should learn it 
 
 Phase 3 — Authentication
 
