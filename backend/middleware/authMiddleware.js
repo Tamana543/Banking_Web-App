@@ -24,7 +24,7 @@ const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     //user ID finder
-    const user = await User.findById(decoded.id).select("-password -pin");
+    const user = await User.findById(decoded.id).select("-password -pin"); // give the uer but never pin and password
 
     if (!user) {
       return res.status(401).json({
