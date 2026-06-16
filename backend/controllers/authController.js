@@ -128,6 +128,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
   try {
     res.status(200).json({
