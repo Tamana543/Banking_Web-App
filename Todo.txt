@@ -45,12 +45,12 @@ Phase 3 — Authentication
 * Auto Logout ✔️
 * Account Lock ✔️
 * fix the running error ✔️
-* check the login process again , and experiment the POSTMAN you should learn it 
+* experiment the POSTMAN you should learn it 
 
 
 Phase 4 — Banking Dashboard
 
-* Dashboard redesign
+* Dashboard redesign (components done work on css)
 * Current balance card
 * Recent transactions card
 * Statistics summary cards
