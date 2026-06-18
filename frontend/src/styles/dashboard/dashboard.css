@@ -1,110 +1,40 @@
 .dashboard {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
+  max-width: 1350px;
+
+  margin: auto;
+
+  padding: 40px;
 
   display: flex;
+
   flex-direction: column;
-  gap: 25px;
 
-  font-family: sans-serif;
-}
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background: white;
-
-  padding: 24px 30px;
-
-  border-radius: 20px;
-
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  gap: 30px;
 }
 
-.dashboard-header h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
-}
+.dashboard-header,
+.balance-card,
+.stat-card,
+.quick-actions,
+.recent-transactions {
+  background: rgba(20, 20, 20, 0.75);
 
-.dashboard-header p {
-  color: #777;
-}
+  backdrop-filter: blur(14px);
 
-.dashboard-profile {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.dashboard-profile img {
-  width: 60px;
-  height: 60px;
-
-  border-radius: 50%;
-
-  object-fit: cover;
-}
-
-.dashboard-profile span {
-  font-weight: 600;
-}
-
-
-.balance-card {
-  background: linear-gradient(
-    135deg,
-    #5ec576,
-    #4bbb7d
-  );
-
-  color: white;
-
-  padding: 35px;
+  border: 1px solid rgba(212, 175, 55, 0.12);
 
   border-radius: 24px;
+
+  box-shadow: var(--shadow);
+
+  transition: var(--transition);
 }
 
-.balance-card h3 {
-  margin-bottom: 10px;
-}
+.dashboard-header:hover,
+.balance-card:hover,
+.stat-card:hover,
+.recent-transactions:hover {
+  border-color: var(--gold);
 
-.balance-card h1 {
-  font-size: 3rem;
-}
-
-.balance-card p {
-  margin-top: 10px;
-}
-
-.stats-cards {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 20px;
-}
-
-.stat-card {
-  background: white;
-
-  padding: 25px;
-
-  border-radius: 18px;
-
-  text-align: center;
-
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
-
-  transition: 0.3s;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-}
-
-.stat-card h4 {
-  color: gray;
-  margin-bottom: 10px;
+  transform: translateY(-4px);
 }
