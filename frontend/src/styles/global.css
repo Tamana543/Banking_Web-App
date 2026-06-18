@@ -1,0 +1,50 @@
+:root {
+  --bg-primary: #070707;
+  --bg-secondary: #111111;
+  --bg-card: rgba(22, 22, 22, 0.75);
+
+  --gold: #d4af37;
+  --gold-light: #f4d06f;
+  --gold-dark: #9b7a17;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+
+  --border: rgba(212, 175, 55, 0.15);
+
+  --shadow:
+    0 10px 40px rgba(0, 0, 0, 0.35);
+
+  --transition: all 0.35s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(
+    circle at top,
+    #181818,
+    #070707
+  );
+
+  color: var(--text-primary);
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  min-height: 100vh;
+}
+
+button,
+input {
+  font-family: inherit;
+}
