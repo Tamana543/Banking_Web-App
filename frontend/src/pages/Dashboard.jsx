@@ -1,3 +1,4 @@
+import "../styles/dashboard/dashboard.css";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import BalanceCard from "../components/dashboard/BalancedCard";
 import StatsCards from "../components/dashboard/StatsCards";
