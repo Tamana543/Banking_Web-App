@@ -131,63 +131,90 @@
   grid-template-columns: 270px 1fr;
 
   min-height: 100vh;
+   background: transparent;
 }
-
 .sidebar {
-  background: rgba(10, 10, 10, 0.96);
-
-  border-right: 1px solid rgba(212, 175, 55, 0.08);
-
-  padding: 35px;
-
   position: sticky;
 
-  top: 0;
+  top: 30px;
 
-  height: 100vh;
+  margin: 10px;
+
+  height: calc(100vh - 60px);
+
+  padding: 35px 25px;
+
+  border-radius: 34px;
+
+  background: rgba(18, 18, 18, 0.82);
+
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(212, 175, 55, 0.12);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45);
+
+  display: flex;
+
+  flex-direction: column;
+}
+.sidebar-logo {
+  text-align: center;
+
+  margin-bottom: 55px;
 }
 
 .sidebar-logo h2 {
   color: white;
 
-  font-size: 2rem;
-
-  letter-spacing: 2px;
-}
-
-.sidebar-logo span {
-  color: var(--gold);
+  font-size: 2.2rem;
 
   letter-spacing: 5px;
 
-  font-size: 0.9rem;
+  font-weight: 800;
 }
 
+.sidebar-logo span {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  color: var(--gold);
+
+  letter-spacing: 10px;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+}
 .sidebar-nav {
   display: flex;
 
   flex-direction: column;
 
-  gap: 14px;
-
-  margin-top: 60px;
+  gap: 12px;
 }
 .sidebar-nav a {
   display: flex;
 
   align-items: center;
 
-  gap: 14px;
+  gap: 18px;
+
+  padding: 18px 20px;
+
+  border-radius: 18px;
 
   text-decoration: none;
 
-  color: #b5b5b5;
+  color: #b7b7b7;
 
-  padding: 14px 18px;
+  transition: 0.35s ease;
 
-  border-radius: 14px;
+  font-size: 1rem;
 
-  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .sidebar-nav a svg {
@@ -197,11 +224,11 @@
 }
 
 .sidebar-nav a:hover {
-  background: rgba(212, 175, 55, 0.08);
+ background: rgba(212, 175, 55, 0.08);
 
   color: white;
 
-  transform: translateX(6px);
+  transform: translateX(8px);
 }
 
 .sidebar-nav a:hover svg {
@@ -209,15 +236,16 @@
 }
 
 .sidebar-nav a.active {
-  background: linear-gradient(
-    90deg,
-    rgba(212, 175, 55, 0.15),
-    transparent
-  );
+  background:
+    linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.18),
+      rgba(212, 175, 55, 0.02)
+    );
 
   color: white;
 
-  border-left: 3px solid var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .sidebar-nav a.active svg {
@@ -249,4 +277,17 @@
   letter-spacing: 8px;
 
   font-size: 0.85rem;
+}
+.sidebar-nav svg {
+  color: var(--gold);
+
+  transition: 0.3s ease;
+}
+
+.sidebar-nav a:hover svg {
+  transform: scale(1.15);
+
+  filter: drop-shadow(
+    0 0 8px rgba(212, 175, 55, 0.35)
+  );
 }
