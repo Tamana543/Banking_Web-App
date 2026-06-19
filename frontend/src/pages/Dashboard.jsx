@@ -26,13 +26,25 @@ function Dashboard() {
 
       <DashboardHeader />
 
-      <BalanceCard />
+<div className="dashboard-grid">
 
-      <StatsCards />
+  <div className="balance-section">
+    <BalanceCard />
+  </div>
 
-      <QuickActions />
+  <div className="stats-section">
+    <StatsCards />
+  </div>
 
-      <RecentTransactions />
+  <div className="actions-section">
+    <QuickActions />
+  </div>
+
+  <div className="transactions-section">
+    <RecentTransactions />
+  </div>
+
+</div>
 
     </main>
 

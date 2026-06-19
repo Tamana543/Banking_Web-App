@@ -3,13 +3,92 @@
 
   margin: auto;
 
-  padding: 40px;
+  padding: 30px;
 
   display: flex;
 
   flex-direction: column;
 
   gap: 30px;
+}
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns: 1.3fr 1fr;
+
+  grid-template-rows: auto auto auto;
+
+  gap: 24px;
+}
+
+.balance-section {
+  grid-column: 1;
+}
+
+.stats-section {
+  grid-column: 2;
+}
+
+.actions-section {
+  grid-column: 1;
+}
+
+.transactions-section {
+  grid-column: 1 / span 2;
+}
+.balance-card,
+.quick-actions,
+.recent-transactions,
+.stat-card {
+  background: rgba(20, 20, 20, 0.82);
+
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(212, 175, 55, 0.12);
+
+  border-radius: 26px;
+
+  padding: 28px;
+
+  transition: all 0.35s ease;
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.balance-card:hover,
+.quick-actions:hover,
+.recent-transactions:hover,
+.stat-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(212, 175, 55, 0.35);
+}
+.balance-card {
+  position: relative;
+
+  overflow: hidden;
+}
+
+.balance-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+
+  height: 260px;
+
+  top: -120px;
+
+  right: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 175, 55, 0.08);
+
+  filter: blur(70px);
 }
 .dashboard-header {
   display: flex;
