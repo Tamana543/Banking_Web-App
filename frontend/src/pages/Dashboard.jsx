@@ -4,7 +4,7 @@ import BalanceCard from "../components/dashboard/BalancedCard";
 import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecentTransactions from "../components/dashboard/RecentTransaction";
-
+import Sidebar from "../components/dashboard/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -18,6 +18,10 @@ function Dashboard() {
   };
 
   return (
+  <div className="dashboard-layout">
+
+    <Sidebar />
+
     <main className="dashboard">
 
       <DashboardHeader />
@@ -30,12 +34,10 @@ function Dashboard() {
 
       <RecentTransactions />
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
-
     </main>
-  );
+
+  </div>
+);
 }
 
 export default Dashboard;
