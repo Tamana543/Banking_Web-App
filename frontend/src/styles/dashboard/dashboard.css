@@ -31,7 +31,7 @@
 }
 
 .actions-section {
-  grid-column: 1;
+  grid-column: 1/ span2;
 }
 
 .transactions-section {
