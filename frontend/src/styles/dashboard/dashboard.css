@@ -60,10 +60,27 @@
 .balance-card:hover,
 .quick-actions:hover,
 .recent-transactions:hover,
-.stat-card:hover {
+.stat-card:hover{
   transform: translateY(-6px);
-
   border-color: rgba(212, 175, 55, 0.35);
+}
+.quick-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+}
+.quick-actions button {
+  font-size: 1rem;
+  border-color: rgba(212, 175, 55, 0.35);
+  background: none;
+  color: white;
+  padding: 1.5% 4%;
+}
+.quick-actions button:hover {
+  transform: rotateY(-1px);
+  border: 0.1px solid rgba(212, 175, 55, 0.35);
+  cursor: pointer;
 }
 .balance-card {
   position: relative;
