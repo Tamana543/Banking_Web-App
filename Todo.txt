@@ -50,7 +50,7 @@ Phase 3 — Authentication
 
 Phase 4 — Banking Dashboard
 
-* Dashboard redesign (Work on css)
+* Dashboard redesign ✔️
 * Current balance card
 * Recent transactions card
 * Statistics summary cards

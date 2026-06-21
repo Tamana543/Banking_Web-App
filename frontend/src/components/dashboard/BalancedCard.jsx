@@ -1,12 +1,43 @@
+import { useAuth } from "../context/AuthContext";
+
 function BalanceCard() {
+  const { user } = useAuth();
+
   return (
-    <section className="balance-card">
-      <h3>Current Balance</h3>
+    <div className="balance-card">
 
-      <h1>$0.00</h1>
+      <div className="card-top">
+        <span className="bank-name">
+          BANKIST PRO
+        </span>
 
-      <p>Available Balance</p>
-    </section>
+        <span className="currency-badge">
+          {user?.currency || "USD"}
+        </span>
+      </div>
+
+      <div className="balance-content">
+        <p className="balance-label">
+          Available Balance
+        </p>
+
+        <h1 className="balance-amount">
+          $
+          {user?.balance?.toLocaleString() || "0"}
+        </h1>
+      </div>
+
+      <div className="card-bottom">
+        <p className="card-number">
+          •••• •••• •••• 4582
+        </p>
+
+        <span className="card-type">
+          VISA GOLD
+        </span>
+      </div>
+
+    </div>
   );
 }
 
