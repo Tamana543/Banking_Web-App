@@ -1,3 +1,26 @@
+body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(212, 175, 55, 0.08),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at bottom left,
+      rgba(212, 175, 55, 0.06),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      180deg,
+      #050505,
+      #0a0a0a,
+      #050505
+    );
+
+  min-height: 100vh;
+}
 .dashboard {
   max-width: 1350px;
   margin: auto;
