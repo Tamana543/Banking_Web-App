@@ -31,8 +31,7 @@ body {
 }
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 1.7fr 1fr;
   gap: 24px;
 }
 .balance-section {
@@ -68,26 +67,57 @@ body {
   border-color: rgba(212, 175, 55, 0.35);
 }
 .quick-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2%;
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+
+  padding: 25px;
 }
 .quick-actions button {
-  font-size: 1rem;
-  border-color: rgba(212, 175, 55, 0.35);
-  background: none;
+    height: 90px;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(212, 175, 55, 0.2);
+
+  background: rgba(255, 255, 255, 0.02);
+
   color: white;
-  padding: 1.5% 4%;
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  transition: 0.3s;
 }
 .quick-actions button:hover {
-  transform: rotateY(-1px);
-  border: 0.1px solid rgba(212, 175, 55, 0.35);
-  cursor: pointer;
+ transform: translateY(-5px);
+
+  background: rgba(212, 175, 55, 0.08);
+
+  border-color: var(--gold);
 }
 .balance-card {
   position: relative;
+
+  min-height: 260px;
+
+  padding: 40px;
+
   overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.08),
+      rgba(20, 20, 20, 0.95)
+    );
+
+  border: 1px solid rgba(212, 175, 55, 0.18);
+
+  border-radius: 28px;
 }
 .balance-card::before {
   content: "";
