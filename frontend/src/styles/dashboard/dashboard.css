@@ -201,6 +201,50 @@ body {
 
   border: 1px solid rgba(212,175,55,0.2);
 }
+.balance-content {
+  z-index: 2;
+}
+
+.balance-label {
+  color: #9d9d9d;
+
+  margin-bottom: 12px;
+
+  font-size: 1rem;
+}
+
+.balance-amount {
+  font-size: 3.4rem;
+
+  font-weight: 700;
+
+  color: white;
+
+  line-height: 1;
+}
+.card-bottom {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color: #bdbdbd;
+}
+
+.card-number {
+  letter-spacing: 3px;
+
+  font-size: 1rem;
+}
+
+.card-type {
+  color: var(--gold);
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
 .dashboard-header {
   display: flex;
   justify-content: space-between;
