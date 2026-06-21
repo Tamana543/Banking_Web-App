@@ -104,11 +104,39 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 35px;
-  background: rgba(18, 18, 18, 0.75);
+
+  min-height: 180px;
+
+  padding: 40px 50px;
+
+  background: rgba(20, 20, 20, 0.8);
+
   backdrop-filter: blur(18px);
-  border: 1px solid rgba(212, 175, 55, 0.15);
+
+  border: 1px solid rgba(212, 175, 55, 0.12);
+
   border-radius: 28px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+.dashboard-header::before {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  right: -150px;
+  top: -150px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 175, 55, 0.08);
+
+  filter: blur(100px);
 }
 .brand-name {
   color: var(--gold);
@@ -117,29 +145,54 @@ body {
   margin-bottom: 10px;
 }
 .header-left h1 {
-  font-size: 2.5rem;
-  margin-bottom: 8px;
+  font-size: 3.2rem;
+
+  line-height: 1.15;
+
+  max-width: 700px;
+
+  margin-bottom: 14px;
+
+  font-weight: 700;
 }
 .header-left span {
   color: var(--gold);
 }
 .header-subtitle {
+    font-size: 1.1rem;
   color: var(--text-secondary);
 }
 .dashboard-profile {
-  display: flex;
+ display: flex;
+
   align-items: center;
-  gap: 18px;
+
+  gap: 20px;
+
+  padding: 14px 20px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  border: 1px solid rgba(212, 175, 55, 0.08);
 }
 .profile-avatar {
- width: 65px;
-    height: 64px;
+   width: 80px;
+  height: 80px;
+
+  font-size: 2.2rem;
+
+  flex-shrink: 0;
+
   border-radius: 50%;
+
   background: linear-gradient(
     135deg,
     #d4af37,
     #f4d06f
   );
+
   display: flex;
   align-items: center;
   justify-content: center;
