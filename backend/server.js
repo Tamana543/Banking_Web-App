@@ -2,8 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import dns from "node:dns";
-import authRouter from "./routes/authRoutes.js";
 import cors from "cors"
+
+// routes
+import authRouter from "./routes/authRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js"
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -23,7 +26,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// APIs 
 app.use("/api/auth", authRouter);
+app.use("/api/transactions", transactionRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
