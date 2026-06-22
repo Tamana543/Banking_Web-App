@@ -61,7 +61,7 @@ Phase 4 — Banking Dashboard
 
 Phase 5 — Transactions
 
-* Transaction history
+* Transaction history (check the balance, it is not updating find why )
 * Search transactions
 * Filter transactions (deposit/withdrawal/loan/transfer)
 * Sort transactions (newest/oldest/highest)
