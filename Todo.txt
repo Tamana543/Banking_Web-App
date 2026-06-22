@@ -45,7 +45,7 @@ Phase 3 — Authentication
 * Auto Logout ✔️
 * Account Lock ✔️
 * fix the running error ✔️
-* experiment the POSTMAN you should learn it 
+* experiment the POSTMAN you should learn it ✔️
 
 
 Phase 4 — Banking Dashboard
