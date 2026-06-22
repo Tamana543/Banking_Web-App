@@ -42,6 +42,8 @@ export const registerUser = async (req,res)=>{
 }
 export const loginUser = async (req, res) => {
   try {
+    console.log("BODY RECEIVED:");
+console.log(req.body);
     const { email, password } = req.body;
     // Check for missing fields
     if (!email || !password) {
@@ -125,3 +127,4 @@ export const getCurrentUser = async (req, res) => {
     });
   }
 };
+

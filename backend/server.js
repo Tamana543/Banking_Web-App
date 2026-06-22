@@ -24,7 +24,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRouter);
+app.post("/test", (req, res) => {
+  console.log(req.body);
 
+  res.json({
+    body: req.body,
+  });
+});
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
 });
