@@ -41,3 +41,24 @@ export const depositMoney = async (req, res) => {
     });
   }
 };
+
+export const getTransactions = async (re,res)=>{
+   try {
+    const transactions = await Transaction.find({
+      user: req.user._id,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: transactions.length,
+      transactions,
+    });
+  } catch (error) {
+    console.error("Get Transactions Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+};
