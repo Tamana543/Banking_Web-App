@@ -63,20 +63,20 @@ export const getTransactions = async (req,res)=>{
   }
 };
 
-/**
- * Conditions for transfer : 
- Sender must exist
-Receiver must exist
-Sender cannot transfer to themselves
-Amount must be greater than 0
-Sender must have enough balance
-Deduct sender balance
-Add receiver balance
-Create sender transaction
-Create receiver transaction
- */
 
 export const transferMoney = async (req,res)=>{
+  /**
+   * Conditions for transfer : 
+   Sender must exist
+  Receiver must exist
+  Sender cannot transfer to themselves
+  Amount must be greater than 0
+  Sender must have enough balance
+  Deduct sender balance
+  Add receiver balance
+  Create sender transaction
+  Create receiver transaction
+   */
   try {
     const { recipientEmail, amount } = req.body;
 
@@ -149,6 +149,26 @@ export const transferMoney = async (req,res)=>{
 
   } catch (error) {
     console.error("Transfer Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+}
+
+export const withdrawMondy = async(req,res)=>{
+  try {
+     const { amount } = req.body;
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+  } catch (error) {
+     console.error("Withdraw Error:", error);
 
     res.status(500).json({
       success: false,
