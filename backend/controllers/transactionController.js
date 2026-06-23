@@ -133,8 +133,20 @@ export const transferMoney = async (req,res)=>{
       description: `Transfer sent to ${receiver.email}`,
       status: "completed",
     });
+    await Transaction.create({
+        user: receiver._id,
+        type: "transfer",
+        amount,
+        description: `Transfer received from ${sender.email}`,
+        status: "completed",
+      });
 
-    
+      res.status(200).json({
+        success: true,
+        message: "Transfer successful.",
+        balance: sender.balance,
+      });
+
   } catch (error) {
     console.error("Transfer Error:", error);
 
