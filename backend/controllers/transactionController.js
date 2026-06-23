@@ -42,7 +42,7 @@ export const depositMoney = async (req, res) => {
   }
 };
 
-export const getTransactions = async (re,res)=>{
+export const getTransactions = async (req,res)=>{
    try {
     const transactions = await Transaction.find({
       user: req.user._id,
@@ -62,3 +62,44 @@ export const getTransactions = async (re,res)=>{
     });
   }
 };
+
+/**
+ * Conditions for transfer : 
+ Sender must exist
+Receiver must exist
+Sender cannot transfer to themselves
+Amount must be greater than 0
+Sender must have enough balance
+Deduct sender balance
+Add receiver balance
+Create sender transaction
+Create receiver transaction
+ */
+
+export const transferMoney = async (req,res)=>{
+  try {
+    const { recipientEmail, amount } = req.body;
+
+    if (!recipientEmail || !amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Recipient email and amount are required.",
+      });
+    }
+
+    if (amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Amount must be greater than zero.",
+      });
+    }
+    
+  } catch (error) {
+    console.error("Transfer Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+}
