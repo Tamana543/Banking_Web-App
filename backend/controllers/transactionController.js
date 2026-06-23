@@ -167,6 +167,34 @@ export const withdrawMondy = async(req,res)=>{
         message: "Please provide a valid amount.",
       });
     }
+
+      const user = await User.findById(req.user._id);
+
+    if (user.balance < amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+
+    user.balance -= Number(amount);
+
+    await user.save();
+
+    const transaction = await Transaction.create({
+      user: user._id,
+      type: "withdrawal",
+      amount,
+      description: "Cash Withdrawal",
+      status: "completed",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal successful.",
+      balance: user.balance,
+      transaction,
+    });
   } catch (error) {
      console.error("Withdraw Error:", error);
 
