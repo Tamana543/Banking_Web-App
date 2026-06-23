@@ -93,6 +93,47 @@ export const transferMoney = async (req,res)=>{
         message: "Amount must be greater than zero.",
       });
     }
+     const sender = await User.findById(req.user._id);
+
+    const receiver = await User.findOne({
+      email: recipientEmail.toLowerCase().trim(),
+    });
+
+    if (!receiver) {
+      return res.status(404).json({
+        success: false,
+        message: "Recipient not found.",
+      });
+    }
+
+    if (String(sender._id) === String(receiver._id)) {
+      return res.status(400).json({
+        success: false,
+        message: "You cannot transfer money to yourself.",
+      });
+    }
+
+    if (sender.balance < amount) {
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+
+     sender.balance -= Number(amount);
+    receiver.balance += Number(amount);
+
+    await sender.save();
+    await receiver.save();
+
+    await Transaction.create({
+      user: sender._id,
+      type: "transfer",
+      amount,
+      description: `Transfer sent to ${receiver.email}`,
+      status: "completed",
+    });
+
     
   } catch (error) {
     console.error("Transfer Error:", error);
