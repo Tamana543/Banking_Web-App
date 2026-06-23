@@ -52,7 +52,7 @@ Phase 4 — Banking Dashboard
 
 * Dashboard redesign ✔️
 * Current balance card ✔️
-* Recent transactions card
+* Recent transactions card (deposit,withdrawal,and transfer done, from backend next fix the frontend)
 * Statistics summary cards
 * Quick actions section
 * Financial overview section
