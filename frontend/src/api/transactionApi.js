@@ -45,3 +45,22 @@ export const withdrawMoney = async (amount) => {
 
   return response.json();
 };
+
+export const transferMoney = async (
+  recipientEmail,
+  amount
+) => {
+  const response = await fetch(`${API_URL}/transfer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({
+      recipientEmail,
+      amount,
+    }),
+  });
+
+  return response.json();
+};
