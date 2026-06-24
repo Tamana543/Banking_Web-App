@@ -1,12 +1,25 @@
-function RecentTransactions() {
+function RecentTransactions({ transactions = [] }) {
   return (
-    <section className="recent-transactions">
+    <div className="recent-transactions">
+      <h3>Recent Activity</h3>
 
-      <h2>Recent Transactions</h2>
+      {transactions.length === 0 ? (
+        <p>No transactions yet.</p>
+      ) : (
+        transactions.map((transaction) => (
+          <div
+            key={transaction._id}
+            className="transaction-item"
+          >
+            <p>{transaction.type}</p>
 
-      <p>No transactions yet.</p>
-
-    </section>
+            <strong>
+              ${transaction.amount}
+            </strong>
+          </div>
+        ))
+      )}
+    </div>
   );
 }
 

@@ -7,11 +7,29 @@ import RecentTransactions from "../components/dashboard/RecentTransaction";
 import Sidebar from "../components/dashboard/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import { getTransactions } from "../api/transactionApi";
+
 
 function Dashboard() {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [transactions,setTransactions] = useState([]);
 
+  const loadTransactions = async () => {
+    try {
+      const data = await getTransactions();
+
+      setTransactions(data.transactions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(()=>{
+    loadTransactions();
+  },[])
+  
   const handleLogout = () => {
     logout();
     navigate("/login");
@@ -41,7 +59,7 @@ function Dashboard() {
   </div>
 
   <div className="transactions-section">
-    <RecentTransactions />
+    <RecentTransactions transactions={transactions}/>
   </div>
 
 </div>
