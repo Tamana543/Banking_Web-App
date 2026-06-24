@@ -8,7 +8,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
-import { getTransactions } from "../api/transactionApi";
+import { depositMoney, getTransactions } from "../api/transactionApi";
 
 
 function Dashboard() {
@@ -16,6 +16,7 @@ function Dashboard() {
   const { logout } = useAuth();
   const [transactions,setTransactions] = useState([]);
 
+  // Transaction handler
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
@@ -25,16 +26,33 @@ function Dashboard() {
       console.error(error);
     }
   };
-
   useEffect(()=>{
     loadTransactions();
   },[])
-  
+  //Logout handler
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
+  //deposit handler
+    const handleDeposit = async () => {
+    const amount = prompt(
+      "Enter deposit amount"
+    );
+
+    if (!amount) return;
+
+    try {
+      await depositMoney(Number(amount));
+
+      await loadTransactions();
+
+      window.location.reload();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
   <div className="dashboard-layout">
 
