@@ -7,16 +7,23 @@ function RecentTransactions({ transactions = [] }) {
         <p>No transactions yet.</p>
       ) : (
         transactions.map((transaction) => (
-          <div
-            key={transaction._id}
-            className="transaction-item"
-          >
-            <p>{transaction.type}</p>
+          <div key={transaction._id} className="transaction-item">
 
-            <strong>
-              ${transaction.amount}
-            </strong>
+          <div>
+            <h4>
+              {transaction.type}
+            </h4>
+
+            <span>
+              {transaction.status}
+            </span>
           </div>
+
+          <strong>
+            ${transaction.amount}
+          </strong>
+
+        </div>
         ))
       )}
     </div>
