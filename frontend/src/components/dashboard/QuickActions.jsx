@@ -2,15 +2,16 @@ function QuickActions({onDeposit}) {
  return (
     <section className="quick-actions">
 
-      <button>
+      <button className="action-card">
         Transfer
       </button>
 
-      <button>
+      <button className="action-card">
         Request Loan
       </button>
 
       <button
+      className="action-card"
         onClick={onDeposit}
       >
         Deposit

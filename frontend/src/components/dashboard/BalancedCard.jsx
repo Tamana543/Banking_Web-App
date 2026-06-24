@@ -17,14 +17,24 @@ function BalanceCard() {
       </div>
 
       <div className="balance-content">
-        <p className="balance-label">
-          Available Balance
-        </p>
 
-        <h1 className="balance-amount">
-          $
-          {user?.balance?.toLocaleString() || "0"}
-        </h1>
+          <span className="portfolio-tag">
+            PREMIUM ACCOUNT
+          </span>
+
+          <p className="balance-label">
+            Total Portfolio Value
+          </p>
+
+          <h1 className="balance-amount">
+            $
+            {user?.balance?.toLocaleString() || "0"}
+          </h1>
+
+          <div className="balance-growth">
+            +12.4% this month
+          </div>
+
       </div>
 
       <div className="card-bottom">

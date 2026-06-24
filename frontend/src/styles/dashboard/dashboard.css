@@ -222,6 +222,31 @@ body {
 
   line-height: 1;
 }
+.portfolio-tag{
+  display:inline-block;
+  margin-bottom:18px;
+
+  color:var(--gold);
+
+  font-size:.8rem;
+  letter-spacing:3px;
+
+  text-transform:uppercase;
+}
+
+.balance-growth{
+  margin-top:18px;
+
+  color:#5dff91;
+
+  font-size:.95rem;
+
+  font-weight:600;
+}
+
+.balance-amount{
+  font-size:4.4rem;
+}
 .card-bottom {
   display: flex;
 
@@ -245,6 +270,38 @@ body {
 
   letter-spacing: 2px;
 }
+.action-card{
+  display:flex;
+  flex-direction:column;
+
+  justify-content:center;
+  align-items:center;
+
+  gap:12px;
+
+  height:140px;
+
+  font-size:1rem;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(212,175,55,.04),
+      rgba(255,255,255,.02)
+    );
+
+  border:1px solid rgba(212,175,55,.12);
+}
+
+.action-card:hover{
+  transform:
+    translateY(-6px)
+    scale(1.02);
+
+  box-shadow:
+    0 0 30px rgba(212,175,55,.15);
+}
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;
