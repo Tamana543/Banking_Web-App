@@ -19,3 +19,29 @@ export const getTransactions = async () => {
 
   return data;
 };
+
+export const depositMoney = async (amount) => {
+  const response = await fetch(`${API_URL}/deposit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ amount }),
+  });
+
+  return response.json();
+};
+
+export const withdrawMoney = async (amount) => {
+  const response = await fetch(`${API_URL}/withdraw`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ amount }),
+  });
+
+  return response.json();
+};
