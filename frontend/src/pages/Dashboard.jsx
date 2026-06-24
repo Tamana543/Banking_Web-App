@@ -53,6 +53,7 @@ function Dashboard() {
       alert(error.message);
     }
   };
+
   return (
   <div className="dashboard-layout">
 
@@ -62,25 +63,25 @@ function Dashboard() {
 
       <DashboardHeader />
 
-<div className="dashboard-grid">
+  <div className="dashboard-grid">
 
-  <div className="balance-section">
-    <BalanceCard />
+    <div className="balance-section">
+      <BalanceCard />
+    </div>
+
+    <div className="stats-section">
+      <StatsCards />
+    </div>
+
+    <div className="actions-section">
+      <QuickActions onDeposit={handleDeposit}/>
+    </div>
+
+    <div className="transactions-section">
+      <RecentTransactions transactions={transactions}/>
+    </div>
+
   </div>
-
-  <div className="stats-section">
-    <StatsCards />
-  </div>
-
-  <div className="actions-section">
-    <QuickActions />
-  </div>
-
-  <div className="transactions-section">
-    <RecentTransactions transactions={transactions}/>
-  </div>
-
-</div>
 
     </main>
 

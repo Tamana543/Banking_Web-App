@@ -1,5 +1,5 @@
-function QuickActions() {
-  return (
+function QuickActions({onDeposit}) {
+ return (
     <section className="quick-actions">
 
       <button>
@@ -10,7 +10,9 @@ function QuickActions() {
         Request Loan
       </button>
 
-      <button>
+      <button
+        onClick={onDeposit}
+      >
         Deposit
       </button>
 
