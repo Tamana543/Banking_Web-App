@@ -204,3 +204,43 @@ export const withdrawMondy = async(req,res)=>{
     });
   }
 }
+
+export const createDeposit = async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid amount",
+      });
+    }
+
+    const transaction = await Transaction.create({
+      user: req.user._id,
+      type: "deposit",
+      amount,
+      status: "completed",
+    });
+
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $inc: { balance: amount },
+      }
+    );
+
+    res.status(201).json({
+      success: true,
+      transaction,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
