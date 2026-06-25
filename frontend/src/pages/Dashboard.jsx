@@ -9,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { depositMoney, getTransactions } from "../api/transactionApi";
+import { getCurrentUser } from "../api/authApi";
+
 
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout,setUser } = useAuth();
   const [transactions,setTransactions] = useState([]);
 
   // Transaction handler

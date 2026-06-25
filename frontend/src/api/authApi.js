@@ -42,3 +42,24 @@ export const registerUser = async (userData) => {
   return data;
 };
 
+export const getCurrentUser = async () => {
+  const token =
+    localStorage.getItem("token");
+
+  const response = await fetch(
+    `${API_URL}/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
+};
