@@ -47,10 +47,9 @@ function Dashboard() {
 
     try {
       await depositMoney(Number(amount));
-
-      await loadTransactions();
-
-      window.location.reload();
+    const userData = await getCurrentUser();
+    setUser(userData.user);
+    await loadTransactions();
     } catch (error) {
       alert(error.message);
     }
