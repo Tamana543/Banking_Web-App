@@ -95,7 +95,7 @@ function Dashboard() {
     </main>
     <ActionModal
       isOpen={showDepositModal}
-      title="Deposit Funds"
+      title="Deposit Amounts"
       submitText="Deposit"
       onClose={() => {
         setShowDepositModal(false);
@@ -105,6 +105,8 @@ function Dashboard() {
     >
       <input
         type="number"
+        min="1"
+        step="0.01"
         placeholder="Enter amount"
         value={depositAmount}
         onChange={(e) =>
