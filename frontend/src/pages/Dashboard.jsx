@@ -17,6 +17,8 @@ function Dashboard() {
   const navigate = useNavigate();
   const { logout,setUser } = useAuth();
   const [transactions,setTransactions] = useState([]);
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [depositAmount, setDepositAmount] = useState("");
 
   // Transaction handler
   const loadTransactions = async () => {
@@ -38,22 +40,27 @@ function Dashboard() {
   };
 
   //deposit handler
-    const handleDeposit = async () => {
-    const amount = prompt(
-      "Enter deposit amount"
-    );
+  const handleDeposit = async () => {
+  if (!depositAmount || Number(depositAmount) <= 0) {
+    alert("Enter a valid amount.");
+    return;
+  }
 
-    if (!amount) return;
+  try {
+    await depositMoney(Number(depositAmount));
 
-    try {
-      await depositMoney(Number(amount));
     const userData = await getCurrentUser();
+
     setUser(userData.user);
+
     await loadTransactions();
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+
+    setDepositAmount("");
+    setShowDepositModal(false);
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   return (
   <div className="dashboard-layout">
@@ -75,7 +82,7 @@ function Dashboard() {
     </div>
 
     <div className="actions-section">
-      <QuickActions onDeposit={handleDeposit}/>
+      <QuickActions onDeposit={() => setShowDepositModal(true)} />
     </div>
 
     <div className="transactions-section">
