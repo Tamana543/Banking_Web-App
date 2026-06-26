@@ -88,3 +88,67 @@
   color:#777;
 }
 
+/* Buttons */
+.modal-actions{
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:16px;
+
+  margin-top:30px;
+}
+
+.cancel-btn,
+.submit-btn{
+
+  padding:14px 28px;
+
+  border:none;
+
+  border-radius:14px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.3s;
+}
+.submit-btn{
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #f4d06f
+    );
+
+  color:black;
+
+  font-weight:700;
+
+  box-shadow:
+    0 8px 25px rgba(212,175,55,.35);
+}
+
+.submit-btn:hover{
+
+  transform:
+    translateY(-3px)
+    scale(1.03);
+}
+
+
+.cancel-btn{
+
+  background:rgba(255,255,255,.05);
+
+  color:white;
+}
+
+.cancel-btn:hover{
+
+  background:rgba(255,255,255,.09);
+
+  transform:translateY(-2px);
+}
