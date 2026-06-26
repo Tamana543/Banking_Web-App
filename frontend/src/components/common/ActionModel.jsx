@@ -1,3 +1,4 @@
+import "../../styles/components/modal.css"
 function ActionModal({
   isOpen,
   title,

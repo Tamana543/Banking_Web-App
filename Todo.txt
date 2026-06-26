@@ -53,6 +53,8 @@ Phase 4 — Banking Dashboard
 * Dashboard redesign ✔️
 * Current balance card ✔️
 * Recent transactions card (deposit,withdrawal,and transfer done, from backend next fix the frontend) ✔️
+* clean up the dashboard css it is so big (modal,buttons.css,sidebar.css,balanceCard.css
+ transaction.css )
 * Quick actions section (remember to use a common component for alerts too)
 * Statistics summary cards
 * Financial overview section

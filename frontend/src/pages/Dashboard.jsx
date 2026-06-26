@@ -5,12 +5,13 @@ import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecentTransactions from "../components/dashboard/RecentTransaction";
 import Sidebar from "../components/dashboard/Sidebar";
+import ActionModal from "../components/common/ActionModel";
+
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { depositMoney, getTransactions } from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
-
 
 
 function Dashboard() {
@@ -92,7 +93,25 @@ function Dashboard() {
   </div>
 
     </main>
-
+    <ActionModal
+      isOpen={showDepositModal}
+      title="Deposit Funds"
+      submitText="Deposit"
+      onClose={() => {
+        setShowDepositModal(false);
+        setDepositAmount("");
+      }}
+      onSubmit={handleDeposit}
+    >
+      <input
+        type="number"
+        placeholder="Enter amount"
+        value={depositAmount}
+        onChange={(e) =>
+          setDepositAmount(e.target.value)
+        }
+      />
+    </ActionModal>
   </div>
 );
 }
