@@ -145,6 +145,27 @@ function Dashboard() {
         }
       />
     </ActionModal>
+    <ActionModal
+      isOpen={showWithdrawModal}
+      title="Withdraw Money"
+      submitText="Withdraw"
+      onClose={() => {
+        setShowWithdrawModal(false);
+        setWithdrawAmount("");
+      }}
+      onSubmit={handleWithdraw}
+      >
+      <input
+        type="number"
+        min="1"
+        step="0.01"
+        placeholder="Enter amount"
+        value={withdrawAmount}
+        onChange={(e) =>
+          setWithdrawAmount(e.target.value)
+        }
+      />
+    </ActionModal>
   </div>
 );
 }
