@@ -80,15 +80,16 @@ export const transferMoney = async (req,res)=>{
    */
   try {
     const { recipientEmail, amount } = req.body;
+    const amountNumber = Number(amount);
 
-    if (!recipientEmail || !amount) {
+    if (!recipientEmail || !amountNumber) {
       return res.status(400).json({
         success: false,
         message: "Recipient email and amount are required.",
       });
     }
 
-    if (amount <= 0) {
+    if (amountNumber <= 0) {
       return res.status(400).json({
         success: false,
         message: "Amount must be greater than zero.",
@@ -121,8 +122,8 @@ export const transferMoney = async (req,res)=>{
       });
     }
 
-     sender.balance -= Number(amount);
-    receiver.balance += Number(amount);
+     sender.balance -= amountNumber;
+    receiver.balance += amountNumber;
 
     await sender.save();
     await receiver.save();
@@ -137,7 +138,7 @@ export const transferMoney = async (req,res)=>{
     await Transaction.create({
         user: receiver._id,
         type: "transfer",
-        amount,
+        amount : amountNumber,
         description: `Transfer received from ${sender.email}`,
         status: "completed",
       });
@@ -161,8 +162,9 @@ export const transferMoney = async (req,res)=>{
 export const withdrawMoney = async(req,res)=>{
   try {
      const { amount } = req.body;
+    const amountNumber = Number(amount);
 
-    if (!amount || amount <= 0) {
+    if (!amountNumber || amountNumber <= 0) {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid amount.",
@@ -171,21 +173,21 @@ export const withdrawMoney = async(req,res)=>{
 
       const user = await User.findById(req.user._id);
 
-    if (user.balance < amount) {
+    if (user.balance < amountNumber) {
       return res.status(400).json({
         success: false,
         message: "Insufficient balance.",
       });
     }
 
-    user.balance -= Number(amount);
+    user.balance -= amountNumber
 
     await user.save();
 
     const transaction = await Transaction.create({
       user: user._id,
       type: "withdrawal",
-      amount,
+      amount :amountNumber,
       description: "Cash Withdrawal",
       status: "completed",
     });
