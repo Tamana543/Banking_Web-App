@@ -1,17 +1,27 @@
-function QuickActions({onDeposit}) {
- return (
+function QuickActions({
+  onDeposit,
+  onWithdraw,
+  onTransfer,
+}) {
+  return (
     <section className="quick-actions">
 
-      <button className="action-card">
+      <button
+        className="action-card"
+        onClick={onTransfer}
+      >
         Transfer
       </button>
 
-      <button className="action-card">
-        Request Loan
+      <button
+        className="action-card"
+        onClick={onWithdraw}
+      >
+        Withdraw
       </button>
 
       <button
-      className="action-card"
+        className="action-card"
         onClick={onDeposit}
       >
         Deposit
