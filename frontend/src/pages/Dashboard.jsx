@@ -10,7 +10,7 @@ import ActionModal from "../components/common/ActionModel";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
-import { depositMoney, getTransactions } from "../api/transactionApi";
+import { depositMoney, getTransactions,withdrawMoney } from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
 const [showWithdrawModal, setShowWithdrawModal] = useState(false);
 const [showTransferModal, setShowTransferModal] = useState(false);
@@ -19,6 +19,7 @@ const [withdrawAmount, setWithdrawAmount] = useState("");
 
 const [recipientEmail, setRecipientEmail] = useState("");
 const [transferAmount, setTransferAmount] = useState("");
+
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -68,6 +69,28 @@ function Dashboard() {
     alert(error.message);
   }
 };
+
+  const handleWithdraw = async () => {
+    if (!withdrawAmount || Number(withdrawAmount) <= 0) {
+      alert("Enter a valid amount.");
+      return;
+    }
+
+    try {
+      await withdrawMoney(Number(withdrawAmount));
+
+      const userData = await getCurrentUser();
+
+      setUser(userData.user);
+
+      await loadTransactions();
+
+      setWithdrawAmount("");
+      setShowWithdrawModal(false);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
   <div className="dashboard-layout">
