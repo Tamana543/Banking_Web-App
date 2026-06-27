@@ -12,7 +12,13 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { depositMoney, getTransactions } from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
+const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+const [showTransferModal, setShowTransferModal] = useState(false);
 
+const [withdrawAmount, setWithdrawAmount] = useState("");
+
+const [recipientEmail, setRecipientEmail] = useState("");
+const [transferAmount, setTransferAmount] = useState("");
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -87,7 +93,9 @@ function Dashboard() {
     </div>
 
     <div className="transactions-section">
-      <RecentTransactions transactions={transactions}/>
+        onDeposit={() => setShowDepositModal(true)}
+        onWithdraw={() => setShowWithdrawModal(true)}
+        onTransfer={() => setShowTransferModal(true)}
     </div>
 
   </div>
