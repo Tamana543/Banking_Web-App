@@ -25,6 +25,9 @@ function Dashboard() {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
+  const [alert, setAlert] = useState({ type: "",
+  message: "",
+  });
 
   // Transaction handler
   const loadTransactions = async () => {
@@ -57,7 +60,7 @@ function Dashboard() {
   //deposit handler
   const handleDeposit = async () => {
   if (!depositAmount || Number(depositAmount) <= 0) {
-    alert("Enter a valid amount.");
+   setAlert({ type: "error", message: "Enter a valid amount.", });
     return;
   }
 
@@ -67,13 +70,13 @@ function Dashboard() {
     setDepositAmount("");
     setShowDepositModal(false);
   } catch (error) {
-    alert(error.message);
+    setAlert({type:"error",message : error.message})
   }
 };
 
   const handleWithdraw = async () => {
     if (!withdrawAmount || Number(withdrawAmount) <= 0) {
-      alert("Enter a valid amount.");
+      setAlert({type:"error",message:"Enter a valid amount."})
       return;
     }
 
@@ -83,18 +86,18 @@ function Dashboard() {
       setWithdrawAmount("");
       setShowWithdrawModal(false);
     } catch (error) {
-      alert(error.message);
+      setAlert({type:"error",message: error.message})
     }
   };
 
   const handleTransfer = async () => {
       if (!recipientEmail || !transferAmount) {
-        alert("Please fill all fields.");
+        setAlert({type:"error",message:"Please fill all fields."})
         return;
       }
 
       if (Number(transferAmount) <= 0) {
-        alert("Enter a valid amount.");
+        setAlert({type:"error",message :"Enter a valid amount."})
         return;
       }
 
@@ -108,7 +111,8 @@ function Dashboard() {
         setTransferAmount("");
         setShowTransferModal(false);
       } catch (error) {
-        alert(error.message);
+  
+        setAlert({type:"error",message:error.message})
       }
   };
 
