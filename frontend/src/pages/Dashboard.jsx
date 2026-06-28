@@ -6,7 +6,7 @@ import QuickActions from "../components/dashboard/QuickActions";
 import RecentTransactions from "../components/dashboard/RecentTransaction";
 import Sidebar from "../components/dashboard/Sidebar";
 import ActionModal from "../components/common/ActionModel";
-
+import AlertMessage from "../components/common/AlertMessage";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -201,6 +201,7 @@ function Dashboard() {
       onClose={() => {
         setShowDepositModal(false);
         setDepositAmount("");
+        setAlert({ type: "", message: "",});
       }}
       onSubmit={handleDeposit}
     >
@@ -214,6 +215,10 @@ function Dashboard() {
           setDepositAmount(e.target.value)
         }
       />
+       <AlertMessage
+        type={alert.type}
+        message={alert.message}
+      />
     </ActionModal>
 
     {/* withdrawl modal */}
@@ -224,6 +229,7 @@ function Dashboard() {
       onClose={() => {
         setShowWithdrawModal(false);
         setWithdrawAmount("");
+        setAlert({ type: "", message: "",});
       }}
       onSubmit={handleWithdraw}
       >
@@ -237,6 +243,10 @@ function Dashboard() {
           setWithdrawAmount(e.target.value)
         }
       />
+       <AlertMessage
+          type={alert.type}
+          message={alert.message}
+        />
     </ActionModal>
 
     {/* transfer modal  */}
@@ -248,6 +258,7 @@ function Dashboard() {
         setShowTransferModal(false);
         setRecipientEmail("");
         setTransferAmount("");
+        setAlert({ type: "", message: "",});
       }}
       onSubmit={handleTransfer}
     >
@@ -270,6 +281,10 @@ function Dashboard() {
           setTransferAmount(e.target.value)
         }
       />
+       <AlertMessage
+          type={alert.type}
+          message={alert.message}
+        />
     </ActionModal>
   </div>
 );
