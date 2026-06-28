@@ -67,8 +67,21 @@ function Dashboard() {
   try {
     await depositMoney(Number(depositAmount));
     await refreshDashboard();
-    setDepositAmount("");
-    setShowDepositModal(false);
+      setAlert({
+      type: "success",
+      message: "Deposit completed successfully.",
+    });
+
+    setTimeout(() => {
+      setAlert({
+        type: "",
+        message: "",
+      });
+
+      setDepositAmount("");
+      setShowDepositModal(false);
+    }, 1200);
+
   } catch (error) {
     setAlert({type:"error",message : error.message})
   }
@@ -83,8 +96,21 @@ function Dashboard() {
     try {
       await withdrawMoney(Number(withdrawAmount));
       await refreshDashboard();
-      setWithdrawAmount("");
+      setAlert({
+        type: "success",
+        message: "Withdraw completed successfully.",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          type: "",
+          message: "",
+        });
+
+         setWithdrawAmount("");
       setShowWithdrawModal(false);
+      }, 1200);
+     
     } catch (error) {
       setAlert({type:"error",message: error.message})
     }
@@ -107,9 +133,21 @@ function Dashboard() {
           Number(transferAmount)
         );
         await refreshDashboard();
+        setAlert({
+        type: "success",
+        message: "Transfer completed successfully.",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          type: "",
+          message: "",
+        });
         setRecipientEmail("");
         setTransferAmount("");
         setShowTransferModal(false);
+      }, 1200);
+        
       } catch (error) {
   
         setAlert({type:"error",message:error.message})
