@@ -1,3 +1,4 @@
+import "../../styles/components/alert.css";
 function AlertMessage({ type = "error", message }) {
   if (!message) return null;
 
