@@ -160,6 +160,7 @@ function Dashboard() {
   </div>
 
     </main>
+    {/* Deposite modal */}
     <ActionModal
       isOpen={showDepositModal}
       title="Deposit Amounts"
@@ -181,6 +182,8 @@ function Dashboard() {
         }
       />
     </ActionModal>
+
+    {/* withdrawl modal */}
     <ActionModal
       isOpen={showWithdrawModal}
       title="Withdraw Money"
@@ -199,6 +202,39 @@ function Dashboard() {
         value={withdrawAmount}
         onChange={(e) =>
           setWithdrawAmount(e.target.value)
+        }
+      />
+    </ActionModal>
+
+    {/* transfer modal  */}
+    <ActionModal
+      isOpen={showTransferModal}
+      title="Transfer Money"
+      submitText="Transfer"
+      onClose={() => {
+        setShowTransferModal(false);
+        setRecipientEmail("");
+        setTransferAmount("");
+      }}
+      onSubmit={handleTransfer}
+    >
+      <input
+        type="email"
+        placeholder="Recipient Email"
+        value={recipientEmail}
+        onChange={(e) =>
+          setRecipientEmail(e.target.value)
+        }
+      />
+
+      <input
+        type="number"
+        min="1"
+        step="0.01"
+        placeholder="Amount"
+        value={transferAmount}
+        onChange={(e) =>
+          setTransferAmount(e.target.value)
         }
       />
     </ActionModal>
