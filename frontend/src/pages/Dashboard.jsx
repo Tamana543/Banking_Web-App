@@ -39,6 +39,15 @@ function Dashboard() {
   useEffect(()=>{
     loadTransactions();
   },[])
+
+  //  reusanle refresh element 
+  const refreshDashboard = async () => {
+    const userData = await getCurrentUser();
+
+    setUser(userData.user);
+
+    await loadTransactions();
+  };
   //Logout handler
   const handleLogout = () => {
     logout();
@@ -54,13 +63,7 @@ function Dashboard() {
 
   try {
     await depositMoney(Number(depositAmount));
-
-    const userData = await getCurrentUser();
-
-    setUser(userData.user);
-
-    await loadTransactions();
-
+    await refreshDashboard();
     setDepositAmount("");
     setShowDepositModal(false);
   } catch (error) {
@@ -76,13 +79,7 @@ function Dashboard() {
 
     try {
       await withdrawMoney(Number(withdrawAmount));
-
-      const userData = await getCurrentUser();
-
-      setUser(userData.user);
-
-      await loadTransactions();
-
+      await refreshDashboard();
       setWithdrawAmount("");
       setShowWithdrawModal(false);
     } catch (error) {
@@ -106,13 +103,7 @@ function Dashboard() {
           recipientEmail,
           Number(transferAmount)
         );
-
-        const userData = await getCurrentUser();
-
-        setUser(userData.user);
-
-        await loadTransactions();
-
+        await refreshDashboard();
         setRecipientEmail("");
         setTransferAmount("");
         setShowTransferModal(false);
