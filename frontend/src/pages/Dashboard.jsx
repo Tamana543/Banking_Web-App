@@ -10,7 +10,7 @@ import ActionModal from "../components/common/ActionModel";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
-import { depositMoney, getTransactions,withdrawMoney } from "../api/transactionApi";
+import { depositMoney, getTransactions,withdrawMoney,transferMoney } from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
 
 
@@ -89,6 +89,38 @@ function Dashboard() {
       alert(error.message);
     }
   };
+
+  const handleTransfer = async () => {
+      if (!recipientEmail || !transferAmount) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      if (Number(transferAmount) <= 0) {
+        alert("Enter a valid amount.");
+        return;
+      }
+
+      try {
+        await transferMoney(
+          recipientEmail,
+          Number(transferAmount)
+        );
+
+        const userData = await getCurrentUser();
+
+        setUser(userData.user);
+
+        await loadTransactions();
+
+        setRecipientEmail("");
+        setTransferAmount("");
+        setShowTransferModal(false);
+      } catch (error) {
+        alert(error.message);
+      }
+  };
+
 
   return (
   <div className="dashboard-layout">
