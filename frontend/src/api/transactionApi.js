@@ -30,7 +30,13 @@ export const depositMoney = async (amount) => {
     body: JSON.stringify({ amount }),
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 };
 
 export const withdrawMoney = async (amount) => {
@@ -43,13 +49,16 @@ export const withdrawMoney = async (amount) => {
     body: JSON.stringify({ amount }),
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 };
 
-export const transferMoney = async (
-  recipientEmail,
-  amount
-) => {
+export const transferMoney = async (recipientEmail, amount) => {
   const response = await fetch(`${API_URL}/transfer`, {
     method: "POST",
     headers: {
@@ -62,5 +71,11 @@ export const transferMoney = async (
     }),
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 };
