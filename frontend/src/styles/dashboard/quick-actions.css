@@ -1,3 +1,6 @@
+.actions-section {
+  grid-column: 1/ span2;
+}
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -5,20 +5,17 @@ body {
       rgba(212, 175, 55, 0.08),
       transparent 30%
     ),
-
     radial-gradient(
       circle at bottom left,
       rgba(212, 175, 55, 0.06),
       transparent 35%
     ),
-
     linear-gradient(
       180deg,
       #050505,
       #0a0a0a,
       #050505
     );
-
   min-height: 100vh;
 }
 .dashboard {
@@ -33,18 +30,6 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
-}
-.balance-section {
-  grid-column: 1;
-}
-.stats-section {
-  grid-column: 2;
-}
-.actions-section {
-  grid-column: 1/ span2;
-}
-.transactions-section {
-  grid-column: 1 / span 2;
 }
 .dashboard-header{
   background: rgba(20, 20, 20, 0.75);
@@ -64,4 +49,3 @@ body {
   min-height: 100vh;
    background: transparent;
 }
-

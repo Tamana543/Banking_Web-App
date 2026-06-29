@@ -1,3 +1,6 @@
+.transactions-section {
+  grid-column: 1 / span 2;
+}
 .recent-transactions{
   background: rgba(20, 20, 20, 0.82);
   backdrop-filter: blur(18px);
@@ -26,33 +29,22 @@
 }
 .transaction-item{
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   padding:18px 0;
-
   border-bottom:
     1px solid rgba(255,255,255,.05);
 }
-
 .transaction-item h4{
   text-transform:capitalize;
-
   margin-bottom:4px;
-
   color:white;
 }
-
 .transaction-item span{
   color:#8e8e8e;
-
   font-size:.85rem;
 }
-
 .transaction-item strong{
   color:var(--gold);
-
   font-size:1.1rem;
 }

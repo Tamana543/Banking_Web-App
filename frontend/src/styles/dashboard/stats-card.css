@@ -1,4 +1,7 @@
-.stat-card {
+
+.stats-section {
+  grid-column: 2;
+}.stat-card {
   padding: 25px;
   background: rgba(20, 20, 20, 0.82);
   backdrop-filter: blur(18px);

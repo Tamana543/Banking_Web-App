@@ -1,3 +1,6 @@
+.balance-section {
+  grid-column: 1;
+}
 .balance-card {
   position: relative;
   overflow: hidden;
