@@ -1,3 +1,5 @@
+import "../../styles/dashboard/quick-actions.css"
+
 function QuickActions({
   onDeposit,
   onWithdraw,
