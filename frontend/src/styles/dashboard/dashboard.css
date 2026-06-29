@@ -47,8 +47,7 @@ body {
   grid-column: 1 / span 2;
 }
 /* change from here  */
-.recent-transactions,
-.stat-card {
+.recent-transactions{
   background: rgba(20, 20, 20, 0.82);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(212, 175, 55, 0.12);
@@ -58,16 +57,11 @@ body {
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.3);
 }
-.recent-transactions:hover,
-.stat-card:hover{
+.recent-transactions:hover{
   transform: translateY(-6px);
   border-color: rgba(212, 175, 55, 0.35);
 }
-
-
-
-.dashboard-header,
-.stat-card,
+.dashboard-header
 .recent-transactions {
   background: rgba(20, 20, 20, 0.75);
   backdrop-filter: blur(14px);
@@ -77,7 +71,6 @@ body {
   transition: var(--transition);
 }
 .dashboard-header:hover,
-.stat-card:hover,
 .recent-transactions:hover {
   border-color: var(--gold);
   transform: translateY(-4px);

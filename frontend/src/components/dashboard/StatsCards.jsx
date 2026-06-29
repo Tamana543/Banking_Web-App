@@ -1,3 +1,4 @@
+import "../../styles/dashboard/stats-card.css"
 function StatsCards() {
   return (
     <section className="stats-cards">
