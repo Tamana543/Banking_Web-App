@@ -1,5 +1,5 @@
 import {useAuth} from "../../context/AuthContext.jsx"
-
+import "../../styles/dashboard/balance-card.css"
 function BalanceCard() {
   const { user } = useAuth();
 
