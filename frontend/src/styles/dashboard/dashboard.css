@@ -47,7 +47,6 @@ body {
   grid-column: 1 / span 2;
 }
 /* change from here  */
-.balance-card,
 .quick-actions,
 .recent-transactions,
 .stat-card {
@@ -60,7 +59,6 @@ body {
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.3);
 }
-.balance-card:hover,
 .quick-actions:hover,
 .recent-transactions:hover,
 .stat-card:hover{
@@ -135,7 +133,6 @@ body {
 
 
 .dashboard-header,
-.balance-card,
 .stat-card,
 .quick-actions,
 .recent-transactions {
@@ -147,7 +144,6 @@ body {
   transition: var(--transition);
 }
 .dashboard-header:hover,
-.balance-card:hover,
 .stat-card:hover,
 .recent-transactions:hover {
   border-color: var(--gold);
