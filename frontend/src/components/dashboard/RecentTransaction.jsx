@@ -1,3 +1,5 @@
+import "../../styles/dashboard/recent-transacrions.css"
+
 function RecentTransactions({ transactions = [] }) {
   return (
     <div className="recent-transactions">
