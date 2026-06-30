@@ -22,6 +22,7 @@ function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showTransferModal, setShowTransferModal] = useState(false);
+  const [showTransferConfirmModal, setShowTransferConfirmModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
@@ -251,16 +252,34 @@ function Dashboard() {
 
     {/* transfer modal  */}
     <ActionModal
-      isOpen={showTransferModal}
-      title="Transfer Money"
-      submitText="Transfer"
-      onClose={() => {
-        setShowTransferModal(false);
-        setRecipientEmail("");
-        setTransferAmount("");
-        setAlert({ type: "", message: "",});
-      }}
-      onSubmit={handleTransfer}
+              isOpen={showTransferModal}
+              title="Transfer Money"
+              submitText="Transfer"
+              onClose={() => {
+                setShowTransferModal(false);
+                setRecipientEmail("");
+                setTransferAmount("");
+                setAlert({ type: "", message: "",});
+              }}
+              onSubmit={() => {
+          if (!recipientEmail || !transferAmount) {
+            setAlert({
+              type: "error",
+              message: "Please fill all fields.",
+            });
+            return;
+          }
+
+          if (Number(transferAmount) <= 0) {
+            setAlert({
+              type: "error",
+              message: "Enter a valid amount.",
+            });
+            return;
+          }
+
+          setShowTransferConfirmModal(true);
+        }}
     >
       <input
         type="email"

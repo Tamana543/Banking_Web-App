@@ -80,8 +80,8 @@ Phase 6 — Transfers
 * Balance validation ✔️
 * Transfer success notifications ✔️
 * Transfer history tracking ✔️
-* Transfer receipt generation
 * Transfer confirmation modal
+* Transfer receipt generation
 
 Phase 7 — Loans
 
