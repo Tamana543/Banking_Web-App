@@ -81,7 +81,7 @@ Phase 6 — Transfers
 * Transfer success notifications ✔️
 * Transfer history tracking ✔️
 * Transfer confirmation modal ✔️
-* Transfer receipt generation 
+* Transfer receipt generation (Generate a transaction ID, Return receipt data, Save the receipt in state,Open a Receipt Modal automatically after a successful transfer,Add a Download PDF button) 
 
 Phase 7 — Loans
 
