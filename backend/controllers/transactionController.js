@@ -124,27 +124,24 @@ export const transferMoney = async (req,res)=>{
 
      sender.balance -= amountNumber;
     receiver.balance += amountNumber;
-    // special ID generator 
-    const transactionId =
-  "TX-" +
-  senderTransaction._id
-    .toString()
-    .slice(-8)
-    .toUpperCase();
-
-
+    
+    
+    
     await sender.save();
     await receiver.save();
-
-     const senderTransaction = await Transaction.create({
+    
+    const senderTransaction = await Transaction.create({
       user: sender._id,
       type: "transfer",
       amount: amountNumber,
       description: `Transfer sent to ${receiver.email}`,
       status: "completed",
     });
-
-      res.status(200).json({
+    // special ID generator 
+    const transactionId = `TX-${senderTransaction._id.toString().slice(-8).toUpperCase()}`;
+    
+       
+       res.status(200).json({
         success: true,
         message: "Transfer successful.",
         balance: sender.balance,

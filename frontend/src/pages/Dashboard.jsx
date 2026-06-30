@@ -7,6 +7,7 @@ import RecentTransactions from "../components/dashboard/RecentTransaction";
 import Sidebar from "../components/dashboard/Sidebar";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
+import ReceiptModal from "../components/common/ReceiptModal";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -26,9 +27,9 @@ function Dashboard() {
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
-  const [alert, setAlert] = useState({ type: "",
-  message: "",
-  });
+  const [alert, setAlert] = useState({ type: "", message: "",});
+  const [receipt, setReceipt] = useState(null);
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
 
   // Transaction handler
   const loadTransactions = async () => {
@@ -129,7 +130,7 @@ function Dashboard() {
       }
 
       try {
-        await transferMoney(
+        const data = await transferMoney(
           recipientEmail,
           Number(transferAmount)
         );
@@ -138,6 +139,7 @@ function Dashboard() {
         type: "success",
         message: "Transfer completed successfully.",
       });
+        setReceipt(data.receipt);
 
       setTimeout(() => {
         setAlert({
@@ -147,6 +149,9 @@ function Dashboard() {
         setRecipientEmail("");
         setTransferAmount("");
         setShowTransferModal(false);
+        setTimeout(()=>{
+          setShowReceiptModal(true)
+        },250)
       }, 1200);
         
       } catch (error) {
@@ -317,26 +322,34 @@ function Dashboard() {
           await handleTransfer();
         }}
       >
-        <p>
-          <strong>Recipient:</strong>
+          <p>
+            <strong>Recipient:</strong>
+            <br />
+            {recipientEmail}
+          </p>
+
           <br />
-          {recipientEmail}
-        </p>
 
-        <br />
+          <p>
+            <strong>Amount:</strong>
+            <br />
+            ${Number(transferAmount).toLocaleString()}
+          </p>
 
-        <p>
-          <strong>Amount:</strong>
           <br />
-          ${Number(transferAmount).toLocaleString()}
-        </p>
 
-        <br />
-
-        <p>
-          Are you sure you want to continue?
-        </p>
+          <p>
+            Are you sure you want to continue?
+          </p>
       </ActionModal>
+      <ReceiptModal
+        isOpen={showReceiptModal}
+        receipt={receipt}
+        onClose={() => {
+          setShowReceiptModal(false);
+          setReceipt(null);
+      }}
+/>
   </div>
 );
 }
