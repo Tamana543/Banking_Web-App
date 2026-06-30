@@ -305,6 +305,38 @@ function Dashboard() {
           message={alert.message}
         />
     </ActionModal>
+
+    {/* Transfer confirmation modal  */}
+    <ActionModal
+        isOpen={showTransferConfirmModal}
+        title="Confirm Transfer"
+        submitText="Confirm Transfer"
+        onClose={() => setShowTransferConfirmModal(false)}
+        onSubmit={async () => {
+          setShowTransferConfirmModal(false);
+          await handleTransfer();
+        }}
+      >
+        <p>
+          <strong>Recipient:</strong>
+          <br />
+          {recipientEmail}
+        </p>
+
+        <br />
+
+        <p>
+          <strong>Amount:</strong>
+          <br />
+          ${Number(transferAmount).toLocaleString()}
+        </p>
+
+        <br />
+
+        <p>
+          Are you sure you want to continue?
+        </p>
+      </ActionModal>
   </div>
 );
 }
