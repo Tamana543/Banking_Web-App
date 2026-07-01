@@ -145,6 +145,71 @@
     0 0 25px rgba(212,175,55,.35);
 }
 
+/* reciept copy btn */
+.transaction-id{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+.copy-btn{
+
+  background:none;
+
+  border:none;
+
+  cursor:pointer;
+
+  font-size:1rem;
+
+  transition:.25s;
+
+}
+
+.copy-btn:hover{
+
+  transform:scale(1.15);
+
+}
+
+.copied-message{
+
+  margin-top:10px;
+
+  color:#49d67c;
+
+  text-align:right;
+
+  font-size:.85rem;
+
+  animation:fadeIn .3s ease;
+
+}
+/* animations  */
+@keyframes fadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(-4px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+  }
+
+}
+
 @keyframes receiptPop{
 
   from{
