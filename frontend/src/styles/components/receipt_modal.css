@@ -100,14 +100,56 @@
   gap:10px;
 }
 .copy-btn{
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-size:1rem;
-  transition:.25s;
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    background:rgba(212,175,55,.06);
+
+    border:1px solid rgba(212,175,55,.15);
+
+    color:var(--gold);
+
+    transition:.35s;
+
 }
+
+.copy-btn svg{
+
+    width:18px;
+
+    height:18px;
+
+}
+
 .copy-btn:hover{
-  transform:scale(1.15);
+
+    background:rgba(212,175,55,.14);
+
+    border-color:var(--gold);
+
+    transform:translateY(-2px);
+
+    box-shadow:
+      0 0 18px rgba(212,175,55,.18);
+
+}
+
+.copy-btn:active{
+
+    transform:scale(.95);
+
 }
 .copied-message{
   margin-top:10px;
