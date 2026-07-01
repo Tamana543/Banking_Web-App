@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../../styles/components/receipt_modal.css";
 
 function ReceiptModal({
@@ -5,8 +6,21 @@ function ReceiptModal({
   receipt,
   onClose,
 }) {
-  if (!isOpen || !receipt) return null;
+        const [copied,setCopied] = useState(false)
+        if (!isOpen || !receipt) return null;
+          const copyTransactionId = async () => {
+        try {
+          await navigator.clipboard.writeText(receipt.transactionId);
 
+          setCopied(true);
+
+          setTimeout(() => {
+            setCopied(false);
+          }, 1200);
+        } catch (error) {
+          console.error(error);
+        }
+      };
   return (
     <div className="modal-overlay">
 
@@ -22,14 +36,14 @@ function ReceiptModal({
 
         <div className="receipt-row">
           <span>Transaction ID</span>
-          <strong>
-            ${Number(receipt.amount).toLocaleString()}
-          </strong>
+          <strong>{receipt.transactionId}</strong>
         </div>
 
         <div className="receipt-row">
           <span>Recipient</span>
-          <strong>{receipt.recipient}</strong>
+          <strong>
+              ${Number(receipt.amount).toLocaleString()}
+            </strong>
         </div>
 
         <div className="receipt-row">
