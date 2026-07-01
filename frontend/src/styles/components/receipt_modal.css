@@ -1,0 +1,46 @@
+.receipt-modal {
+  width: 480px;
+
+  max-width: 92%;
+
+  background:
+    linear-gradient(
+      160deg,
+      #171717,
+      #0d0d0d
+    );
+
+  border: 1px solid rgba(212,175,55,.18);
+
+  border-radius: 26px;
+
+  padding: 35px;
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.55);
+
+  position: relative;
+
+  overflow: hidden;
+
+  animation: receiptPop .35s ease;
+}
+
+.receipt-modal::before{
+  content:"";
+
+  position:absolute;
+
+  top:-120px;
+  right:-100px;
+
+  width:250px;
+  height:250px;
+
+  border-radius:50%;
+
+  background:
+    rgba(212,175,55,.10);
+
+  filter:blur(90px);
+}
