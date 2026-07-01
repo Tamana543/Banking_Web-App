@@ -1,4 +1,4 @@
-// import "../../styles/components/receipt-modal.css";
+import "../../styles/components/receipt_modal.css";
 
 function ReceiptModal({
   isOpen,
@@ -12,11 +12,19 @@ function ReceiptModal({
 
       <div className="receipt-modal">
 
-        <h2>Transfer Receipt</h2>
+        <div className="receipt-header">
+
+          <h2>Bankist Pro</h2>
+
+          <p>Official Transfer Receipt</p>
+
+        </div>
 
         <div className="receipt-row">
           <span>Transaction ID</span>
-          <strong>{receipt.transactionId}</strong>
+          <strong>
+            ${Number(receipt.amount).toLocaleString()}
+          </strong>
         </div>
 
         <div className="receipt-row">
