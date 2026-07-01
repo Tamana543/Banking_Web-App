@@ -34,9 +34,25 @@ function ReceiptModal({
 
         </div>
 
-        <div className="receipt-row">
+       <div className="receipt-row">
+
           <span>Transaction ID</span>
-          <strong>{receipt.transactionId}</strong>
+
+          <div className="transaction-id">
+
+            <strong>
+              {receipt.transactionId}
+            </strong>
+
+            <button
+              className="copy-btn"
+              onClick={copyTransactionId}
+            >
+              📋
+            </button>
+
+          </div>
+
         </div>
 
         <div className="receipt-row">
@@ -64,7 +80,11 @@ function ReceiptModal({
             {new Date(receipt.date).toLocaleString()}
           </strong>
         </div>
-
+          {copied && (
+            <div className="copied-message">
+              ✓ Copied to clipboard
+            </div>
+          )}
         <button
           className="receipt-close-btn"
           onClick={onClose}
