@@ -93,6 +93,58 @@
   box-shadow:
     0 0 25px rgba(212,175,55,.35);
 }
+.receipt-title{
+
+    font-size:3.2rem;
+
+    font-weight:800;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+    color:#f6d365;
+
+    background:linear-gradient(
+        180deg,
+        #fff5c4 0%,
+        #f6d365 25%,
+        #d4af37 60%,
+        #9f7b12 100%
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+    text-shadow:
+        0 0 8px rgba(212,175,55,.18),
+        0 0 18px rgba(212,175,55,.12);
+
+    user-select:none;
+
+}
+.receipt-subtitle{
+
+    text-align:center;
+
+    color:rgba(212,175,55,.8);
+
+    letter-spacing:7px;
+
+    text-transform:uppercase;
+
+    font-size:.75rem;
+
+    margin-bottom:35px;
+
+}
 /* reciept copy btn */
 .transaction-id{
   display:flex;

@@ -22,8 +22,13 @@ function ReceiptModal({
     <div className="modal-overlay">
       <div className="receipt-modal">
         <div className="receipt-header">
-          <h2>Bankist Pro</h2>
-          <p>Official Transfer Receipt</p>
+          <h2 className="receipt-title">
+    Bankist Pro
+</h2>
+
+<p className="receipt-subtitle">
+    PREMIUM DIGITAL BANKING
+</p>
         </div>
        <div className="receipt-row">
           <span>Transaction ID</span>
