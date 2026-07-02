@@ -1,5 +1,8 @@
 import { useState } from "react";
+import jsPDF from "jspdf";
+
 import "../../styles/components/receipt_modal.css";
+
 function ReceiptModal({
   isOpen,
   receipt,
@@ -18,6 +21,42 @@ function ReceiptModal({
           console.error(error);
         }
       };
+      const downloadReciept = ()=>{
+        // Create pdf handler
+        const doc = new jsPDF();
+        // pdf format
+          doc.setFontSize(22);
+          doc.text("BANKIST PRO", 20, 25);
+          doc.setFontSize(12);
+          doc.text(
+            `Transaction ID: ${receipt.transactionId}`,
+            20,
+            45
+          );
+          doc.text(
+            `Recipient: ${receipt.recipient}`,
+            20,
+            55
+          );
+          doc.text(
+            `Amount: $${receipt.amount}`,
+            20,
+            65
+          );
+          doc.text(
+            `Status: ${receipt.status}`,
+            20,
+            75
+          );
+          doc.text(
+            `Date: ${receipt.date}`,
+            20,
+            85
+          );
+          doc.save(
+            `BankistPro_${receipt.transactionId}.pdf`
+          );
+      }
   return (
     <div className="modal-overlay">
       <div className="receipt-modal">
@@ -77,6 +116,11 @@ function ReceiptModal({
           onClick={onClose}
         >
           Close
+        </button>
+        <button
+            onClick={downloadReciept}
+        >
+            Download
         </button>
       </div>
     </div>
