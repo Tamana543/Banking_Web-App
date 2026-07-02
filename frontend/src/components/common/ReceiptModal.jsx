@@ -111,17 +111,21 @@ function ReceiptModal({
               ✓ Copied to clipboard
             </div>
           )}
-        <button
-          className="receipt-close-btn"
-          onClick={onClose}
-        >
-          Close
-        </button>
-        <button
-            onClick={downloadReciept}
-        >
-            Download
-        </button>
+        <div className="receipt-actions">
+            <button
+              className="receipt-download-btn"
+              onClick={downloadReciept}
+            >
+              Download PDF
+            </button>
+
+            <button
+              className="receipt-close-btn"
+              onClick={onClose}
+            >
+              Close
+            </button>
+          </div>
       </div>
     </div>
   );
