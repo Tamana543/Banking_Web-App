@@ -4,7 +4,8 @@ do not forget to update the IP access of the MongoDB
 Phase 1 — Project Foundation
 
 * Configure Vercel deployment
-* Configure Render deployment 
+* Configure Render deployment
+* fix the QR code url to deploy too it is now setted in loacal host
 * lazyloading feature
 
 * Connect MongoDB Atlas database✔️

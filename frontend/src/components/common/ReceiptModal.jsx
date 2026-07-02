@@ -1,6 +1,6 @@
 import { useState } from "react";
 import jsPDF from "jspdf";
-
+import QRCode from "qrcode"
 import "../../styles/components/receipt_modal.css";
 function ReceiptModal({
   isOpen,
@@ -21,17 +21,10 @@ function ReceiptModal({
         }
       };
 
-    const downloadReciept = () => {
+    const downloadReciept = async () => {
         const doc = new jsPDF();
         const width = doc.internal.pageSize.getWidth();
-        // canvas for the barcode :))
-        const canvas = document.createElement("canvas")
-        JsBarcode(canvas,receipt.transactionId,{
-          format : "CODE128"
-        });
-
-        // convert the barcoded canvas to image
-        const barcodeImg = canvas.toDataURL("image/png")
+        
         //header
         doc.setFillColor(17,17,17);
         doc.rect(0,0,width,42,"F");
@@ -167,24 +160,48 @@ function ReceiptModal({
         );
         doc.setFontSize(10);
         doc.setTextColor(50);
-        // Barcode
-                doc.addImage(
-              barcodeImg,
-              "PNG",
-              40,
-              y + 5,
-              130,
-              28
-          );
           doc.setFontSize(9);
           doc.setTextColor(120);
 
-          doc.text(
-              "Scan to verify transaction",
-              width / 2,
-              y + 40,
-              { align: "center" }
-          );
+          // QR code 
+          const qrData = `
+            Bankist Pro Receipt
+
+            Transaction ID:
+            ${receipt.transactionId}
+
+            Recipient:
+            ${receipt.recipient}
+
+            Amount:
+            $${receipt.amount}
+
+            Status:
+            ${receipt.status}
+
+            Date:
+            ${new Date(receipt.date).toLocaleString()}
+
+            Verification:
+            BKP-${verificationCode}
+            `;
+            const qrImage = await QRCode.toDataURL(qrData, {
+              width: 220,
+              margin: 1,
+              color: {
+                dark: "#000000",
+                light: "#FFFFFF",
+              },
+            });
+            doc.addImage(qrImage, "PNG", 70, y + 5, 70, 70)
+            doc.setFontSize(9);
+              doc.setTextColor(120);
+              doc.text(
+                  "Scan to view transaction details",
+                  width / 2,
+                  y + 82,
+                  { align: "center" }
+              );
         doc.text(
           "Thank you for choosing Bankist Pro.",
           width/2,
