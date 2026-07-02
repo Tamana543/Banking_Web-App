@@ -1,5 +1,7 @@
 import { useState } from "react";
 import jsPDF from "jspdf";
+import JsBarcode from "jsbarcode";
+
 import "../../styles/components/receipt_modal.css";
 function ReceiptModal({
   isOpen,
@@ -19,9 +21,18 @@ function ReceiptModal({
           console.error(error);
         }
       };
+
     const downloadReciept = () => {
         const doc = new jsPDF();
         const width = doc.internal.pageSize.getWidth();
+        // canvas for the barcode :))
+        const canvas = document.createElement("canvas")
+        JsBarcode(canvas,receipt.transactionId,{
+          format : "CODE128"
+        });
+
+        // convert the barcoded canvas to image
+        const barcodeImg = canvas.toDataURL("image/png")
         //header
         doc.setFillColor(17,17,17);
         doc.rect(0,0,width,42,"F");
@@ -157,14 +168,24 @@ function ReceiptModal({
         );
         doc.setFontSize(10);
         doc.setTextColor(50);
-        doc.text(
-          "This transaction has been digitally verified.",
-          width/2,
-          y+10,
-          {
-            align:"center"
-          }
-        );
+        // Barcode
+                doc.addImage(
+              barcodeImg,
+              "PNG",
+              40,
+              y + 5,
+              130,
+              28
+          );
+          doc.setFontSize(9);
+          doc.setTextColor(120);
+
+          doc.text(
+              "Scan to verify transaction",
+              width / 2,
+              y + 40,
+              { align: "center" }
+          );
         doc.text(
           "Thank you for choosing Bankist Pro.",
           width/2,
