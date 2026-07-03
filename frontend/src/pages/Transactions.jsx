@@ -8,6 +8,7 @@ import "../styles/dashboard/dashboard.css";
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const loadTransactions = async () => {
     try {
@@ -21,7 +22,26 @@ function Transactions() {
   useEffect(() => {
     loadTransactions();
   }, []);
+     
+  const filteredTransactions = transactions.filter(
+          (transaction) => {
+          const search = searchTerm.toLowerCase();
 
+          return (
+               transaction.type
+               .toLowerCase()
+               .includes(search) ||
+
+               transaction.description
+               ?.toLowerCase()
+               .includes(search) ||
+
+               transaction.status
+               .toLowerCase()
+               .includes(search)
+          );
+          }
+  );
   return (
     <div className="dashboard-layout">
       <Sidebar />
