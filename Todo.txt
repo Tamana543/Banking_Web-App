@@ -66,8 +66,8 @@ Phase 5 — Transactions
 * Transaction history (check the balance, it is not updating find why )✔️
 * Transaction persistence ✔️
 * Transaction timestamps ✔️
-* Transaction details modal
-* Search transactions
+* Transaction details modal ✔️
+* Search transactions ✔️
 * Filter transactions (deposit/withdrawal/loan/transfer)
 * Sort transactions (newest/oldest/highest)
 * Transaction status indicators
