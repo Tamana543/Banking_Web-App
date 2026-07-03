@@ -48,10 +48,19 @@ function Transactions() {
 
       <main className="dashboard">
         <DashboardHeader />
-
+               <div className="transaction-search">
+               <input
+               type="text"
+               placeholder="Search transactions..."
+               value={searchTerm}
+               onChange={(e) =>
+                    setSearchTerm(e.target.value)
+               }
+               />
+     </div>
         <TransactionList
           title="Transaction History"
-          transactions={transactions}
+          transactions={filteredTransactions}
         />
       </main>
     </div>
