@@ -3,7 +3,7 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import BalanceCard from "../components/dashboard/BalancedCard";
 import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
-import RecentTransactions from "../components/dashboard/RecentTransaction";
+import TransactionList from "../components/dashboard/TransactionList";
 import Sidebar from "../components/dashboard/Sidebar";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
@@ -189,9 +189,10 @@ function Dashboard() {
     </div>
 
     <div className="transactions-section">
-      <RecentTransactions
-        transactions={transactions}
-      />
+     <TransactionList
+        title="Recent Activity"
+        transactions={transactions.slice(0,5)}
+    />
     </div>
 
   
