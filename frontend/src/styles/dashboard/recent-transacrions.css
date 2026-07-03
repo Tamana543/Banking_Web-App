@@ -69,3 +69,38 @@
     color:#777;
     font-size:.78rem;
 }
+.transaction-search{
+    margin:28px 0;
+}
+
+.transaction-search input{
+    width:100%;
+    height:58px;
+
+    padding:0 22px;
+
+    border-radius:18px;
+
+    outline:none;
+
+    font-size:1rem;
+
+    color:white;
+
+    background:rgba(20,20,20,.82);
+
+    border:1px solid rgba(212,175,55,.12);
+
+    transition:.3s;
+}
+
+.transaction-search input:focus{
+    border-color:var(--gold);
+
+    box-shadow:
+        0 0 18px rgba(212,175,55,.18);
+}
+
+.transaction-search input::placeholder{
+    color:#8d8d8d;
+}
