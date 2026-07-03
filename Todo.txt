@@ -201,3 +201,10 @@ Phase 17 — Portfolio Features
 * Feature showcase
 * LinkedIn project post
 * Portfolio integration
+
+phase 18 - Setting dashboard
+* Dark mode 
+* Currency
+* Notification Perference
+* Logout 
+* Delete Account
