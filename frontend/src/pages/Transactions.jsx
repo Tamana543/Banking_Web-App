@@ -7,9 +7,12 @@ import { getTransactions } from "../api/transactionApi";
 import "../styles/dashboard/dashboard.css";
 
 function Transactions() {
-  const [transactions, setTransactions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("all");
+  // states 
+    const [transactions, setTransactions] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filter, setFilter] = useState("all");
+    const [sortBy, setSortBy] = useState("newest");
+
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
@@ -23,30 +26,31 @@ function Transactions() {
     loadTransactions();
   }, []);
      
-  const filteredTransactions = transactions.filter(
-          (transaction) => {
-          const search = searchTerm.toLowerCase();
-          const matchesSearch =
-                transaction.type
-                  .toLowerCase()
-                  .includes(search) ||
+  const filteredTransactions = transactions.filter((transaction) => {
 
-                transaction.description
-                  ?.toLowerCase()
-                  .includes(search) ||
+    const search = searchTerm.toLowerCase();
 
-                transaction.status
-                  .toLowerCase()
-                  .includes(search);
+    const matchesSearch =
+        transaction.type
+            .toLowerCase()
+            .includes(search) ||
 
-              const matchesFilter =
-                filter === "all"
-                  ? true
-                  : transaction.type === filter;
+        transaction.description
+            ?.toLowerCase()
+            .includes(search) ||
 
-              return matchesSearch && matchesFilter;
-          }
-  );
+        transaction.status
+            .toLowerCase()
+            .includes(search);
+
+    const matchesFilter =
+        filter === "all"
+            ? true
+            : transaction.type === filter;
+
+    return matchesSearch && matchesFilter;
+
+});
   return (
     <div className="dashboard-layout">
       <Sidebar />
