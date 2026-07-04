@@ -127,11 +127,39 @@ function Transactions() {
               </select>
 
           </div>
+          <div className="transaction-sort">
+
+            <select
+                value={sortBy}
+                onChange={(e)=>
+                    setSortBy(e.target.value)
+                }
+            >
+
+                <option value="newest">
+                    Newest
+                </option>
+
+                <option value="oldest">
+                    Oldest
+                </option>
+
+                <option value="highest">
+                    Highest Amount
+                </option>
+
+                <option value="lowest">
+                    Lowest Amount
+                </option>
+
+            </select>
+
+        </div>
 
       </div>
         <TransactionList
           title="Transaction History"
-          transactions={filteredTransactions}
+          transactions={sortedTransactions}
         />
       </main>
     </div>
