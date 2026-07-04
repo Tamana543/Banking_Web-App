@@ -53,16 +53,55 @@ function Transactions() {
 
       <main className="dashboard">
         <DashboardHeader />
-               <div className="transaction-search">
-               <input
-               type="text"
-               placeholder="Search transactions..."
-               value={searchTerm}
-               onChange={(e) =>
-                    setSearchTerm(e.target.value)
-               }
-               />
-     </div>
+               <div className="transaction-toolbar">
+
+          <div className="transaction-search">
+
+              <input
+                  type="text"
+                  placeholder="Search transactions..."
+                  value={searchTerm}
+                  onChange={(e)=>
+                      setSearchTerm(e.target.value)
+                  }
+              />
+
+          </div>
+
+          <div className="transaction-filter">
+
+              <select
+                  value={filter}
+                  onChange={(e)=>
+                      setFilter(e.target.value)
+                  }
+              >
+
+                  <option value="all">
+                      All
+                  </option>
+
+                  <option value="deposit">
+                      Deposits
+                  </option>
+
+                  <option value="withdrawal">
+                      Withdrawals
+                  </option>
+
+                  <option value="transfer">
+                      Transfers
+                  </option>
+
+                  <option value="loan">
+                      Loans
+                  </option>
+
+              </select>
+
+          </div>
+
+      </div>
         <TransactionList
           title="Transaction History"
           transactions={filteredTransactions}
