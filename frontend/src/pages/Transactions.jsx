@@ -9,7 +9,7 @@ import "../styles/dashboard/dashboard.css";
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [filter, setFilter] = useState("all");
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
@@ -26,20 +26,25 @@ function Transactions() {
   const filteredTransactions = transactions.filter(
           (transaction) => {
           const search = searchTerm.toLowerCase();
+          const matchesSearch =
+                transaction.type
+                  .toLowerCase()
+                  .includes(search) ||
 
-          return (
-               transaction.type
-               .toLowerCase()
-               .includes(search) ||
+                transaction.description
+                  ?.toLowerCase()
+                  .includes(search) ||
 
-               transaction.description
-               ?.toLowerCase()
-               .includes(search) ||
+                transaction.status
+                  .toLowerCase()
+                  .includes(search);
 
-               transaction.status
-               .toLowerCase()
-               .includes(search)
-          );
+              const matchesFilter =
+                filter === "all"
+                  ? true
+                  : transaction.type === filter;
+
+              return matchesSearch && matchesFilter;
           }
   );
   return (
