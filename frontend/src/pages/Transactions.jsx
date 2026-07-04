@@ -81,7 +81,38 @@ function Transactions() {
       <main className="dashboard">
         <DashboardHeader />
                <div className="transaction-toolbar">
+            <div className="transaction-sort">
 
+            <select
+                value={sortBy}
+                onChange={(e)=>
+                    setSortBy(e.target.value)
+                }
+                defaultValue="Sort"
+            >
+
+                <option value="newest">
+                    Sort
+                </option>
+                <option value="newest">
+                    Newest
+                </option>
+
+                <option value="oldest">
+                    Oldest
+                </option>
+
+                <option value="highest">
+                    Highest Amount
+                </option>
+
+                <option value="lowest">
+                    Lowest Amount
+                </option>
+
+            </select>
+
+        </div>
           <div className="transaction-search">
 
               <input
@@ -127,34 +158,7 @@ function Transactions() {
               </select>
 
           </div>
-          <div className="transaction-sort">
-
-            <select
-                value={sortBy}
-                onChange={(e)=>
-                    setSortBy(e.target.value)
-                }
-            >
-
-                <option value="newest">
-                    Newest
-                </option>
-
-                <option value="oldest">
-                    Oldest
-                </option>
-
-                <option value="highest">
-                    Highest Amount
-                </option>
-
-                <option value="lowest">
-                    Lowest Amount
-                </option>
-
-            </select>
-
-        </div>
+        
 
       </div>
         <TransactionList
