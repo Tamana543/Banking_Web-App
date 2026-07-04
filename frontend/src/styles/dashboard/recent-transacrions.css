@@ -127,7 +127,11 @@
     width:220px;
 
 }
-.transaction-filter select{
+.transaction-sort{
+    width:220px;
+}
+.transaction-filter select,
+.transaction-sort select{
 
     width:100%;
 
@@ -153,16 +157,16 @@
 
 }
 
-.transaction-filter select:hover{
+.transaction-filter select:hover,
+.transaction-sort select:hover{
 
     border-color:rgba(212,175,55,.35);
 
 }
 
-.transaction-filter select:focus{
-
+.transaction-filter select:focus,
+.transaction-sort select:focus{
     border-color:var(--gold);
-
     box-shadow:
         0 0 18px rgba(212,175,55,.18);
 
@@ -179,10 +183,9 @@
 
 }
 
-.transaction-filter{
-
+.transaction-filter,
+.transaction-sort{
     width:100%;
-
 }
 
 }
