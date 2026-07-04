@@ -68,7 +68,7 @@ Phase 5 — Transactions
 * Transaction timestamps ✔️
 * Transaction details modal ✔️
 * Search transactions ✔️
-* Filter transactions (deposit/withdrawal/loan/transfer)
+* Filter transactions (deposit/withdrawal/loan/transfer) ✔️
 * Sort transactions (newest/oldest/highest)
 * Transaction status indicators
 * Transaction categories
@@ -208,3 +208,4 @@ phase 18 - Setting dashboard
 * Notification Perference
 * Logout 
 * Delete Account
+* create a responsive css add all medias there 
