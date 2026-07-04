@@ -51,6 +51,29 @@ function Transactions() {
     return matchesSearch && matchesFilter;
 
 });
+
+  const sortedTransactions = [...filteredTransactions].sort(// never forgot that sort change the main array so get a copy
+      (a, b) => {
+
+          switch (sortBy) {
+
+              case "oldest":
+                  return new Date(a.createdAt) - new Date(b.createdAt);
+
+              case "highest":
+                  return b.amount - a.amount;
+
+              case "lowest":
+                  return a.amount - b.amount;
+
+              case "newest":
+              default:
+                  return new Date(b.createdAt) - new Date(a.createdAt);
+
+          }
+
+      }
+  );
   return (
     <div className="dashboard-layout">
       <Sidebar />
