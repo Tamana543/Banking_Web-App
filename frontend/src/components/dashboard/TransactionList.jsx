@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TransactionDetailsModal from "./TransactionDetailsModal";
 import "../../styles/dashboard/recent-transacrions.css";
-
+import { generateTransactionId } from "../../util/transactionId";
 function TransactionList({
   transactions = [],
   title = "Recent Activity",
@@ -50,6 +50,11 @@ function TransactionList({
                 {new Date(
                   transaction.createdAt
                 ).toLocaleString()}
+              </small>
+              <br />
+
+              <small className="transaction-reference">
+                  {generateTransactionId(transaction._id)}
               </small>
             </div>
 

@@ -1,4 +1,5 @@
 import "../../styles/components/transaction_details_modal.css"
+import { generateTransactionId } from "../../util/transactionId";
 
 function TransactionDetailsModal({
   transaction,
@@ -58,12 +59,12 @@ function TransactionDetailsModal({
         </div>
 
         <div className="detail-row">
-          <span>ID</span>
+               <span>Transaction ID</span>
 
-          <strong>
-            {transaction._id}
-          </strong>
-        </div>
+               <strong className="transaction-id">
+                    {generateTransactionId(transaction._id)}
+               </strong>
+          </div>
 
         <button
           className="transaction-close-btn"

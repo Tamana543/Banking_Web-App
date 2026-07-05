@@ -72,3 +72,9 @@
     box-shadow:
         0 0 20px rgba(212,175,55,.35);
 }
+.transaction-id{
+    color:var(--gold)!important;
+    font-family:"Courier New", monospace;
+    letter-spacing:1px;
+    font-weight:700;
+}

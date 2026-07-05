@@ -171,6 +171,14 @@
         0 0 18px rgba(212,175,55,.18);
 
 }
+.transaction-reference{
+    display:block;
+    margin-top:4px;
+    color:var(--gold);
+    font-size:.72rem;
+    letter-spacing:1px;
+    font-family:"Courier New", monospace;
+}
 
 /* mdeia  */
 @media (max-width:768px){
