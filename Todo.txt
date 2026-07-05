@@ -69,7 +69,8 @@ Phase 5 — Transactions
 * Transaction details modal ✔️
 * Search transactions ✔️
 * Filter transactions (deposit/withdrawal/loan/transfer) ✔️
-* Sort transactions (newest/oldest/highest)
+* Sort transactions (newest/oldest/highest) ✔️
+* Transaction details modal
 * Transaction status indicators
 * Transaction categories
 
