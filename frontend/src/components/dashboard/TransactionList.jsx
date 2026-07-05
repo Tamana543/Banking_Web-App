@@ -1,9 +1,26 @@
+import { useState } from "react";
+import TransactionDetailsModal from "./TransactionDetailsModal";
 import "../../styles/dashboard/recent-transacrions.css";
 
 function TransactionList({
   transactions = [],
   title = "Recent Activity",
 }) {
+   const [selectedTransaction, setSelectedTransaction] =
+    useState(null);
+
+  const [showDetails, setShowDetails] =
+    useState(false);
+
+  const openDetails = (transaction) => {
+    setSelectedTransaction(transaction);
+    setShowDetails(true);
+  };
+
+  const closeDetails = () => {
+    setShowDetails(false);
+    setSelectedTransaction(null);
+  };
   return (
     <div className="recent-transactions">
       <h3>{title}</h3>
