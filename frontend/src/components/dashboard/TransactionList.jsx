@@ -22,6 +22,7 @@ function TransactionList({
     setSelectedTransaction(null);
   };
   return (
+    <>
     <div className="recent-transactions">
       <h3>{title}</h3>
 
@@ -32,6 +33,9 @@ function TransactionList({
           <div
             key={transaction._id}
             className="transaction-item"
+             onClick={() =>
+                openDetails(transaction)
+              }
           >
             <div>
               <h4>{transaction.type}</h4>
@@ -62,6 +66,12 @@ function TransactionList({
         ))
       )}
     </div>
+    <TransactionDetailsModal
+        transaction={selectedTransaction}
+        isOpen={showDetails}
+        onClose={closeDetails}
+    />
+    </>
   );
 }
 
