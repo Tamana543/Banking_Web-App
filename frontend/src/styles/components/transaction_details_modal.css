@@ -114,3 +114,22 @@
     background:rgba(59,130,246,.15);
     color:#60a5fa;
 }
+.category-text.deposit{
+    color:#22c55e;
+}
+
+.category-text.withdrawal{
+    color:#ef4444;
+}
+
+.category-text.transfer{
+    color:#60a5fa;
+}
+
+.category-text.loan{
+    color:#facc15;
+}
+
+.category-text.default{
+    color:var(--gold);
+}
