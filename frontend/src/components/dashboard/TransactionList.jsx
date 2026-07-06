@@ -63,7 +63,9 @@ return (
         <p>No transactions yet.</p>
       ) : (
         
-        transactions.map((transaction) => (
+        transactions.map((transaction) => {
+           const category = getCategory(transaction.type);
+          return (
           <div
           key={transaction._id}
           className="transaction-item"
@@ -108,7 +110,7 @@ return (
               </strong>
             </div>
           </div>
-        ))
+        )})
       )}
     </div>
     <TransactionDetailsModal

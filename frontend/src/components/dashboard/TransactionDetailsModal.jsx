@@ -1,13 +1,47 @@
 import "../../styles/components/transaction_details_modal.css"
 import { generateTransactionId } from "../../util/transactionId";
 
+const getCategory = (type) => {
+    switch (type) {
+
+        case "deposit":
+            return {
+                color: "deposit",
+                label: "Deposit",
+            };
+
+        case "withdrawal":
+            return {
+                color: "withdrawal",
+                label: "Withdrawal",
+            };
+
+        case "transfer":
+            return {
+                color: "transfer",
+                label: "Transfer",
+            };
+
+        case "loan":
+            return {
+                color: "loan",
+                label: "Loan",
+            };
+
+        default:
+            return {
+                color: "default",
+                label: type,
+            };
+    }
+};
 function TransactionDetailsModal({
   transaction,
   isOpen,
   onClose,
 }) {
   if (!isOpen || !transaction) return null;
-
+  const category = getCategory(transaction.type);
   return (
     <div
       className="modal-overlay"
@@ -19,9 +53,12 @@ function TransactionDetailsModal({
       >
         <h2>Transaction Details</h2>
 
-        <div className="detail-row">
-          <span>Type</span>
-          <strong>{transaction.type}</strong>
+       <div className="detail-row">
+            <span>Category</span>
+
+            <strong className={`category-text ${category.color}`}>
+                {category.label}
+            </strong>
         </div>
 
         <div className="detail-row">
