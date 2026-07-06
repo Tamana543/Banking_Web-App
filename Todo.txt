@@ -72,7 +72,7 @@ Phase 5 — Transactions
 * Sort transactions (newest/oldest/highest) ✔️
 * Transaction details modal (when every transaction clicked modal popup) ✔️
 * Transaction status indicators ✔️
-* Transaction categories
+* Transaction categories ✔️
 
 Phase 6 — Transfers
 
