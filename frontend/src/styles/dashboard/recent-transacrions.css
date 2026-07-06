@@ -34,6 +34,7 @@
   padding:18px 0;
   border-bottom:
     1px solid rgba(255,255,255,.05);
+  cursor:pointer;
 }
 .transaction-item h4{
   text-transform:capitalize;

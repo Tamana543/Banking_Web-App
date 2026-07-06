@@ -21,24 +21,64 @@ function TransactionList({
     setShowDetails(false);
     setSelectedTransaction(null);
   };
-  return (
-    <>
+    const getCategory = (type) => {
+    switch (type) {
+        case "deposit":
+            return {
+                color: "deposit",
+                label: "Deposit",
+            };
+
+        case "withdrawal":
+            return {
+                color: "withdrawal",
+                label: "Withdrawal",
+            };
+
+        case "transfer":
+            return {
+                color: "transfer",
+                label: "Transfer",
+            };
+
+        case "loan":
+            return {
+                color: "loan",
+                label: "Loan",
+            };
+
+        default:
+            return {
+                color: "default",
+                label: type,
+            };
+    }
+};
+return (
+  <>
     <div className="recent-transactions">
       <h3>{title}</h3>
 
       {transactions.length === 0 ? (
         <p>No transactions yet.</p>
       ) : (
+        
         transactions.map((transaction) => (
           <div
-            key={transaction._id}
-            className="transaction-item"
-             onClick={() =>
-                openDetails(transaction)
-              }
+          key={transaction._id}
+          className="transaction-item"
+          onClick={() =>
+            openDetails(transaction)
+          }
           >
             <div>
-              <h4>{transaction.type}</h4>
+              <div className="transaction-category">
+
+              <h4>
+                  {category.label}
+              </h4>
+
+          </div>
 
               <span>
                 {transaction.description}
