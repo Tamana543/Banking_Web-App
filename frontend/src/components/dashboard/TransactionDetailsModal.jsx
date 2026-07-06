@@ -35,7 +35,7 @@ function TransactionDetailsModal({
         <div className="detail-row">
           <span>Status</span>
 
-          <strong className="status completed">
+          <strong className={`status ${transaction.status.toLowerCase()}`}>
             {transaction.status}
           </strong>
         </div>

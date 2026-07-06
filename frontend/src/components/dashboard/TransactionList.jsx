@@ -59,8 +59,8 @@ function TransactionList({
             </div>
 
             <div className="transaction-right">
-              <p className="transaction-status">
-                {transaction.status}
+             <p className={`transaction-status ${transaction.status.toLowerCase()}`} >
+                  {transaction.status}
               </p>
 
               <strong>
