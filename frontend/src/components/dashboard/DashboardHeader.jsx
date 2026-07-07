@@ -22,6 +22,22 @@ function DashboardHeader() {
             year: "numeric",
         }
     );
+
+    // personalized quote generator 
+    const quotes = [
+    "Every transaction is another step toward financial freedom.",
+    "Small savings become great wealth.",
+    "Discipline today builds prosperity tomorrow.",
+    "Invest in your future, one decision at a time.",
+    "Financial confidence starts with consistency."
+  ];
+
+const quote =
+    quotes[
+        new Date().getDate() %
+        quotes.length
+    ];
+
   return (
     <header className="dashboard-header">
       <div className="header-left">
@@ -41,7 +57,7 @@ function DashboardHeader() {
         </h1>
 
         <p className="header-subtitle">
-          Wealth begins with discipline.
+            {quote}
         </p>
         <p className="today-date">
                     {today}
