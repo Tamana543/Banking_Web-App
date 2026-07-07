@@ -76,30 +76,35 @@
 
   border: 1px solid rgba(212, 175, 55, 0.08);
 }
-.profile-avatar {
-   width: 80px;
-  height: 80px;
+.profile-avatar{
 
-  font-size: 2.2rem;
+    width:64px;
 
-  flex-shrink: 0;
+    height:64px;
 
-  border-radius: 50%;
+    border-radius:50%;
 
-  background: linear-gradient(
-    135deg,
-    #d4af37,
-    #f4d06f
-  );
+    display:flex;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: black;
-  font-size: 2rem;
-  font-weight: 700;
-  box-shadow:
-    0 0 25px rgba(212, 175, 55, 0.3);
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.4rem;
+
+    font-weight:700;
+
+    color:black;
+
+    background:linear-gradient(
+        135deg,
+        #fff4bf,
+        #d4af37
+    );
+
+    box-shadow:
+        0 0 22px rgba(212,175,55,.22);
+
 }
 .dashboard-profile h4 {
   color: white;
