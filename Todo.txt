@@ -56,10 +56,10 @@ Phase 4 — Banking Dashboard
 * Recent transactions card (deposit,withdrawal,and transfer done, from backend next fix the frontend) ✔️
 * Quick actions section ✔️
 * clean up the dashboard css it is so big ()✔️
-* Statistics summary cards
+* Statistics summary cards ✔️
+* User welcome section
 * Financial overview section
 * Better responsive layout
-* User welcome section
 
 Phase 5 — Transactions
 

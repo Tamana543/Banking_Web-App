@@ -2,21 +2,49 @@ import { useAuth } from "../../context/AuthContext";
 import "../../styles/dashboard/header.css"
 function DashboardHeader() {
   const { user } = useAuth();
+  // daytime 
+  const hour = new Date().getHours();
 
+    let greeting = "Good Evening";
+
+    if (hour < 12) {
+        greeting = "Good Morning";
+    } else if (hour < 18) {
+        greeting = "Good Afternoon";
+    }
+
+    const today = new Date().toLocaleDateString(
+        "en-US",
+        {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        }
+    );
   return (
     <header className="dashboard-header">
       <div className="header-left">
         <p className="brand-name">
           BANKIST PRO
         </p>
+       <p className="greeting">
+                    {greeting}
+                </p>
 
         <h1>
           Welcome back,
-          <span> {user?.firstName}</span>
+          <span>
+            {" "} 
+            {user?.firstName}
+          </span>
         </h1>
 
         <p className="header-subtitle">
           Wealth begins with discipline.
+        </p>
+        <p className="today-date">
+                    {today}
         </p>
       </div>
 
