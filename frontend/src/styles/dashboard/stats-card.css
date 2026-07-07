@@ -14,3 +14,14 @@
   transform: translateY(-4px);
   border-color: var(--gold);
 }
+
+.stat-card h4{
+    color:#9d9d9d;
+    margin-bottom:12px;
+}
+
+.stat-card h2{
+    color:white;
+        font-size: 1.1rem;
+    font-weight:700;
+}

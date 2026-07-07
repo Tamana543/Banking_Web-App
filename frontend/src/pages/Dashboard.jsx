@@ -177,7 +177,7 @@ function Dashboard() {
     </div>
 
     <div className="stats-section">
-      <StatsCards />
+      <StatsCards transactions={transactions}/>
     </div>
 
     <div className="actions-section">
