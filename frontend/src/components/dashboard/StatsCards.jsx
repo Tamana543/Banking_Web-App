@@ -18,6 +18,15 @@ const totalExpenses = transactions
             sum + Number(transaction.amount),
         0
     );
+    const totalTransfers = transactions
+    .filter(transaction => transaction.type === "transfer")
+    .reduce(
+        (sum, transaction) =>
+            sum + Number(transaction.amount),
+        0
+    );
+
+const totalTransactions = transactions.length;
   return (
     <section className="stats-cards">
 
