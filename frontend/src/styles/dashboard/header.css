@@ -108,3 +108,66 @@
   color: var(--gold-light);
   font-size: 0.9rem;
 }
+.greeting{
+
+    color:var(--gold);
+
+    font-size:.95rem;
+
+    font-weight:600;
+
+    letter-spacing:1px;
+
+    margin-bottom:8px;
+
+}
+
+.today-date{
+
+    margin-top:16px;
+
+    color:#8f8f8f;
+
+    font-size:.9rem;
+
+    letter-spacing:.5px;
+
+}
+
+.header-left h1{
+
+    line-height:1.15;
+
+}
+
+.header-left h1 span{
+
+    background:linear-gradient(
+        135deg,
+        #fff4bf,
+        #f6d365,
+        #d4af37
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+}
+
+.brand-name{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    margin-bottom:18px;
+
+    border-radius:999px;
+
+    background:rgba(212,175,55,.08);
+
+    border:1px solid rgba(212,175,55,.18);
+
+}
