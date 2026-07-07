@@ -30,22 +30,53 @@ const totalTransactions = transactions.length;
   return (
     <section className="stats-cards">
 
-      <div className="stat-card">
-        <h4>Income</h4>
-        <h2>$0.00</h2>
-      </div>
+    <div className="stat-card income">
 
-      <div className="stat-card">
-        <h4>Expenses</h4>
-        <h2>$0.00</h2>
-      </div>
+       
 
-      <div className="stat-card">
+        <h4>Total Deposits</h4>
+
+        <h2>
+            $
+            {totalIncome.toLocaleString()}
+        </h2>
+
+    </div>
+
+    <div className="stat-card expense">
+
+        <h4>Total Withdrawals</h4>
+
+        <h2>
+            $
+            {totalExpenses.toLocaleString()}
+        </h2>
+
+    </div>
+
+    <div className="stat-card transfer">
+
+
+        <h4>Total Transfers</h4>
+
+        <h2>
+            $
+            {totalTransfers.toLocaleString()}
+        </h2>
+
+    </div>
+
+    <div className="stat-card transaction">
+
         <h4>Transactions</h4>
-        <h2>0</h2>
-      </div>
 
-    </section>
+        <h2>
+            {totalTransactions}
+        </h2>
+
+    </div>
+
+</section>
   );
 }
 
