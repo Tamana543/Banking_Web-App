@@ -1,5 +1,23 @@
 import "../../styles/dashboard/stats-card.css"
-function StatsCards() {
+function StatsCards({
+  transactions
+}) {
+  // total datas logic 
+  const totalIncome = transactions
+    .filter(transaction => transaction.type === "deposit")
+    .reduce(
+        (sum, transaction) =>
+            sum + Number(transaction.amount),
+        0
+    );
+
+const totalExpenses = transactions
+    .filter(transaction => transaction.type === "withdrawal")
+    .reduce(
+        (sum, transaction) =>
+            sum + Number(transaction.amount),
+        0
+    );
   return (
     <section className="stats-cards">
 
