@@ -58,7 +58,7 @@ Phase 4 — Banking Dashboard
 * clean up the dashboard css it is so big ()✔️
 * Statistics summary cards ✔️
 * User welcome section ✔️
-* Financial overview section
+* Financial overview section ✔️
 * Better responsive layout
 
 Phase 5 — Transactions

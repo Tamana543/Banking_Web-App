@@ -172,7 +172,7 @@ function Dashboard() {
 
       <DashboardHeader />
 
-  <div className="dashboard-grid">
+  <div className="dashboard-grid" id="responsive">
 
     <div className="balance-section">
       <BalanceCard />
