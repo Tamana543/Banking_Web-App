@@ -124,3 +124,44 @@ function FinancialOverview({
 
     );
 }
+
+
+function OverviewRow({
+    label,
+    value,
+    percent,
+    color,
+}) {
+
+    return (
+
+        <div className="overview-row">
+
+            <div className="overview-info">
+
+                <p>{label}</p>
+
+                <strong>
+                    ${value.toLocaleString()}
+                </strong>
+
+            </div>
+
+            <div className="progress">
+
+                <div
+                    className={`progress-fill ${color}`}
+                    style={{
+                        width: `${Math.min(percent,100)}%`,
+                    }}
+                />
+
+            </div>
+
+        </div>
+
+    );
+
+}
+
+export default FinancialOverview;
