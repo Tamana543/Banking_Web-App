@@ -8,6 +8,8 @@ import Sidebar from "../components/dashboard/Sidebar";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
+import FinancialOverview from "../components/dashboard/financial_overview";
+
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -179,7 +181,11 @@ function Dashboard() {
     <div className="stats-section">
       <StatsCards transactions={transactions}/>
     </div>
-
+    <div className="overview-section">
+      <FinancialOverview
+          transactions={transactions}
+      />
+    </div>
     <div className="actions-section">
       <QuickActions
         onDeposit={() => setShowDepositModal(true)}

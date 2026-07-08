@@ -49,3 +49,6 @@ body {
   min-height: 100vh;
    background: transparent;
 }
+.overview-section{
+    grid-column:span 2;
+}
