@@ -59,7 +59,7 @@ Phase 4 — Banking Dashboard
 * Statistics summary cards ✔️
 * User welcome section ✔️
 * Financial overview section ✔️
-* Better responsive layout
+* Better responsive layout ( fix the sidebar, cross btn, empty space, the hamburger icon)
 
 Phase 5 — Transactions
 
