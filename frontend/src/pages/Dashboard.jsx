@@ -1,4 +1,6 @@
 import "../styles/dashboard/dashboard.css";
+import "../styles/dashboard/responsive.css";
+
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import BalanceCard from "../components/dashboard/BalancedCard";
 import StatsCards from "../components/dashboard/StatsCards";
@@ -9,8 +11,7 @@ import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
 import FinancialOverview from "../components/dashboard/financial_overview";
-import "../styles/dashboard/responsive.css"
-
+import HamburgerButton from "../components/dashboard/HamburgerButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -167,26 +168,26 @@ function Dashboard() {
   return (
   <div className="dashboard-layout">
 
-    <Sidebar />
+    <Sidebar  sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
 
     <main className="dashboard">
 
       <DashboardHeader />
+      <HamburgerButton onClick={() => setSidebarOpen(true)} />
+      <div className="dashboard-grid" id="responsive">
 
-  <div className="dashboard-grid" id="responsive">
+          <div className="balance-section">
+            <BalanceCard />
+          </div>
 
-    <div className="balance-section">
-      <BalanceCard />
-    </div>
-
-    <div className="stats-section">
-      <StatsCards transactions={transactions}/>
-    </div>
-    <div className="overview-section">
-      <FinancialOverview
-          transactions={transactions}
-      />
-    </div>
+          <div className="stats-section">
+            <StatsCards transactions={transactions}/>
+          </div>
+          <div className="overview-section">
+            <FinancialOverview
+                transactions={transactions}
+            />
+      </div>
     <div className="actions-section">
       <QuickActions
         onDeposit={() => setShowDepositModal(true)}
