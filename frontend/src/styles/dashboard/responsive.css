@@ -22,4 +22,33 @@
 .dashboard-layout{
     grid-template-columns:1fr;
 }
+.dashboard-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:24px;
+}
+.dashboard-profile{
+    width:100%;
+}
+.balance-section{
+    grid-column:1/-1;
+}
+.stats-section{
+    grid-column:1/-1;
+}
+.stats-cards{
+    grid-template-columns:1fr;
+}
+.overview-section{
+    grid-column:1/-1;
+}
+.actions-section{
+    grid-column:1/-1;
+}
+.transactions-section{
+    grid-column:1/-1;
+}
+.header-left h1{
+    font-size:2.3rem;
+}
 }
