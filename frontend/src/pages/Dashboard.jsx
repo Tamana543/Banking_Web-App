@@ -9,6 +9,7 @@ import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
 import FinancialOverview from "../components/dashboard/financial_overview";
+import "../styles/dashboard/responsive.css"
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -32,7 +33,7 @@ function Dashboard() {
   const [alert, setAlert] = useState({ type: "", message: "",});
   const [receipt, setReceipt] = useState(null);
   const [showReceiptModal, setShowReceiptModal] = useState(false);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   // Transaction handler
   const loadTransactions = async () => {
     try {
