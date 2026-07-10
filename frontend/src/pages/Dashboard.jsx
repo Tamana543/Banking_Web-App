@@ -6,12 +6,11 @@ import BalanceCard from "../components/dashboard/BalancedCard";
 import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
 import TransactionList from "../components/dashboard/TransactionList";
-import Sidebar from "../components/dashboard/Sidebar";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
 import FinancialOverview from "../components/dashboard/financial_overview";
-import HamburgerButton from "../components/dashboard/HamburgerButton";
+import DashboardLayout from "../components/dashboard/DashboardLayout";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -34,7 +33,7 @@ function Dashboard() {
   const [alert, setAlert] = useState({ type: "", message: "",});
   const [receipt, setReceipt] = useState(null);
   const [showReceiptModal, setShowReceiptModal] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   // Transaction handler
   const loadTransactions = async () => {
     try {
@@ -166,12 +165,7 @@ function Dashboard() {
 
 
   return (
-  <div className="dashboard-layout">
-      <HamburgerButton sidebarOpen={sidebarOpen} onClick={() => setSidebarOpen(prev => !prev)} />
-
-    <Sidebar  sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
-
-    <main className="dashboard">
+    <DashboardLayout>
 
       <DashboardHeader />
       <div className="dashboard-grid" id="responsive">
@@ -207,7 +201,7 @@ function Dashboard() {
 
   </div>
 
-    </main>
+  
     {/* Deposite modal */}
     <ActionModal
       isOpen={showDepositModal}
@@ -359,7 +353,7 @@ function Dashboard() {
           setReceipt(null);
       }}
 />
-  </div>
+ </DashboardLayout> 
 );
 }
 
