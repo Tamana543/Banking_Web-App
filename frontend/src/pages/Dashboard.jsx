@@ -8,47 +8,49 @@ import QuickActions from "../components/dashboard/QuickActions";
 import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
-import ReceiptModal from "../components/common/ReceiptModal";
 import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+
 import { useEffect, useState } from "react";
-import { depositMoney, getTransactions,withdrawMoney,transferMoney } from "../api/transactionApi";
+import { useAuth } from "../context/AuthContext";
+
+import {
+  depositMoney,
+  withdrawMoney,
+  getTransactions,
+} from "../api/transactionApi";
+
 import { getCurrentUser } from "../api/authApi";
 
-
 function Dashboard() {
-  const navigate = useNavigate();
-  const { logout,setUser } = useAuth();
-  const [transactions,setTransactions] = useState([]);
+  const { setUser } = useAuth();
+
+  const [transactions, setTransactions] = useState([]);
+
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState("");
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [showTransferModal, setShowTransferModal] = useState(false);
-  const [showTransferConfirmModal, setShowTransferConfirmModal] = useState(false);
-  const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [recipientEmail, setRecipientEmail] = useState("");
-  const [transferAmount, setTransferAmount] = useState("");
-  const [alert, setAlert] = useState({ type: "", message: "",});
-  const [receipt, setReceipt] = useState(null);
-  const [showReceiptModal, setShowReceiptModal] = useState(false);
 
-  // Transaction handler
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+
+  const [alert, setAlert] = useState({
+    type: "",
+    message: "",
+  });
+
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
-
       setTransactions(data.transactions);
     } catch (error) {
       console.error(error);
     }
   };
-  useEffect(()=>{
-    loadTransactions();
-  },[])
 
-  //  reusanle refresh element 
+  useEffect(() => {
+    loadTransactions();
+  }, []);
+
   const refreshDashboard = async () => {
     const userData = await getCurrentUser();
 
@@ -56,54 +58,65 @@ function Dashboard() {
 
     await loadTransactions();
   };
-  //Logout handler
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
-  //deposit handler
+  //  Deposit 
+
   const handleDeposit = async () => {
-  if (!depositAmount || Number(depositAmount) <= 0) {
-   setAlert({ type: "error", message: "Enter a valid amount.", });
-    return;
-  }
-
-  try {
-    await depositMoney(Number(depositAmount));
-    await refreshDashboard();
+    if (!depositAmount || Number(depositAmount) <= 0) {
       setAlert({
-      type: "success",
-      message: "Deposit completed successfully.",
-    });
+        type: "error",
+        message: "Enter a valid amount.",
+      });
+      return;
+    }
 
-    setTimeout(() => {
+    try {
+      await depositMoney(Number(depositAmount));
+
+      await refreshDashboard();
+
       setAlert({
-        type: "",
-        message: "",
+        type: "success",
+        message: "Deposit completed successfully.",
       });
 
-      setDepositAmount("");
-      setShowDepositModal(false);
-    }, 1200);
+      setTimeout(() => {
+        setAlert({
+          type: "",
+          message: "",
+        });
 
-  } catch (error) {
-    setAlert({type:"error",message : error.message})
-  }
-};
+        setDepositAmount("");
+        setShowDepositModal(false);
+      }, 1200);
+    } catch (error) {
+      setAlert({
+        type: "error",
+        message: error.message,
+      });
+    }
+  };
+
+  //  Withdraw 
 
   const handleWithdraw = async () => {
     if (!withdrawAmount || Number(withdrawAmount) <= 0) {
-      setAlert({type:"error",message:"Enter a valid amount."})
+      setAlert({
+        type: "error",
+        message: "Enter a valid amount.",
+      });
+
       return;
     }
 
     try {
       await withdrawMoney(Number(withdrawAmount));
+
       await refreshDashboard();
+
       setAlert({
         type: "success",
-        message: "Withdraw completed successfully.",
+        message: "Withdrawal completed successfully.",
       });
 
       setTimeout(() => {
@@ -112,249 +125,122 @@ function Dashboard() {
           message: "",
         });
 
-         setWithdrawAmount("");
-      setShowWithdrawModal(false);
+        setWithdrawAmount("");
+        setShowWithdrawModal(false);
       }, 1200);
-     
     } catch (error) {
-      setAlert({type:"error",message: error.message})
+      setAlert({
+        type: "error",
+        message: error.message,
+      });
     }
   };
 
-  const handleTransfer = async () => {
-      if (!recipientEmail || !transferAmount) {
-        setAlert({type:"error",message:"Please fill all fields."})
-        return;
-      }
-
-      if (Number(transferAmount) <= 0) {
-        setAlert({type:"error",message :"Enter a valid amount."})
-        return;
-      }
-
-      try {
-        const data = await transferMoney(
-          recipientEmail,
-          Number(transferAmount)
-        );
-        await refreshDashboard();
-        setAlert({
-        type: "success",
-        message: "Transfer completed successfully.",
-      });
-        setReceipt(data.receipt);
-
-      setTimeout(() => {
-        setAlert({
-          type: "",
-          message: "",
-        });
-        setRecipientEmail("");
-        setTransferAmount("");
-        setShowTransferModal(false);
-        setTimeout(()=>{
-          setShowReceiptModal(true)
-        },250)
-      }, 1200);
-        
-      } catch (error) {
-  
-        setAlert({type:"error",message:error.message})
-      }
-  };
-
-
   return (
     <DashboardLayout>
-
       <DashboardHeader />
-      <div className="dashboard-grid" id="responsive">
 
-          <div className="balance-section">
-            <BalanceCard />
-          </div>
+      <div className="dashboard-grid">
 
-          <div className="stats-section">
-            <StatsCards transactions={transactions}/>
-          </div>
-          <div className="overview-section">
-            <FinancialOverview
-                transactions={transactions}
-            />
+        <div className="balance-section">
+          <BalanceCard />
+        </div>
+
+        <div className="stats-section">
+          <StatsCards
+            transactions={transactions}
+          />
+        </div>
+
+        <div className="overview-section">
+          <FinancialOverview
+            transactions={transactions}
+          />
+        </div>
+
+        <div className="actions-section">
+          <QuickActions
+            onDeposit={() => setShowDepositModal(true)}
+            onWithdraw={() => setShowWithdrawModal(true)}
+          />
+        </div>
+
+        <div className="transactions-section">
+          <TransactionList
+            title="Recent Activity"
+            transactions={transactions.slice(0, 5)}
+          />
+        </div>
+
       </div>
-    <div className="actions-section">
-      <QuickActions
-        onDeposit={() => setShowDepositModal(true)}
-        onWithdraw={() => setShowWithdrawModal(true)}
-        onTransfer={() => setShowTransferModal(true)}
-      />
-    </div>
 
-    <div className="transactions-section">
-     <TransactionList
-        title="Recent Activity"
-        transactions={transactions.slice(0,5)}
-    />
-    </div>
+      {/* Deposit */}
 
-  
-
-  </div>
-
-  
-    {/* Deposite modal */}
-    <ActionModal
-      isOpen={showDepositModal}
-      title="Deposit Amounts"
-      submitText="Deposit"
-      onClose={() => {
-        setShowDepositModal(false);
-        setDepositAmount("");
-        setAlert({ type: "", message: "",});
-      }}
-      onSubmit={handleDeposit}
-    >
-      <input
-        type="number"
-        min="1"
-        step="0.01"
-        placeholder="Enter amount"
-        value={depositAmount}
-        onChange={(e) =>
-          setDepositAmount(e.target.value)
-        }
-      />
-       <AlertMessage
-        type={alert.type}
-        message={alert.message}
-      />
-    </ActionModal>
-
-    {/* withdrawl modal */}
-    <ActionModal
-      isOpen={showWithdrawModal}
-      title="Withdraw Money"
-      submitText="Withdraw"
-      onClose={() => {
-        setShowWithdrawModal(false);
-        setWithdrawAmount("");
-        setAlert({ type: "", message: "",});
-      }}
-      onSubmit={handleWithdraw}
-      >
-      <input
-        type="number"
-        min="1"
-        step="0.01"
-        placeholder="Enter amount"
-        value={withdrawAmount}
-        onChange={(e) =>
-          setWithdrawAmount(e.target.value)
-        }
-      />
-       <AlertMessage
-          type={alert.type}
-          message={alert.message}
-        />
-    </ActionModal>
-
-    {/* transfer modal  */}
-    <ActionModal
-              isOpen={showTransferModal}
-              title="Transfer Money"
-              submitText="Transfer"
-              onClose={() => {
-                setShowTransferModal(false);
-                setRecipientEmail("");
-                setTransferAmount("");
-                setAlert({ type: "", message: "",});
-              }}
-              onSubmit={() => {
-          if (!recipientEmail || !transferAmount) {
-            setAlert({
-              type: "error",
-              message: "Please fill all fields.",
-            });
-            return;
-          }
-
-          if (Number(transferAmount) <= 0) {
-            setAlert({
-              type: "error",
-              message: "Enter a valid amount.",
-            });
-            return;
-          }
-
-          setShowTransferConfirmModal(true);
-        }}
-    >
-      <input
-        type="email"
-        placeholder="Recipient Email"
-        value={recipientEmail}
-        onChange={(e) =>
-          setRecipientEmail(e.target.value)
-        }
-      />
-
-      <input
-        type="number"
-        min="1"
-        step="0.01"
-        placeholder="Amount"
-        value={transferAmount}
-        onChange={(e) =>
-          setTransferAmount(e.target.value)
-        }
-      />
-       <AlertMessage
-          type={alert.type}
-          message={alert.message}
-        />
-    </ActionModal>
-
-    {/* Transfer confirmation modal  */}
-    <ActionModal
-        isOpen={showTransferConfirmModal}
-        title="Confirm Transfer"
-        submitText="Confirm Transfer"
-        onClose={() => setShowTransferConfirmModal(false)}
-        onSubmit={async () => {
-          setShowTransferConfirmModal(false);
-          await handleTransfer();
-        }}
-      >
-          <p>
-            <strong>Recipient:</strong>
-            <br />
-            {recipientEmail}
-          </p>
-
-          <br />
-
-          <p>
-            <strong>Amount:</strong>
-            <br />
-            ${Number(transferAmount).toLocaleString()}
-          </p>
-
-          <br />
-
-          <p>
-            Are you sure you want to continue?
-          </p>
-      </ActionModal>
-      <ReceiptModal
-        isOpen={showReceiptModal}
-        receipt={receipt}
+      <ActionModal
+        isOpen={showDepositModal}
+        title="Deposit Amount"
+        submitText="Deposit"
         onClose={() => {
-          setShowReceiptModal(false);
-          setReceipt(null);
-      }}
-/>
- </DashboardLayout> 
-);
+          setShowDepositModal(false);
+          setDepositAmount("");
+          setAlert({
+            type: "",
+            message: "",
+          });
+        }}
+        onSubmit={handleDeposit}
+      >
+        <input
+          type="number"
+          min="1"
+          step="0.01"
+          placeholder="Enter amount"
+          value={depositAmount}
+          onChange={(e) =>
+            setDepositAmount(e.target.value)
+          }
+        />
+
+        <AlertMessage
+          type={alert.type}
+          message={alert.message}
+        />
+      </ActionModal>
+
+      {/* Withdraw */}
+
+      <ActionModal
+        isOpen={showWithdrawModal}
+        title="Withdraw Money"
+        submitText="Withdraw"
+        onClose={() => {
+          setShowWithdrawModal(false);
+          setWithdrawAmount("");
+          setAlert({
+            type: "",
+            message: "",
+          });
+        }}
+        onSubmit={handleWithdraw}
+      >
+        <input
+          type="number"
+          min="1"
+          step="0.01"
+          placeholder="Enter amount"
+          value={withdrawAmount}
+          onChange={(e) =>
+            setWithdrawAmount(e.target.value)
+          }
+        />
+
+        <AlertMessage
+          type={alert.type}
+          message={alert.message}
+        />
+      </ActionModal>
+    </DashboardLayout>
+  );
 }
 
 export default Dashboard;
