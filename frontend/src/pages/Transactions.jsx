@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
-import Sidebar from "../components/dashboard/Sidebar";
+import DashboardLayout from "../components/dashboard/DashboardLayout";
 import TransactionList from "../components/dashboard/TransactionList";
+
 import { getTransactions } from "../api/transactionApi";
 
 import "../styles/dashboard/dashboard.css";
@@ -74,100 +75,57 @@ function Transactions() {
 
       }
   );
-  return (
-    <div className="dashboard-layout">
-      <Sidebar />
+ return (
+  <DashboardLayout>
 
-      <main className="dashboard">
-        <DashboardHeader />
-               <div className="transaction-toolbar">
-            <div className="transaction-sort">
+    <DashboardHeader />
 
-            <select
-                value={sortBy}
-                onChange={(e)=>
-                    setSortBy(e.target.value)
-                }
-                defaultValue="Sort"
-            >
+    <div className="transaction-toolbar">
 
-                <option value="newest">
-                    Sort
-                </option>
-                <option value="newest">
-                    Newest
-                </option>
-
-                <option value="oldest">
-                    Oldest
-                </option>
-
-                <option value="highest">
-                    Highest Amount
-                </option>
-
-                <option value="lowest">
-                    Lowest Amount
-                </option>
-
-            </select>
-
-        </div>
-          <div className="transaction-search">
-
-              <input
-                  type="text"
-                  placeholder="Search transactions..."
-                  value={searchTerm}
-                  onChange={(e)=>
-                      setSearchTerm(e.target.value)
-                  }
-              />
-
-          </div>
-
-          <div className="transaction-filter">
-
-              <select
-                  value={filter}
-                  onChange={(e)=>
-                      setFilter(e.target.value)
-                  }
-              >
-
-                  <option value="all">
-                      All
-                  </option>
-
-                  <option value="deposit">
-                      Deposits
-                  </option>
-
-                  <option value="withdrawal">
-                      Withdrawals
-                  </option>
-
-                  <option value="transfer">
-                      Transfers
-                  </option>
-
-                  <option value="loan">
-                      Loans
-                  </option>
-
-              </select>
-
-          </div>
-        
-
+      <div className="transaction-sort">
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="" disabled>Sort</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="highest">Highest Amount</option>
+          <option value="lowest">Lowest Amount</option>
+        </select>
       </div>
-        <TransactionList
-          title="Transaction History"
-          transactions={sortedTransactions}
+
+      <div className="transaction-search">
+        <input
+          type="text"
+          placeholder="Search transactions..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </main>
+      </div>
+
+      <div className="transaction-filter">
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="deposit">Deposits</option>
+          <option value="withdrawal">Withdrawals</option>
+          <option value="transfer">Transfers</option>
+          <option value="loan">Loans</option>
+        </select>
+      </div>
+
     </div>
-  );
+
+    <TransactionList
+      title="Transaction History"
+      transactions={sortedTransactions}
+    />
+
+  </DashboardLayout>
+);
 }
 
 export default Transactions;
