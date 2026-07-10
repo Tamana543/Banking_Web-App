@@ -59,7 +59,7 @@ Phase 4 — Banking Dashboard
 * Statistics summary cards ✔️
 * User welcome section ✔️
 * Financial overview section ✔️
-* Better responsive layout ( fix the sidebar, cross btn, empty space, the hamburger icon)
+* Better responsive layout ( fix the sidebar, cross btn, empty space, the hamburger icon) ✔️
 
 Phase 5 — Transactions
 
@@ -75,7 +75,7 @@ Phase 5 — Transactions
 * Transaction categories ✔️
 
 Phase 6 — Transfers
-
+* fix the transfer page 
 * Transfer money between users ✔️
 * Transfer validation improvements ✔️
 * Prevent self-transfer ✔️
