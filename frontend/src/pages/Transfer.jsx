@@ -11,7 +11,7 @@ import ReceiptModal from "../components/common/ReceiptModal";
 import { transferMoney } from "../api/transactionApi";
 
 import "../styles/dashboard/dashboard.css";
-import "../styles/transfer.css";
+import "../styles/transfer.css"
 
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

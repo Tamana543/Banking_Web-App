@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import Transactions from "../pages/Transactions";
 import NotFound from "../pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
+import Transfer from "../pages/Transfer";
 
 function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ function AppRoutes() {
           }
         />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/transfer" element={<Transfer/>}/>
       <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
