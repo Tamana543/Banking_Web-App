@@ -167,13 +167,13 @@ function Dashboard() {
 
   return (
   <div className="dashboard-layout">
+      <HamburgerButton onClick={() => setSidebarOpen(true)} />
 
     <Sidebar  sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
 
     <main className="dashboard">
 
       <DashboardHeader />
-      <HamburgerButton onClick={() => setSidebarOpen(true)} />
       <div className="dashboard-grid" id="responsive">
 
           <div className="balance-section">

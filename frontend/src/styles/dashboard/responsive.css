@@ -34,8 +34,8 @@
     z-index:900;
 }
 .dashboard-layout{
-    /* grid-template-columns:1fr; */
-    display:block;
+    grid-template-columns:1fr;
+    /* display:block; */
 }
  .dashboard{
       grid-column:1;
