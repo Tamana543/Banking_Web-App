@@ -53,7 +53,5 @@
         translateY(-8px)
         rotate(-45deg);
 }
-.hamburger-btn.active{
-    left:290px;
-}
+
 }

@@ -167,7 +167,7 @@ function Dashboard() {
 
   return (
   <div className="dashboard-layout">
-      <HamburgerButton onClick={() => setSidebarOpen(!sidebarOpen)} />
+      <HamburgerButton sidebarOpen={sidebarOpen} onClick={() => setSidebarOpen(prev => !prev)} />
 
     <Sidebar  sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
 
