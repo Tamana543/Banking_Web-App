@@ -6,7 +6,6 @@
 }
 .transfer-card{
     width:100%;
-    max-width:650px;
     padding:40px;
     border-radius:28px;
     background:rgba(20,20,20,.82);
@@ -50,4 +49,7 @@
 }
 .transfer-btn:hover{
     transform:translateY(-2px);
+}
+.transfer-history{
+    margin-top:32px;
 }
