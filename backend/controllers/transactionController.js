@@ -212,3 +212,7 @@ export const withdrawMoney = async(req,res)=>{
     });
   }
 }
+
+export const applyLoan = async(req,res)=>{
+
+};
