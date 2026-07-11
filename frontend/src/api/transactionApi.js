@@ -1,25 +1,19 @@
 const API_URL = "http://localhost:5000/api/transactions";
-
 const getToken = () => {
   return localStorage.getItem("token");
 };
-
 export const getTransactions = async () => {
   const response = await fetch(API_URL, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-
   const data = await response.json();
-
   if (!response.ok) {
     throw new Error(data.message);
   }
-
   return data;
 };
-
 export const depositMoney = async (amount) => {
   const response = await fetch(`${API_URL}/deposit`, {
     method: "POST",
@@ -29,16 +23,12 @@ export const depositMoney = async (amount) => {
     },
     body: JSON.stringify({ amount }),
   });
-
   const data = await response.json();
-
   if (!response.ok) {
     throw new Error(data.message);
   }
-
   return data;
 };
-
 export const withdrawMoney = async (amount) => {
   const response = await fetch(`${API_URL}/withdraw`, {
     method: "POST",
@@ -48,16 +38,12 @@ export const withdrawMoney = async (amount) => {
     },
     body: JSON.stringify({ amount }),
   });
-
   const data = await response.json();
-
   if (!response.ok) {
     throw new Error(data.message);
   }
-
   return data;
 };
-
 export const transferMoney = async (recipientEmail, amount) => {
   const response = await fetch(`${API_URL}/transfer`, {
     method: "POST",
@@ -70,12 +56,27 @@ export const transferMoney = async (recipientEmail, amount) => {
       amount,
     }),
   });
-
   const data = await response.json();
-
   if (!response.ok) {
     throw new Error(data.message);
   }
-
   return data;
+};
+export const applyLoan = async ( amount, purpo ) => {
+  const response = await fetch(
+        `${API_URL}/transactions/loan`,
+        {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify({
+                amount,
+                purpose,
+            }),
+        }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message);
+    }
+    return data;
 };
