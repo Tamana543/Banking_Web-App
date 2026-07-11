@@ -1,5 +1,5 @@
 import "../styles/dashboard/dashboard.css";
-import "../styles/dashboard/responsive.css";
+import "../styles/responsive.css";
 
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import BalanceCard from "../components/dashboard/BalancedCard";

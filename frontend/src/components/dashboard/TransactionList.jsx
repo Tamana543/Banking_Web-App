@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TransactionDetailsModal from "./TransactionDetailsModal";
-import "../../styles/dashboard/recent-transacrions.css";
+import "../../styles/recent-transacrions.css";
 import { generateTransactionId } from "../../util/transactionId";
 function TransactionList({
   transactions = [],
