@@ -86,7 +86,7 @@ Phase 6 — Transfers✔️
 
 Phase 7 — Loans
 
-* Loan request system
+* Loan request system ✔️
 * Loan request improvements
 * Loan history section
 * Loan approval/loading animation

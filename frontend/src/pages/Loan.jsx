@@ -21,6 +21,12 @@ function Loan() {
      };
      // LoanHundler
      const handleLoan = async () => {
+          // clean the previous alert first 
+          setAlert({
+               type: "",
+               message: "",
+          });
+
           if (!loanAmount || Number(loanAmount) <= 0) {
           setAlert({
                type: "error",
@@ -46,7 +52,13 @@ function Loan() {
           });
           setLoanAmount("");
           setPurpose("");
-          loadTransactions();
+           await loadTransactions();
+          setTimeout(() => {
+               setAlert({
+                    type: "",
+                    message: "",
+               });
+          }, 2000);
           }
           catch (error) {
           setAlert({
