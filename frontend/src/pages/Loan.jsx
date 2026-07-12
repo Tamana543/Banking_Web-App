@@ -42,13 +42,13 @@ function Loan() {
           return;
           }
           try {
-          await applyLoan(
+          const data = await applyLoan(
                Number(loanAmount),
                purpose
           );
           setAlert({
                type: "success",
-               message: "Loan approved successfully.",
+               message: data.message,
           });
           setLoanAmount("");
           setPurpose("");
