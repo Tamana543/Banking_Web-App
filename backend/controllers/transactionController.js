@@ -236,6 +236,61 @@ try {
                 message: "User not found.",
             });
         }
+        // max loan two times greater than balance 
+        const maximumLoan = user.balance * 2;
+
+        if (amount > maximumLoan) {
+            return res.status(400).json({
+                message:
+                    `Maximum loan allowed is $${maximumLoan.toLocaleString()}.`,
+            });
+        }
+        // if there is an other loan do not give the new one
+         const activeLoan =
+            await Transaction.findOne({
+
+                user: userId,
+
+                type: "loan",
+
+                status: "pending",
+
+            });
+
+        if (activeLoan) {
+            return res.status(400).json({
+                message:
+                    "You already have an active loan.",
+            });
+        }
+
+        user.balance += Number(amount);
+
+        await user.save();
+
+        const transaction =
+            await Transaction.create({
+
+                user: userId,
+
+                type: "loan",
+
+                amount,
+
+                description: purpose,
+
+                status: "pending",
+
+            });
+
+        res.status(201).json({
+
+            message: "Loan approved.",
+
+            transaction,
+
+        });
+
 
 } catch (error) {
   res.status(500).json({
