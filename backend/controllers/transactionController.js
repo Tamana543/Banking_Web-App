@@ -214,5 +214,32 @@ export const withdrawMoney = async(req,res)=>{
 }
 
 export const applyLoan = async(req,res)=>{
+try {
+   const userId = req.user.id;
+        const { amount, purpose } = req.body;
 
+        if (!amount || Number(amount) <= 0) {
+            return res.status(400).json({
+                message: "Invalid loan amount.",
+            });
+        }
+
+        if (!purpose || purpose.trim() === "") {
+            return res.status(400).json({
+                message: "Loan purpose is required.",
+            });
+        }
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found.",
+            });
+        }
+
+} catch (error) {
+  res.status(500).json({
+    message:error.message,
+  })
+}
 };

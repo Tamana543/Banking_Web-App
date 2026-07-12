@@ -209,3 +209,4 @@ phase 18 - Setting dashboard
 * Logout 
 * Delete Account
 * create a responsive css add all medias there 
+* fix the 404 page
