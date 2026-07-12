@@ -62,22 +62,24 @@ export const transferMoney = async (recipientEmail, amount) => {
   }
   return data;
 };
-export const applyLoan = async ( amount, purpo ) => {
-  const response = await fetch(
-        `${API_URL}/transactions/loan`,
-        {
-            method: "POST",
-            headers: getHeaders(),
-            body: JSON.stringify({
-                amount,
-                purpose,
-            }),
-        }
-    );
-    const data = await response.json();
-    
-    if (!response.ok) {
-        throw new Error(data.message);
-    }
-    return data;
+export const applyLoan = async (amount, purpose) => {
+  const response = await fetch(`${API_URL}/loan`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({
+      amount,
+      purpose,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+
+  return data;
 };
