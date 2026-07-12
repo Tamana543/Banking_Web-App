@@ -88,12 +88,12 @@ Phase 7 — Loans
 
 * Loan request system ✔️
 * Loan request improvements
-* Loan history section
-* Loan approval/loading animation
+* Loan history section ✔️
+* Loan approval/loading animation ✔️
 * Loan eligibility display
-* Pending loan status
-* Approved loan status
-* Rejected loan status
+* Pending loan status ✔️
+* Approved loan status ( in admin side; future)✔️
+* Rejected loan status ( same admin feature in future) ✔️ 
 * Loan repayment tracking
 
 Phase 8 — Account Management
@@ -153,7 +153,7 @@ Phase 13 — Admin Dashboard
 * Admin authentication
 * View all users
 * View all transactions
-* View all loans
+* View all loans ( and approval, updated the loan to show as apprved stats or rejected)
 * User management
 * Account management
 * Dashboard statistics
@@ -201,6 +201,7 @@ Phase 17 — Portfolio Features
 * Feature showcase
 * LinkedIn project post
 * Portfolio integration
+* TransactionContext ( right shared repeate, instead of each page making its own API requests, similar to AuthContext )
 
 phase 18 - Setting dashboard
 * Dark mode 
