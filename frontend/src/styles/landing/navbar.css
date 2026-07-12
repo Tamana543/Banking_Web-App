@@ -1,0 +1,22 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.5rem 4rem;
+}
+
+.nav__links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav__links a {
+  text-decoration: none;
+}
+
+.nav__btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
+}
