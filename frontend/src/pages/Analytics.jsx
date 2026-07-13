@@ -55,31 +55,72 @@ function Analytics() {
                 expense={expense}
                 savings={savings}
             />
-            <section className="analytics-card">
-                <h2>
-                    Income vs Expense
-                </h2>
-            </section>
-            <section className="analytics-card">
-                <h2>
-                    Monthly Cash Flow
-                </h2>
-            </section>
-            <section className="analytics-card">
-                <h2>
-                    Spending by Category
-                </h2>
-            </section>
-            <section className="analytics-card">
-                <h2>
-                    Transaction Insights
-                </h2>
-            </section>
-            <section className="analytics-card">
-                <h2>
-                    Monthly Report
-                </h2>
-            </section>
+           <section className="analytics-page">
+               <div className="analytics-summary">
+                    <div className="analytics-card income">
+                         <span>Total Income</span>
+                         <h2>
+                              $
+                              {
+                                   transactions
+                                   .filter(
+                                        t =>
+                                             t.type === "deposit" ||
+                                             t.type === "loan"
+                                   )
+                                   .reduce(
+                                        (sum, t) => sum + t.amount,
+                                        0
+                                   )
+                                   .toLocaleString()
+                              }
+                         </h2>
+                    </div>
+                    <div className="analytics-card expense">
+                         <span>Total Expense</span>
+                         <h2>
+                              $
+                              {
+                                   transactions
+                                   .filter(
+                                        t =>
+                                             t.type === "withdrawal" ||
+                                             t.type === "transfer"
+                                   )
+                                   .reduce(
+                                        (sum, t) => sum + t.amount,
+                                        0
+                                   )
+                                   .toLocaleString()
+                              }
+                         </h2>
+                    </div>
+                    <div className="analytics-card balance">
+                         <span>Total Transactions</span>
+                         <h2>
+                              {transactions.length}
+                         </h2>
+                    </div>
+               </div>
+               <div className="analytics-grid">
+                    <div className="analytics-panel">
+                         <h3>
+                              Income vs Expense
+                         </h3>
+                         <div className="chart-placeholder">
+                              Chart Coming Next →
+                         </div>
+                    </div>
+                    <div className="analytics-panel">
+                         <h3>
+                              Monthly Spending
+                         </h3>
+                         <div className="chart-placeholder">
+                              Chart Coming Next →
+                         </div>
+                    </div>
+               </div>
+               </section>
         </DashboardLayout>
     );
 }
