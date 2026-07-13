@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from "recharts";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import FinancialSummary from "../components/dashboard/FinancialSummary";
@@ -21,40 +23,40 @@ function Analytics() {
     useEffect(() => {
         loadTransactions();
     }, []);
-    const income = transactions
-        .filter(
-            (transaction) =>
-                transaction.type === "deposit"
-        )
-        .reduce(
-            (total, transaction) =>
-                total + Number(transaction.amount),
-            0
-        );
-    const expense = transactions
-        .filter(
-            (transaction) =>
-                transaction.type === "withdrawal" ||
-                transaction.type === "transfer"
-        )
-        .reduce(
-            (total, transaction) =>
-                total + Number(transaction.amount),
-            0
-        );
-    const balance =
-        income - expense;
-    const savings =
-        income - expense;
+    const totalIncome = transactions.filter(
+          (transaction) =>
+               transaction.type === "deposit" ||
+               transaction.type === "loan"
+          )
+          .reduce(
+          (sum, transaction) =>
+               sum + Number(transaction.amount),
+          0
+          );
+
+     const totalExpense = transactions
+     .filter(
+     (transaction) =>
+          transaction.type === "withdrawal" ||
+          transaction.type === "transfer"
+     )
+     .reduce(
+     (sum, transaction) =>
+          sum + Number(transaction.amount),
+     0
+     );
+
+     const balance = totalIncome - totalExpense;
+     const savings = balance;
     return (
         <DashboardLayout>
             <DashboardHeader />
             <FinancialSummary
-                balance={balance}
-                income={income}
-                expense={expense}
-                savings={savings}
-            />
+                    balance={balance}
+                    income={totalIncome}
+                    expense={totalExpense}
+                    savings={savings}
+               />
            <section className="analytics-page">
                <div className="analytics-summary">
                     <div className="analytics-card income">
