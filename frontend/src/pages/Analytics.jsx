@@ -48,6 +48,43 @@ function Analytics() {
 
      const balance = totalIncome - totalExpense;
      const savings = balance;
+     const monthlyMap = {};
+
+     transactions.forEach((transaction) => {
+     const month = new Date(
+     transaction.createdAt
+     ).toLocaleString("default", {
+     month: "short",
+     });
+
+     if (!monthlyMap[month]) {
+     monthlyMap[month] = {
+          month,
+          income: 0,
+          expense: 0,
+     };
+     }
+
+     if (
+     transaction.type === "deposit" ||
+     transaction.type === "loan"
+     ) {
+     monthlyMap[month].income += Number(
+          transaction.amount
+     );
+     }
+
+     if (
+     transaction.type === "withdrawal" ||
+     transaction.type === "transfer"
+     ) {
+     monthlyMap[month].expense += Number(
+          transaction.amount
+     );
+     }
+     });
+
+     const monthlyData = Object.values(monthlyMap);
     return (
         <DashboardLayout>
             <DashboardHeader />
@@ -62,39 +99,13 @@ function Analytics() {
                     <div className="analytics-card income">
                          <span>Total Income</span>
                          <h2>
-                              $
-                              {
-                                   transactions
-                                   .filter(
-                                        t =>
-                                             t.type === "deposit" ||
-                                             t.type === "loan"
-                                   )
-                                   .reduce(
-                                        (sum, t) => sum + t.amount,
-                                        0
-                                   )
-                                   .toLocaleString()
-                              }
+                              $ {totalIncome.toLocaleString()}
                          </h2>
                     </div>
                     <div className="analytics-card expense">
                          <span>Total Expense</span>
                          <h2>
-                              $
-                              {
-                                   transactions
-                                   .filter(
-                                        t =>
-                                             t.type === "withdrawal" ||
-                                             t.type === "transfer"
-                                   )
-                                   .reduce(
-                                        (sum, t) => sum + t.amount,
-                                        0
-                                   )
-                                   .toLocaleString()
-                              }
+                              ${totalExpense.toLocaleString()}
                          </h2>
                     </div>
                     <div className="analytics-card balance">
