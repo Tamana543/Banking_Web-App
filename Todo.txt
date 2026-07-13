@@ -97,9 +97,9 @@ Phase 7 — Loans
 Phase 8 — Analytics
 
 * Analytics page layout ✔️
-* Financial Summary cards 
-* Income vs Expense chart
-* Monthly Cash Flow chart
+* Income vs Expense chart ✔️
+* Monthly Cash Flow chart ✔️
+* Financial Summary cards ( not yet)
 * Spending by Category chart
 * Transaction Insights
 * Monthly Report
