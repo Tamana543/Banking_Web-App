@@ -1,0 +1,74 @@
+/* Analytics Page
+*/
+.analytics-page{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+}
+/*
+   Summary Cards
+*/
+.analytics-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+}
+.analytics-card{
+    padding:28px;
+    border-radius:24px;
+    background:rgba(20,20,20,.82);
+    border:1px solid rgba(212,175,55,.10);
+    backdrop-filter:blur(18px);
+    transition:.35s;
+}
+.analytics-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(212,175,55,.25);
+}
+.analytics-card span{
+    color:#a6a6a6;
+    font-size:.9rem;
+    letter-spacing:1px;
+}
+.analytics-card h2{
+    margin-top:12px;
+    color:white;
+    font-size:2rem;
+    font-weight:700;
+}
+.analytics-card.income h2{
+    color:#65e57d;
+}
+.analytics-card.expense h2{
+    color:#ff7a7a;
+}
+.analytics-card.balance h2{
+    color:var(--gold);
+}
+/* Chart Area */
+.analytics-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:24px;
+}
+.analytics-panel{
+    background:rgba(20,20,20,.82);
+    border-radius:24px;
+    padding:28px;
+    border:1px solid rgba(212,175,55,.10);
+}
+.analytics-panel h3{
+    color:white;
+    margin-bottom:20px;
+    font-size:1.2rem;
+}
+.chart-placeholder{
+    height:320px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:18px;
+    border:2px dashed rgba(212,175,55,.20);
+    color:#9b9b9b;
+    font-size:1rem;
+}
