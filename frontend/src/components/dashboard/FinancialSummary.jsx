@@ -17,4 +17,25 @@ function FinancialSummary({balance, income, expense, savings,}){
             value: savings,
         },
     ];
+     return (
+        <section className="financial-summary">
+            {
+                cards.map((card) => (
+                    <div
+                        className="summary-card"
+                        key={card.title}
+                    >
+                        <h4>
+                            {card.title}
+                        </h4>
+                        <h2>
+                            $
+                            {card.value.toLocaleString()}
+                        </h2>
+                    </div>
+                ))
+            }
+        </section>
+    );
 }
+export default FinancialSummary;
