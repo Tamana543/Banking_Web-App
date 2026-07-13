@@ -72,3 +72,30 @@
     color:#9b9b9b;
     font-size:1rem;
 }
+.summary-card{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.summary-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-top:20px;
+}
+.summary-list div{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.03);
+}
+.summary-list span{
+    color:#aaa;
+    font-size:.95rem;
+}
+.summary-list strong{
+    color:var(--gold);
+    font-size:1.1rem;
+}
