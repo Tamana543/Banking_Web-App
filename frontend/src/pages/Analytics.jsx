@@ -103,23 +103,73 @@ function Analytics() {
                     </div>
                </div>
                <div className="analytics-grid">
-                    <div className="analytics-panel">
-                         <h3>
-                              Income vs Expense
-                         </h3>
-                         <div className="chart-placeholder">
-                              Chart Coming Next →
+                    <section className="analytics-card summary-card">
+                         <h3>Financial Summary</h3>
+                         <div className="summary-list">
+                              <div>
+                                   <span>Total Income</span>
+                                   <strong>${totalIncome.toLocaleString()}</strong>
+                              </div>
+                              <div>
+                                   <span>Total Expenses</span>
+                                   <strong>${totalExpense.toLocaleString()}</strong>
+                              </div>
+                              <div>
+                                   <span>Current Balance</span>
+                                   <strong>
+                                        ${(totalIncome - totalExpense).toLocaleString()}
+                                   </strong>
+                              </div>
                          </div>
+                    </section>
+                    <section className="analytics-card">
+                         <h3>Income vs Expense</h3>
+                         <ResponsiveContainer width="100%" height={300}>
+                              <BarChart
+                                   data={[
+                                        {
+                                        name: "Overview",
+                                        Income: totalIncome,
+                                        Expense: totalExpense,
+                                        },
+                                   ]}
+                              >
+                                   <CartesianGrid strokeDasharray="3 3" />
+                                   <XAxis dataKey="name" />
+                                   <YAxis />
+                                   <Tooltip />
+                                   <Legend />
+                                   <Bar
+                                        dataKey="Income"
+                                        fill="#d4af37"
+                                        radius={[8,8,0,0]}
+                                   />
+                                   <Bar
+                                        dataKey="Expense"
+                                        fill="#8b1e1e"
+                                        radius={[8,8,0,0]}
+                                   />
+                              </BarChart>
+                         </ResponsiveContainer>
+                    </section>
+                    <section className="analytics-card">
+                         <h3>Monthly Spending</h3>
+                         <ResponsiveContainer width="100%" height={320}>
+                              <LineChart data={monthlyData}>
+                                   <CartesianGrid strokeDasharray="3 3" />
+                                   <XAxis dataKey="month" />
+                                   <YAxis />
+                                   <Tooltip />
+                                   <Line
+                                        type="monotone"
+                                        dataKey="expense"
+                                        stroke="#d4af37"
+                                        strokeWidth={3}
+                                   />
+                              </LineChart>
+                         </ResponsiveContainer>
+                    </section>
                     </div>
-                    <div className="analytics-panel">
-                         <h3>
-                              Monthly Spending
-                         </h3>
-                         <div className="chart-placeholder">
-                              Chart Coming Next →
-                         </div>
-                    </div>
-               </div>
                </section>
         </DashboardLayout>
     );
