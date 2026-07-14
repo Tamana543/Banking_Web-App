@@ -100,8 +100,8 @@ Phase 8 — Analytics
 * Income vs Expense chart ✔️
 * Monthly Cash Flow chart ✔️
 * Spending by Category chart ✔️
-* Transaction Insights
-* Financial Summary cards 
+* Transaction Insights ✔️
+* Financial Summary cards ✔️
 
 
 

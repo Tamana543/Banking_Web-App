@@ -32,7 +32,6 @@ function Analytics() {
                sum + Number(transaction.amount),
           0
           );
-
      const totalExpense = transactions
      .filter(
      (transaction) =>
@@ -44,7 +43,6 @@ function Analytics() {
           sum + Number(transaction.amount),
      0
      );
-
      const balance = totalIncome - totalExpense; // remember this is not the user real balance we will fix that in future 
      const monthlyMap = {};
      transactions.forEach((transaction) => {
@@ -53,7 +51,6 @@ function Analytics() {
      ).toLocaleString("default", {
      month: "short",
      });
-
      if (!monthlyMap[month]) {
      monthlyMap[month] = {
           month,
@@ -61,7 +58,6 @@ function Analytics() {
           expense: 0,
      };
      }
-
      if (
      transaction.type === "deposit" ||
      transaction.type === "loan"
@@ -70,7 +66,6 @@ function Analytics() {
           transaction.amount
      );
      }
-
      if (
      transaction.type === "withdrawal" ||
      transaction.type === "transfer"
@@ -80,7 +75,6 @@ function Analytics() {
      );
      }
      });
-
      const monthlyData = Object.values(monthlyMap);
      const categoryData = [
           {
@@ -104,7 +98,6 @@ function Analytics() {
      ];
      // Transaction Insights
      const totalTransactions = transactions.length;
-
           const averageTransaction =
           totalTransactions === 0
                ? 0
@@ -113,7 +106,6 @@ function Analytics() {
                          sum + Number(transaction.amount),
                     0
                     ) / totalTransactions;
-
           const highestTransaction =
           transactions.length > 0
                ? Math.max(
@@ -122,24 +114,17 @@ function Analytics() {
                     )
                     )
                : 0;
-
           const transactionTypes = {};
-
           transactions.forEach(transaction => {
-
           transactionTypes[transaction.type] =
                (transactionTypes[transaction.type] || 0) + 1;
-
           });
-
           const mostUsedTransaction =
           Object.keys(transactionTypes).length
                ? Object.entries(transactionTypes).sort(
                     (a, b) => b[1] - a[1]
                     )[0][0]
                : "N/A";
-
-
      const COLORS = [ "#d4af37", "#4f46e5", "#22c55e", ];
      
     return (
@@ -147,7 +132,6 @@ function Analytics() {
             <DashboardHeader />
                <div className="analytics-header">
                     <h1>Analytics Dashboard</h1>
-
                     <p>
                          Monitor your financial performance and spending insights.
                     </p>
@@ -175,19 +159,13 @@ function Analytics() {
                     </div>
                </div>
                {transactions.length === 0 ? (
-
                <div className="analytics-empty">
-
                     <h3>No Analytics Available</h3>
-
                     <p>
                          Complete some transactions to unlock your financial insights.
                     </p>
-
                </div>
-
                ) : (
-
                <div className="analytics-grid">
                     <section className="analytics-card summary-card">
                          <h3>Account Overview</h3>
@@ -256,13 +234,9 @@ function Analytics() {
                          </ResponsiveContainer>
                     </section>
                     <section className="analytics-card">
-
                     <h3>Spending by Category</h3>
-
                     <ResponsiveContainer width="100%" height={320}>
-
                          <PieChart>
-
                               <Pie
                                    data={categoryData}
                                    dataKey="value"
@@ -272,78 +246,48 @@ function Analytics() {
                                    outerRadius={100}
                                    label
                               >
-
                                    {categoryData.map((entry, index) => (
-
                                         <Cell
                                         key={index}
                                         fill={COLORS[index % COLORS.length]}
                                         />
-
                                    ))}
-
                               </Pie>
-
                               <Tooltip />
-
                               <Legend />
-
                          </PieChart>
-
                     </ResponsiveContainer>
-
                     </section>
                     <section className="analytics-card">
                          <h3>Transaction Insights</h3>
-
                          <div className="insights-grid">
-
                               <div className="insight-box">
-
                                    <p>Highest Transaction</p>
-
                                    <h2>
                                         $
                                         {highestTransaction.toLocaleString()}
                                    </h2>
-
                               </div>
-
                               <div className="insight-box">
-
                                    <p>Average Transaction</p>
-
                                    <h2>
                                         $
                                         {averageTransaction.toFixed(2)}
                                    </h2>
-
                               </div>
-
                               <div className="insight-box">
-
                                    <p>Total Transactions</p>
-
                                    <h2>
                                         {totalTransactions}
                                    </h2>
-
                               </div>
-
                               <div className="insight-box">
-
                                    <p>Most Used Type</p>
-
                                    <h2 style={{textTransform:"capitalize"}}>
-
                                         {mostUsedTransaction}
-
                                    </h2>
-
                               </div>
-
                          </div>
-
                          </section>
                     </div>
                )}
