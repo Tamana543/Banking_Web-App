@@ -293,6 +293,58 @@ function Analytics() {
                     </ResponsiveContainer>
 
                     </section>
+                    <section className="analytics-card">
+                         <h3>Transaction Insights</h3>
+
+                         <div className="insights-grid">
+
+                              <div className="insight-box">
+
+                                   <p>Highest Transaction</p>
+
+                                   <h2>
+                                        $
+                                        {highestTransaction.toLocaleString()}
+                                   </h2>
+
+                              </div>
+
+                              <div className="insight-box">
+
+                                   <p>Average Transaction</p>
+
+                                   <h2>
+                                        $
+                                        {averageTransaction.toFixed(2)}
+                                   </h2>
+
+                              </div>
+
+                              <div className="insight-box">
+
+                                   <p>Total Transactions</p>
+
+                                   <h2>
+                                        {totalTransactions}
+                                   </h2>
+
+                              </div>
+
+                              <div className="insight-box">
+
+                                   <p>Most Used Type</p>
+
+                                   <h2 style={{textTransform:"capitalize"}}>
+
+                                        {mostUsedTransaction}
+
+                                   </h2>
+
+                              </div>
+
+                         </div>
+
+                         </section>
                     </div>
                )}
                </section>
