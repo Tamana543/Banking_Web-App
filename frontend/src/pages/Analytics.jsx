@@ -82,6 +82,28 @@ function Analytics() {
      });
 
      const monthlyData = Object.values(monthlyMap);
+     const categoryData = [
+          {
+               name: "Withdrawals",
+               value: transactions
+                    .filter(t => t.type === "withdrawal")
+                    .reduce((sum, t) => sum + Number(t.amount), 0),
+          },
+          {
+               name: "Transfers",
+               value: transactions
+                    .filter(t => t.type === "transfer")
+                    .reduce((sum, t) => sum + Number(t.amount), 0),
+          },
+          {
+               name: "Loans",
+               value: transactions
+                    .filter(t => t.type === "loan")
+                    .reduce((sum, t) => sum + Number(t.amount), 0),
+          },
+     ];
+     const COLORS = [ "#d4af37", "#4f46e5", "#22c55e", ];
+     
     return (
         <DashboardLayout>
             <DashboardHeader />
@@ -194,6 +216,44 @@ function Analytics() {
                                    />
                               </LineChart>
                          </ResponsiveContainer>
+                    </section>
+                    <section className="analytics-card">
+                                   
+                    <h3>Spending by Category</h3>
+
+                    <ResponsiveContainer width="100%" height={320}>
+
+                         <PieChart>
+
+                              <Pie
+                                   data={categoryData}
+                                   dataKey="value"
+                                   nameKey="name"
+                                   cx="50%"
+                                   cy="50%"
+                                   outerRadius={100}
+                                   label
+                              >
+
+                                   {categoryData.map((entry, index) => (
+
+                                        <Cell
+                                        key={index}
+                                        fill={COLORS[index % COLORS.length]}
+                                        />
+
+                                   ))}
+
+                              </Pie>
+
+                              <Tooltip />
+
+                              <Legend />
+
+                         </PieChart>
+
+                    </ResponsiveContainer>
+
                     </section>
                     </div>
                )}
