@@ -102,6 +102,44 @@ function Analytics() {
                     .reduce((sum, t) => sum + Number(t.amount), 0),
           },
      ];
+     // Transaction Insights
+     const totalTransactions = transactions.length;
+
+          const averageTransaction =
+          totalTransactions === 0
+               ? 0
+               : transactions.reduce(
+                    (sum, transaction) =>
+                         sum + Number(transaction.amount),
+                    0
+                    ) / totalTransactions;
+
+          const highestTransaction =
+          transactions.length > 0
+               ? Math.max(
+                    ...transactions.map(transaction =>
+                         Number(transaction.amount)
+                    )
+                    )
+               : 0;
+
+          const transactionTypes = {};
+
+          transactions.forEach(transaction => {
+
+          transactionTypes[transaction.type] =
+               (transactionTypes[transaction.type] || 0) + 1;
+
+          });
+
+          const mostUsedTransaction =
+          Object.keys(transactionTypes).length
+               ? Object.entries(transactionTypes).sort(
+                    (a, b) => b[1] - a[1]
+                    )[0][0]
+               : "N/A";
+
+
      const COLORS = [ "#d4af37", "#4f46e5", "#22c55e", ];
      
     return (
@@ -218,7 +256,7 @@ function Analytics() {
                          </ResponsiveContainer>
                     </section>
                     <section className="analytics-card">
-                                   
+
                     <h3>Spending by Category</h3>
 
                     <ResponsiveContainer width="100%" height={320}>
