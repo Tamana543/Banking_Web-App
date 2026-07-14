@@ -102,7 +102,7 @@ Phase 8 — Analytics
 * Financial Summary cards ( not yet)
 * Spending by Category chart
 * Transaction Insights
-* Monthly Report
+
 
 
 Phase 9 — Account Management
