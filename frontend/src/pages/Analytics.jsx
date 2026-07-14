@@ -3,7 +3,6 @@ import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, Cart
 } from "recharts";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
-import FinancialSummary from "../components/dashboard/FinancialSummary";
 import { getTransactions } from "../api/transactionApi";
 import "../styles/analytics.css";
 function Analytics() {
@@ -46,7 +45,7 @@ function Analytics() {
      0
      );
 
-     const balance = totalIncome - totalExpense;
+     const balance = totalIncome - totalExpense; // remember this is not the user real balance we will fix that in future 
      const savings = balance;
      const monthlyMap = {};
 
@@ -95,12 +94,7 @@ function Analytics() {
                          Monitor your financial performance and spending insights.
                     </p>
                </div>
-            <FinancialSummary
-                    balance={balance}
-                    income={totalIncome}
-                    expense={totalExpense}
-                    savings={savings}
-               />
+     
            <section className="analytics-page">
                <div className="analytics-summary">
                     <div className="analytics-card income">
@@ -122,6 +116,20 @@ function Analytics() {
                          </h2>
                     </div>
                </div>
+               {transactions.length === 0 ? (
+
+               <div className="analytics-empty">
+
+                    <h3>No Analytics Available</h3>
+
+                    <p>
+                         Complete some transactions to unlock your financial insights.
+                    </p>
+
+               </div>
+
+               ) : (
+
                <div className="analytics-grid">
                     <section className="analytics-card summary-card">
                          <h3>Account Overview</h3>
@@ -190,6 +198,7 @@ function Analytics() {
                          </ResponsiveContainer>
                     </section>
                     </div>
+               )}
                </section>
         </DashboardLayout>
     );
