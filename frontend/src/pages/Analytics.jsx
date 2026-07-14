@@ -46,9 +46,7 @@ function Analytics() {
      );
 
      const balance = totalIncome - totalExpense; // remember this is not the user real balance we will fix that in future 
-     const savings = balance;
      const monthlyMap = {};
-
      transactions.forEach((transaction) => {
      const month = new Date(
      transaction.createdAt
@@ -96,7 +94,7 @@ function Analytics() {
                </div>
      
            <section className="analytics-page">
-               <div className="analytics-summary">
+               <div className="analytics-overview">
                     <div className="analytics-card income">
                          <p>Total Income</p>
                          <h2>
