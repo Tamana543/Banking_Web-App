@@ -88,6 +88,13 @@ function Analytics() {
     return (
         <DashboardLayout>
             <DashboardHeader />
+               <div className="analytics-header">
+                    <h1>Analytics Dashboard</h1>
+
+                    <p>
+                         Monitor your financial performance and spending insights.
+                    </p>
+               </div>
             <FinancialSummary
                     balance={balance}
                     income={totalIncome}
@@ -97,19 +104,19 @@ function Analytics() {
            <section className="analytics-page">
                <div className="analytics-summary">
                     <div className="analytics-card income">
-                         <span>Total Income</span>
+                         <p>Total Income</p>
                          <h2>
                               $ {totalIncome.toLocaleString()}
                          </h2>
                     </div>
                     <div className="analytics-card expense">
-                         <span>Total Expense</span>
+                         <p>Total Expense</p>
                          <h2>
                               ${totalExpense.toLocaleString()}
                          </h2>
                     </div>
                     <div className="analytics-card balance">
-                         <span>Total Transactions</span>
+                         <p>Total Transactions</p>
                          <h2>
                               {transactions.length}
                          </h2>
@@ -117,7 +124,7 @@ function Analytics() {
                </div>
                <div className="analytics-grid">
                     <section className="analytics-card summary-card">
-                         <h3>Financial Summary</h3>
+                         <h3>Account Overview</h3>
                          <div className="summary-list">
                               <div>
                                    <span>Total Income</span>
@@ -128,7 +135,7 @@ function Analytics() {
                                    <strong>${totalExpense.toLocaleString()}</strong>
                               </div>
                               <div>
-                                   <span>Current Balance</span>
+                                   <span>Net Balance</span>
                                    <strong>
                                         ${(totalIncome - totalExpense).toLocaleString()}
                                    </strong>
