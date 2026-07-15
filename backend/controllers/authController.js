@@ -30,6 +30,7 @@ export const registerUser = async (req,res)=>{
                     role: user.role,
                     avatar: user.avatar,
                     isVerified: user.isVerified,
+                    createdAt:user.createdAt,
                },
           });
      } catch (error) {
@@ -100,6 +101,9 @@ export const loginUser = async (req, res) => {
         balance: user.balance,
         currency: user.currency,
         role: user.role,
+        avatar:user.avatar,
+                isVerified:user.isVerified,
+                createdAt:user.createdAt,
       },
     });
   } catch (error) {
