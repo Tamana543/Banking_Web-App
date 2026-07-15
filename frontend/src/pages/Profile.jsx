@@ -10,9 +10,9 @@ function Profile() {
             <section className="profile-page">
                 <div className="profile-card">
                     <div className="profile-avatar">
-                        {user?.name?.charAt(0).toUpperCase()}
+                        {user?.firstName?.charAt(0).toUpperCase()}
                     </div>
-                    <h2>{user?.name}</h2>
+                    <h2>{user?.firstName} {user?.lastName}</h2>
                     <p>{user?.email}</p>
                     <span className="verified">
                         Verified Account
@@ -22,7 +22,7 @@ function Profile() {
                     <h3>Personal Information</h3>
                     <div className="info-row">
                         <span>Full Name</span>
-                        <strong>{user?.name}</strong>
+                        <strong>{user?.firstName}{" "}{user?.lastName}</strong>
                     </div>
                     <div className="info-row">
                         <span>Email</span>

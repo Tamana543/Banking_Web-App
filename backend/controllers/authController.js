@@ -112,24 +112,35 @@ export const loginUser = async (req, res) => {
 };
 // Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
-  try {
-        res.status(200).json({
-        success:true,
-        user:{
-            _id:user._id,
-            name:user.name,
-            email:user.email,
-            balance:user.balance,
-            phone:user.phone,
-            country:user.country,
-            createdAt:user.createdAt,
+    try {
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({
+                success:false,
+                message:"User not found.",
+            });
         }
-    });
-  } catch (error) {
-    console.error("Get Current User Error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error.",
-    });
-  }
+        res.status(200).json({
+            success:true,
+            user:{
+                id:user._id,
+                firstName:user.firstName,
+                lastName:user.lastName,
+                email:user.email,
+                balance:user.balance,
+                currency:user.currency,
+                role:user.role,
+                avatar:user.avatar,
+                isVerified:user.isVerified,
+                createdAt:user.createdAt,
+            }
+        });
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({
+            success:false,
+            message:"Server error.",
+        });
+    }
 };
