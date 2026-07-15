@@ -105,16 +105,17 @@ Phase 8 — Analytics
 
 
 
-Phase 9 — Account Management
+Phase 9 — Profile 
 
 * Profile page
-* Edit profile
+* User profile card
+* Personal information
+* Edit profile modal
 * Change password
-* Change PIN
-* User avatar upload
-* Account settings page
-* Delete account confirmation modal
-* Account information management
+* Upload profile picture
+* Account statistics
+* Security section
+* Logout section
 
 Phase 10 — Notifications & UX
 
