@@ -113,9 +113,17 @@ export const loginUser = async (req, res) => {
 // Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
   try {
-    res.status(200).json({
-      success: true,
-      user: req.user,
+        res.status(200).json({
+        success:true,
+        user:{
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            balance:user.balance,
+            phone:user.phone,
+            country:user.country,
+            createdAt:user.createdAt,
+        }
     });
   } catch (error) {
     console.error("Get Current User Error:", error);
@@ -125,4 +133,3 @@ export const getCurrentUser = async (req, res) => {
     });
   }
 };
-
