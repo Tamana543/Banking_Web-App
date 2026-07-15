@@ -107,13 +107,13 @@ Phase 8 — Analytics
 
 Phase 9 — Profile 
 
-* Profile page
-* User profile card
-* Personal information
+* Profile page ✔️
+* User profile card ✔️
+* Personal information ✔️
+* Account statistics ✔️
 * Edit profile modal
 * Change password
 * Upload profile picture
-* Account statistics
 * Security section
 * Logout section
 
