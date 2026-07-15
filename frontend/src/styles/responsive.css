@@ -85,6 +85,9 @@
     font-size:1.6rem;
 }
 }
+.profile-page{
+    grid-template-columns:1fr;
+}
 @media (max-width:768px){
     .analytics-card{
         padding:20px;
