@@ -10,34 +10,24 @@ import ProtectedRoute from "./ProtectedRoute";
 import Transfer from "../pages/Transfer";
 import Loan from "../pages/Loan";
 import Analytics from "../pages/Analytics"
+import Profile from "../pages/Profile";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-
         <Route path="/login" element={<Login />} />
-
         <Route path="/register" element={<Register />} />
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/transfer" element={<Transfer/>}/>
         <Route path="/loans" element={<Loan/>}/>
         <Route path="/analytics" element={<Analytics/>}/>
-
-      <Route path="*" element={<NotFound />} />
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
 export default AppRoutes;
