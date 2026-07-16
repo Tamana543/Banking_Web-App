@@ -65,8 +65,15 @@ const quote =
       </div>
 
       <div className="dashboard-profile">
-        <div className="profile-avatar">
-          {user?.firstName?.charAt(0)}
+       <div className="profile-avatar">
+          {user?.avatar ? (
+            <img
+              src={`http://localhost:5000${user.avatar}`}
+              alt="Profile"
+            />
+          ) : (
+            user?.firstName?.charAt(0)
+          )}
         </div>
 
         <div>

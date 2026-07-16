@@ -2,39 +2,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   min-height: 180px;
-
   padding: 40px 50px;
-
   background: rgba(20, 20, 20, 0.8);
-
   backdrop-filter: blur(18px);
-
   border: 1px solid rgba(212, 175, 55, 0.12);
-
   border-radius: 28px;
-
   position: relative;
-
   overflow: hidden;
    gap: 80px;
 }
 .dashboard-header::before {
   content: "";
-
   position: absolute;
-
   width: 400px;
   height: 400px;
-
   right: -150px;
   top: -150px;
-
   border-radius: 50%;
-
   background: rgba(212, 175, 55, 0.08);
-
   filter: blur(100px);
 }
 .brand-name {
@@ -45,13 +31,9 @@
 }
 .header-left h1 {
   font-size: 3.2rem;
-
   line-height: 1.15;
-
   max-width: 700px;
-
   margin-bottom: 14px;
-
   font-weight: 700;
 }
 .header-left span {
@@ -63,48 +45,33 @@
 }
 .dashboard-profile {
  display: flex;
-
   align-items: center;
-
   gap: 20px;
-
   padding: 14px 20px;
-
   border-radius: 20px;
-
   background: rgba(255, 255, 255, 0.03);
-
   border: 1px solid rgba(212, 175, 55, 0.08);
 }
 .profile-avatar{
-
-    width:64px;
-
-    height:64px;
-
+    width:120px;
+    height:120px;
     border-radius:50%;
-
+    border:5px solid var(--gold);
+    overflow:hidden;
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-    font-size:1.4rem;
-
+    background:var(--gold);
+    color:#111;
+    font-size:3rem;
     font-weight:700;
-
-    color:black;
-
-    background:linear-gradient(
-        135deg,
-        #fff4bf,
-        #d4af37
-    );
-
-    box-shadow:
-        0 0 22px rgba(212,175,55,.22);
-
+    flex-shrink:0;
+}
+.profile-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 .dashboard-profile h4 {
   color: white;
@@ -114,65 +81,37 @@
   font-size: 0.9rem;
 }
 .greeting{
-
     color:var(--gold);
-
     font-size:.95rem;
-
     font-weight:600;
-
     letter-spacing:1px;
-
     margin-bottom:8px;
-
 }
-
 .today-date{
-
     margin-top:16px;
-
     color:#8f8f8f;
-
     font-size:.9rem;
-
     letter-spacing:.5px;
-
 }
-
 .header-left h1{
-
     line-height:1.15;
-
 }
-
 .header-left h1 span{
-
     background:linear-gradient(
         135deg,
         #fff4bf,
         #f6d365,
         #d4af37
     );
-
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-
     background-clip:text;
-
 }
-
 .brand-name{
-
     display:inline-block;
-
     padding:8px 16px;
-
     margin-bottom:18px;
-
     border-radius:999px;
-
     background:rgba(212,175,55,.08);
-
     border:1px solid rgba(212,175,55,.18);
-
 }

@@ -24,6 +24,8 @@ function Profile() {
                alert(error.message);
           }
      };
+     console.log("Avatar from Context:", user?.avatar);
+     console.log("Full URL:", `http://localhost:5000${user?.avatar}`);
      return (
         <DashboardLayout>
             <DashboardHeader />
