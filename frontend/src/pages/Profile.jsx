@@ -1,19 +1,55 @@
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
+import { uploadAvatar } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/profile.css";
+
 function Profile() {
-     const {user} = useAuth();
-     console.log(user);
-    
+     const {user,setUser} = useAuth();
+     const handleAvatarChange = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          try {
+               const data = await uploadAvatar(file);
+               const updatedUser = {
+                    ...user,
+                    avatar: data.avatar,
+               };
+               setUser(updatedUser);
+               localStorage.setItem(
+                    "user",
+                    JSON.stringify(updatedUser)
+               );
+          } catch (error) {
+               alert(error.message);
+          }
+     };
      return (
         <DashboardLayout>
             <DashboardHeader />
             <section className="profile-page">
                 <div className="profile-card">
                     <div className="profile-avatar">
-                        {user?.firstName?.charAt(0).toUpperCase()}
-                    </div>
+                         <label htmlFor="avatarUpload">
+                         {user?.avatar ? (
+                              <img
+                              src={`http://localhost:5000${user.avatar}`}
+                              alt="avatar"
+                              />
+                         ) : (
+                              <span>
+                              {user?.firstName?.charAt(0)}
+                              </span>
+                         )}
+                         </label>
+                         <input
+                         id="avatarUpload"
+                         type="file"
+                         accept="image/*"
+                         hidden
+                         onChange={handleAvatarChange}
+                         />
+                         </div>
                     <h2>{user?.firstName} {user?.lastName}</h2>
                     <p>{user?.email}</p>
                     <span className="verified">
