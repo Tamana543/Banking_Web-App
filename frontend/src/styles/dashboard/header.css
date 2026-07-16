@@ -53,8 +53,8 @@
   border: 1px solid rgba(212, 175, 55, 0.08);
 }
 .profile-avatar{
-    width:120px;
-    height:120px;
+   width:95px;
+  height:95px;
     border-radius:50%;
     border:5px solid var(--gold);
     overflow:hidden;

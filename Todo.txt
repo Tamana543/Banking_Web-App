@@ -110,11 +110,11 @@ Phase 9 — Profile
 * Profile page layout ✔️
 * Display user information ✔️
 * Member since ✔️
-* Profile picture
+* Profile picture ✔️
+* Upload avatar ✔️
 * Edit profile
 * Change password
 * Change PIN
-* Upload avatar
 * Security section
 * Success notifications
 
