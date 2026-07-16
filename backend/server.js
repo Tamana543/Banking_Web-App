@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import dns from "node:dns";
 import cors from "cors"
+import path from "path";
 
 // routes
 import authRouter from "./routes/authRoutes.js";
@@ -29,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 // APIs 
 app.use("/api/auth", authRouter);
 app.use("/api/transactions", transactionRoutes);
-
+app.use( "/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
