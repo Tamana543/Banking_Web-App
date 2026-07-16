@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+
 export const registerUser = async (req,res)=>{
      try {
           const {firstName,lastName,email,password,pin} = req.body;
@@ -41,6 +42,7 @@ export const registerUser = async (req,res)=>{
     });
      }
 }
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -114,6 +116,7 @@ export const loginUser = async (req, res) => {
     });
   }
 };
+
 // Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
     try {
@@ -145,6 +148,25 @@ export const getCurrentUser = async (req, res) => {
         res.status(500).json({
             success:false,
             message:"Server error.",
+        });
+    }
+};
+
+export const uploadAvatar = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        user.avatar = `/uploads/${req.file.filename}`;
+        await user.save();
+        res.status(200).json({
+            success: true,
+            avatar: user.avatar,
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Avatar upload failed.",
         });
     }
 };
