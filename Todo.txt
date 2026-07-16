@@ -107,15 +107,16 @@ Phase 8 — Analytics
 
 Phase 9 — Profile 
 
-* Profile page ✔️
-* User profile card ✔️
-* Personal information ✔️
-* Account statistics ✔️
-* Edit profile modal
+* Profile page layout ✔️
+* Display user information ✔️
+* Member since ✔️
+* Profile picture
+* Edit profile
 * Change password
-* Upload profile picture
+* Change PIN
+* Upload avatar
 * Security section
-* Logout section
+* Success notifications
 
 Phase 10 — Notifications & UX
 
