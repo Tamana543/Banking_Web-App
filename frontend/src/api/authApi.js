@@ -1,5 +1,4 @@
 const API_URL = "http://localhost:5000/api/auth";
-
 export const loginUser = async (email, password) => {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
@@ -17,7 +16,6 @@ export const loginUser = async (email, password) => {
   }
   return data;
 };
-
 export const registerUser = async (userData) => {
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
@@ -34,7 +32,6 @@ export const registerUser = async (userData) => {
 }
   return data;
 };
-
 export const getCurrentUser = async () => {
   const token =
     localStorage.getItem("token");
@@ -52,7 +49,6 @@ export const getCurrentUser = async () => {
   }
   return data;
 };
-
 export const uploadAvatar = async (file) => {
     const formData = new FormData();
     formData.append("avatar", file);
@@ -64,6 +60,24 @@ export const uploadAvatar = async (file) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: formData,
+        }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message);
+    }
+    return data;
+};
+export const updateProfile = async (profileData) => {
+    const response = await fetch(
+        `${API_URL}/profile`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(profileData),
         }
     );
     const data = await response.json();
