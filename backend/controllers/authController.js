@@ -188,6 +188,21 @@ export const updateProfile = async (req, res) => {
                 message: "User not found.",
             });
         }
+        // duplicate email checker (for peofile udpated)\
+        const existingUser = await User.findOne({
+              email: email.toLowerCase().trim(),
+          });
+
+          if (
+              existingUser &&
+              String(existingUser._id) !== String(user._id)
+          ) {
+              return res.status(400).json({
+                  success: false,
+                  message: "Email already exists.",
+              });
+          }
+          
         user.firstName = firstName;
         user.lastName = lastName;
         user.email = email.toLowerCase().trim();
