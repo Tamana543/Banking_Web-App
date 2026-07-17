@@ -1,8 +1,9 @@
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { uploadAvatar,updateProfile } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
-import { uploadAvatar,updateProfile } from "../api/authApi";
-import { useAuth } from "../context/AuthContext";
 import "../styles/profile.css";
 function Profile() {
      const {user,setUser} = useAuth();
@@ -27,23 +28,46 @@ function Profile() {
                alert(error.message);
           }
      };
+//     Profile change
      const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
+     // Profile overall save
      const handleSave = async () => {
-    try {
-        setLoading(true);
-        const data = await updateProfile(formData);
-        setUser(data.user);
-        localStorage.setItem(
-            "user",
-            JSON.stringify(data.user)
-        );
-        setEditing(false);
-    } catch (error) {
-        alert(error.message);
-    } finally {
-        setLoading(false);
-    }
-};
+          if (!formData.firstName.trim()) {
+               return alert("First name is required.");
+          }
+          if (!formData.lastName.trim()) {
+               return alert("Last name is required.");
+          }
+          if (!formData.email.trim()) {
+               return alert("Email is required.");
+          }
+          const emailRegex =
+               /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(formData.email)) {
+               return alert("Please enter a valid email.");
+          }
+          if (
+               formData.firstName === user.firstName &&
+               formData.lastName === user.lastName &&
+               formData.email === user.email
+          ) {
+               return alert("No changes detected.");
+          }
+          try {
+               setLoading(true);
+               const data = await updateProfile(formData);
+               setUser(data.user);
+               localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+               );
+               setEditing(false);
+          } catch (error) {
+               alert(error.message);
+          } finally {
+               setLoading(false);
+          }
+          };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
      
      return (
