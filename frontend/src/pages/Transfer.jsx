@@ -1,40 +1,29 @@
 import { useState, useEffect } from "react";
-
 import Sidebar from "../components/dashboard/Sidebar";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import HamburgerButton from "../components/dashboard/HamburgerButton";
 import TransactionList from "../components/dashboard/TransactionList";
-
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
-
 import {
   transferMoney,
   getTransactions,
 } from "../api/transactionApi";
-
 import "../styles/dashboard/dashboard.css";
 import "../styles/transfer.css";
-
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [transactions, setTransactions] = useState([]);
-
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
-
   const [receipt, setReceipt] = useState(null);
-
   const [alert, setAlert] = useState({
     type: "",
     message: "",
   });
-
   const [showConfirm, setShowConfirm] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
-
   // Load transactions
   const loadTransactions = async () => {
     try {
@@ -44,30 +33,23 @@ function Transfer() {
       console.error(error);
     }
   };
-
   useEffect(() => {
     loadTransactions();
   }, []);
-
   const handleTransfer = async () => {
     try {
       const data = await transferMoney(
         recipientEmail,
         Number(transferAmount)
       );
-
       await loadTransactions();
-
       setAlert({
         type: "success",
         message: "Transfer completed successfully.",
       });
-
       setReceipt(data.receipt);
-
       setRecipientEmail("");
       setTransferAmount("");
-
       setTimeout(() => {
         setShowReceipt(true);
       }, 500);
@@ -78,7 +60,6 @@ function Transfer() {
       });
     }
   };
-
   return (
     <div className="dashboard-layout">
       <HamburgerButton
@@ -87,24 +68,19 @@ function Transfer() {
           setSidebarOpen(!sidebarOpen)
         }
       />
-
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
-
       <main className="dashboard">
         <DashboardHeader />
-
         <section className="transfer-page">
           <div className="transfer-card">
             <h2>Transfer Money</h2>
-
             <p>
               Send money instantly to another
               Bankist user.
             </p>
-
             <input
               type="email"
               placeholder="Recipient Email"
@@ -115,7 +91,6 @@ function Transfer() {
                 )
               }
             />
-
             <input
               type="number"
               placeholder="Amount"
@@ -126,7 +101,6 @@ function Transfer() {
                 )
               }
             />
-
             <button
               className="transfer-btn"
               onClick={() => {
@@ -141,7 +115,6 @@ function Transfer() {
                   });
                   return;
                 }
-
                 if (
                   Number(transferAmount) <= 0
                 ) {
@@ -152,20 +125,17 @@ function Transfer() {
                   });
                   return;
                 }
-
                 setShowConfirm(true);
               }}
             >
               Transfer Money
             </button>
-
             <AlertMessage
               type={alert.type}
               message={alert.message}
             />
           </div>
         </section>
-
         <section className="transfer-history">
           <TransactionList
             title="Recent Transfers"
@@ -179,13 +149,12 @@ function Transfer() {
           />
         </section>
       </main>
-
       {/* Confirmation Modal */}
-
       <ActionModal
         isOpen={showConfirm}
         title="Confirm Transfer"
         submitText="Confirm Transfer"
+        loading={loading}
         onClose={() =>
           setShowConfirm(false)
         }
@@ -196,28 +165,20 @@ function Transfer() {
       >
         <p>
           <strong>Recipient</strong>
-
           <br />
-
           {recipientEmail}
         </p>
-
         <br />
-
         <p>
           <strong>Amount</strong>
-
           <br />
-
           $
           {Number(
             transferAmount
           ).toLocaleString()}
         </p>
       </ActionModal>
-
       {/* Receipt */}
-
       <ReceiptModal
         isOpen={showReceipt}
         receipt={receipt}
@@ -229,5 +190,4 @@ function Transfer() {
     </div>
   );
 }
-
 export default Transfer;

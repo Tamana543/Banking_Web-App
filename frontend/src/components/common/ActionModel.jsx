@@ -6,42 +6,37 @@ function ActionModal({
   onClose,
   onSubmit,
   submitText,
+  loading = false
 }) {
   if (!isOpen) return null;
-
   return (
     <div className="modal-overlay">
-
       <div className="action-modal">
-
         <h2>{title}</h2>
-
         <div className="modal-body">
           {children}
         </div>
-
         <div className="modal-actions">
-
           <button
             className="cancel-btn"
             onClick={onClose}
           >
             Cancel
           </button>
-
           <button
-            className="submit-btn"
-            onClick={onSubmit}
+              className="submit-btn"
+              onClick={onSubmit}
+              disabled={loading}
           >
-            {submitText}
+              {
+                  loading
+                      ? "Saving..."
+                      : submitText
+              }
           </button>
-
         </div>
-
       </div>
-
     </div>
   );
 }
-
 export default ActionModal;

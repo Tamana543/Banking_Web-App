@@ -1,5 +1,7 @@
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
+import ActionModal from "../components/common/ActionModel";
+
 import { uploadAvatar,updateProfile } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/profile.css";
@@ -7,7 +9,7 @@ function Profile() {
      const {user,setUser} = useAuth();
      const [editing, setEditing] = useState(false);
      const [formData, setFormData] = useState({ firstName: user?.firstName || "", lastName: user?.lastName || "", email: user?.email || "", });
-     
+     const [loading, setLoading] = useState(false);
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
           if (!file) return;
