@@ -1,4 +1,5 @@
 import "../../styles/components/modal.css"
+import { useEffect } from "react";
 function ActionModal({
   isOpen,
   title,
@@ -9,9 +10,27 @@ function ActionModal({
   loading = false
 }) {
   if (!isOpen) return null;
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+        if (e.key === "Escape") {
+            onClose();
+        }
+    };
+    document.addEventListener(
+        "keydown",
+        handleEsc
+    );
+    return () =>
+        document.removeEventListener(
+            "keydown",
+            handleEsc
+        );
+}, [onClose]);
+
   return (
-    <div className="modal-overlay">
-      <div className="action-modal">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="action-modal" onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         <div className="modal-body">
           {children}
