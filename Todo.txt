@@ -112,7 +112,7 @@ Phase 9 — Profile
 * Member since ✔️
 * Profile picture ✔️
 * Upload avatar ✔️
-* Edit profile
+* Edit profile ✔️
 * Change password
 * Change PIN
 * Security section
