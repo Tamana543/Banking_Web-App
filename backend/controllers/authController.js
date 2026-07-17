@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
-
 export const registerUser = async (req,res)=>{
      try {
           const {firstName,lastName,email,password,pin} = req.body;
@@ -42,7 +41,6 @@ export const registerUser = async (req,res)=>{
     });
      }
 }
-
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -116,7 +114,6 @@ export const loginUser = async (req, res) => {
     });
   }
 };
-
 // Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
     try {
@@ -151,7 +148,6 @@ export const getCurrentUser = async (req, res) => {
         });
     }
 };
-
 export const uploadAvatar = async (req, res) => {
     try {
         if (!req.file) {
@@ -160,27 +156,63 @@ export const uploadAvatar = async (req, res) => {
                 message: "Please choose an image.",
             });
         }
-
         const user = await User.findById(req.user._id);
-
         const avatarPath = `/uploads/avatars/${req.file.filename}`;
-
         user.avatar = avatarPath;
-
         await user.save();
-
         res.status(200).json({
             success: true,
             message: "Profile photo updated.",
             avatar: avatarPath,
         });
-
     } catch (error) {
         console.error(error);
-
         res.status(500).json({
             success: false,
             message: "Avatar upload failed.",
+        });
+    }
+};
+
+export const updateProfile = async (req, res) => {
+    try {
+        const {
+            firstName,
+            lastName,
+            email,
+        } = req.body;
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found.",
+            });
+        }
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email.toLowerCase().trim();
+        await user.save();
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully.",
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                balance: user.balance,
+                currency: user.currency,
+                role: user.role,
+                avatar: user.avatar,
+                isVerified: user.isVerified,
+                createdAt: user.createdAt,
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
         });
     }
 };
