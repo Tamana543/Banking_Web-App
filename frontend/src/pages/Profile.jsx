@@ -1,7 +1,6 @@
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
-
 import { uploadAvatar,updateProfile } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/profile.css";
@@ -30,18 +29,21 @@ function Profile() {
      };
      const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
      const handleSave = async () => {
-          try {
-               const data = await updateProfile(formData);
-               setUser(data.user);
-               localStorage.setItem(
-                    "user",
-                    JSON.stringify(data.user)
-               );
-               setEditing(false);
-          } catch (error) {
-               alert(error.message);
-          }
-     };
+    try {
+        setLoading(true);
+        const data = await updateProfile(formData);
+        setUser(data.user);
+        localStorage.setItem(
+            "user",
+            JSON.stringify(data.user)
+        );
+        setEditing(false);
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        setLoading(false);
+    }
+};
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
      
      return (
@@ -78,6 +80,7 @@ function Profile() {
                 </div>
                 <div className="profile-info">
                     <h3>Personal Information</h3>
+                    <button className="edit-profile-btn" onClick={() => setEditing(true)} > Edit Profile </button>
                     <div className="info-row">
                          <span>Full Name</span>
                          <strong>
@@ -128,6 +131,20 @@ function Profile() {
                          </div>
                     </div>
             </section>
+            <ActionModal
+                    isOpen={editing}
+                    title="Edit Profile"
+                    submitText="Save Changes"
+                    onClose={handleCancel}
+                    onSubmit={handleSave}
+                    loading={loading}
+                    >
+                    <div className="profile-form">
+                         <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
+                         <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
+                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+                    </div>
+                    </ActionModal>
         </DashboardLayout>
     );
 }
