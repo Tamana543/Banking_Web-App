@@ -1,11 +1,13 @@
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
-import { uploadAvatar } from "../api/authApi";
+import { uploadAvatar,updateProfile } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/profile.css";
-
 function Profile() {
      const {user,setUser} = useAuth();
+     const [editing, setEditing] = useState(false);
+     const [formData, setFormData] = useState({ firstName: user?.firstName || "", lastName: user?.lastName || "", email: user?.email || "", });
+     
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
           if (!file) return;
@@ -24,8 +26,22 @@ function Profile() {
                alert(error.message);
           }
      };
-     console.log("Avatar from Context:", user?.avatar);
-     console.log("Full URL:", `http://localhost:5000${user?.avatar}`);
+     const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
+     const handleSave = async () => {
+          try {
+               const data = await updateProfile(formData);
+               setUser(data.user);
+               localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+               );
+               setEditing(false);
+          } catch (error) {
+               alert(error.message);
+          }
+     };
+     const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
+     
      return (
         <DashboardLayout>
             <DashboardHeader />
