@@ -231,3 +231,49 @@ export const updateProfile = async (req, res) => {
         });
     }
 };
+
+
+export const changePassword = async (req, res) => {
+    try {
+         const {
+            currentPassword,
+            newPassword,
+            confirmPassword,
+        } = req.body;
+        // Guardians 
+         if (
+            !currentPassword ||
+            !newPassword ||
+            !confirmPassword
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required.",
+            });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Passwords do not match.",
+            });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must be at least 6 characters.",
+            });
+        }
+
+        
+    } catch (error) {
+         console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error.",
+        });
+    }
+}
