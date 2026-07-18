@@ -113,8 +113,8 @@ Phase 9 — Profile
 * Profile picture ✔️
 * Upload avatar ✔️
 * Edit profile ✔️
-* Change password 
-* Success notifications 
+* Change password ✔️
+* Success notifications ✔️
 * Change PIN
 * Security section
 
