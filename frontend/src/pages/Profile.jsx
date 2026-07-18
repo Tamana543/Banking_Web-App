@@ -35,7 +35,7 @@ function Profile() {
                alert(error.message);
           }
      };
-     
+
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
      
      // handle password saving 
@@ -139,6 +139,7 @@ function Profile() {
                 <div className="profile-info">
                     <h3>Personal Information</h3>
                     <button className="edit-profile-btn" onClick={() => setEditing(true)} > Edit Profile </button>
+                    <button className="profile-btn" onClick={() => setShowPasswordModal(true) } > Change Password </button>
                     <div className="info-row">
                          <span>Full Name</span>
                          <strong>
@@ -203,6 +204,18 @@ function Profile() {
                          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
                     </div>
                     </ActionModal>
+                    {/* password change model */}
+                    <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={loading} onClose={() => {setShowPasswordModal(false);setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "",});setMessage("")}} onSubmit={handleChangePassword} >
+                         <input type="password" name="currentPassword" placeholder="Current Password" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
+                         <input type="password" name="newPassword" placeholder="New Password" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                         <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
+                         {message && (
+                              <p className="modal-message">
+                                   {message}
+                              </p>
+                         )}
+
+                         </ActionModal>
         </DashboardLayout>
     );
 }

@@ -128,3 +128,26 @@
 .profile-form input:focus{
     border-color:var(--gold);
 }
+/* password change  */
+.profile-btn{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    background:var(--gold);
+    color:#111;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.profile-btn:hover{
+    transform:translateY(-2px);
+}
+
+.modal-message{
+    margin-top:15px;
+    text-align:center;
+    color:var(--gold);
+    font-size:.9rem;
+}
