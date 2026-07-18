@@ -113,10 +113,10 @@ Phase 9 — Profile
 * Profile picture ✔️
 * Upload avatar ✔️
 * Edit profile ✔️
-* Change password
+* Change password 
+* Success notifications 
 * Change PIN
 * Security section
-* Success notifications
 
 Phase 10 — Notifications & UX
 

@@ -5,6 +5,7 @@ import { uploadAvatar,updateProfile,changePassword } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
+import AlertMessage from "../components/common/AlertMessage";
 import "../styles/profile.css";
 function Profile() {
      // states 
@@ -16,7 +17,7 @@ function Profile() {
      const [showPasswordModal, setShowPasswordModal] = useState(false)
      const [passwordData, setPasswordData] =
     useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
-     const [message, setMessage] = useState("");
+     const [alert, setAlert] = useState({ type: "", message: "", });
 
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
@@ -43,15 +44,22 @@ function Profile() {
      const handleChangePassword = async () => {
           try {
                setLoading(true);
-               const data =
-                    await changePassword(passwordData);
-               setMessage( "Password updated successfully. Logging you out...");
-               setTimeout(() => { logout(); navigate("/login"); }, 1800);
-          }
-          catch (error) {
-               setMessage(error.message);
-          }
-          finally {
+               await changePassword(passwordData);
+               setAlert({
+                    type: "success",
+                    message:
+                         "Password updated successfully. Logging you out...",
+               });
+               setTimeout(() => {
+                    logout();
+                    navigate("/login");
+               }, 1800);
+          } catch (error) {
+               setAlert({
+                    type: "error",
+                    message: error.message,
+               });
+          } finally {
                setLoading(false);
           }
           };
@@ -198,15 +206,13 @@ function Profile() {
                     </div>
                     </ActionModal>
                     {/* password change model */}
-                    <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={loading} onClose={() => {setShowPasswordModal(false);setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "",});setMessage("")}} onSubmit={handleChangePassword} >
+                    <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={loading}
+                     onClose={() => {setShowPasswordModal(false); setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "",});
+                    setAlert({ type: "", message: "", });}} onSubmit={handleChangePassword} >
                          <input type="password" name="currentPassword" placeholder="Current Password" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="newPassword" placeholder="New Password" value={passwordData.newPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
-                         {message && (
-                              <p className="modal-message">
-                                   {message}
-                              </p>
-                         )}
+                         <AlertMessage type={alert.type} message={alert.message} />
 
                          </ActionModal>
         </DashboardLayout>
