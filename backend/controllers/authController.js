@@ -173,7 +173,6 @@ export const uploadAvatar = async (req, res) => {
         });
     }
 };
-
 export const updateProfile = async (req, res) => {
     try {
         const {
@@ -192,7 +191,6 @@ export const updateProfile = async (req, res) => {
         const existingUser = await User.findOne({
               email: email.toLowerCase().trim(),
           });
-
           if (
               existingUser &&
               String(existingUser._id) !== String(user._id)
@@ -231,8 +229,6 @@ export const updateProfile = async (req, res) => {
         });
     }
 };
-
-
 export const changePassword = async (req, res) => {
     try {
          const {
@@ -251,14 +247,12 @@ export const changePassword = async (req, res) => {
                 message: "All fields are required.",
             });
         }
-
         if (newPassword !== confirmPassword) {
             return res.status(400).json({
                 success: false,
                 message: "Passwords do not match.",
             });
         }
-
         if (newPassword.length < 6) {
             return res.status(400).json({
                 success: false,
@@ -266,11 +260,29 @@ export const changePassword = async (req, res) => {
                     "Password must be at least 6 characters.",
             });
         }
-
+        const user = await User.findById(req.user._id);
+        const isMatch = await bcrypt.compare(
+            currentPassword,
+            user.password
+        );
+        if (!isMatch) {
+            return res.status(400).json({
+                success: false,
+                message: "Current password is incorrect.",
+            });
+        }
+        user.password = await bcrypt.hash(
+            newPassword,
+            10
+        );
+        await user.save();
+        res.status(200).json({
+            success: true,
+            message: "Password updated successfully.",
+        });
         
     } catch (error) {
          console.error(error);
-
         res.status(500).json({
             success: false,
             message: "Server error.",
