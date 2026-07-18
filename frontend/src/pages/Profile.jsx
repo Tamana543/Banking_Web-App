@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { uploadAvatar,updateProfile } from "../api/authApi";
+import { uploadAvatar,updateProfile,changePassword } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import "../styles/profile.css";
 function Profile() {
+     // states 
      const {user,setUser} = useAuth();
      const [editing, setEditing] = useState(false);
      const [formData, setFormData] = useState({ firstName: user?.firstName || "", lastName: user?.lastName || "", email: user?.email || "", });
      const [loading, setLoading] = useState(false);
+     const [showPasswordModal, setShowPasswordModal] = useState(false)
+     const [passwordData, setPasswordData] =
+    useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
+     const [loading, setLoading] = useState(false);
+     const [message, setMessage] = useState("");
+
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
           if (!file) return;
@@ -28,7 +35,34 @@ function Profile() {
                alert(error.message);
           }
      };
-//     Profile change
+     
+     const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
+     
+     // handle password saving 
+     const handleChangePassword = async () => {
+          try {
+               setLoading(true);
+               const data =
+                    await changePassword(passwordData);
+               setMessage(data.message);
+               setTimeout(() => {
+                    setShowPasswordModal(false);
+                    setMessage("");
+                    setPasswordData({
+                         currentPassword: "",
+                         newPassword: "",
+                         confirmPassword: "",
+                    });
+               }, 1500);
+          }
+          catch (error) {
+               setMessage(error.message);
+          }
+          finally {
+               setLoading(false);
+          }
+          };
+     //Profile change
      const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
      // Profile overall save
      const handleSave = async () => {
