@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { uploadAvatar,updateProfile,changePassword } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
@@ -7,7 +8,8 @@ import ActionModal from "../components/common/ActionModel";
 import "../styles/profile.css";
 function Profile() {
      // states 
-     const {user,setUser} = useAuth();
+     const {user,setUser,logout} = useAuth();
+     const navigate= useNavigate();
      const [editing, setEditing] = useState(false);
      const [formData, setFormData] = useState({ firstName: user?.firstName || "", lastName: user?.lastName || "", email: user?.email || "", });
      const [loading, setLoading] = useState(false);
@@ -43,16 +45,8 @@ function Profile() {
                setLoading(true);
                const data =
                     await changePassword(passwordData);
-               setMessage(data.message);
-               setTimeout(() => {
-                    setShowPasswordModal(false);
-                    setMessage("");
-                    setPasswordData({
-                         currentPassword: "",
-                         newPassword: "",
-                         confirmPassword: "",
-                    });
-               }, 1500);
+               setMessage( "Password updated successfully. Logging you out...");
+               setTimeout(() => { logout(); navigate("/login"); }, 1800);
           }
           catch (error) {
                setMessage(error.message);
