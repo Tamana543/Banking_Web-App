@@ -86,3 +86,21 @@ export const updateProfile = async (profileData) => {
     }
     return data;
 };
+export const changePassword = async (passwordData) => {
+    const response = await fetch(
+        `${API_URL}/change-password`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(passwordData),
+        }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message);
+    }
+    return data;
+};
