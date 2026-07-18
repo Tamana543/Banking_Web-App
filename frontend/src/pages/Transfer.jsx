@@ -24,9 +24,11 @@ function Transfer() {
   });
   const [showConfirm, setShowConfirm] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
+  const [loading,setLoading] = useState(false)
   // Load transactions
   const loadTransactions = async () => {
     try {
+      setLoading(true)
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
@@ -58,6 +60,8 @@ function Transfer() {
         type: "error",
         message: error.message,
       });
+    }finally {
+      setLoading(false)
     }
   };
   return (

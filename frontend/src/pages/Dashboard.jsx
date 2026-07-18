@@ -24,10 +24,9 @@ function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [alert, setAlert] = useState({
-    type: "",
-    message: "",
-  });
+  const [alert, setAlert] = useState({ type: "", message: "",});
+  const [loading, setLoading] = useState(false);
+
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
@@ -54,6 +53,7 @@ function Dashboard() {
       return;
     }
     try {
+      setLoading(true)
       await depositMoney(Number(depositAmount));
       await refreshDashboard();
       setAlert({
@@ -73,6 +73,8 @@ function Dashboard() {
         type: "error",
         message: error.message,
       });
+    }finally {
+      setLoading(false)
     }
   };
   //  Withdraw 
@@ -85,6 +87,7 @@ function Dashboard() {
       return;
     }
     try {
+      setLoading(true)
       await withdrawMoney(Number(withdrawAmount));
       await refreshDashboard();
       setAlert({
@@ -104,6 +107,8 @@ function Dashboard() {
         type: "error",
         message: error.message,
       });
+    }finally {
+      setLoading(false)
     }
   };
   return (
