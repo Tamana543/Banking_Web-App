@@ -129,16 +129,17 @@
     border-color:var(--gold);
 }
 /* password change  */
-.profile-btn{
-    margin-top:20px;
-    padding:12px 20px;
-    border:none;
-    border-radius:12px;
-    background:var(--gold);
-    color:#111;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
+.profile-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background: var(--gold);
+    color: #111;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    margin-left: 2%;
 }
 
 .profile-btn:hover{

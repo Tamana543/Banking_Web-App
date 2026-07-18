@@ -14,7 +14,6 @@ function Profile() {
      const [showPasswordModal, setShowPasswordModal] = useState(false)
      const [passwordData, setPasswordData] =
     useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
-     const [loading, setLoading] = useState(false);
      const [message, setMessage] = useState("");
 
      const handleAvatarChange = async (e) => {
