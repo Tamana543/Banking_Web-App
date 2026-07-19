@@ -115,7 +115,7 @@ Phase 9 — Profile
 * Edit profile ✔️
 * Change password ✔️
 * Success notifications ✔️
-* Change PIN
+*  Change PIN
 * Security section
 
 Phase 10 — Notifications & UX
