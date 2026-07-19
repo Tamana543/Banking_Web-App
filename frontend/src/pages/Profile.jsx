@@ -17,7 +17,7 @@ function Profile() {
      const [showPasswordModal, setShowPasswordModal] = useState(false)
      const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
      const [showPinModal, setShowPinModal] = useState(false)
-     const [pinData, setPinDate] = useState({currentPassword:"",newPin:"",confirmPin:""})
+     const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
      const [alert, setAlert] = useState({ type: "", message: "", });
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
