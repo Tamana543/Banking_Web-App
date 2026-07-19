@@ -62,6 +62,41 @@ function Profile() {
                setLoading(false);
           }
           };
+     // Handle pin change 
+          const handleChangePin = async () => {
+          if (pinData.newPin !== pinData.confirmPin) {
+               return setAlert({
+                    type: "error",
+                    message: "PINs do not match.",
+               });
+          }
+          if (pinData.newPin.length !== 4) {
+               return setAlert({
+                    type: "error",
+                    message: "PIN must be exactly 4 digits.",
+               });
+          }
+          try {
+               setLoading(true);
+               await changePin(pinData);
+               setAlert({
+                    type: "success",
+                    message:
+                         "PIN updated successfully. Logging you out...",
+               });
+               setTimeout(() => {
+                    logout();
+                    navigate("/login");
+               }, 1800);
+          } catch (error) {
+               setAlert({
+                    type: "error",
+                    message: error.message,
+               });
+          } finally {
+               setLoading(false);
+          }
+          };
      //Profile change
      const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
      // Profile overall save
@@ -103,7 +138,7 @@ function Profile() {
           }
           };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
-     const handleChangePin = async () => { console.log(pinData); };
+     
      return (
         <DashboardLayout>
             <DashboardHeader />
