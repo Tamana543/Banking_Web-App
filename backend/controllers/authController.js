@@ -289,3 +289,60 @@ export const changePassword = async (req, res) => {
         });
     }
 }
+export const changePin = async (req, res) => {
+    try {
+        const {
+            currentPin,
+            newPin,
+            confirmPin,
+        } = req.body;
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found.",
+            });
+        }
+        // Current PIN check
+        const isMatch = await bcrypt.compare(
+            currentPin,
+            user.pin
+        );
+        if (!isMatch) {
+            return res.status(400).json({
+                success: false,
+                message: "Current PIN is incorrect.",
+            });
+        }
+        // Confirmation check
+        if (newPin !== confirmPin) {
+            return res.status(400).json({
+                success: false,
+                message: "PINs do not match.",
+            });
+        }
+        // Length check
+        if (String(newPin).length !== 4) {
+            return res.status(400).json({
+                success: false,
+                message: "PIN must be exactly 4 digits.",
+            });
+        }
+        // Hash new PIN
+        user.pin = await bcrypt.hash(
+            String(newPin),
+            12
+        );
+        await user.save();
+        res.status(200).json({
+            success: true,
+            message: "PIN updated successfully.",
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
+    }
+};
