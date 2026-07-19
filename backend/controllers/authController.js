@@ -322,10 +322,10 @@ export const changePin = async (req, res) => {
             });
         }
         // Length check
-        if (String(newPin).length !== 4) {
+        if (!/^\d{4}$/.test(String(newPin))) {
             return res.status(400).json({
                 success: false,
-                message: "PIN must be exactly 4 digits.",
+                message: "PIN must contain exactly 4 digits.",
             });
         }
         // Hash new PIN
