@@ -15,8 +15,9 @@ function Profile() {
      const [formData, setFormData] = useState({ firstName: user?.firstName || "", lastName: user?.lastName || "", email: user?.email || "", });
      const [loading, setLoading] = useState(false);
      const [showPasswordModal, setShowPasswordModal] = useState(false)
-     const [passwordData, setPasswordData] =
-    useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
+     const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
+     const [showPinModal, setShowPinModal] = useState(false)
+     const [pinData, setPinDate] = useState({currentPassword:"",newPin:"",confirmPin:""})
      const [alert, setAlert] = useState({ type: "", message: "", });
 
      const handleAvatarChange = async (e) => {
@@ -39,7 +40,7 @@ function Profile() {
      };
 
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
-     
+     const handlePinChange = (e) => { setPinData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };
      // handle password saving 
      const handleChangePassword = async () => {
           try {
@@ -104,7 +105,7 @@ function Profile() {
           }
           };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
-     
+     const handleChangePin = async () => { console.log(pinData); };
      return (
         <DashboardLayout>
             <DashboardHeader />
@@ -141,6 +142,8 @@ function Profile() {
                     <h3>Personal Information</h3>
                     <button className="edit-profile-btn" onClick={() => setEditing(true)} > Edit Profile </button>
                     <button className="profile-btn" onClick={() => setShowPasswordModal(true) } > Change Password </button>
+                    <button className="profile-btn" onClick={() => setShowPinModal(true)} > Change PIN </button>
+
                     <div className="info-row">
                          <span>Full Name</span>
                          <strong>
@@ -214,7 +217,61 @@ function Profile() {
                          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
                          <AlertMessage type={alert.type} message={alert.message} />
 
-                         </ActionModal>
+                    </ActionModal>
+                    <ActionModal
+                         isOpen={showPinModal}
+                         title="Change PIN"
+                         submitText="Update PIN"
+                         loading={loading}
+                         onClose={() => {
+                              setShowPinModal(false);
+
+                              setPinData({
+                                   currentPin: "",
+                                   newPin: "",
+                                   confirmPin: "",
+                              });
+
+                              setAlert({
+                                   type: "",
+                                   message: "",
+                              });
+                         }}
+
+                         onSubmit={handleChangePin}
+                         >
+
+                         <input
+                              type="password"
+                              name="currentPin"
+                              placeholder="Current PIN"
+                              value={pinData.currentPin}
+                              onChange={handlePinChange}
+                         />
+
+                         <input
+                              type="password"
+                              name="newPin"
+                              placeholder="New PIN"
+                              value={pinData.newPin}
+                              onChange={handlePinChange}
+                         />
+
+                         <input
+                              type="password"
+                              name="confirmPin"
+                              placeholder="Confirm PIN"
+                              value={pinData.confirmPin}
+                              onChange={handlePinChange}
+                         />
+
+                         <AlertMessage
+                              type={alert.type}
+                              message={alert.message}
+                         />
+
+                    </ActionModal>
+
         </DashboardLayout>
     );
 }
