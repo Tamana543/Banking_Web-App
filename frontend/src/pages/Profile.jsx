@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { uploadAvatar,updateProfile,changePassword } from "../api/authApi";
+import { uploadAvatar,updateProfile,changePassword,changePin } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
@@ -19,7 +19,6 @@ function Profile() {
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinDate] = useState({currentPassword:"",newPin:"",confirmPin:""})
      const [alert, setAlert] = useState({ type: "", message: "", });
-
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
           if (!file) return;
@@ -38,7 +37,6 @@ function Profile() {
                alert(error.message);
           }
      };
-
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
      const handlePinChange = (e) => { setPinData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };
      // handle password saving 
@@ -143,7 +141,6 @@ function Profile() {
                     <button className="edit-profile-btn" onClick={() => setEditing(true)} > Edit Profile </button>
                     <button className="profile-btn" onClick={() => setShowPasswordModal(true) } > Change Password </button>
                     <button className="profile-btn" onClick={() => setShowPinModal(true)} > Change PIN </button>
-
                     <div className="info-row">
                          <span>Full Name</span>
                          <strong>
@@ -216,7 +213,6 @@ function Profile() {
                          <input type="password" name="newPassword" placeholder="New Password" value={passwordData.newPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
                          <AlertMessage type={alert.type} message={alert.message} />
-
                     </ActionModal>
                     <ActionModal
                          isOpen={showPinModal}
@@ -225,22 +221,18 @@ function Profile() {
                          loading={loading}
                          onClose={() => {
                               setShowPinModal(false);
-
                               setPinData({
                                    currentPin: "",
                                    newPin: "",
                                    confirmPin: "",
                               });
-
                               setAlert({
                                    type: "",
                                    message: "",
                               });
                          }}
-
                          onSubmit={handleChangePin}
                          >
-
                          <input
                               type="password"
                               name="currentPin"
@@ -248,7 +240,6 @@ function Profile() {
                               value={pinData.currentPin}
                               onChange={handlePinChange}
                          />
-
                          <input
                               type="password"
                               name="newPin"
@@ -256,7 +247,6 @@ function Profile() {
                               value={pinData.newPin}
                               onChange={handlePinChange}
                          />
-
                          <input
                               type="password"
                               name="confirmPin"
@@ -264,14 +254,11 @@ function Profile() {
                               value={pinData.confirmPin}
                               onChange={handlePinChange}
                          />
-
                          <AlertMessage
                               type={alert.type}
                               message={alert.message}
                          />
-
                     </ActionModal>
-
         </DashboardLayout>
     );
 }

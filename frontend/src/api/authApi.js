@@ -104,3 +104,21 @@ export const changePassword = async (passwordData) => {
     }
     return data;
 };
+export const changePin = async (pinData) => {
+    const response = await fetch(
+        `${API_URL}/change-pin`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(pinData),
+        }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message);
+    }
+    return data;
+};
