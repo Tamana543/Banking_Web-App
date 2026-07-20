@@ -64,6 +64,7 @@ function Profile() {
           };
      // Handle pin change 
           const handleChangePin = async () => {
+              
           if (pinData.newPin !== pinData.confirmPin) {
                return setAlert({
                     type: "error",
@@ -78,6 +79,7 @@ function Profile() {
           }
           try {
                setLoading(true);
+                console.log(pinData);
                await changePin(pinData);
                setAlert({
                     type: "success",

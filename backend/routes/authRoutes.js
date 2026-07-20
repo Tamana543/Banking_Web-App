@@ -11,7 +11,7 @@ router.get("/me",protect,getCurrentUser)
 router.post( "/avatar", protect, upload.single("avatar"), uploadAvatar );
 router.put("/profile", protect, updateProfile);
 router.put("/change-password",protect,changePassword)
-router.put("/change-pin",protect,changePassword)
+router.put("/change-pin",protect,changePin)
 
 
 export default router
