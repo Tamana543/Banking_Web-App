@@ -70,6 +70,13 @@ const userSchema = new mongoose.Schema(
                type: Date,
                default: null,
           },
+          passwordUpdatedAt: {
+               type: Date,
+               default: null,
+          },pinUpdatedAt: {
+               type: Date,
+               default: null,
+          },
      }, {
           timestamps :true
      }

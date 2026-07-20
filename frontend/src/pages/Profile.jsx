@@ -86,6 +86,13 @@ function Profile() {
                     message:
                          "PIN updated successfully. Logging you out...",
                });
+                //  To updated PIN After success 
+               const userData = await getCurrentUser();
+                    setUser(userData.user);
+                    localStorage.setItem(
+                         "user",
+                         JSON.stringify(userData.user)
+               );
                setTimeout(() => {
                     logout();
                     navigate("/login");
@@ -140,7 +147,8 @@ function Profile() {
           }
           };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
-     
+    
+
      return (
         <DashboardLayout>
             <DashboardHeader />

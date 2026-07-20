@@ -31,6 +31,10 @@ export const registerUser = async (req,res)=>{
                     avatar: user.avatar,
                     isVerified: user.isVerified,
                     createdAt:user.createdAt,
+                    lastLogin:user.lastLogin,
+                    passwordUpdatedAt:user.passwordUpdatedAt,
+                    pinUpdatedAt:user.pinUpdatedAt,
+                    failedLoginAttempts:user.failedLoginAttempts,
                },
           });
      } catch (error) {
@@ -89,7 +93,7 @@ export const loginUser = async (req, res) => {
     const token = generateToken(user._id);
     user.failedLoginAttempts = 0;
     user.isLocked = false;
-    
+    user.lastLogin = new Date()
     await user.save();
     // Send response
     res.status(200).json({
@@ -104,8 +108,12 @@ export const loginUser = async (req, res) => {
         currency: user.currency,
         role: user.role,
         avatar:user.avatar,
-                isVerified:user.isVerified,
-                createdAt:user.createdAt,
+        isVerified:user.isVerified,
+        createdAt:user.createdAt,
+        lastLogin: user.lastLogin,
+        passwordUpdatedAt: user.passwordUpdatedAt,
+        pinUpdatedAt: user.pinUpdatedAt,
+        failedLoginAttempts: user.failedLoginAttempts,
       },
     });
   } catch (error) {
@@ -140,6 +148,10 @@ export const getCurrentUser = async (req, res) => {
                 isVerified:user.isVerified,
                 createdAt:user.createdAt,
                 lastLogin: user.lastLogin,
+                lastLogin:user.lastLogin,
+                passwordUpdatedAt:user.passwordUpdatedAt,
+                pinUpdatedAt:user.pinUpdatedAt,
+                failedLoginAttempts:user.failedLoginAttempts,
             }
         });
     }
@@ -278,6 +290,7 @@ export const changePassword = async (req, res) => {
             newPassword,
             10
         );
+        user.passwordUpdatedAt = new Date();
         await user.save();
         res.status(200).json({
             success: true,
@@ -332,10 +345,8 @@ export const changePin = async (req, res) => {
             });
         }
         // Hash new PIN
-        user.pin = await bcrypt.hash(
-            String(newPin),
-            12
-        );
+        user.pin = await bcrypt.hash( String(newPin), 12 );
+        user.pinUpdatedAt = new Date();
         await user.save();
         res.status(200).json({
             success: true,
