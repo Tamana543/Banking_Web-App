@@ -227,6 +227,36 @@ function Profile() {
                               <strong>Active</strong>
                          </div>
                     </div>
+                    {/* Security Card */}
+                    <div className="profile-info">
+                         <h3>Security</h3>
+                         <div className="info-row">
+                              <span>Password</span>
+                              <strong>Updated</strong>
+                         </div>
+                         <div className="info-row">
+                              <span>Transaction PIN</span>
+                              <strong>Protected</strong>
+                         </div>
+                         <div className="info-row">
+                              <span>Account Status</span>
+                              <strong className="security-success">
+                                   Secure
+                              </strong>
+                         </div>
+                         <div className="info-row">
+                              <span>Two-Factor Authentication</span>
+                              <strong className="coming-soon">
+                                   Coming Soon
+                              </strong>
+                         </div>
+                         <div className="info-row">
+                              <span>Current Session</span>
+                              <strong>
+                                   Active
+                              </strong>
+                         </div>
+                    </div>
             </section>
             <ActionModal
                     isOpen={editing}
