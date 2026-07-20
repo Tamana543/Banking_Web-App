@@ -152,3 +152,12 @@
     color:var(--gold);
     font-size:.9rem;
 }
+.security-success{
+    color:#32d583;
+    font-weight:600;
+}
+
+.coming-soon{
+    color:#d4af37;
+    font-weight:600;
+}

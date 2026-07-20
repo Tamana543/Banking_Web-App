@@ -75,12 +75,14 @@ export const loginUser = async (req, res) => {
   if (user.failedLoginAttempts >= 5) {
     user.isLocked = true;
   }
+  user.lastLogin = new Date();
   await user.save();
   return res.status(401).json({
     success: false,
     message: user.isLocked
       ? "Your account has been locked after 5 failed login attempts."
       : "Invalid email or password.",
+      lastLogin: user.lastLogin,
   });
 }
     // Generate JWT
@@ -137,6 +139,7 @@ export const getCurrentUser = async (req, res) => {
                 avatar:user.avatar,
                 isVerified:user.isVerified,
                 createdAt:user.createdAt,
+                lastLogin: user.lastLogin,
             }
         });
     }
