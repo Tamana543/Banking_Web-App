@@ -237,31 +237,81 @@ function Profile() {
                     </div>
                     {/* Security Card */}
                     <div className="profile-info">
-                         <h3>Security</h3>
+                         <h3>Security Center</h3>
+
                          <div className="info-row">
-                              <span>Password</span>
-                              <strong>Updated</strong>
-                         </div>
-                         <div className="info-row">
-                              <span>Transaction PIN</span>
-                              <strong>Protected</strong>
-                         </div>
-                         <div className="info-row">
-                              <span>Account Status</span>
+                              <span>Current Session</span>
                               <strong className="security-success">
-                                   Secure
+                                   Active
                               </strong>
                          </div>
+
+                         <div className="info-row">
+                              <span>Last Login</span>
+
+                              <strong>
+                                   {
+                                        user?.lastLogin
+                                        ?
+                                        new Date(user.lastLogin)
+                                        .toLocaleString()
+                                        :
+                                        "Never"
+                                   }
+                              </strong>
+                         </div>
+
+                         <div className="info-row">
+                              <span>Password Updated</span>
+
+                              <strong>
+                                   {
+                                        user?.passwordUpdatedAt
+                                        ?
+                                        new Date(user.passwordUpdatedAt)
+                                        .toLocaleDateString()
+                                        :
+                                        "Not yet"
+                                   }
+                              </strong>
+                         </div>
+
+                         <div className="info-row">
+                              <span>PIN Updated</span>
+
+                              <strong>
+                                   {
+                                        user?.pinUpdatedAt
+                                        ?
+                                        new Date(user.pinUpdatedAt)
+                                        .toLocaleDateString()
+                                        :
+                                        "Not yet"
+                                   }
+                              </strong>
+                         </div>
+
+                         <div className="info-row">
+                              <span>Failed Login Attempts</span>
+
+                              <strong>
+                                   {user?.failedLoginAttempts}/5
+                              </strong>
+                         </div>
+
                          <div className="info-row">
                               <span>Two-Factor Authentication</span>
+
                               <strong className="coming-soon">
                                    Coming Soon
                               </strong>
                          </div>
+
                          <div className="info-row">
-                              <span>Current Session</span>
-                              <strong>
-                                   Active
+                              <span>Logout From All Devices</span>
+
+                              <strong className="coming-soon">
+                                   Coming Soon
                               </strong>
                          </div>
                     </div>
