@@ -116,7 +116,7 @@ Phase 9 — Profile
 * Change password ✔️
 * Success notifications ✔️
 *  Change PIN ✔️
-* Security section
+* Security section ( fix the failed login bug)
 
 Phase 10 — Notifications & UX
 

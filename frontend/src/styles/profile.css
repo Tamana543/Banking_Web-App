@@ -153,11 +153,20 @@
     font-size:.9rem;
 }
 .security-success{
-    color:#32d583;
+    color:#34d399;
     font-weight:600;
 }
 
 .coming-soon{
-    color:#d4af37;
+    color:var(--gold);
     font-weight:600;
+}
+
+.profile-info .info-row{
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.profile-info .info-row:last-child{
+    border-bottom:none;
 }

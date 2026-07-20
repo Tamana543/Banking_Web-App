@@ -67,28 +67,31 @@ export const loginUser = async (req, res) => {
   });
 }
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid email or password.",
-      });
-    }
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-  user.failedLoginAttempts += 1;
-  if (user.failedLoginAttempts >= 5) {
-    user.isLocked = true;
-  }
-  user.lastLogin = new Date();
-  await user.save();
-  return res.status(401).json({
-    success: false,
-    message: user.isLocked
-      ? "Your account has been locked after 5 failed login attempts."
-      : "Invalid email or password.",
-      lastLogin: user.lastLogin,
-  });
-}
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password.",
+            });
+            }
+            // Compare password
+            const isMatch = await bcrypt.compare(password, user.password);
+        console.log("Password Match:", isMatch);
+            if (!isMatch) {
+                console.log("Before Increment:", user.failedLoginAttempts);
+            user.failedLoginAttempts += 1;
+            console.log("After Increment:", user.failedLoginAttempts);
+            if (user.failedLoginAttempts >= 5) {
+                user.isLocked = true;
+            }
+            user.lastLogin = new Date();
+            await user.save();
+            return res.status(401).json({
+                success: false,
+                message: user.isLocked
+                ? "Your account has been locked after 5 failed login attempts."
+                : "Invalid email or password.",
+                lastLogin: user.lastLogin,
+            });
+        }
     // Generate JWT
     const token = generateToken(user._id);
     user.failedLoginAttempts = 0;
