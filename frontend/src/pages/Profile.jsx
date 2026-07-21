@@ -6,6 +6,8 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
+import Toast from "../components/common/Toast";
+
 import "../styles/profile.css";
 function Profile() {
      // states 
@@ -44,20 +46,24 @@ function Profile() {
           try {
                setLoading(true);
                await changePassword(passwordData);
+               setTimeout(() => {
                setAlert({
                     type: "success",
                     message:
                          "Password updated successfully. Logging you out...",
                });
+               },2500);
                setTimeout(() => {
                     logout();
                     navigate("/login");
                }, 1800);
           } catch (error) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: error.message,
                });
+               },2500);
           } finally {
                setLoading(false);
           }
@@ -66,26 +72,34 @@ function Profile() {
           const handleChangePin = async () => {
               
           if (pinData.newPin !== pinData.confirmPin) {
-               return setAlert({
+               setTimeout(()=>{
+               setAlert({
                     type: "error",
                     message: "PINs do not match.",
                });
+               },2500);
+               return;
           }
           if (pinData.newPin.length !== 4) {
-               return setAlert({
+               setTimeout(()=>{
+               setAlert({
                     type: "error",
                     message: "PIN must be exactly 4 digits.",
                });
+               },2500);
+               return
           }
           try {
                setLoading(true);
                 console.log(pinData);
                await changePin(pinData);
+               etTimeout(() => {
                setAlert({
                     type: "success",
                     message:
                          "PIN updated successfully. Logging you out...",
                });
+               },2500);
                 //  To updated PIN After success 
                const userData = await getCurrentUser();
                     setUser(userData.user);
@@ -98,10 +112,12 @@ function Profile() {
                     navigate("/login");
                }, 1800);
           } catch (error) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: error.message,
                });
+               },2500);
           } finally {
                setLoading(false);
           }
@@ -111,33 +127,41 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
+               etTimeout(() => {
               setAlert({
                type: "error",
                message: "First name is required.",
                });
+               },2500);
                return;
           }
           if (!formData.lastName.trim()) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: "Last name is required.",
                     });
+                    },2500);
                return;
           }
           if (!formData.email.trim()) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: "Email is required.",
                     });
+               },2500);
                return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: "Please enter a valid email.",
                     });
+                    },2500);
                return;
           }
           if (
@@ -145,10 +169,12 @@ function Profile() {
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
+               etTimeout(() => {
                setAlert({
                     type: "error",
                     message: "No changes detected.",
                     });
+                    },2500);
                return;
           }
           try {
@@ -159,10 +185,12 @@ function Profile() {
                     "user",
                     JSON.stringify(data.user)
                );
+               etTimeout(() => {
                setAlert({
                     type: "success",
                     message: "Profile updated successfully.",
                });
+               },2500);
 
                setTimeout(() => {
                     setEditing(false);
@@ -173,10 +201,12 @@ function Profile() {
                     });
                }, 1500);
           } catch (error) {
+               etTimeout(() => {
                setAlert({
                          type: "error",
                          message: error.message,
                     });
+                    },2500);
           } finally {
                setLoading(false);
           }
@@ -420,6 +450,11 @@ function Profile() {
                               message={alert.message}
                          />
                     </ActionModal>
+                    <Toast
+                         type={alert.type}
+                         message={alert.message}
+                         isVisible={!!alert.message}
+                    />
         </DashboardLayout>
     );
 }
