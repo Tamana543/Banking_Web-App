@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // if any error check the name of files as changed alot
 import Landing from "../pages/Landing";
 import Login from "../pages/Login";
@@ -14,7 +14,7 @@ import Profile from "../pages/Profile";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+    
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
@@ -27,7 +27,7 @@ function AppRoutes() {
         <Route path="/profile" element={<Profile/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    
   );
 }
 export default AppRoutes;

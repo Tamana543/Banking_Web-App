@@ -7,7 +7,7 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
 import Toast from "../components/common/Toast";
-
+import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
 function Profile() {
      // states 
@@ -21,6 +21,8 @@ function Profile() {
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
      const [alert, setAlert] = useState({ type: "", message: "", });
+     const { showToast } = useToast();
+     
      const handleAvatarChange = async (e) => {
           const file = e.target.files[0];
           if (!file) return;
@@ -47,11 +49,10 @@ function Profile() {
                setLoading(true);
                await changePassword(passwordData);
                setTimeout(() => {
-               setAlert({
-                    type: "success",
-                    message:
-                         "Password updated successfully. Logging you out...",
-               });
+              showToast(
+                    "Profile updated successfully.",
+                    "success"
+               );
                },2500);
                setTimeout(() => {
                     logout();
