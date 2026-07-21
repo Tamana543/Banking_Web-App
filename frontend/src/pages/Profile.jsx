@@ -111,25 +111,45 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
-               return alert("First name is required.");
+              setAlert({
+               type: "error",
+               message: "First name is required.",
+               });
+               return;
           }
           if (!formData.lastName.trim()) {
-               return alert("Last name is required.");
+               setAlert({
+                    type: "error",
+                    message: "Last name is required.",
+                    });
+               return;
           }
           if (!formData.email.trim()) {
-               return alert("Email is required.");
+               setAlert({
+                    type: "error",
+                    message: "Email is required.",
+                    });
+               return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
-               return alert("Please enter a valid email.");
+               setAlert({
+                    type: "error",
+                    message: "Please enter a valid email.",
+                    });
+               return;
           }
           if (
                formData.firstName === user.firstName &&
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
-               return alert("No changes detected.");
+               setAlert({
+                    type: "error",
+                    message: "No changes detected.",
+                    });
+               return;
           }
           try {
                setLoading(true);
@@ -139,9 +159,24 @@ function Profile() {
                     "user",
                     JSON.stringify(data.user)
                );
-               setEditing(false);
+               setAlert({
+                    type: "success",
+                    message: "Profile updated successfully.",
+               });
+
+               setTimeout(() => {
+                    setEditing(false);
+
+                    setAlert({
+                         type: "",
+                         message: "",
+                    });
+               }, 1500);
           } catch (error) {
-               alert(error.message);
+               setAlert({
+                         type: "error",
+                         message: error.message,
+                    });
           } finally {
                setLoading(false);
           }
@@ -328,6 +363,7 @@ function Profile() {
                          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
                          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
                          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+                         <AlertMessage type={alert.type} message={alert.message} />
                     </div>
                     </ActionModal>
                     {/* password change model */}
