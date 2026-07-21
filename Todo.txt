@@ -130,6 +130,20 @@ Phase 10 — Notifications & UX
 * Dark mode
 * Theme persistence
 
+Phase 17 — Portfolio Features
+
+* README redesign
+* Project architecture documentation
+* API documentation
+* Screenshots section
+* Live demo deployment
+* Technical documentation
+* Installation guide
+* Feature showcase
+* LinkedIn project post
+* Portfolio integration
+* TransactionContext ( right shared repeate, instead of each page making its own API requests, similar to AuthContext )
+
 
 Phase 11 — Savings Features
 
@@ -192,19 +206,6 @@ Phase 16 — Advanced Features
 * Transaction tagging
 * Advanced filtering
 
-Phase 17 — Portfolio Features
-
-* README redesign
-* Project architecture documentation
-* API documentation
-* Screenshots section
-* Live demo deployment
-* Technical documentation
-* Installation guide
-* Feature showcase
-* LinkedIn project post
-* Portfolio integration
-* TransactionContext ( right shared repeate, instead of each page making its own API requests, similar to AuthContext )
 
 phase 18 - Setting dashboard
 * Dark mode 
@@ -214,3 +215,11 @@ phase 18 - Setting dashboard
 * Delete Account
 * create a responsive css add all medias there 
 * fix the 404 page
+
+Phase 19 — Real-Time Features
+* Live balance updates
+* Live notifications
+* WebSockets (Socket.IO)
+* Instant transfer notifications
+* Live admin dashboard
+* Online users indicator
