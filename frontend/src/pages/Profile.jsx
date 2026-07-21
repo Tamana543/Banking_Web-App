@@ -177,8 +177,16 @@ function Profile() {
                          </div>
                     <h2>{user?.firstName} {user?.lastName}</h2>
                     <p>{user?.email}</p>
-                    <span className="verified">
-                        Verified Account
+                    <span
+                         className={
+                              user?.isVerified
+                                   ? "verified"
+                                   : "not-verified"
+                         }
+                         >
+                         {user?.isVerified
+                              ? "Verified Account"
+                              : "Unverified Account"}
                     </span>
                 </div>
                 <div className="profile-info">
@@ -288,14 +296,6 @@ function Profile() {
                                         :
                                         "Not yet"
                                    }
-                              </strong>
-                         </div>
-
-                         <div className="info-row">
-                              <span>Failed Login Attempts</span>
-
-                              <strong>
-                                   {user?.failedLoginAttempts}/5
                               </strong>
                          </div>
 

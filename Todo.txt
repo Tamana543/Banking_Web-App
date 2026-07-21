@@ -106,7 +106,7 @@ Phase 8 — Analytics
 
 
 Phase 9 — Profile 
-
+* Email verification budge 
 * Profile page layout ✔️
 * Display user information ✔️
 * Member since ✔️
@@ -116,7 +116,7 @@ Phase 9 — Profile
 * Change password ✔️
 * Success notifications ✔️
 *  Change PIN ✔️
-* Security section ( fix the failed login bug)
+* Security section ✔️
 
 Phase 10 — Notifications & UX
 

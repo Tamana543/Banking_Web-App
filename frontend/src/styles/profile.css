@@ -170,3 +170,7 @@
 .profile-info .info-row:last-child{
     border-bottom:none;
 }
+.not-verified{
+    background:#442b17;
+    color:#f2a93b;
+}

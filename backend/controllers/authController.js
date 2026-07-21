@@ -34,7 +34,6 @@ export const registerUser = async (req,res)=>{
                     lastLogin:user.lastLogin,
                     passwordUpdatedAt:user.passwordUpdatedAt,
                     pinUpdatedAt:user.pinUpdatedAt,
-                    failedLoginAttempts:user.failedLoginAttempts,
                },
           });
      } catch (error) {
@@ -115,8 +114,7 @@ export const loginUser = async (req, res) => {
         createdAt:user.createdAt,
         lastLogin: user.lastLogin,
         passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt,
-        failedLoginAttempts: user.failedLoginAttempts,
+        pinUpdatedAt: user.pinUpdatedAt
       },
     });
   } catch (error) {
@@ -153,8 +151,7 @@ export const getCurrentUser = async (req, res) => {
                 lastLogin: user.lastLogin,
                 lastLogin:user.lastLogin,
                 passwordUpdatedAt:user.passwordUpdatedAt,
-                pinUpdatedAt:user.pinUpdatedAt,
-                failedLoginAttempts:user.failedLoginAttempts,
+                pinUpdatedAt:user.pinUpdatedAt
             }
         });
     }
