@@ -120,7 +120,7 @@ Phase 9 — Profile
 
 Phase 10 — Notifications & UX
 
-* Toast notifications (apply the same toast context for all setAlarms in profile.jsx)
+* Toast notifications 
 * Loading spinners
 * Success messages
 * Error handling messages

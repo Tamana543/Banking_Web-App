@@ -9,6 +9,7 @@ import AlertMessage from "../components/common/AlertMessage";
 import Toast from "../components/common/Toast";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
+
 function Profile() {
      // states 
      const {user,setUser,logout} = useAuth();
@@ -59,11 +60,11 @@ function Profile() {
                     navigate("/login");
                }, 1800);
           } catch (error) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: error.message,
-               });
+               setTimeout(() => {
+                    showToast(
+                    error.message,
+                    "error"
+               );
                },2500);
           } finally {
                setLoading(false);
@@ -74,19 +75,19 @@ function Profile() {
               
           if (pinData.newPin !== pinData.confirmPin) {
                setTimeout(()=>{
-               setAlert({
-                    type: "error",
-                    message: "PINs do not match.",
-               });
+                    showToast(
+                    "PINs do not match.",
+                    "error"
+               );
                },2500);
                return;
           }
           if (pinData.newPin.length !== 4) {
                setTimeout(()=>{
-               setAlert({
-                    type: "error",
-                    message: "PIN must be exactly 4 digits.",
-               });
+                    showToast(
+                    "PIN must be exactly 4 digits.",
+                    "error"
+               );
                },2500);
                return
           }
@@ -94,12 +95,11 @@ function Profile() {
                setLoading(true);
                 console.log(pinData);
                await changePin(pinData);
-               etTimeout(() => {
-               setAlert({
-                    type: "success",
-                    message:
-                         "PIN updated successfully. Logging you out...",
-               });
+               setTimeout(() => {
+                    showToast(
+                   "PIN updated successfully. Logging you out...",
+                    "success"
+               );
                },2500);
                 //  To updated PIN After success 
                const userData = await getCurrentUser();
@@ -113,11 +113,11 @@ function Profile() {
                     navigate("/login");
                }, 1800);
           } catch (error) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: error.message,
-               });
+               setTimeout(() => {
+                    showToast(
+                         error.message,
+                         "error"
+                    );
                },2500);
           } finally {
                setLoading(false);
@@ -128,40 +128,40 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
-               etTimeout(() => {
-              setAlert({
-               type: "error",
-               message: "First name is required.",
-               });
+               setTimeout(() => {
+                    showToast(
+                         "First name is required.",
+                         "error"
+                    );
                },2500);
                return;
           }
           if (!formData.lastName.trim()) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: "Last name is required.",
-                    });
+               setTimeout(() => {
+                    showToast(
+                         "Last name is required.",
+                         "error"
+                    );
                     },2500);
                return;
           }
           if (!formData.email.trim()) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: "Email is required.",
-                    });
+               setTimeout(() => {
+                    showToast(
+                         "Email is required.",
+                         "error"
+                    );
                },2500);
                return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: "Please enter a valid email.",
-                    });
+               setTimeout(() => {
+                    showToast(
+                         "Please enter a valid email.",
+                         "error"
+                    );
                     },2500);
                return;
           }
@@ -170,11 +170,11 @@ function Profile() {
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
-               etTimeout(() => {
-               setAlert({
-                    type: "error",
-                    message: "No changes detected.",
-                    });
+               setTimeout(() => {
+                    showToast(
+                         "No changes detected.",
+                         "error"
+                    );
                     },2500);
                return;
           }
@@ -186,11 +186,11 @@ function Profile() {
                     "user",
                     JSON.stringify(data.user)
                );
-               etTimeout(() => {
-               setAlert({
-                    type: "success",
-                    message: "Profile updated successfully.",
-               });
+               setTimeout(() => {
+                    showToast(
+                         "Profile updated successfully.",
+                         "success"
+                    );
                },2500);
 
                setTimeout(() => {
@@ -202,11 +202,11 @@ function Profile() {
                     });
                }, 1500);
           } catch (error) {
-               etTimeout(() => {
-               setAlert({
-                         type: "error",
-                         message: error.message,
-                    });
+               setTimeout(() => {
+                    showToast(
+                         error.message,
+                         "error"
+                    );
                     },2500);
           } finally {
                setLoading(false);
