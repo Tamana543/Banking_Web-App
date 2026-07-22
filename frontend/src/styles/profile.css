@@ -171,6 +171,10 @@
     border-bottom:none;
 }
 .not-verified{
-    background:#442b17;
-    color:#f2a93b;
+        margin-top: 2%;
+    background: #442b17;
+    color: #f2a93b;
+    padding: 2%;
+    border-radius: 4%;
+  
 }

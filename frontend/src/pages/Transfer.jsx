@@ -12,6 +12,7 @@ import {
 } from "../api/transactionApi";
 import "../styles/dashboard/dashboard.css";
 import "../styles/transfer.css";
+
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -28,7 +29,6 @@ function Transfer() {
   // Load transactions
   const loadTransactions = async () => {
     try {
-      setLoading(true)
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
@@ -39,6 +39,7 @@ function Transfer() {
     loadTransactions();
   }, []);
   const handleTransfer = async () => {
+    setLoading(true)
     try {
       const data = await transferMoney(
         recipientEmail,

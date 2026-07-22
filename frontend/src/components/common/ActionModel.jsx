@@ -1,13 +1,14 @@
 import "../../styles/components/modal.css"
+import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
 function ActionModal({
-  isOpen,
-  title,
-  children,
-  onClose,
-  onSubmit,
-  submitText,
-  loading = false
+    isOpen,
+    title,
+    children,
+    onClose,
+    onSubmit,
+    submitText,
+    loading = false,
 }) {
   if (!isOpen) return null;
 
@@ -36,22 +37,15 @@ function ActionModal({
           {children}
         </div>
         <div className="modal-actions">
-          <button
-            className="cancel-btn"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
-          <button
-              className="submit-btn"
-              onClick={onSubmit}
-              disabled={loading}
-          >
-              {
-                  loading
-                      ? "Saving..."
-                      : submitText
-              }
+          <button className="cancel-btn" onClick={onClose} disabled={loading} >
+                Cancel
+            </button>
+          <button className="submit-btn" onClick={onSubmit} disabled={loading}>
+                {loading ? (
+                    <LoadingSpinner size="small" />
+                ) : (
+                    submitText
+                )}
           </button>
         </div>
       </div>
