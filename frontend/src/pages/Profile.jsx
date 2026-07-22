@@ -6,7 +6,6 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
-import Toast from "../components/common/Toast";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
 
@@ -39,7 +38,7 @@ function Profile() {
                     JSON.stringify(updatedUser)
                );
           } catch (error) {
-               alert(error.message);
+               showToast(error.message, "error");
           }
      };
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
@@ -51,10 +50,10 @@ function Profile() {
                await changePassword(passwordData);
                setTimeout(() => {
               showToast(
-                    "Profile updated successfully.",
+                    "Password updated successfully.",
                     "success"
                );
-               },2500);
+               });
                setTimeout(() => {
                     logout();
                     navigate("/login");
@@ -100,7 +99,11 @@ function Profile() {
                    "PIN updated successfully. Logging you out...",
                     "success"
                );
-               },2500);
+               });
+               setTimeout(() => {
+                    logout();
+                    navigate("/login");
+               },1800);
                 //  To updated PIN After success 
                const userData = await getCurrentUser();
                     setUser(userData.user);
@@ -394,7 +397,7 @@ function Profile() {
                          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
                          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
                          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
-                         <AlertMessage type={alert.type} message={alert.message} />
+                         
                     </div>
                     </ActionModal>
                     {/* password change model */}
@@ -404,7 +407,7 @@ function Profile() {
                          <input type="password" name="currentPassword" placeholder="Current Password" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="newPassword" placeholder="New Password" value={passwordData.newPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
-                         <AlertMessage type={alert.type} message={alert.message} />
+                        
                     </ActionModal>
                     <ActionModal
                          isOpen={showPinModal}
@@ -446,16 +449,8 @@ function Profile() {
                               value={pinData.confirmPin}
                               onChange={handlePinChange}
                          />
-                         <AlertMessage
-                              type={alert.type}
-                              message={alert.message}
-                         />
+                         
                     </ActionModal>
-                    <Toast
-                         type={alert.type}
-                         message={alert.message}
-                         isVisible={!!alert.message}
-                    />
         </DashboardLayout>
     );
 }
