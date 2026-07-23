@@ -6,6 +6,7 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import AlertMessage from "../components/common/AlertMessage";
+import handleApiError from "../util/handleApiError";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
 
@@ -38,7 +39,7 @@ function Profile() {
                     JSON.stringify(updatedUser)
                );
           } catch (error) {
-               showToast(error.message, "error");
+               showToast( "error",handleApiError(error));
           }
      };
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
@@ -61,8 +62,9 @@ function Profile() {
           } catch (error) {
                setTimeout(() => {
                     showToast(
-                    error.message,
-                    "error"
+                    
+                    "error",
+                    handleApiError(error)
                );
                },2500);
           } finally {
@@ -75,8 +77,9 @@ function Profile() {
           if (pinData.newPin !== pinData.confirmPin) {
                setTimeout(()=>{
                     showToast(
-                    "PINs do not match.",
-                    "error"
+                    
+                    "error",
+                    handleApiError(error)
                );
                },2500);
                return;
@@ -84,8 +87,9 @@ function Profile() {
           if (pinData.newPin.length !== 4) {
                setTimeout(()=>{
                     showToast(
-                    "PIN must be exactly 4 digits.",
-                    "error"
+                    
+                    "error",
+                    handleApiError(error)
                );
                },2500);
                return
@@ -118,8 +122,9 @@ function Profile() {
           } catch (error) {
                setTimeout(() => {
                     showToast(
-                         error.message,
-                         "error"
+                         
+                         "error",
+                         handleApiError(error)
                     );
                },2500);
           } finally {
@@ -133,8 +138,9 @@ function Profile() {
           if (!formData.firstName.trim()) {
                setTimeout(() => {
                     showToast(
-                         "First name is required.",
-                         "error"
+                         
+                         "error",
+                         handleApiError(error)
                     );
                },2500);
                return;
@@ -142,8 +148,8 @@ function Profile() {
           if (!formData.lastName.trim()) {
                setTimeout(() => {
                     showToast(
-                         "Last name is required.",
-                         "error"
+                         "error",
+                         handleApiError(error)
                     );
                     },2500);
                return;
@@ -151,8 +157,8 @@ function Profile() {
           if (!formData.email.trim()) {
                setTimeout(() => {
                     showToast(
-                         "Email is required.",
-                         "error"
+                         "error",
+                         handleApiError(error)
                     );
                },2500);
                return;
@@ -162,8 +168,8 @@ function Profile() {
           if (!emailRegex.test(formData.email)) {
                setTimeout(() => {
                     showToast(
-                         "Please enter a valid email.",
-                         "error"
+                         "error",
+                         handleApiError(error)
                     );
                     },2500);
                return;
@@ -175,8 +181,8 @@ function Profile() {
           ) {
                setTimeout(() => {
                     showToast(
-                         "No changes detected.",
-                         "error"
+                         "error",
+                         handleApiError(error)
                     );
                     },2500);
                return;
@@ -207,8 +213,8 @@ function Profile() {
           } catch (error) {
                setTimeout(() => {
                     showToast(
-                         error.message,
-                         "error"
+                         "error",
+                         handleApiError(error)
                     );
                     },2500);
           } finally {
