@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { uploadAvatar,updateProfile,changePassword,changePin,getCurrentUser } from "../api/authApi";
+import { uploadAvatar,updateProfile,changePassword,changePin } from "../api/authApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
-import AlertMessage from "../components/common/AlertMessage";
 import handleApiError from "../util/handleApiError";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
@@ -21,7 +20,6 @@ function Profile() {
      const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
-     const [alert, setAlert] = useState({ type: "", message: "", });
      const { showToast } = useToast();
      
      const handleAvatarChange = async (e) => {
@@ -51,9 +49,9 @@ function Profile() {
                await changePassword(passwordData);
             
               showToast(
-                    "Password updated successfully.",
-                    "success"
-               );
+                    "success",
+                    "Password updated successfully. Logging you out..."
+                    );
              
                setTimeout(() => {
                     logout();
@@ -72,23 +70,12 @@ function Profile() {
           };
      // Handle pin change 
           const handleChangePin = async () => {
-              
           if (pinData.newPin !== pinData.confirmPin) {
-              
-                    showToast(
-                    "error",
-                    handleApiError(error)
-               );
-           
+              showToast("error", "PINs do not match.");
                return;
           }
           if (pinData.newPin.length !== 4) {
-               
-                    showToast(
-                    "error",
-                    handleApiError(error)
-               );
-   
+             showToast("error", "PIN must contain exactly 4 digits.");
                return
           }
           try {
@@ -97,25 +84,15 @@ function Profile() {
                await changePin(pinData);
               
                     showToast(
-                   "PIN updated successfully. Logging you out...",
-                    "success"
-               );
+                              "success",
+                              "PIN updated successfully. Logging you out..."
+                         );
                
                setTimeout(() => {
                     logout();
                     navigate("/login");
                },1800);
-                //  To updated PIN After success 
-               const userData = await getCurrentUser();
-                    setUser(userData.user);
-                    localStorage.setItem(
-                         "user",
-                         JSON.stringify(userData.user)
-               );
-               setTimeout(() => {
-                    logout();
-                    navigate("/login");
-               }, 1800);
+               
           } catch (error) {
               
                     showToast(
@@ -131,40 +108,21 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
-               
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
+                    showToast("error", "First name is required.");
                return;
           }
           if (!formData.lastName.trim()) {
-             
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
-       
+             showToast("error", "Last name is required.");
                return;
           }
           if (!formData.email.trim()) {
-              
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
-             
+              showToast("error", "Email is required.");
                return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
-              
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
-                 
+              showToast("error", "Please enter a valid email.");
                return;
           }
           if (
@@ -172,12 +130,7 @@ function Profile() {
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
-               
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
-                 
+               showToast("error", "No changes detected.");
                return;
           }
           try {
@@ -190,18 +143,11 @@ function Profile() {
                );
                
                     showToast(
+                         "success",
                          "Profile updated successfully.",
-                         "success"
                     );
-             
-
-               setTimeout(() => {
                     setEditing(false);
-                    setAlert({
-                         type: "",
-                         message: "",
-                    });
-               }, 1500);
+               
           } catch (error) {
               
                     showToast(
@@ -401,7 +347,7 @@ function Profile() {
                     {/* password change model */}
                     <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={loading}
                      onClose={() => {setShowPasswordModal(false); setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "",});
-                    setAlert({ type: "", message: "", });}} onSubmit={handleChangePassword} >
+                    }} onSubmit={handleChangePassword} >
                          <input type="password" name="currentPassword" placeholder="Current Password" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="newPassword" placeholder="New Password" value={passwordData.newPassword} onChange={handlePasswordChange}/>
                          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
@@ -418,10 +364,6 @@ function Profile() {
                                    currentPin: "",
                                    newPin: "",
                                    confirmPin: "",
-                              });
-                              setAlert({
-                                   type: "",
-                                   message: "",
                               });
                          }}
                          onSubmit={handleChangePin}
