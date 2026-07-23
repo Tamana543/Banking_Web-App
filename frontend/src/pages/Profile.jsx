@@ -49,24 +49,23 @@ function Profile() {
           try {
                setLoading(true);
                await changePassword(passwordData);
-               setTimeout(() => {
+            
               showToast(
                     "Password updated successfully.",
                     "success"
                );
-               });
+             
                setTimeout(() => {
                     logout();
                     navigate("/login");
                }, 1800);
           } catch (error) {
-               setTimeout(() => {
+              
                     showToast(
-                    
                     "error",
                     handleApiError(error)
                );
-               },2500);
+              
           } finally {
                setLoading(false);
           }
@@ -75,35 +74,33 @@ function Profile() {
           const handleChangePin = async () => {
               
           if (pinData.newPin !== pinData.confirmPin) {
-               setTimeout(()=>{
+              
                     showToast(
-                    
                     "error",
                     handleApiError(error)
                );
-               },2500);
+           
                return;
           }
           if (pinData.newPin.length !== 4) {
-               setTimeout(()=>{
+               
                     showToast(
-                    
                     "error",
                     handleApiError(error)
                );
-               },2500);
+   
                return
           }
           try {
                setLoading(true);
                 console.log(pinData);
                await changePin(pinData);
-               setTimeout(() => {
+              
                     showToast(
                    "PIN updated successfully. Logging you out...",
                     "success"
                );
-               });
+               
                setTimeout(() => {
                     logout();
                     navigate("/login");
@@ -120,13 +117,11 @@ function Profile() {
                     navigate("/login");
                }, 1800);
           } catch (error) {
-               setTimeout(() => {
+              
                     showToast(
-                         
                          "error",
                          handleApiError(error)
                     );
-               },2500);
           } finally {
                setLoading(false);
           }
@@ -136,42 +131,40 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
-               setTimeout(() => {
+               
                     showToast(
-                         
                          "error",
                          handleApiError(error)
                     );
-               },2500);
                return;
           }
           if (!formData.lastName.trim()) {
-               setTimeout(() => {
+             
                     showToast(
                          "error",
                          handleApiError(error)
                     );
-                    },2500);
+       
                return;
           }
           if (!formData.email.trim()) {
-               setTimeout(() => {
+              
                     showToast(
                          "error",
                          handleApiError(error)
                     );
-               },2500);
+             
                return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
-               setTimeout(() => {
+              
                     showToast(
                          "error",
                          handleApiError(error)
                     );
-                    },2500);
+                 
                return;
           }
           if (
@@ -179,12 +172,12 @@ function Profile() {
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
-               setTimeout(() => {
+               
                     showToast(
                          "error",
                          handleApiError(error)
                     );
-                    },2500);
+                 
                return;
           }
           try {
@@ -195,28 +188,27 @@ function Profile() {
                     "user",
                     JSON.stringify(data.user)
                );
-               setTimeout(() => {
+               
                     showToast(
                          "Profile updated successfully.",
                          "success"
                     );
-               },2500);
+             
 
                setTimeout(() => {
                     setEditing(false);
-
                     setAlert({
                          type: "",
                          message: "",
                     });
                }, 1500);
           } catch (error) {
-               setTimeout(() => {
+              
                     showToast(
                          "error",
                          handleApiError(error)
                     );
-                    },2500);
+                   
           } finally {
                setLoading(false);
           }
