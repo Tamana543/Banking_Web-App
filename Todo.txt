@@ -123,7 +123,7 @@ Phase 10 — Notifications & UX
 * Toast notifications ✔️
 * Loading spinners ✔️
 * Success messages ✔️
-* Error handling messages ( profile.jsx done, hundle the other files)
+* Error handling messages (fix the transfer.jsx ug)
 * Empty state screens
 * Skeleton loading effects
 * Better mobile responsiveness
