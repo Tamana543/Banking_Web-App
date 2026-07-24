@@ -8,10 +8,7 @@ import ReceiptModal from "../components/common/ReceiptModal";
 import AlertMessage from "../components/common/AlertMessage";
 import {useToast} from "../context/ToastContext"
 import handleApiError from "../util/handleApiError"
-import {
-  transferMoney,
-  getTransactions,
-} from "../api/transactionApi";
+import {transferMoney,getTransactions, } from "../api/transactionApi";
 import "../styles/dashboard/dashboard.css";
 import "../styles/transfer.css";
 
@@ -45,10 +42,10 @@ function Transfer() {
         Number(transferAmount)
       );
       await loadTransactions();
-      setAlert({
-        type: "success",
-        message: "Transfer completed successfully.",
-      });
+     showToast(
+        "success",
+        "Transfer completed successfully."
+      );
       setReceipt(data.receipt);
       setRecipientEmail("");
       setTransferAmount("");
@@ -56,10 +53,10 @@ function Transfer() {
         setShowReceipt(true);
       }, 500);
     } catch (error) {
-      setAlert({
-        type: "error",
-        message: error.message,
-      });
+      showToast(
+        "error",
+        handleApiError(error)
+      );
     }finally {
       setLoading(false)
     }
@@ -112,21 +109,19 @@ function Transfer() {
                   !recipientEmail ||
                   !transferAmount
                 ) {
-                  setAlert({
-                    type: "error",
-                    message:
-                      "Please fill all fields.",
-                  });
+                  showToast(
+                    "error",
+                    "Please fill all fields."
+                  );
                   return;
                 }
                 if (
                   Number(transferAmount) <= 0
                 ) {
-                  setAlert({
-                    type: "error",
-                    message:
-                      "Enter a valid amount.",
-                  });
+                  showToast(
+                    "error",
+                    "Enter a valid amount."
+                  );
                   return;
                 }
                 setShowConfirm(true);
@@ -134,10 +129,6 @@ function Transfer() {
             >
               Transfer Money
             </button>
-            <AlertMessage
-              type={alert.type}
-              message={alert.message}
-            />
           </div>
         </section>
         <section className="transfer-history">
