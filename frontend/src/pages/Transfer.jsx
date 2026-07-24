@@ -5,7 +5,6 @@ import HamburgerButton from "../components/dashboard/HamburgerButton";
 import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
 import ReceiptModal from "../components/common/ReceiptModal";
-import AlertMessage from "../components/common/AlertMessage";
 import {useToast} from "../context/ToastContext"
 import handleApiError from "../util/handleApiError"
 import {transferMoney,getTransactions, } from "../api/transactionApi";

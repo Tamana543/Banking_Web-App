@@ -3,7 +3,7 @@ import protect from "../middleware/authMiddleware.js";
 // import { depositMoney,getTransactions,transferMoney,withdrawMoney } from "../controllers/transactionController.js";
 import { depositMoney, getTransactions, transferMoney, withdrawMoney, applyLoan } from "../controllers/transactionController.js";
 const router = express.Router();
-
+console.log("Transaction routes loaded");
 
 router.post("/deposit", protect, depositMoney );
 router.post("/transfer",protect,transferMoney)
