@@ -4,8 +4,10 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import HamburgerButton from "../components/dashboard/HamburgerButton";
 import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
-import AlertMessage from "../components/common/AlertMessage";
 import ReceiptModal from "../components/common/ReceiptModal";
+import AlertMessage from "../components/common/AlertMessage";
+import {useToast} from "../context/ToastContext"
+import handleApiError from "../util/handleApiError"
 import {
   transferMoney,
   getTransactions,
@@ -19,20 +21,17 @@ function Transfer() {
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
   const [receipt, setReceipt] = useState(null);
-  const [alert, setAlert] = useState({
-    type: "",
-    message: "",
-  });
   const [showConfirm, setShowConfirm] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [loading,setLoading] = useState(false)
+  const {showToast} = useToast();
   // Load transactions
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
-      console.error(error);
+      showToast("error", handleApiError(error));
     }
   };
   useEffect(() => {

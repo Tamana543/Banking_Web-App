@@ -11,12 +11,9 @@ import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import {
-  depositMoney,
-  withdrawMoney,
-  getTransactions,
-} from "../api/transactionApi";
+import { depositMoney, withdrawMoney, getTransactions, } from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
+
 function Dashboard() {
   const { setUser } = useAuth();
   const [transactions, setTransactions] = useState([]);
