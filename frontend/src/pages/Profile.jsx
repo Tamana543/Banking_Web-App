@@ -37,7 +37,7 @@ function Profile() {
                     JSON.stringify(updatedUser)
                );
           } catch (error) {
-               showToast( "error",handleApiError(error));
+               showToast.error(handleApiError(error));
           }
      };
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
@@ -47,22 +47,14 @@ function Profile() {
           try {
                setLoading(true);
                await changePassword(passwordData);
-            
-              showToast(
-                    "success",
-                    "Password updated successfully. Logging you out..."
-                    );
-             
+              showToast.success( "Password updated successfully. Logging you out...");
                setTimeout(() => {
                     logout();
                     navigate("/login");
                }, 1800);
           } catch (error) {
               
-                    showToast(
-                    "error",
-                    handleApiError(error)
-               );
+                    showToast.error(handleApiError(error));
               
           } finally {
                setLoading(false);
@@ -71,11 +63,11 @@ function Profile() {
      // Handle pin change 
           const handleChangePin = async () => {
           if (pinData.newPin !== pinData.confirmPin) {
-              showToast("error", "PINs do not match.");
+              showToast.error("PINs do not match.");
                return;
           }
           if (pinData.newPin.length !== 4) {
-             showToast("error", "PIN must contain exactly 4 digits.");
+             showToast.error("PIN must contain exactly 4 digits.");
                return
           }
           try {
@@ -83,10 +75,7 @@ function Profile() {
                 console.log(pinData);
                await changePin(pinData);
               
-                    showToast(
-                              "success",
-                              "PIN updated successfully. Logging you out..."
-                         );
+                    showToast.success( "PIN updated successfully. Logging you out...");
                
                setTimeout(() => {
                     logout();
@@ -95,10 +84,7 @@ function Profile() {
                
           } catch (error) {
               
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
+                    showToast.error( handleApiError(error) );
           } finally {
                setLoading(false);
           }
@@ -108,21 +94,21 @@ function Profile() {
      // Profile overall save
      const handleSave = async () => {
           if (!formData.firstName.trim()) {
-                    showToast("error", "First name is required.");
+                    showToast.error("First name is required.");
                return;
           }
           if (!formData.lastName.trim()) {
-             showToast("error", "Last name is required.");
+             showToast.error("Last name is required.");
                return;
           }
           if (!formData.email.trim()) {
-              showToast("error", "Email is required.");
+              showToast.error("Email is required.");
                return;
           }
           const emailRegex =
                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.email)) {
-              showToast("error", "Please enter a valid email.");
+              showToast.error("Please enter a valid email.");
                return;
           }
           if (
@@ -130,7 +116,7 @@ function Profile() {
                formData.lastName === user.lastName &&
                formData.email === user.email
           ) {
-               showToast("error", "No changes detected.");
+               showToast.error("No changes detected.");
                return;
           }
           try {
@@ -142,18 +128,12 @@ function Profile() {
                     JSON.stringify(data.user)
                );
                
-                    showToast(
-                         "success",
-                         "Profile updated successfully.",
-                    );
+                    showToast.success( "Profile updated successfully.");
                     setEditing(false);
                
           } catch (error) {
               
-                    showToast(
-                         "error",
-                         handleApiError(error)
-                    );
+                    showToast.error(  handleApiError(error) );
                    
           } finally {
                setLoading(false);
