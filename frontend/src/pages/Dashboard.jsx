@@ -6,9 +6,10 @@ import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
 import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
-import AlertMessage from "../components/common/AlertMessage";
 import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
+import { useToast } from "../context/ToastContext";
+import handleApiError from "../util/handleApiError";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { depositMoney, withdrawMoney, getTransactions, } from "../api/transactionApi";
@@ -21,15 +22,15 @@ function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [alert, setAlert] = useState({ type: "", message: "",});
   const [loading, setLoading] = useState(false);
+  const { showToast } = useToast();
 
   const loadTransactions = async () => {
     try {
       const data = await getTransactions();
       setTransactions(data.transactions);
-    } catch (error) {
-      console.error(error);
+    }catch (error) {
+      showToast.error(handleApiError(error));
     }
   };
   useEffect(() => {
@@ -43,33 +44,21 @@ function Dashboard() {
   //  Deposit 
   const handleDeposit = async () => {
     if (!depositAmount || Number(depositAmount) <= 0) {
-      setAlert({
-        type: "error",
-        message: "Enter a valid amount.",
-      });
+      showToast.error("Enter a valid amount.");
       return;
     }
     try {
       setLoading(true)
       await depositMoney(Number(depositAmount));
       await refreshDashboard();
-      setAlert({
-        type: "success",
-        message: "Deposit completed successfully.",
-      });
+        showToast.success( "Deposit completed successfully.");
       setTimeout(() => {
-        setAlert({
-          type: "",
-          message: "",
-        });
+
         setDepositAmount("");
         setShowDepositModal(false);
       }, 1200);
     } catch (error) {
-      setAlert({
-        type: "error",
-        message: error.message,
-      });
+      showToast.error(error.message);
     }finally {
       setLoading(false)
     }
@@ -77,33 +66,20 @@ function Dashboard() {
   //  Withdraw 
   const handleWithdraw = async () => {
     if (!withdrawAmount || Number(withdrawAmount) <= 0) {
-      setAlert({
-        type: "error",
-        message: "Enter a valid amount.",
-      });
+      showToast.error("Enter a valid amount.");
       return;
     }
     try {
       setLoading(true)
       await withdrawMoney(Number(withdrawAmount));
       await refreshDashboard();
-      setAlert({
-        type: "success",
-        message: "Withdrawal completed successfully.",
-      });
+      showToast.success("Withdrawal completed successfully.");
       setTimeout(() => {
-        setAlert({
-          type: "",
-          message: "",
-        });
         setWithdrawAmount("");
         setShowWithdrawModal(false);
       }, 1200);
     } catch (error) {
-      setAlert({
-        type: "error",
-        message: error.message,
-      });
+       showToast.error(error.message);
     }finally {
       setLoading(false)
     }
@@ -147,10 +123,7 @@ function Dashboard() {
         onClose={() => {
           setShowDepositModal(false);
           setDepositAmount("");
-          setAlert({
-            type: "",
-            message: "",
-          });
+       
         }}
         onSubmit={handleDeposit}
       >
@@ -178,10 +151,6 @@ function Dashboard() {
         onClose={() => {
           setShowWithdrawModal(false);
           setWithdrawAmount("");
-          setAlert({
-            type: "",
-            message: "",
-          });
         }}
         onSubmit={handleWithdraw}
       >
