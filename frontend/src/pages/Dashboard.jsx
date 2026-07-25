@@ -8,11 +8,17 @@ import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
 import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
-import { useToast } from "../context/ToastContext";
-import handleApiError from "../util/handleApiError";
+
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { depositMoney, withdrawMoney, getTransactions, } from "../api/transactionApi";
+import { useToast } from "../context/ToastContext";
+import handleApiError from "../util/handleApiError";
+
+import {
+  depositMoney,
+  withdrawMoney,
+  getTransactions,
+} from "../api/transactionApi";
 import { getCurrentUser } from "../api/authApi";
 
 function Dashboard() {
@@ -29,84 +35,105 @@ function Dashboard() {
     try {
       const data = await getTransactions();
       setTransactions(data.transactions);
-    }catch (error) {
-      showToast.error(handleApiError(error));
+    } catch (error) {
+      showToast(handleApiError(error), "error");
     }
   };
+
   useEffect(() => {
     loadTransactions();
   }, []);
+
   const refreshDashboard = async () => {
     const userData = await getCurrentUser();
     setUser(userData.user);
     await loadTransactions();
   };
-  //  Deposit 
+
+  // Deposit
   const handleDeposit = async () => {
     if (!depositAmount || Number(depositAmount) <= 0) {
-      showToast.error("Enter a valid amount.");
+      showToast("Enter a valid amount.", "error");
       return;
     }
-    try {
-      setLoading(true)
-      await depositMoney(Number(depositAmount));
-      await refreshDashboard();
-        showToast.success( "Deposit completed successfully.");
-      setTimeout(() => {
 
+    try {
+      setLoading(true);
+
+      await depositMoney(Number(depositAmount));
+
+      await refreshDashboard();
+
+      showToast(
+        "Deposit completed successfully.",
+        "success"
+      );
+
+      setTimeout(() => {
         setDepositAmount("");
         setShowDepositModal(false);
       }, 1200);
     } catch (error) {
-      showToast.error(error.message);
-    }finally {
-      setLoading(false)
+      showToast(handleApiError(error), "error");
+    } finally {
+      setLoading(false);
     }
   };
-  //  Withdraw 
+
+  // Withdraw
   const handleWithdraw = async () => {
     if (!withdrawAmount || Number(withdrawAmount) <= 0) {
-      showToast.error("Enter a valid amount.");
+      showToast("Enter a valid amount.", "error");
       return;
     }
+
     try {
-      setLoading(true)
+      setLoading(true);
+
       await withdrawMoney(Number(withdrawAmount));
+
       await refreshDashboard();
-      showToast.success("Withdrawal completed successfully.");
+
+      showToast(
+        "Withdrawal completed successfully.",
+        "success"
+      );
+
       setTimeout(() => {
         setWithdrawAmount("");
         setShowWithdrawModal(false);
       }, 1200);
     } catch (error) {
-       showToast.error(error.message);
-    }finally {
-      setLoading(false)
+      showToast(handleApiError(error), "error");
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <DashboardLayout>
       <DashboardHeader />
+
       <div className="dashboard-grid">
         <div className="balance-section">
           <BalanceCard />
         </div>
+
         <div className="stats-section">
-          <StatsCards
-            transactions={transactions}
-          />
+          <StatsCards transactions={transactions} />
         </div>
+
         <div className="overview-section">
-          <FinancialOverview
-            transactions={transactions}
-          />
+          <FinancialOverview transactions={transactions} />
         </div>
+
         <div className="actions-section">
           <QuickActions
             onDeposit={() => setShowDepositModal(true)}
             onWithdraw={() => setShowWithdrawModal(true)}
           />
         </div>
+
         <div className="transactions-section">
           <TransactionList
             title="Recent Activity"
@@ -114,6 +141,7 @@ function Dashboard() {
           />
         </div>
       </div>
+
       {/* Deposit */}
       <ActionModal
         isOpen={showDepositModal}
@@ -123,7 +151,6 @@ function Dashboard() {
         onClose={() => {
           setShowDepositModal(false);
           setDepositAmount("");
-       
         }}
         onSubmit={handleDeposit}
       >
@@ -137,11 +164,8 @@ function Dashboard() {
             setDepositAmount(e.target.value)
           }
         />
-        <AlertMessage
-          type={alert.type}
-          message={alert.message}
-        />
       </ActionModal>
+
       {/* Withdraw */}
       <ActionModal
         isOpen={showWithdrawModal}
@@ -164,12 +188,9 @@ function Dashboard() {
             setWithdrawAmount(e.target.value)
           }
         />
-        <AlertMessage
-          type={alert.type}
-          message={alert.message}
-        />
       </ActionModal>
     </DashboardLayout>
   );
 }
+
 export default Dashboard;
