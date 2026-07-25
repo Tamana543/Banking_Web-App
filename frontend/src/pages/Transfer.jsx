@@ -27,7 +27,7 @@ function Transfer() {
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
-      showToast("error", handleApiError(error));
+      showToast.error(handleApiError(error));
     }
   };
   useEffect(() => {
@@ -41,10 +41,7 @@ function Transfer() {
         Number(transferAmount)
       );
       await loadTransactions();
-     showToast(
-        "success",
-        "Transfer completed successfully."
-      );
+     showToast.success( "Transfer completed successfully." );
       setReceipt(data.receipt);
       setRecipientEmail("");
       setTransferAmount("");
@@ -52,10 +49,7 @@ function Transfer() {
         setShowReceipt(true);
       }, 500);
     } catch (error) {
-      showToast(
-        "error",
-        handleApiError(error)
-      );
+      showToast.error(handleApiError(error));
     }finally {
       setLoading(false)
     }
@@ -108,19 +102,13 @@ function Transfer() {
                   !recipientEmail ||
                   !transferAmount
                 ) {
-                  showToast(
-                    "error",
-                    "Please fill all fields."
-                  );
+                  showToast.error("Please fill all fields.");
                   return;
                 }
                 if (
                   Number(transferAmount) <= 0
                 ) {
-                  showToast(
-                    "error",
-                    "Enter a valid amount."
-                  );
+                  showToast.error( "Enter a valid amount." );
                   return;
                 }
                 setShowConfirm(true);
