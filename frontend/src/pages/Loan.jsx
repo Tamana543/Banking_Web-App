@@ -2,43 +2,33 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import TransactionList from "../components/dashboard/TransactionList";
-import AlertMessage from "../components/common/AlertMessage";
+import handleApiError from "../util/handleApiError";
+import { useToast } from "../context/ToastContext";
 import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
 function Loan() {
+     const { showToast } = useToast();
      const [loanAmount, setLoanAmount] = useState("");
      const [purpose, setPurpose] = useState("");
      const [transactions, setTransactions] = useState([]);
-     const [alert, setAlert] = useState({ type: "", message: "", });
 // Transaction with loan in it 
      const loadTransactions = async () => {
           try {
           const data = await getTransactions();
           setTransactions(data.transactions);
           } catch (error) {
-          console.error(error);
+               showToast(handleApiError(error), "error");
           }
      };
      // LoanHundler
      const handleLoan = async () => {
           // clean the previous alert first 
-          setAlert({
-               type: "",
-               message: "",
-          });
-
           if (!loanAmount || Number(loanAmount) <= 0) {
-          setAlert({
-               type: "error",
-               message: "Enter a valid loan amount.",
-          });
+          showToast( "Enter a valid loan amount.", "error");
           return;
           }
           if (!purpose.trim()) {
-          setAlert({
-               type: "error",
-               message: "Loan purpose is required.",
-          });
+          showToast( "Loan purpose is required.", "error" );
           return;
           }
           try {
@@ -46,25 +36,14 @@ function Loan() {
                Number(loanAmount),
                purpose
           );
-          setAlert({
-               type: "success",
-               message: data.message,
-          });
+          showToast( data.message, "success" );
           setLoanAmount("");
           setPurpose("");
            await loadTransactions();
-          setTimeout(() => {
-               setAlert({
-                    type: "",
-                    message: "",
-               });
-          }, 2000);
+
           }
           catch (error) {
-          setAlert({
-               type: "error",
-               message: error.message,
-          });
+          showToast( handleApiError(error), "error" );
           }
      };
      useEffect(() => { loadTransactions();}, []);
@@ -78,15 +57,8 @@ function Loan() {
                               <input type="number" placeholder="Loan Amount" value={loanAmount} onChange={(e)=> setLoanAmount(e.target.value) } />
                               <textarea placeholder="Purpose of Loan" value={purpose} onChange={(e)=> setPurpose(e.target.value) } />
                               <button className="loan-btn" onClick={handleLoan} > Apply for Loan </button>
-                              <AlertMessage type={alert.type} message={alert.message} />
                          </div>
-                         <TransactionList
-                         title="Loan History"
-                         transactions={transactions.filter(
-                         (transaction)=>
-                         transaction.type==="loan"
-                         )}
-                         />
+                         <TransactionList title="Loan History" transactions={transactions.filter( (transaction)=> transaction.type==="loan" )} />
                     </section>
           </DashboardLayout>
      );
