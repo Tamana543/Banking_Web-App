@@ -1,13 +1,15 @@
+import handleApiError from "../util/handleApiError";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { registerUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 
 function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();
-
+  const {showToast} = useToast()
     const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -26,16 +28,24 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.email.trim()) {
+      showToast("Email is required.", "error");
+      return;
+    }
 
+  if (!formData.password.trim()) {
+    showToast("Password is required.", "error");
+    return;
+  }
     try {
       const data = await registerUser(formData);
 
       // Automatically log the user in after registration
       login(data.user, data.token);
-
+      showToast( "Welcome back!", "success" );
       navigate("/dashboard");
     } catch (error) {
-      alert(error.message);
+      showToast(handleApiError(error),"error")
     }
   };
 
