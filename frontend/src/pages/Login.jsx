@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useToast } from "../context/ToastContext";
+import handleApiError from "../util/handleApiError";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const {showToast} = useToast()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -22,7 +24,15 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.email.trim()) {
+      showToast("Email is required.", "error");
+      return;
+    }
 
+    if (!formData.password.trim()) {
+      showToast("Password is required.", "error");
+      return;
+    }
     try {
       const data = await loginUser(
         formData.email,
@@ -30,10 +40,10 @@ function Login() {
       );
 
       login(data.user, data.token);
-
+      showToast( "Welcome back!", "success" );
       navigate("/dashboard");
     } catch (error) {
-      alert(error.message);
+      showToast(handleApiError(error),"error")
     }
   };
 
