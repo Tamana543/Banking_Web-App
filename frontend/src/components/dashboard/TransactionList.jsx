@@ -60,7 +60,15 @@ return (
       <h3>{title}</h3>
 
       {transactions.length === 0 ? (
-        <p>No transactions yet.</p>
+        <div className="empty-state">
+
+            <h4><h4>No {title.toLowerCase()} yet</h4></h4>
+
+            <p>
+                Your transaction history will appear here after
+                your first activity.
+            </p>
+        </div>
       ) : (
         
         transactions.map((transaction) => {
