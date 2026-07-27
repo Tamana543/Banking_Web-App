@@ -1,10 +1,12 @@
 import { useState } from "react";
 import TransactionDetailsModal from "./TransactionDetailsModal";
 import "../../styles/recent-transacrions.css";
+import TransactionSkeleton from "../common/TransactionSkeleton";
 import { generateTransactionId } from "../../util/transactionId";
 function TransactionList({
   transactions = [],
   title = "Recent Activity",
+  loading = false,
 }) {
    const [selectedTransaction, setSelectedTransaction] =
     useState(null);
