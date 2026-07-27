@@ -65,7 +65,7 @@ return (
             <h4><h4>No {title.toLowerCase()} yet</h4></h4>
 
             <p>
-                Your transaction history will appear here after
+                Your {title.toLowerCase()}s  will appear here after
                 your first activity.
             </p>
         </div>
