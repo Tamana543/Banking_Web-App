@@ -61,19 +61,19 @@ return (
     <div className="recent-transactions">
       <h3>{title}</h3>
 
-      {transactions.length === 0 ? (
-        <div className="empty-state">
+      {loading ? (
+              <TransactionSkeleton />
+          ) : transactions.length === 0 ? (
+              <div className="empty-state">
+                  <h4>No {title.toLowerCase()} yet</h4>
 
-            <h4><h4>No {title.toLowerCase()} yet</h4></h4>
-
-            <p>
-                Your {title.toLowerCase()}s  will appear here after
-                your first activity.
-            </p>
-        </div>
-      ) : (
-        
-        transactions.map((transaction) => {
+                  <p>
+                      Your {title.toLowerCase()} will appear here after
+                      your first activity.
+                  </p>
+              </div>
+          ) : (
+          transactions.map((transaction) => {
            const category = getCategory(transaction.type);
           return (
           <div
