@@ -33,10 +33,13 @@ function Dashboard() {
 
   const loadTransactions = async () => {
     try {
+      setLoading(true)
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
       showToast(handleApiError(error), "error");
+    } finally {
+        setLoading(false);
     }
   };
 
@@ -138,6 +141,7 @@ function Dashboard() {
           <TransactionList
             title="Recent Activity"
             transactions={transactions.slice(0, 5)}
+            loading={loading}
           />
         </div>
       </div>
