@@ -29,17 +29,20 @@ function Dashboard() {
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingTransactions, setLoadingTransactions] = useState(true);
   const { showToast } = useToast();
 
   const loadTransactions = async () => {
     try {
-      setLoading(true)
-      const data = await getTransactions();
-      setTransactions(data.transactions);
+        setLoadingTransactions(true);
+
+        const data = await getTransactions();
+
+        setTransactions(data.transactions);
     } catch (error) {
-      showToast(handleApiError(error), "error");
+        showToast.error(handleApiError(error));
     } finally {
-        setLoading(false);
+        setLoadingTransactions(false);
     }
   };
 
@@ -119,7 +122,7 @@ function Dashboard() {
 
       <div className="dashboard-grid">
         <div className="balance-section">
-          <BalanceCard />
+          <BalanceCard loading={loadingTransactions}  />
         </div>
 
         <div className="stats-section">
