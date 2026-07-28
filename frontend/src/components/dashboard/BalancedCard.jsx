@@ -1,8 +1,11 @@
 import {useAuth} from "../../context/AuthContext.jsx"
 import "../../styles/dashboard/balance-card.css"
-function BalanceCard() {
+import BalanceCardSkeleton from "../common/BalanceCardSkeleton";
+function BalanceCard({ loading = false }) {
+  if (loading) {
+    return <BalanceCardSkeleton />;
+  }
   const { user } = useAuth();
-
   return (
     <div className="balance-card">
 
