@@ -125,7 +125,7 @@ Phase 10 — Notifications & UX
 * Success messages ✔️
 * Error handling messages ✔️
 * Empty state screens ✔️
-* Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly )
+* Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
 * Better mobile responsiveness
 
 

@@ -144,7 +144,7 @@ function Dashboard() {
           <TransactionList
             title="Recent Activity"
             transactions={transactions.slice(0, 5)}
-            loading={loading}
+            loading={pageLoading}
           />
         </div>
       </div>
