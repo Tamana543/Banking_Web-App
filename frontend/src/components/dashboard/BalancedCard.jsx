@@ -1,6 +1,6 @@
 import {useAuth} from "../../context/AuthContext.jsx"
 import "../../styles/dashboard/balance-card.css"
-import BalanceCardSkeleton from "../common/BalanceCardSkeleton";
+import BalanceCardSkeleton from "../common/BalanceSkeleton";
 function BalanceCard({ loading = false }) {
   if (loading) {
     return <BalanceCardSkeleton />;

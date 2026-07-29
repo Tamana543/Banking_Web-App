@@ -126,7 +126,7 @@ Phase 10 — Notifications & UX
 * Error handling messages ✔️
 * Empty state screens ✔️
 * Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
-* Better mobile responsiveness
+* Better mobile responsiveness (Fix the profile page sidebar)
 
 
 
