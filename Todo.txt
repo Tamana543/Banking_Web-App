@@ -118,6 +118,17 @@ phase 10 — Notifications & UX
 * Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
 * Better mobile responsiveness (Fix the profile page sidebar)✔️
 
+Phase 10.5
+* settings page
+* remove duplicated code
+* reusable components
+* improve UI consistency
+* animations
+* accessibility
+* code cleanup
+* reusable hooks
+* final responsive fixes
+
 phase 11 — Savings Features
 * Savings goals
 * Create savings targets
