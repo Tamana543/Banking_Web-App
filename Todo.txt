@@ -2,12 +2,11 @@ Bankist Pro TODO:
 Keep in mind: 
 do not forget to update the IP access of the MongoDB
 
-Phase 1 — Project Foundation
+phase 1 — Project Foundation
 * Configure Vercel deployment
 * Configure Render deployment
 * fix the QR code url to deploy too it is now setted in loacal host
 * lazyloading feature
-
 * Connect MongoDB Atlas database✔️
 * Configure environment variables ✔️
 * Setup project folder structure ✔️
@@ -16,8 +15,7 @@ Phase 1 — Project Foundation
 * Create new Bankist Pro repository ✔️
 * Setup React frontend (React Setup, React Router, Pages Created, Protected Routes)✔️
 
-Phase 2 — Core Integration
-
+phase 2 — Core Integration
 * Create responsive navigation
 * Finalize Protected Routes
 * Create separate Login page ✔️
@@ -27,8 +25,7 @@ Phase 2 — Core Integration
 * Merge Landing Page + Banking App ✔️
 * Connect "Open Account" button to banking system ✔️
 
-Phase 3 — Authentication
-
+phase 3 — Authentication
 * Password Reset
 * Email Verification
 * Create User Model ✔️
@@ -47,10 +44,9 @@ Phase 3 — Authentication
 * Account Lock ✔️
 * fix the running error ✔️
 * experiment the POSTMAN you should learn it ✔️
-
  
-Phase 4 — Banking Dashboard ✔️
 
+phase 4 — Banking Dashboard ✔️
 * Dashboard redesign ✔️
 * Current balance card ✔️
 * Recent transactions card (deposit,withdrawal,and transfer done, from backend next fix the frontend) ✔️
@@ -61,8 +57,7 @@ Phase 4 — Banking Dashboard ✔️
 * Financial overview section ✔️
 * Better responsive layout ( fix the sidebar, cross btn, empty space, the hamburger icon) ✔️
 
-Phase 5 — Transactions✔️
-
+phase 5 — Transactions✔️
 * Transaction history (check the balance, it is not updating find why )✔️
 * Transaction persistence ✔️
 * Transaction timestamps ✔️
@@ -74,7 +69,7 @@ Phase 5 — Transactions✔️
 * Transaction status indicators ✔️
 * Transaction categories ✔️
 
-Phase 6 — Transfers✔️
+phase 6 — Transfers✔️
 * Transfer money between users ✔️
 * Transfer validation improvements ✔️
 * Prevent self-transfer ✔️
@@ -84,8 +79,7 @@ Phase 6 — Transfers✔️
 * Transfer confirmation modal ✔️
 * Transfer receipt generation (Generate a transaction ID, Return receipt data, Save the receipt in state,Open a Receipt Modal automatically after a successful transfer,Add a Download PDF button) ✔️
 
-Phase 7 — Loans
-
+phase 7 — Loans
 * Loan request system ✔️
 * Loan request improvements
 * Loan history section ✔️
@@ -94,8 +88,7 @@ Phase 7 — Loans
 * Approved loan status ( in admin side; future)✔️
 * Rejected loan status ( same admin feature in future) ✔️  
 
-Phase 8 — Analytics
-
+phase 8 — Analytics
 * Analytics page layout ✔️
 * Income vs Expense chart ✔️
 * Monthly Cash Flow chart ✔️
@@ -103,9 +96,7 @@ Phase 8 — Analytics
 * Transaction Insights ✔️
 * Financial Summary cards ✔️
 
-
-
-Phase 9 — Profile 
+phase 9 — Profile 
 * Email verification budge 
 * Profile page layout ✔️
 * Display user information ✔️
@@ -118,21 +109,16 @@ Phase 9 — Profile
 *  Change PIN ✔️
 * Security section ✔️
 
-Phase 10 — Notifications & UX
-
+phase 10 — Notifications & UX
 * Toast notifications ✔️
 * Loading spinners ✔️
 * Success messages ✔️
 * Error handling messages ✔️
 * Empty state screens ✔️
 * Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
-* Better mobile responsiveness (Fix the profile page sidebar)
+* Better mobile responsiveness (Fix the profile page sidebar)✔️
 
-
-
-
-Phase 11 — Savings Features
-
+phase 11 — Savings Features
 * Savings goals
 * Create savings targets
 * Goal progress bars
@@ -140,8 +126,7 @@ Phase 11 — Savings Features
 * Savings analytics
 * Goal completion notifications
 
-Phase 12 — Security
-
+phase 12 — Security
 * Session management
 * PIN validation
 * Protected API routes
@@ -150,8 +135,7 @@ Phase 12 — Security
 * User authorization
 * Role-based access (User/Admin)
 
-Phase 13 — Admin Dashboard
-
+phase 13 — Admin Dashboard
 * Admin authentication
 * View all users
 * View all transactions
@@ -162,16 +146,14 @@ Phase 13 — Admin Dashboard
 * Platform analytics
 * Loan repayment tracking
 
-Phase 14 — Export Features
-
+phase 14 — Export Features
 * Download account statement
 * Export transactions as CSV
 * Generate PDF statement
 * Download transaction history
 * Print account summary
 
-Phase 15 — Landing Page Improvements
-
+phase 15 — Landing Page Improvements
 * Modern homepage redesign
 * Real testimonials
 * FAQ section
@@ -182,16 +164,15 @@ Phase 15 — Landing Page Improvements
 * Improved footer
 * Call-to-action sections
 
-Phase 16 — Advanced Features
-
+phase 16 — Advanced Features
 * Multi-currency support
 * Currency converter
 * Financial insights
 * Smart account recommendations
 * Scheduled transfers
 * Transaction tagging
-Phase 17 — Portfolio Features
 
+phase 17 — Portfolio Features
 * README redesign
 * Project architecture documentation
 * API documentation
@@ -205,7 +186,6 @@ Phase 17 — Portfolio Features
 * TransactionContext ( right shared repeate, instead of each page making its own API requests, similar to AuthContext )
 * Advanced filtering
 
-
 phase 18 - Setting dashboard
 * Dark mode 
 * Currency
@@ -215,7 +195,7 @@ phase 18 - Setting dashboard
 * create a responsive css add all medias there 
 * fix the 404 page
 
-Phase 19 — Real-Time Features
+phase 19 — Real-Time Features
 * Live balance updates
 * Live notifications
 * WebSockets (Socket.IO)

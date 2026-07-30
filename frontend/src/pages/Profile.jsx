@@ -160,6 +160,7 @@ function Profile() {
                               </span>
                          )}
                          </label>
+                         </div>
                          <input
                          id="avatarUpload"
                          type="file"
@@ -167,7 +168,6 @@ function Profile() {
                          hidden
                          onChange={handleAvatarChange}
                          />
-                         </div>
                     <h2>{user?.firstName} {user?.lastName}</h2>
                     <p>{user?.email}</p>
                     <span
