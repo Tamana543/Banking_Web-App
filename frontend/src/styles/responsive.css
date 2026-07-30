@@ -1,7 +1,7 @@
 /* Dashboard */
 @media(max-width:992px){
 .sidebar{
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     bottom: 0;
@@ -86,7 +86,7 @@
 }
 /*  Profile page */
 .profile-page{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr !important;
 }
 .profile-details{
     gap:20px;
