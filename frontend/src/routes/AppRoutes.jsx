@@ -11,6 +11,7 @@ import Transfer from "../pages/Transfer";
 import Loan from "../pages/Loan";
 import Analytics from "../pages/Analytics"
 import Profile from "../pages/Profile";
+import Settings from "../pages/Settings";
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
         <Route path="/loans" element={<Loan/>}/>
         <Route path="/analytics" element={<Analytics/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/settings" element={<Settings/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     
