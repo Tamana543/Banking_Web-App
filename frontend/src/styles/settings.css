@@ -1,0 +1,13 @@
+.settings-page{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.settings-page h2{
+    color:white;
+    font-size:2rem;
+}
+.settings-subtitle{
+    color:#999;
+    margin-bottom:30px;
+}
