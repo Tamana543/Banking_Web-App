@@ -11,3 +11,48 @@
     color:#999;
     margin-bottom:30px;
 }
+.settings-card{
+    background:#181818;
+    border-radius:22px;
+    border:1px solid rgba(212,175,55,.15);
+    overflow:hidden;
+}
+.setting-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 28px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    cursor:pointer;
+    transition:.25s;
+}
+.setting-item:last-child{
+    border-bottom:none;
+}
+.setting-item:hover{
+    background:#202020;
+}
+.setting-item h4{
+    color:white;
+    margin-bottom:6px;
+}
+.setting-item p{
+    color:#999;
+    font-size:.9rem;
+}
+.setting-item span{
+    color:var(--gold);
+    font-size:1.6rem;
+}
+.setting-item.disabled{
+    cursor:default;
+}
+.setting-item.disabled:hover{
+    background:#181818;
+}
+.setting-item.logout h4{
+    color:#ff6868;
+}
+.setting-item.logout span{
+    color:#ff6868;
+}
