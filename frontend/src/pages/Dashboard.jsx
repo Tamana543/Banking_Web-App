@@ -8,6 +8,8 @@ import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
 import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
+// hooks
+import useTransactions from "../hooks/useTransactions";
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -23,32 +25,13 @@ import { getCurrentUser } from "../api/authApi";
 
 function Dashboard() {
   const { setUser } = useAuth();
-  const [transactions, setTransactions] = useState([]);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState("");
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
   const { showToast } = useToast();
-
-  const loadTransactions = async () => {
-    try {
-        setPageLoading(true);
-
-        const data = await getTransactions();
-
-        setTransactions(data.transactions);
-    } catch (error) {
-        showToast.error(handleApiError(error));
-    } finally {
-        setPageLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadTransactions();
-  }, []);
+  const { transactions, loading: pageLoading, loadTransactions, } = useTransactions();
 
   const refreshDashboard = async () => {
     const userData = await getCurrentUser();
