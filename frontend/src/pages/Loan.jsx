@@ -6,20 +6,13 @@ import handleApiError from "../util/handleApiError";
 import { useToast } from "../context/ToastContext";
 import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
+// hooks 
+import useTransactions from "../hooks/useTransactions";
 function Loan() {
      const { showToast } = useToast();
      const [loanAmount, setLoanAmount] = useState("");
      const [purpose, setPurpose] = useState("");
-     const [transactions, setTransactions] = useState([]);
-// Transaction with loan in it 
-     const loadTransactions = async () => {
-          try {
-          const data = await getTransactions();
-          setTransactions(data.transactions);
-          } catch (error) {
-               showToast(handleApiError(error), "error");
-          }
-     };
+     const { transactions, loadTransactions } = useTransactions();
      // LoanHundler
      const handleLoan = async () => {
           // clean the previous alert first 
@@ -46,7 +39,6 @@ function Loan() {
           showToast( handleApiError(error), "error" );
           }
      };
-     useEffect(() => { loadTransactions();}, []);
      return (
           <DashboardLayout>
                     <DashboardHeader />
