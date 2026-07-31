@@ -9,11 +9,12 @@ import {useToast} from "../context/ToastContext"
 import handleApiError from "../util/handleApiError"
 import {transferMoney,getTransactions, } from "../api/transactionApi";
 import "../styles/dashboard/dashboard.css";
+// hooks
+import useTransactions from "../hooks/useTransactions";
 import "../styles/transfer.css";
 
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [transactions, setTransactions] = useState([]);
   const [recipientEmail, setRecipientEmail] = useState("");
   const [transferAmount, setTransferAmount] = useState("");
   const [receipt, setReceipt] = useState(null);
@@ -21,18 +22,7 @@ function Transfer() {
   const [showReceipt, setShowReceipt] = useState(false);
   const [loading,setLoading] = useState(false)
   const {showToast} = useToast();
-  // Load transactions
-  const loadTransactions = async () => {
-    try {
-      const data = await getTransactions();
-      setTransactions(data.transactions);
-    } catch (error) {
-      showToast(handleApiError(error),"error");
-    }
-  };
-  useEffect(() => {
-    loadTransactions();
-  }, []);
+ const { transactions, loadTransactions, } = useTransactions();
   const handleTransfer = async () => {
     setLoading(true)
     try {

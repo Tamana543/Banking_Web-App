@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import TransactionList from "../components/dashboard/TransactionList";
+import useTransactions from "../hooks/useTransactions";
 
 import { getTransactions } from "../api/transactionApi";
 
@@ -9,23 +10,12 @@ import "../styles/dashboard/dashboard.css";
 
 function Transactions() {
   // states 
-    const [transactions, setTransactions] = useState([]);
+    
     const [searchTerm, setSearchTerm] = useState("");
     const [filter, setFilter] = useState("all");
     const [sortBy, setSortBy] = useState("newest");
-
-  const loadTransactions = async () => {
-    try {
-      const data = await getTransactions();
-      setTransactions(data.transactions);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    loadTransactions();
-  }, []);
+    const { transactions, loading, } = useTransactions();
+  
      
   const filteredTransactions = transactions.filter((transaction) => {
 
@@ -121,7 +111,8 @@ function Transactions() {
 
     <TransactionList
       title="Transaction History"
-      transactions={sortedTransactions}
+      transactions={transactions}
+    loading={loading}
     />
 
   </DashboardLayout>
