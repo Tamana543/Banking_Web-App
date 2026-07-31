@@ -119,7 +119,7 @@ phase 10 — Notifications & UX
 * Better mobile responsiveness (Fix the profile page sidebar)✔️
 
 Phase 10.5
-* settings page
+* settings page (Notifications and Banking performance will be added next ) ✔️
 * remove duplicated code
 * reusable components
 * improve UI consistency
