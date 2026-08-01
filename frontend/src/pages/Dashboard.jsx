@@ -70,27 +70,21 @@ function Dashboard() {
       return;
     }
 
-    try {
-      setLoading(true);
+    await execute(
+      () => withdrawMoney(Number(withdrawAmount)),
+      {
+        successMessage:
+          "Withdrawal completed successfully.",
 
-      await withdrawMoney(Number(withdrawAmount));
+        onSuccess: async () => {
+          await refreshDashboard();
 
-      await refreshDashboard();
+          setWithdrawAmount("");
 
-      showToast(
-        "Withdrawal completed successfully.",
-        "success"
-      );
-
-      setTimeout(() => {
-        setWithdrawAmount("");
-        setShowWithdrawModal(false);
-      }, 1200);
-    } catch (error) {
-      showToast(handleApiError(error), "error");
-    } finally {
-      setLoading(false);
-    }
+          setShowWithdrawModal(false);
+        },
+      }
+    );
   };
 
   return (
