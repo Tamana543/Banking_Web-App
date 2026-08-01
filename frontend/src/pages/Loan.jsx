@@ -5,7 +5,6 @@ import TransactionList from "../components/dashboard/TransactionList";
 import handleApiError from "../util/handleApiError";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
-import { applyLoan } from "../api/transactionApi";
 import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
 // hooks 
@@ -14,6 +13,7 @@ function Loan() {
      const { showToast } = useToast();
      const [loanAmount, setLoanAmount] = useState("");
      const [purpose, setPurpose] = useState("");
+     const { transactions, loadTransactions } = useTransactions();
      const { execute, loading } = useApiAction();
      // LoanHundler
      const handleLoan = async () => {
@@ -49,7 +49,7 @@ function Loan() {
                               <p> Request a personal loan instantly.</p>
                               <input type="number" placeholder="Loan Amount" value={loanAmount} onChange={(e)=> setLoanAmount(e.target.value) } />
                               <textarea placeholder="Purpose of Loan" value={purpose} onChange={(e)=> setPurpose(e.target.value) } />
-                              <button className="loan-btn" onClick={handleLoan} > Apply for Loan </button>
+                              <button className="loan-btn" onClick={handleLoan} disabled={loading}> Apply for Loan </button>
                          </div>
                          <TransactionList title="Loan History" transactions={transactions.filter( (transaction)=> transaction.type==="loan" )} />
                     </section>

@@ -122,42 +122,13 @@ function Transfer() {
         </section>
       </main>
       {/* Confirmation Modal */}
-      <ActionModal
-        isOpen={showConfirm}
-        title="Confirm Transfer"
-        submitText="Confirm Transfer"
-        loading={loading}
-        onClose={() =>
-          setShowConfirm(false)
-        }
-        onSubmit={async () => {
-          setShowConfirm(false);
-          await handleTransfer();
-        }}
-      >
-        <p>
-          <strong>Recipient</strong>
-          <br />
-          {recipientEmail}
-        </p>
+      <ActionModal isOpen={showConfirm} title="Confirm Transfer" submitText="Confirm Transfer" loading={loading} onClose={() => setShowConfirm(false) } onSubmit={async () => { setShowConfirm(false); await handleTransfer() }}>
+        <p> <strong>Recipient</strong> <br /> {recipientEmail} </p>
         <br />
-        <p>
-          <strong>Amount</strong>
-          <br />
-          $
-          {Number(
-            transferAmount
-          ).toLocaleString()}
-        </p>
+        <p> <strong>Amount</strong> <br /> $ {Number( transferAmount ).toLocaleString()}</p>
       </ActionModal>
       {/* Receipt */}
-      <ReceiptModal
-        isOpen={showReceipt}
-        receipt={receipt}
-        onClose={() => {
-          setShowReceipt(false);
-          setReceipt(null);
-        }}
+      <ReceiptModal isOpen={showReceipt} receipt={receipt} onClose={() => { setShowReceipt(false); setReceipt(null);}}
       />
     </div>
   );
