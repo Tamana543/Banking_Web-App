@@ -5,6 +5,7 @@ import TransactionList from "../components/dashboard/TransactionList";
 import handleApiError from "../util/handleApiError";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
+import { applyLoan } from "../api/transactionApi";
 import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
 // hooks 
@@ -13,20 +14,26 @@ function Loan() {
      const { showToast } = useToast();
      const [loanAmount, setLoanAmount] = useState("");
      const [purpose, setPurpose] = useState("");
-     const { transactions, loadTransactions } = useTransactions();
      const { execute, loading } = useApiAction();
      // LoanHundler
      const handleLoan = async () => {
           if (!loanAmount || Number(loanAmount) <= 0) {
-          showToast("Enter a valid loan amount.", "error");
-          return;
+               showToast(
+                    "Enter a valid loan amount.",
+                    "error"
+               );
+               return;
           }
           if (!purpose.trim()) {
-          showToast("Loan purpose is required.", "error");
-          return;
+               showToast(
+                    "Loan purpose is required.",
+                    "error"
+               );
+               return;
           }
-          const data = await execute(() =>
-          applyLoan(Number(loanAmount), purpose)
+          const data = await execute(
+               () => applyLoan(Number(loanAmount), purpose),
+               "Loan approved successfully."
           );
           if (!data) return;
           setLoanAmount("");
