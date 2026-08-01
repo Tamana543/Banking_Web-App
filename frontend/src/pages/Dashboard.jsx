@@ -10,6 +10,7 @@ import FinancialOverview from "../components/dashboard/financial_overview";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 // hooks
 import useTransactions from "../hooks/useTransactions";
+import useApiAction from "../hooks/useApiAction";
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -29,9 +30,9 @@ function Dashboard() {
   const [depositAmount, setDepositAmount] = useState("");
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState("");
-  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const { transactions, loading: pageLoading, loadTransactions, } = useTransactions();
+  const { loading, execute } = useApiAction();
 
   const refreshDashboard = async () => {
     const userData = await getCurrentUser();
@@ -45,28 +46,21 @@ function Dashboard() {
       showToast("Enter a valid amount.", "error");
       return;
     }
+      await execute(
+        () => depositMoney(Number(depositAmount)),
+        {
+          successMessage:
+            "Deposit completed successfully.",
 
-    try {
-      setLoading(true);
+          onSuccess: async () => {
+            await refreshDashboard();
 
-      await depositMoney(Number(depositAmount));
+            setDepositAmount("");
 
-      await refreshDashboard();
-
-      showToast(
-        "Deposit completed successfully.",
-        "success"
+            setShowDepositModal(false);
+          },
+        }
       );
-
-      setTimeout(() => {
-        setDepositAmount("");
-        setShowDepositModal(false);
-      }, 1200);
-    } catch (error) {
-      showToast(handleApiError(error), "error");
-    } finally {
-      setLoading(false);
-    }
   };
 
   // Withdraw
