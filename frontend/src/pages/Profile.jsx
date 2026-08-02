@@ -20,6 +20,8 @@ function Profile() {
      const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
+     // for hooks
+     const { execute: executePin, loading: pinLoading, } = useApiAction();
      const { execute, loading: passwordLoading, } = useApiAction();
      
      const handleAvatarChange = async (e) => {
@@ -44,6 +46,35 @@ function Profile() {
      const handlePinChange = (e) => { setPinData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };
      // handle password saving 
      const handleChangePassword = async () => {
+          if (!passwordData.currentPassword) {
+               showToast("Current password is required.", "error");
+               return;
+          }
+
+          if (!passwordData.newPassword) {
+               showToast("New password is required.", "error");
+               return;
+          }
+
+          if (passwordData.newPassword.length < 6) {
+               showToast(
+                    "Password must be at least 6 characters.",
+                    "error"
+               );
+               return;
+          }
+
+          if (
+               passwordData.newPassword !==
+               passwordData.confirmPassword
+          ) {
+               showToast(
+                    "Passwords do not match.",
+                    "error"
+               );
+               return;
+          }
+
                const data = await execute(
                     () => changePassword(passwordData),
                     "Password updated successfully. Logging you out..."
@@ -56,32 +87,30 @@ function Profile() {
           };
      // Handle pin change 
           const handleChangePin = async () => {
-          if (pinData.newPin !== pinData.confirmPin) {
-              showToast("PINs do not match.","error");
-               return;
-          }
-          if (pinData.newPin.length !== 4) {
-             showToast("PIN must contain exactly 4 digits.","error");
-               return
-          }
-          try {
-               setLoading(true);
-                console.log(pinData);
-               await changePin(pinData);
+                if (!pinData.currentPin) {
+                         showToast("Current PIN is required.", "error");
+                         return;
+                         }
+
+                         if (pinData.newPin !== pinData.confirmPin) {
+                         showToast("PINs do not match.", "error");
+                         return;
+               }
+               const data = await executePin(
+               () => changePin(pinData),
+               "PIN updated successfully."
+               );
               
-                    showToast( "PIN updated successfully. Logging you out...","success");
-               
-               setTimeout(() => {
-                    logout();
-                    navigate("/login");
-               },1800);
-               
-          } catch (error) {
-              
-                    showToast( handleApiError(error),"error");
-          } finally {
-               setLoading(false);
-          }
+
+               if (!data) return;
+
+               setShowPinModal(false);
+
+               setPinData({
+               currentPin: "",
+               newPin: "",
+               confirmPin: "",
+               });
           };
      //Profile change
      const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value, }); };
@@ -331,7 +360,7 @@ function Profile() {
                          isOpen={showPinModal}
                          title="Change PIN"
                          submitText="Update PIN"
-                         loading={loading}
+                         loading={pinLoading}
                          onClose={() => {
                               setShowPinModal(false);
                               setPinData({
