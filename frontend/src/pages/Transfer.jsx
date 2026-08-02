@@ -6,13 +6,12 @@ import TransactionList from "../components/dashboard/TransactionList";
 import ActionModal from "../components/common/ActionModel";
 import ReceiptModal from "../components/common/ReceiptModal";
 import {useToast} from "../context/ToastContext"
-import handleApiError from "../util/handleApiError"
 import {transferMoney,getTransactions, } from "../api/transactionApi";
 import "../styles/dashboard/dashboard.css";
 // hooks
 import useTransactions from "../hooks/useTransactions";
+import useApiAction from "../hooks/useApiAction";
 import "../styles/transfer.css";
-
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -20,30 +19,28 @@ function Transfer() {
   const [receipt, setReceipt] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
-  const [loading,setLoading] = useState(false)
   const {showToast} = useToast();
- const { transactions, loadTransactions, } = useTransactions();
+  const { transactions, loadTransactions, } = useTransactions();
+  const {execute,loading} = useApiAction();
   const handleTransfer = async () => {
-    setLoading(true)
-    try {
-      const data = await transferMoney(
-        recipientEmail,
-        Number(transferAmount)
+      const data = await execute(
+        () =>
+          transferMoney(
+            recipientEmail,
+            Number(transferAmount)
+          ),
+        "Transfer completed successfully."
       );
+      if (!data) return;
       await loadTransactions();
-     showToast("Transfer completed successfully.","success");
       setReceipt(data.receipt);
       setRecipientEmail("");
       setTransferAmount("");
       setTimeout(() => {
         setShowReceipt(true);
       }, 500);
-    } catch (error) {
-      showToast(handleApiError(error),"error");
-    }finally {
-      setLoading(false)
-    }
-  };
+    };
+  
   return (
     <div className="dashboard-layout">
       <HamburgerButton
