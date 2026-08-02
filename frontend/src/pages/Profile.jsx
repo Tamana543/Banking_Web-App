@@ -5,7 +5,6 @@ import { uploadAvatar,updateProfile,changePassword,changePin } from "../api/auth
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
-import handleApiError from "../util/handleApiError";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
@@ -21,8 +20,7 @@ function Profile() {
      const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "",});
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
-     const { showToast } = useToast();
-     const { execute} = useApiAction();
+     const { execute, loading: passwordLoading, } = useApiAction();
      
      const handleAvatarChange = async (e) => {
                const file = e.target.files[0];
@@ -46,21 +44,15 @@ function Profile() {
      const handlePinChange = (e) => { setPinData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };
      // handle password saving 
      const handleChangePassword = async () => {
-          try {
-               setLoading(true);
-               await changePassword(passwordData);
-              showToast( "Password updated successfully. Logging you out...","success");
+               const data = await execute(
+                    () => changePassword(passwordData),
+                    "Password updated successfully. Logging you out..."
+               );
+               if (!data) return;
                setTimeout(() => {
                     logout();
                     navigate("/login");
                }, 1800);
-          } catch (error) {
-              
-                    showToast(handleApiError(error),"error");
-              
-          } finally {
-               setLoading(false);
-          }
           };
      // Handle pin change 
           const handleChangePin = async () => {
@@ -327,7 +319,7 @@ function Profile() {
                     </div>
                     </ActionModal>
                     {/* password change model */}
-                    <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={loading}
+                    <ActionModal isOpen={showPasswordModal} title="Change Password" submitText="Update Password" loading={passwordLoading}
                      onClose={() => {setShowPasswordModal(false); setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "",});
                     }} onSubmit={handleChangePassword} >
                          <input type="password" name="currentPassword" placeholder="Current Password" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
