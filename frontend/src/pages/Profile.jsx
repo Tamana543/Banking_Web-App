@@ -6,6 +6,7 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import handleApiError from "../util/handleApiError";
+import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
 
@@ -21,12 +22,16 @@ function Profile() {
      const [showPinModal, setShowPinModal] = useState(false)
      const [pinData, setPinData] = useState({ currentPin: "", newPin: "", confirmPin: "", });
      const { showToast } = useToast();
+     const { execute} = useApiAction();
      
      const handleAvatarChange = async (e) => {
-          const file = e.target.files[0];
-          if (!file) return;
-          try {
-               const data = await uploadAvatar(file);
+               const file = e.target.files[0];
+               if (!file) return;
+               const data = await execute(
+                    () => uploadAvatar(file),
+                    "Profile photo updated successfully."
+               );
+               if (!data) return;
                const updatedUser = {
                     ...user,
                     avatar: data.avatar,
@@ -36,10 +41,7 @@ function Profile() {
                     "user",
                     JSON.stringify(updatedUser)
                );
-          } catch (error) {
-               showToast(handleApiError(error),"error");
-          }
-     };
+          };
      const handlePasswordChange = (e) => { setPasswordData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };// handles input 
      const handlePinChange = (e) => { setPinData((prev) => ({ ...prev, [e.target.name]: e.target.value, })); };
      // handle password saving 
