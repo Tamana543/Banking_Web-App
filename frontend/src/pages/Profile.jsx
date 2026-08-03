@@ -7,6 +7,8 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
+// hook
+import { isEmpty,isValidEmail,minLength,isPin } from "../util/validation";
 import "../styles/profile.css";
 function Profile() {
      // states 
@@ -55,7 +57,7 @@ function Profile() {
                showToast("New password is required.", "error");
                return;
           }
-          if (passwordData.newPassword.length < 6) {
+         if (!minLength(passwordData.newPassword, 6)) {
                showToast(
                     "Password must be at least 6 characters.",
                     "error"
@@ -99,7 +101,7 @@ function Profile() {
                               showToast("New PIN is required.", "error");
                               return;
                          }
-                         if (pinData.newPin.length !== 4) {
+                        if (!isPin(pinData.newPin)) {
                               showToast(
                                    "PIN must contain 4 digits.",
                                    "error"
@@ -139,10 +141,12 @@ function Profile() {
               showToast("Email is required.","error");
                return;
           }
-          const emailRegex =
-               /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(formData.email)) {
-              showToast("Please enter a valid email.","error");
+          if (isEmpty(formData.email)) {
+               showToast("Email is required.", "error");
+               return;
+          }
+          if (!isValidEmail(formData.email)) {
+               showToast("Please enter a valid email.", "error");
                return;
           }
           if (

@@ -9,7 +9,7 @@ import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
 // hooks 
 import useTransactions from "../hooks/useTransactions";
-import { isPositiveNumber } from "../util/validation";
+import { isPositiveNumber,isEmpty } from "../util/validation";
 
 function Loan() {
      const { showToast } = useToast();
@@ -26,7 +26,7 @@ function Loan() {
                );
                return;
           }
-          if (!purpose.trim()) {
+          if (isEmpty(purpose)) {
                showToast(
                     "Loan purpose is required.",
                     "error"
