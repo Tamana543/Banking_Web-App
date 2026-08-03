@@ -99,15 +99,15 @@ function Profile() {
                               showToast("New PIN is required.", "error");
                               return;
                          }
-                         if (pinData.newPin !== pinData.confirmPin) {
-                              showToast("PINs do not match.", "error");
+                         if (pinData.newPin.length !== 4) {
+                              showToast(
+                                   "PIN must contain 4 digits.",
+                                   "error"
+                              );
                               return;
                          }
-                         if (pinData.newPin.length !== 4) {
-                                   showToast(
-                                        "PIN must contain 4 digits.",
-                                        "error"
-                                   );
+                         if (pinData.newPin !== pinData.confirmPin) {
+                                   showToast("PINs do not match.", "error");
                                    return;
                          }
                const data = await executePin(
@@ -154,16 +154,12 @@ function Profile() {
                return;
           }
          const data = await executeProfile( () => updateProfile(formData), "Profile updated successfully." );
-
                if (!data) return;
-
                setUser(data.user);
-
                localStorage.setItem(
                "user",
                JSON.stringify(data.user)
                );
-
                setEditing(false);
           };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
