@@ -1,4 +1,5 @@
 import handleApiError from "../util/handleApiError";
+import AuthLayout from "../components/auth/AuthLayout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
@@ -46,7 +47,7 @@ function Login() {
     }
   };
   return (
-    <div>
+<AuthLayout title="Welcome Back" subtitle="Sign in to access your Bankist Pro account.">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -67,7 +68,7 @@ function Login() {
           Login
         </button>
       </form>
-    </div>
+    </AuthLayout>
   );
 }
 export default Login;

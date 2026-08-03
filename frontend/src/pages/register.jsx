@@ -1,4 +1,5 @@
 import handleApiError from "../util/handleApiError";
+import AuthLayout from "../components/auth/AuthLayout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authApi";
@@ -43,7 +44,7 @@ function Register() {
     }
   };
   return (
-    <div>
+    <AuthLayout title="Create Your Account" subtitle="Start managing your finances securely.">
       <h1>Create Account</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -92,7 +93,7 @@ function Register() {
           Register
         </button>
       </form>
-    </div>
+    </AuthLayout>
   );
 }
 export default Register;
