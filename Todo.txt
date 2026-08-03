@@ -120,9 +120,9 @@ phase 10 — Notifications & UX
 
 Phase 10.5
 * settings page (Notifications and Banking performance will be added next ) ✔️
-* remove duplicated code
-* reusable components
-* improve UI consistency
+* remove duplicated code ✔️
+* reusable components ✔️ 
+* improve UI consistency 
 * animations
 * accessibility
 * code cleanup
