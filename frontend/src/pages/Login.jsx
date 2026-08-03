@@ -47,27 +47,47 @@ function Login() {
     }
   };
   return (
-<AuthLayout title="Welcome Back" subtitle="Sign in to access your Bankist Pro account.">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button type="submit">
-          Login
-        </button>
-      </form>
+    <AuthLayout
+      title="Welcome Back"
+      subtitle="Securely access your Bankist account."
+    >
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit}
+        >
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="auth-btn"
+          >
+            Login
+          </button>
+          <p className="auth-footer">
+            Don't have an account?
+            <span onClick={() => navigate("/register")}>
+              Create one
+            </span>
+          </p>
+        </form>
     </AuthLayout>
   );
 }
