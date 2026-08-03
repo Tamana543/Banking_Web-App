@@ -8,7 +8,6 @@ import ActionModal from "../components/common/ActionModel";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
 import "../styles/profile.css";
-
 function Profile() {
      // states 
      const {user,setUser,logout} = useAuth();
@@ -23,6 +22,8 @@ function Profile() {
      // for hooks
      const { execute: executePin, loading: pinLoading, } = useApiAction();
      const { execute, loading: passwordLoading, } = useApiAction();
+     const { execute: executeProfile, loading: profileLoading, } = useApiAction();
+     const { showToast } = useToast();
      
      const handleAvatarChange = async (e) => {
                const file = e.target.files[0];
@@ -50,12 +51,10 @@ function Profile() {
                showToast("Current password is required.", "error");
                return;
           }
-
           if (!passwordData.newPassword) {
                showToast("New password is required.", "error");
                return;
           }
-
           if (passwordData.newPassword.length < 6) {
                showToast(
                     "Password must be at least 6 characters.",
@@ -63,7 +62,6 @@ function Profile() {
                );
                return;
           }
-
           if (
                passwordData.newPassword !==
                passwordData.confirmPassword
@@ -74,7 +72,13 @@ function Profile() {
                );
                return;
           }
-
+          if ( passwordData.currentPassword === passwordData.newPassword ) {
+               showToast(
+                    "New password must be different from the current password.",
+                    "error"
+               );
+               return;
+               }
                const data = await execute(
                     () => changePassword(passwordData),
                     "Password updated successfully. Logging you out..."
@@ -91,21 +95,28 @@ function Profile() {
                          showToast("Current PIN is required.", "error");
                          return;
                          }
-
+                         if (!pinData.newPin) {
+                              showToast("New PIN is required.", "error");
+                              return;
+                         }
                          if (pinData.newPin !== pinData.confirmPin) {
-                         showToast("PINs do not match.", "error");
-                         return;
-               }
+                              showToast("PINs do not match.", "error");
+                              return;
+                         }
+                         if (pinData.newPin.length !== 4) {
+                                   showToast(
+                                        "PIN must contain 4 digits.",
+                                        "error"
+                                   );
+                                   return;
+                         }
                const data = await executePin(
                () => changePin(pinData),
                "PIN updated successfully."
                );
               
-
                if (!data) return;
-
                setShowPinModal(false);
-
                setPinData({
                currentPin: "",
                newPin: "",
@@ -142,29 +153,21 @@ function Profile() {
                showToast("No changes detected.","error");
                return;
           }
-          try {
-               setLoading(true);
-               const data = await updateProfile(formData);
+         const data = await executeProfile( () => updateProfile(formData), "Profile updated successfully." );
+
+               if (!data) return;
+
                setUser(data.user);
+
                localStorage.setItem(
-                    "user",
-                    JSON.stringify(data.user)
+               "user",
+               JSON.stringify(data.user)
                );
-               
-                    showToast("Profile updated successfully.","success");
-                    setEditing(false);
-               
-          } catch (error) {
-              
-                    showToast(handleApiError(error),"error");
-                   
-          } finally {
-               setLoading(false);
-          }
+
+               setEditing(false);
           };
      const handleCancel = () => { setFormData({ firstName: user.firstName, lastName: user.lastName, email: user.email, }); setEditing(false); };
     
-
      return (
         <DashboardLayout>
             <DashboardHeader />
@@ -262,17 +265,14 @@ function Profile() {
                     {/* Security Card */}
                     <div className="profile-info">
                          <h3>Security Center</h3>
-
                          <div className="info-row">
                               <span>Current Session</span>
                               <strong className="security-success">
                                    Active
                               </strong>
                          </div>
-
                          <div className="info-row">
                               <span>Last Login</span>
-
                               <strong>
                                    {
                                         user?.lastLogin
@@ -284,10 +284,8 @@ function Profile() {
                                    }
                               </strong>
                          </div>
-
                          <div className="info-row">
                               <span>Password Updated</span>
-
                               <strong>
                                    {
                                         user?.passwordUpdatedAt
@@ -299,10 +297,8 @@ function Profile() {
                                    }
                               </strong>
                          </div>
-
                          <div className="info-row">
                               <span>PIN Updated</span>
-
                               <strong>
                                    {
                                         user?.pinUpdatedAt
@@ -314,18 +310,14 @@ function Profile() {
                                    }
                               </strong>
                          </div>
-
                          <div className="info-row">
                               <span>Two-Factor Authentication</span>
-
                               <strong className="coming-soon">
                                    Coming Soon
                               </strong>
                          </div>
-
                          <div className="info-row">
                               <span>Logout From All Devices</span>
-
                               <strong className="coming-soon">
                                    Coming Soon
                               </strong>
