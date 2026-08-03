@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
+import {isEmpty,isValidEmail} from "../util/validation";
 
 function Login() {
   const navigate = useNavigate();
@@ -24,14 +25,19 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email.trim()) {
-      showToast("Email is required.", "error");
-      return;
+    if (isEmpty(formData.email)) {
+    showToast("Email is required.", "error");
+    return;
     }
 
-    if (!formData.password.trim()) {
-      showToast("Password is required.", "error");
-      return;
+    if (!isValidEmail(formData.email)) {
+        showToast("Please enter a valid email.", "error");
+        return;
+    }
+
+    if (isEmpty(formData.password)) {
+        showToast("Password is required.", "error");
+        return;
     }
     try {
       const data = await loginUser(
