@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import handleApiError from "../util/handleApiError";
 import AuthLayout from "../components/auth/AuthLayout";
 import { useState } from "react";
@@ -46,12 +47,39 @@ function Login() {
       showToast(handleApiError(error),"error")
     }
   };
-  return (
-    <AuthLayout
-      title="Welcome Back"
-      subtitle="Securely access your Bankist account."
-    >
-        <form
+return (
+<div className="auth-page">
+    <div className="auth-left">
+        <div className="brand">
+            <h1>BANKIST PRO</h1>
+            <span>Premium Digital Banking</span>
+        </div>
+        <div className="brand-content">
+            <h2>
+                Banking Made
+                <br />
+                Smarter.
+            </h2>
+            <p>
+                Securely manage your money,
+                transfer instantly,
+                monitor your finances
+                and stay in complete control.
+            </p>
+            <ul>
+                <li>✓ Instant Transfers</li>
+                <li>✓ Bank-level Security</li>
+                <li>✓ Smart Financial Analytics</li>
+            </ul>
+        </div>
+    </div>
+    <div className="auth-right">
+        <div className="auth-card">
+            <h2>Welcome Back</h2>
+            <p>
+                Login to your account
+            </p>
+            <form
           className="auth-form"
           onSubmit={handleSubmit}
         >
@@ -81,14 +109,16 @@ function Login() {
           >
             Login
           </button>
-          <p className="auth-footer">
-            Don't have an account?
-            <span onClick={() => navigate("/register")}>
-              Create one
-            </span>
-          </p>
         </form>
-    </AuthLayout>
-  );
+            <div className="auth-footer">
+                Don't have an account?
+                <Link to="/register">
+                    Create one
+                </Link>
+            </div>
+        </div>
+    </div>
+</div>
+);
 }
 export default Login;
