@@ -9,6 +9,8 @@ import { applyLoan, getTransactions } from "../api/transactionApi";
 import "../styles/loan.css";
 // hooks 
 import useTransactions from "../hooks/useTransactions";
+import { isPositiveNumber } from "../util/validation";
+
 function Loan() {
      const { showToast } = useToast();
      const [loanAmount, setLoanAmount] = useState("");
@@ -17,7 +19,7 @@ function Loan() {
      const { execute, loading } = useApiAction();
      // LoanHundler
      const handleLoan = async () => {
-          if (!loanAmount || Number(loanAmount) <= 0) {
+          if (!isPositiveNumber(loanAmount)) {
                showToast(
                     "Enter a valid loan amount.",
                     "error"

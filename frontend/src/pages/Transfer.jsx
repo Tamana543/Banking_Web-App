@@ -12,6 +12,9 @@ import "../styles/dashboard/dashboard.css";
 import useTransactions from "../hooks/useTransactions";
 import useApiAction from "../hooks/useApiAction";
 import "../styles/transfer.css";
+import { isPositiveNumber } from "../util/validation";
+
+
 function Transfer() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -93,7 +96,7 @@ function Transfer() {
                   return;
                 }
                 if (
-                  Number(transferAmount) <= 0
+                  !isPositiveNumber(transferAmount)
                 ) {
                   showToast("Enter a valid amount.","error");
                   return;

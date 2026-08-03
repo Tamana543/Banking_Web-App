@@ -11,6 +11,7 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 // hooks
 import useTransactions from "../hooks/useTransactions";
 import useApiAction from "../hooks/useApiAction";
+import { isPositiveNumber } from "../util/validation";
 
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -42,7 +43,7 @@ function Dashboard() {
 
   // Deposit
   const handleDeposit = async () => {
-    if (!depositAmount || Number(depositAmount) <= 0) {
+    if (!isPositiveNumber(depositAmount)) {
       showToast("Enter a valid amount.", "error");
       return;
     }
@@ -65,7 +66,7 @@ function Dashboard() {
 
   // Withdraw
   const handleWithdraw = async () => {
-    if (!withdrawAmount || Number(withdrawAmount) <= 0) {
+    if (!isPositiveNumber(withdrawAmount)) {
       showToast("Enter a valid amount.", "error");
       return;
     }
