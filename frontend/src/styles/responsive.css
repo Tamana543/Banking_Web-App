@@ -91,6 +91,13 @@
 .profile-details{
     gap:20px;
 }
+/* login */
+.auth-page{
+    grid-template-columns:1.1fr;
+}
+.auth-card {
+        margin-left: 5%;
+}
 }
 @media (max-width:768px){
     .analytics-card{

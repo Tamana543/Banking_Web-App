@@ -50,36 +50,27 @@ function Login() {
 return (
 <div className="auth-page">
     <div className="auth-left">
-        <div className="brand">
-            <h1>BANKIST PRO</h1>
-            <span>Premium Digital Banking</span>
-        </div>
-        <div className="brand-content">
-            <h2>
-                Banking Made
-                <br />
-                Smarter.
-            </h2>
-            <p>
-                Securely manage your money,
-                transfer instantly,
-                monitor your finances
-                and stay in complete control.
-            </p>
-            <ul>
-                <li>✓ Instant Transfers</li>
-                <li>✓ Bank-level Security</li>
-                <li>✓ Smart Financial Analytics</li>
-            </ul>
-        </div>
+        <h1 className="auth-logo">
+            BANKIST PRO
+        </h1>
+        <h2 className="auth-tagline">
+            Modern Banking
+            <br />
+            Built For Everyone.
+        </h2>
+        <p className="auth-description">
+            Secure digital banking with instant transfers,
+            savings goals, loans, analytics, and complete
+            financial control—all in one place.
+        </p>
     </div>
     <div className="auth-right">
         <div className="auth-card">
             <h2>Welcome Back</h2>
             <p>
-                Login to your account
+                Login to continue to your account.
             </p>
-            <form
+           <form
           className="auth-form"
           onSubmit={handleSubmit}
         >
@@ -110,12 +101,6 @@ return (
             Login
           </button>
         </form>
-            <div className="auth-footer">
-                Don't have an account?
-                <Link to="/register">
-                    Create one
-                </Link>
-            </div>
         </div>
     </div>
 </div>
