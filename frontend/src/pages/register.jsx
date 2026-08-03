@@ -1,11 +1,9 @@
 import handleApiError from "../util/handleApiError";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
-
 function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -18,28 +16,24 @@ function Register() {
     confirmPassword: "",
     pin: "",
   });
-
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email.trim()) {
       showToast("Email is required.", "error");
       return;
     }
-
   if (!formData.password.trim()) {
     showToast("Password is required.", "error");
     return;
   }
     try {
       const data = await registerUser(formData);
-
       // Automatically log the user in after registration
       login(data.user, data.token);
       showToast( "Welcome back!", "success" );
@@ -48,11 +42,9 @@ function Register() {
       showToast(handleApiError(error),"error")
     }
   };
-
   return (
     <div>
       <h1>Create Account</h1>
-
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -61,7 +53,6 @@ function Register() {
           value={formData.firstName}
           onChange={handleChange}
         />
-
         <input
           type="text"
           name="lastName"
@@ -69,7 +60,6 @@ function Register() {
           value={formData.lastName}
           onChange={handleChange}
         />
-
         <input
           type="email"
           name="email"
@@ -77,7 +67,6 @@ function Register() {
           value={formData.email}
           onChange={handleChange}
         />
-
         <input
           type="password"
           name="password"
@@ -85,7 +74,6 @@ function Register() {
           value={formData.password}
           onChange={handleChange}
         />
-
         <input
           type="password"
           name="pin"
@@ -107,5 +95,4 @@ function Register() {
     </div>
   );
 }
-
 export default Register;
