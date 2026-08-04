@@ -171,6 +171,11 @@
     pointer-events:none;
     z-index:0;
 }
+.name-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
 .floating-card{
     position:absolute;
     width:220px;

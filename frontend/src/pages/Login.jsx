@@ -48,44 +48,11 @@ function Login() {
     }
   };
 return (
-<div className="auth-page">
-   <div className="auth-decoration">
-            <div className="star s1"></div>
-            <div className="star s2"></div>
-            <div className="star s3"></div>
-            <div className="star s4"></div>
-            <div className="star s5"></div>
-            <div className="floating-card card-one"></div>
-            <div className="floating-card card-two"></div>
-            <div className="floating-card card-three"></div>
-            <div className="floating-card card-four"></div>
-            <div className="floating-circle circle-one"></div>
-            <div className="floating-circle circle-two"></div>
-            <div className="floating-circle circle-three"></div>
-        </div>
-    <div className="auth-left">
-        <h1 className="auth-logo">
-            BANKIST PRO
-        </h1>
-        <h2 className="auth-tagline">
-            Modern Banking
-            <br />
-            Built For Everyone.
-        </h2>
-        <p className="auth-description">
-            Secure digital banking with instant transfers,
-            savings goals, loans, analytics, and complete
-            financial control—all in one place.
-        </p>
-       
-    </div>
-    <div className="auth-right">
-        <div className="auth-card">
-            <h2>Welcome Back</h2>
-            <p>
-                Login to continue to your account.
-            </p>
-           <form
+<AuthLayout
+    title="Welcome Back"
+    subtitle="Login to continue to your account."
+>
+   <form
           className="auth-form"
           onSubmit={handleSubmit}
         >
@@ -116,10 +83,8 @@ return (
             Login
           </button>
         </form>
-        </div>
-        
-    </div>
-</div>
+
+</AuthLayout>
 );
 }
 export default Login;
