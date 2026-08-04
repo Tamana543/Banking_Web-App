@@ -1,11 +1,3 @@
-/* .auth-page{
-    min-height:100vh;
-    position: relative;
-    overflow: hidden;
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-    background:#0f0f0f;
-} */
 .auth-page{
     position:relative;
     overflow:hidden;
@@ -179,11 +171,6 @@
     pointer-events:none;
     z-index:0;
 }
-.auth-left,
-.auth-right{
-    position:relative;
-    z-index:2;
-}
 .floating-card{
     position:absolute;
     width:220px;
@@ -223,6 +210,22 @@ backdrop-filter:blur(18px);
     transform:rotate(-28deg);
     animation-delay:5s;
 }
+.star{
+    position:absolute;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:#e4c04b;
+    box-shadow:
+        0 0 8px #d4af37,
+        0 0 18px #d4af37;
+    animation:twinkle 4s infinite;
+}
+.s1{top:15%;left:20%;}
+.s2{top:30%;left:65%;}
+.s3{top:60%;left:52%;}
+.s4{top:80%;right:18%;}
+.s5{top:12%;right:8%;}
 .floating-circle{
     position:absolute;
     border-radius:50%;
@@ -235,7 +238,7 @@ backdrop-filter:blur(18px);
     filter:blur(8px);
     animation:floatCircle 12s linear infinite;
 }
-.circle-one,.circle-two{
+.circle-one{
     width:140px;
     height:140px;
     top:120px;
@@ -244,8 +247,8 @@ backdrop-filter:blur(18px);
 .circle-two{
     width:140px;
     height:140px;
-    top:120px;
-    left:140px;
+    top: 360px;
+    left: 550px;
 }
 .circle-three{
     width:180px;
@@ -286,5 +289,15 @@ backdrop-filter:blur(18px);
         transform:
             translateY(0)
             rotate(-18deg);
+    }
+}
+@keyframes twinkle{
+    0%,100%{
+        opacity:.2;
+        transform:scale(.8);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.6);
     }
 }
