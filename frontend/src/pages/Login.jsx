@@ -49,6 +49,17 @@ function Login() {
   };
 return (
 <div className="auth-page">
+   <div className="auth-decoration">
+            <div className="star s1"></div>
+            <div className="star s2"></div>
+            <div className="star s3"></div>
+            <div className="star s4"></div>
+            <div className="star s5"></div>
+            <div className="floating-card card-one"></div>
+            <div className="floating-card card-two"></div>
+            <div className="floating-circle circle-one"></div>
+            <div className="floating-circle circle-two"></div>
+        </div>
     <div className="auth-left">
         <h1 className="auth-logo">
             BANKIST PRO
@@ -63,12 +74,7 @@ return (
             savings goals, loans, analytics, and complete
             financial control—all in one place.
         </p>
-        <div className="auth-decoration">
-            <div className="floating-card card-one"></div>
-            <div className="floating-card card-two"></div>
-            <div className="floating-circle circle-one"></div>
-            <div className="floating-circle circle-two"></div>
-        </div>
+       
     </div>
     <div className="auth-right">
         <div className="auth-card">

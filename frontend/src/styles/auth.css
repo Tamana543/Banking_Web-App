@@ -1,4 +1,14 @@
+/* .auth-page{
+    min-height:100vh;
+    position: relative;
+    overflow: hidden;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    background:#0f0f0f;
+} */
 .auth-page{
+    position:relative;
+    overflow:hidden;
     min-height:100vh;
     display:grid;
     grid-template-columns:1.1fr .9fr;
@@ -13,8 +23,7 @@
     padding:40px;
 }
 .auth-left{
-    position: relative;
-    overflow: hidden;
+   
     padding:70px;
     display:flex;
     flex-direction:column;
@@ -162,21 +171,26 @@
     text-decoration:underline;
 }
 .auth-decoration{
-    position:absolute;
+     position:absolute;
     inset:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
     pointer-events:none;
+    z-index:0;
+}
+.auth-left,
+.auth-right{
+    position:relative;
+    z-index:2;
 }
 .floating-card{
     position:absolute;
     width:220px;
     height:140px;
     border-radius:20px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(212,175,55,.18),
-            rgba(255,255,255,.03)
-        );
+   background: linear-gradient( 135deg, rgba(212,175,55,.10), rgba(255,255,255,.02) );
+backdrop-filter:blur(18px);
     border:1px solid rgba(212,175,55,.2);
     backdrop-filter:blur(8px);
     animation:floatCard 8s ease-in-out infinite;
@@ -193,6 +207,22 @@
     transform:rotate(15deg);
     animation-delay:3s;
 }
+.card-three{
+    top:12%;
+    left:42%;
+    width:170px;
+    height:110px;
+    transform:rotate(22deg);
+    animation-delay:1.5s;
+}
+.card-four{
+    bottom:8%;
+    right:4%;
+    width:240px;
+    height:150px;
+    transform:rotate(-28deg);
+    animation-delay:5s;
+}
 .floating-circle{
     position:absolute;
     border-radius:50%;
@@ -205,17 +235,24 @@
     filter:blur(8px);
     animation:floatCircle 12s linear infinite;
 }
-.circle-one{
+.circle-one,.circle-two{
     width:140px;
     height:140px;
     top:120px;
     left:140px;
 }
-.circle-one{
+.circle-two{
     width:140px;
     height:140px;
     top:120px;
     left:140px;
+}
+.circle-three{
+    width:180px;
+    height:180px;
+    bottom:-60px;
+    left:35%;
+    opacity:.4;
 }
 @keyframes floatCard{
     0%{
