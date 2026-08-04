@@ -63,6 +63,12 @@ return (
             savings goals, loans, analytics, and complete
             financial control—all in one place.
         </p>
+        <div className="auth-decoration">
+            <div className="floating-card card-one"></div>
+            <div className="floating-card card-two"></div>
+            <div className="floating-circle circle-one"></div>
+            <div className="floating-circle circle-two"></div>
+        </div>
     </div>
     <div className="auth-right">
         <div className="auth-card">
