@@ -57,8 +57,11 @@ return (
             <div className="star s5"></div>
             <div className="floating-card card-one"></div>
             <div className="floating-card card-two"></div>
+            <div className="floating-card card-three"></div>
+            <div className="floating-card card-four"></div>
             <div className="floating-circle circle-one"></div>
             <div className="floating-circle circle-two"></div>
+            <div className="floating-circle circle-three"></div>
         </div>
     <div className="auth-left">
         <h1 className="auth-logo">

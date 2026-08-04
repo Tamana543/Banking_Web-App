@@ -212,8 +212,8 @@ backdrop-filter:blur(18px);
 }
 .star{
     position:absolute;
-    width:4px;
-    height:4px;
+    width:6px;
+    height:6px;
     border-radius:50%;
     background:#e4c04b;
     box-shadow:
