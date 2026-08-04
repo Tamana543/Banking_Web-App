@@ -5,6 +5,7 @@
     display:grid;
     grid-template-columns:1.1fr .9fr;
     background:#0f0f0f;
+    overflow-y:auto;
 }
 .auth-container{
     min-height:100vh;
@@ -69,6 +70,7 @@
     border:1px solid rgba(212,175,55,.12);
     box-shadow:
         0 25px 70px rgba(0,0,0,.45);
+        margin: 5%;
 }
 .auth-card:hover{
     border-color:rgba(212,175,55,.35);
