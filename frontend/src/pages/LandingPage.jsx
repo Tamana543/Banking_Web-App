@@ -11,6 +11,7 @@ import "../styles/landing/landing.css"
 function LandingPage() {
   return (
     <main className="landing-page">
+     
       <Navbar />
       <Hero />
       <Features />

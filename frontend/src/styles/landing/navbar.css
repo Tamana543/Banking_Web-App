@@ -9,6 +9,7 @@
     backdrop-filter:blur(18px);
     background:rgba(15,15,15,.72);
     border-bottom:1px solid rgba(212,175,55,.08);
+  color: red;
 }
 .landing-logo{
     font-size:1.8rem;
