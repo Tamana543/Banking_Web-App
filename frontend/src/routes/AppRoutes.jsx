@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 // if any error check the name of files as changed alot
-import Landing from "../pages/Landing";
+import LandingPage from "../pages/LandingPage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
@@ -17,7 +17,7 @@ function AppRoutes() {
   return (
     
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
