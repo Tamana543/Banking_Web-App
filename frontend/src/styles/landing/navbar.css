@@ -1,22 +1,69 @@
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 1.5rem 4rem;
+.landing-navbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 70px;
+    backdrop-filter:blur(18px);
+    background:rgba(15,15,15,.72);
+    border-bottom:1px solid rgba(212,175,55,.08);
 }
-
-.nav__links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
+.landing-logo{
+    font-size:1.8rem;
+    font-weight:700;
+    letter-spacing:.8px;
 }
-
-.nav__links a {
-  text-decoration: none;
+.logo-gold{
+    color:var(--gold);
 }
-
-.nav__btn {
-  padding: 0.8rem 1.5rem;
-  border-radius: 999px;
+.logo-white{
+    color:white;
+}
+.landing-nav-links{
+    display:flex;
+    gap:38px;
+}
+.landing-nav-links a{
+    text-decoration:none;
+    color:#cfcfcf;
+    font-weight:500;
+    transition:.25s;
+}
+.landing-nav-links a:hover{
+    color:var(--gold);
+}
+.landing-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+.login-link{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.25s;
+}
+.login-link:hover{
+    color:var(--gold);
+}
+.open-account-btn{
+    text-decoration:none;
+    background:linear-gradient(
+        135deg,
+        #e4c04b,
+        #d4af37
+    );
+    color:#111;
+    padding:12px 26px;
+    border-radius:999px;
+    font-weight:700;
+    transition:.3s;
+}
+.open-account-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 12px 30px
+        rgba(212,175,55,.30);
 }
