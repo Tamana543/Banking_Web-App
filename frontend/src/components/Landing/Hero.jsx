@@ -1,5 +1,25 @@
+import { useEffect, useState } from "react";
 import "../../styles/landing/hero.css";
 function Hero() {
+  // Animations :)
+      const [balance, setBalance] = useState(0);
+    useEffect(() => {
+        const target = 18450;
+        const duration = 1000;
+        const stepTime = 16;
+        const increment = target / (duration / stepTime);
+        let current = 0;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            setBalance(current);
+        }, stepTime);
+        return () => clearInterval(timer);
+    }, []);
+
   return (
     <section className="hero">
   
@@ -58,10 +78,7 @@ function Hero() {
     <div className="dashboard-header">
             <div>
                 <small>Current Balance</small>
-                <h1>$18,450.35</h1>
-            </div>
-            <div className="dashboard-logo">
-                BP
+                <h1>$ {balance.toLocaleString(undefined,{ maximumFractionDigits:0 })}</h1>
             </div>
         </div>
         <div className="dashboard-summary">
