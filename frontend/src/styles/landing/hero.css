@@ -234,6 +234,127 @@
 .analytics-card small{
     color:#888;
 }
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+.dashboard-header small{
+    color:#888;
+    font-size:.9rem;
+}
+.dashboard-header h1{
+    color:white;
+    margin-top:8px;
+    font-size:2rem;
+}
+.dashboard-logo{
+    width:55px;
+    height:55px;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:var(--gold);
+    color:#111;
+    font-weight:700;
+}
+.dashboard-summary{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:30px;
+}
+.mini-card{
+    padding:18px;
+    border-radius:16px;
+    background:#202020;
+}
+.mini-card span{
+    display:block;
+    color:#888;
+    margin-bottom:10px;
+}
+.mini-card strong{
+    color:white;
+    font-size:1.2rem;
+}
+.dashboard-progress{
+    margin-bottom:35px;
+}
+.progress-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+    color:white;
+}
+.progress-bar{
+    width:100%;
+    height:10px;
+    border-radius:999px;
+    background:#2c2c2c;
+    overflow:hidden;
+}
+.progress-fill{
+    width:74%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        var(--gold),
+        #f4d978
+    );
+    animation:progressGrow 2s ease;
+}
+.dashboard-transactions{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+.transaction-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+.transaction-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+}
+.income-icon{
+    background:#1d3827;
+    color:#38d977;
+}
+.expense-icon{
+    background:#422323;
+    color:#ff7070;
+}
+.transaction-row strong{
+    display:block;
+    color:white;
+}
+.transaction-row small{
+    color:#888;
+}
+.amount{
+    font-weight:700;
+}
+.amount.income{
+    color:#38d977;
+}
+.amount.expense{
+    color:#ff7070;
+}
+@keyframes progressGrow{
+    from{
+        width:0;
+    }
+}
 /* Floating Animation */
 @keyframes float{
     0%{

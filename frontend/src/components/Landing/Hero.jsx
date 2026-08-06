@@ -55,28 +55,73 @@ function Hero() {
             <span className="success-dot"></span>
         </div>
         <div className="dashboard-card">
-            <div className="dashboard-header">
-                <h3>Available Balance</h3>
-                <span>●</span>
+    <div className="dashboard-header">
+            <div>
+                <small>Current Balance</small>
+                <h1>$18,450.35</h1>
             </div>
-            <h1>$18,450.35</h1>
-            <div className="dashboard-stats">
-                <div className="mini-card income">
-                    <small>Income</small>
-                    <h4>+$4,250</h4>
-                </div>
-                <div className="mini-card expense">
-                    <small>Expenses</small>
-                    <h4>-$1,140</h4>
-                </div>
-            </div>
-            <div className="dashboard-bottom">
-                <div className="saving-card">
-                    <span>Monthly Savings</span>
-                    <strong>$2,980</strong>
-                </div>
+            <div className="dashboard-logo">
+                BP
             </div>
         </div>
+        <div className="dashboard-summary">
+            <div className="mini-card income">
+                <span>Income</span>
+                <strong>+$4,250</strong>
+            </div>
+            <div className="mini-card expense">
+                <span>Expense</span>
+                <strong>-$1,140</strong>
+            </div>
+        </div>
+        <div className="dashboard-progress">
+            <div className="progress-title">
+                <span>Monthly Savings</span>
+                <strong>74%</strong>
+            </div>
+            <div className="progress-bar">
+                <div className="progress-fill"></div>
+            </div>
+        </div>
+        <div className="dashboard-transactions">
+            <div className="transaction-row">
+                <div className="transaction-icon income-icon">
+                    ↑
+                </div>
+                <div>
+                    <strong>Salary</strong>
+                    <small>Today</small>
+                </div>
+                <span className="amount income">
+                    +$2,450
+                </span>
+            </div>
+            <div className="transaction-row">
+                <div className="transaction-icon expense-icon">
+                    ↓
+                </div>
+                <div>
+                    <strong>Netflix</strong>
+                    <small>Yesterday</small>
+                </div>
+                <span className="amount expense">
+                    -$14
+                </span>
+            </div>
+            <div className="transaction-row">
+                <div className="transaction-icon income-icon">
+                    ↑
+                </div>
+                <div>
+                    <strong>Transfer</strong>
+                    <small>2 days ago</small>
+                </div>
+                <span className="amount income">
+                    +$520
+                </span>
+            </div>
+        </div>
+    </div>
         <div className="floating-card analytics-card">
             <h4>Investments</h4>
             <strong>+18.4%</strong>
