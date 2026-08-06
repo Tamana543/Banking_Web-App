@@ -6,7 +6,6 @@
     padding:90px 8%;
     position:relative;
     overflow:hidden;
-    
 }
 .hero::before{
     content:"";
@@ -22,6 +21,63 @@
     right:-250px;
     top:-150px;
     pointer-events:none;
+}
+.hero-particles{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+.particle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(212,175,55,.55);
+    filter:blur(1px);
+    animation:particleFloat linear infinite;
+}
+.particle::after{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    border-radius:50%;
+    background:rgba(212,175,55,.2);
+    filter:blur(8px);
+}
+.p1{
+    width:6px;
+    height:6px;
+    left:8%;
+    animation-duration:11s;
+}
+.p2{
+    width:10px;
+    height:10px;
+    left:22%;
+    animation-duration:14s;
+}
+.p3{
+    width:8px;
+    height:8px;
+    left:48%;
+    animation-duration:12s;
+}
+.p4{
+    width:5px;
+    height:5px;
+    left:67%;
+    animation-duration:16s;
+}
+.p5{
+    width:9px;
+    height:9px;
+    left:82%;
+    animation-duration:13s;
+}
+.p6{
+    width:7px;
+    height:7px;
+    left:93%;
+     animation-duration: 25s;
 }
 .hero-left{
     display:flex;
@@ -366,6 +422,27 @@
 @keyframes progressGrow{
     from{
         width:0;
+    }
+}
+@keyframes particleFloat{
+    0%{
+        transform:
+            translateY(120px)
+            scale(.8);
+        opacity:0.2;
+    }
+    15%{
+        opacity:.8;
+    }
+    50%{
+        opacity:.35;
+    }
+    100%{
+        transform:
+            translateY(-120vh)
+            translateX(35px)
+            scale(1.4);
+        opacity:0;
     }
 }
 /* Floating Animation */

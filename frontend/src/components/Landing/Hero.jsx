@@ -22,7 +22,15 @@ function Hero() {
 
   return (
     <section className="hero">
-  
+      <div className="hero-particles">
+        <span className="particle p1"></span>
+        <span className="particle p2"></span>
+        <span className="particle p3"></span>
+        <span className="particle p4"></span>
+        <span className="particle p5"></span>
+        <span className="particle p6"></span>
+      </div>
+      
       <div className="hero-left">
         <span className="hero-badge">
           Trusted by 50,000+ Customers
