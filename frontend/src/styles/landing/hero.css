@@ -114,24 +114,97 @@
     margin-top:10px;
 }
 .hero-primary-btn{
-    padding:16px 30px;
+    position:relative;
+    overflow:hidden;
+    padding:18px 34px;
     border:none;
-    border-radius:14px;
+    border-radius:16px;
     cursor:pointer;
-    background:var(--gold);
+    background:
+        linear-gradient(
+            135deg,
+            #e7c44d,
+            var(--gold)
+        );
     color:#111;
     font-weight:700;
+    font-size:1rem;
+    transition:
+        transform .25s,
+        box-shadow .25s;
+}
+.hero-primary-btn span{
+    position:relative;
+    z-index:2;
+}
+.hero-primary-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.55),
+            transparent
+        );
+    transform:skewX(-25deg);
+}
+.hero-primary-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.55),
+            transparent
+        );
+    transform:skewX(-25deg);
+}
+.hero-primary-btn:hover{
+    transform:
+        translateY(-3px);
+    box-shadow:
+        0 15px 35px rgba(212,175,55,.35);
+}
+.hero-primary-btn:active{
+    transform:
+        scale(.97);
 }
 .hero-secondary-btn{
-    padding:16px 30px;
-    background:transparent;
-    color:white;
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:14px;
+    position:relative;
+    overflow:hidden;
+    padding:18px 34px;
+    border-radius:16px;
     cursor:pointer;
+    background:transparent;
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+    transition:.3s;
 }
-.hero-primary-btn:hover,.hero-secondary-btn:hover{
-  border-color: var(--gold);
+.hero-secondary-btn{
+    position:relative;
+    overflow:hidden;
+    padding:18px 34px;
+    border-radius:16px;
+    cursor:pointer;
+    background:transparent;
+    border:1px solid rgba(255,255,255,.15);
+    color:white;
+    transition:.3s;
+}
+.hero-secondary-btn:hover{
+    background:rgba(255,255,255,.05);
+    border-color:var(--gold);
+    color:var(--gold);
 }
 .hero-trust{
     display:flex;

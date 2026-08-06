@@ -19,7 +19,6 @@ function Hero() {
         }, stepTime);
         return () => clearInterval(timer);
     }, []);
-
   return (
     <section className="hero">
       <div className="hero-particles">
@@ -30,7 +29,6 @@ function Hero() {
         <span className="particle p5"></span>
         <span className="particle p6"></span>
       </div>
-      
       <div className="hero-left">
         <span className="hero-badge">
           Trusted by 50,000+ Customers
@@ -50,12 +48,12 @@ function Hero() {
           control—all in one beautiful platform.
         </p>
         <div className="hero-buttons">
-          <button className="hero-primary-btn">
-            Open Free Account
-          </button>
-          <button className="hero-secondary-btn">
-            Learn More
-          </button>
+            <button className="hero-primary-btn">
+                <span>Open Free Account</span>
+            </button>
+            <button className="hero-secondary-btn">
+                <span>Learn More</span>
+            </button>
         </div>
         <div className="hero-trust">
           <div className="trust-item">
