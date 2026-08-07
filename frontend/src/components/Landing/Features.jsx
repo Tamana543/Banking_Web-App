@@ -1,83 +1,80 @@
-import digital from "../../assets/images/digital-lazy.jpg"
-import grow from "../../assets/images/grow-lazy.jpg"
-import card from "../../assets/images/card-lazy.jpg"
-import icons from "../../assets/icons/icons.svg";
 import "../../styles/landing/features.css";
-
-
 function Features() {
+  const features = [
+    {
+      title: "Smart Banking",
+      description:
+        "Manage your balance, transactions, transfers, and everyday banking from one secure platform.",
+    },
+    {
+      title: "Instant Transfers",
+      description:
+        "Send money quickly and securely to other Bankist users whenever you need it.",
+    },
+    {
+      title: "Savings Goals",
+      description:
+        "Create savings targets, track your progress, and stay motivated as you move closer to your goals.",
+    },
+    {
+      title: "Financial Analytics",
+      description:
+        "Understand your spending and income with clear financial insights and activity tracking.",
+    },
+    {
+      title: "Secure Loans",
+      description:
+        "Apply for personal loans and keep track of your loan activity from your banking dashboard.",
+    },
+    {
+      title: "Complete Control",
+      description:
+        "Manage your profile, security settings, PIN, password, and financial activity in one place.",
+    },
+  ];
   return (
-     <section className="section" id="section--1">
-      <div className="section__title">
-        <h2 className="section__description">Features</h2>
-        <h3 className="section__header">
-          Everything you need in a modern bank and more.
-        </h3>
+    <section
+      className="features-section"
+      id="features"
+    >
+      <div className="features-heading">
+        <span className="features-label">
+          WHY BANKIST PRO
+        </span>
+        <h2>
+          Everything You Need
+          <br />
+          <span>To Manage Your Money.</span>
+        </h2>
+        <p>
+          Powerful banking tools designed to make
+          managing your finances simpler, safer,
+          and more transparent.
+        </p>
       </div>
-
-      <div className="features">
-        <img
-          src={digital}
-          alt="Computer"
-          className="features__img lazy-img"
-        />
-        <div className="features__feature" id="feature-1">
-          <div className="features__icon">
-            <svg>
-              {/* <!-- <use xlink:href="img/icons.svg#icon-monitor"></use> --> */}
-               <use href={`${icons}#icon-monitor`}></use>
-            </svg>
-          </div>
-          <h5 className="features__header">100% digital bank</h5>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde alias
-            sint quos? Accusantium a fugiat porro reiciendis saepe quibusdam
-            debitis ducimus.
-          </p>
-        </div>
-
-        <div className="features__feature" id="feature-2">
-          <div className="features__icon">
-            
-             <svg>
-                <use href={`${icons}#icon-trending-up`}></use>
-            </svg>
-           
-          </div>
-          <h5 className="features__header">Watch your money grow</h5>
-          <p>
-            Nesciunt quos autem dolorum voluptates cum dolores dicta fuga
-            inventore ab? Nulla incidunt eius numquam sequi iste pariatur
-            quibusdam!
-          </p>
-        </div>
-        <img
-          src={grow}
-          alt="Plant"
-          className="features__img lazy-img"
-        />
-
-        <img
-          src={card}
-          alt="Credit card"
-          className="features__img lazy-img"
-        />
-        <div className="features__feature" id="feature-3">
-          <div className="features__icon">
-            <svg>
-              <use href={`${icons}#icon-credit-card`}></use>
-            </svg>
-          </div>
-          <h5 className="features__header">Free debit card included</h5>
-          <p>
-            Quasi, fugit in cumque cupiditate reprehenderit debitis animi enim
-            eveniet consequatur odit quam quos possimus assumenda dicta fuga
-            inventore ab.
-          </p>
-        </div>
+      <div className="features-grid">
+        {features.map((feature, index) => (
+          <article
+            className="feature-card"
+            key={feature.title}
+          >
+            <span className="feature-number">
+              0{index + 1}
+            </span>
+            <div className="feature-accent"></div>
+            <h3>
+              {feature.title}
+            </h3>
+            <p>
+              {feature.description}
+            </p>
+            <span className="feature-arrow">
+              →
+            </span>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
-
 export default Features;
