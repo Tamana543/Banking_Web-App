@@ -124,6 +124,15 @@ display: none;
       .insights-grid{
         grid-template-columns:1fr;
     }
+     .services-section {
+        padding: 90px 6%;
+    }
+    .services-heading h2 {
+        font-size: 2.2rem;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
 }
 @media (max-width:600px){
     .analytics-overview{

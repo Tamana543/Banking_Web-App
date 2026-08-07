@@ -119,6 +119,3 @@
 .service-card:hover .service-arrow {
     transform: translateX(7px);
 }
-@media (max-width: 750px) {
-   
-}
