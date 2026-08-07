@@ -1,85 +1,101 @@
-import user_1 from "../../assets/images/user-1.jpg"
-import user_2 from "../../assets/images/user-2.jpg"
-import user_3 from "../../assets/images/user-3.jpg"
+import { useEffect, useRef } from "react";
+import user_1 from "../../assets/images/user-1.jpg";
+import user_2 from "../../assets/images/user-2.jpg";
+import user_3 from "../../assets/images/user-3.jpg";
 import "../../styles/landing/testimonials.css";
-// "../../assets/images/logo.png"
 function Testimonials() {
-  return (
-  <section className="section" id="section--3">
-      <div className="section__title section__title--testimonials">
-        <h2 className="section__description">Not sure yet?</h2>
-        <h3 className="section__header">
-          Millions of Bankists are already making their lifes simpler.
-        </h3>
-      </div>
-
-      <div className="slider">
-        <div className="slide slide--1">
-          <div className="testimonial">
-            <h5 className="testimonial__header">Best financial decision ever!</h5>
-            <blockquote className="testimonial__text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Accusantium quas quisquam non? Quas voluptate nulla minima
-              deleniti optio ullam nesciunt, numquam corporis et asperiores
-              laboriosam sunt, praesentium suscipit blanditiis. Necessitatibus
-              id alias reiciendis, perferendis facere pariatur dolore veniam
-              autem esse non voluptatem saepe provident nihil molestiae.
-            </blockquote>
-            <address className="testimonial__author">
-              <img src={user_1} alt="" className="testimonial__photo" />
-              <h6 className="testimonial__name">Aarav Lynn</h6>
-              <p className="testimonial__location">San Francisco, USA</p>
-            </address>
-          </div>
-        </div>
-
-        <div className="slide slide--2">
-          <div className="testimonial">
-            <h5 className="testimonial__header">
-              The last step to becoming a complete minimalist
-            </h5>
-            <blockquote className="testimonial__text">
-              Quisquam itaque deserunt ullam, quia ea repellendus provident,
-              ducimus neque ipsam modi voluptatibus doloremque, corrupti
-              laborum. Incidunt numquam perferendis veritatis neque repellendus.
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo
-              deserunt exercitationem deleniti.
-            </blockquote>
-            <address className="testimonial__author">
-              <img src={user_2} alt="" className="testimonial__photo" />
-              <h6 className="testimonial__name">Miyah Miles</h6>
-              <p className="testimonial__location">London, UK</p>
-            </address>
-          </div>
-        </div>
-
-        <div className="slide slide--3">
-          <div className="testimonial">
-            <h5 className="testimonial__header">
-              Finally free from old-school banks
-            </h5>
-            <blockquote className="testimonial__text">
-              Debitis, nihil sit minus suscipit magni aperiam vel tenetur
-              incidunt commodi architecto numquam omnis nulla autem,
-              necessitatibus blanditiis modi similique quidem. Odio aliquam
-              culpa dicta beatae quod maiores ipsa minus consequatur error sunt,
-              deleniti saepe aliquid quos inventore sequi. Necessitatibus id
-              alias reiciendis, perferendis facere.
-            </blockquote>
-            <address className="testimonial__author">
-              <img src={user_3} alt="" className="testimonial__photo" />
-              <h6 className="testimonial__name">Francisco Gomes</h6>
-              <p className="testimonial__location">Lisbon, Portugal</p>
-            </address>
-          </div>
-        </div>
-
-        <button className="slider__btn slider__btn--left">&larr;</button>
-        <button className="slider__btn slider__btn--right">&rarr;</button>
-        <div className="dots"></div>
-      </div>
-    </section>
-  );
+    const sectionRef = useRef(null);
+    const testimonials = [
+        {
+            image: user_1,
+            name: "Aarav Lynn",
+            location: "San Francisco, USA",
+            title: "Best financial decision ever!",
+            text:
+                "Bankist Pro completely changed the way I manage my money. Everything is clear, simple, and available exactly when I need it.",
+        },
+        {
+            image: user_2,
+            name: "Miyah Miles",
+            location: "London, UK",
+            title: "Banking finally feels simple.",
+            text:
+                "I can manage my savings, transfers, and everyday finances without jumping between different platforms. It just works.",
+        },
+        {
+            image: user_3,
+            name: "Francisco Gomes",
+            location: "Lisbon, Portugal",
+            title: "Finally free from old-school banks.",
+            text:
+                "The clean interface and financial insights make it much easier to understand where my money is going and stay in control.",
+        },
+    ];
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    section.classList.add("testimonials-visible");
+                    observer.unobserve(section);
+                }
+            },
+            {
+                threshold: 0.15,
+            }
+        );
+        observer.observe(section);
+        return () => observer.disconnect();
+    }, []);
+    return (
+        <section
+            ref={sectionRef}
+            className="testimonials-section"
+            id="testimonials"
+        >
+            <div className="testimonials-heading">
+                <span className="testimonials-label">
+                    TRUSTED BY OUR USERS
+                </span>
+                <h2>
+                    Real People.
+                    <br />
+                    <span>Real Financial Freedom.</span>
+                </h2>
+                <p>
+                    See how Bankist Pro helps people manage their
+                    finances with more confidence, clarity, and control.
+                </p>
+            </div>
+            <div className="testimonials-grid">
+                {testimonials.map((testimonial) => (
+                    <article
+                        className="testimonial-card"
+                        key={testimonial.name}
+                    >
+                        <div className="testimonial-quote">
+                            “
+                        </div>
+                        <h3>{testimonial.title}</h3>
+                        <p className="testimonial-text">
+                            {testimonial.text}
+                        </p>
+                        <div className="testimonial-author">
+                            <img
+                                src={testimonial.image}
+                                alt={testimonial.name}
+                                className="testimonial-photo"
+                            />
+                            <div>
+                                <h4>{testimonial.name}</h4>
+                                <span>{testimonial.location}</span>
+                            </div>
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </section>
+    );
 }
-
 export default Testimonials;
