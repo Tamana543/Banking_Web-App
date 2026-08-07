@@ -98,6 +98,21 @@
 .auth-card {
         margin-left: 5%;
 }
+/* Hero */
+.hero {
+        grid-template-columns: 1fr !important;
+}
+.dashboard-card {
+display: none;
+}
+.credit-card {
+    right: 0;
+    left: -60px;
+    z-index: 0;
+}
+.hero-left {
+    z-index: 1111;
+}
 }
 @media (max-width:768px){
     .analytics-card{
