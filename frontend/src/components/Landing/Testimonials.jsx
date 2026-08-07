@@ -1,101 +1,137 @@
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import user_1 from "../../assets/images/user-1.jpg";
 import user_2 from "../../assets/images/user-2.jpg";
 import user_3 from "../../assets/images/user-3.jpg";
 import "../../styles/landing/testimonials.css";
+
 function Testimonials() {
-    const sectionRef = useRef(null);
-    const testimonials = [
-        {
-            image: user_1,
-            name: "Aarav Lynn",
-            location: "San Francisco, USA",
-            title: "Best financial decision ever!",
-            text:
-                "Bankist Pro completely changed the way I manage my money. Everything is clear, simple, and available exactly when I need it.",
-        },
-        {
-            image: user_2,
-            name: "Miyah Miles",
-            location: "London, UK",
-            title: "Banking finally feels simple.",
-            text:
-                "I can manage my savings, transfers, and everyday finances without jumping between different platforms. It just works.",
-        },
-        {
-            image: user_3,
-            name: "Francisco Gomes",
-            location: "Lisbon, Portugal",
-            title: "Finally free from old-school banks.",
-            text:
-                "The clean interface and financial insights make it much easier to understand where my money is going and stay in control.",
-        },
-    ];
-    useEffect(() => {
-        const section = sectionRef.current;
-        if (!section) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    section.classList.add("testimonials-visible");
-                    observer.unobserve(section);
-                }
-            },
-            {
-                threshold: 0.15,
-            }
-        );
-        observer.observe(section);
-        return () => observer.disconnect();
-    }, []);
-    return (
-        <section
-            ref={sectionRef}
-            className="testimonials-section"
-            id="testimonials"
-        >
-            <div className="testimonials-heading">
-                <span className="testimonials-label">
-                    TRUSTED BY OUR USERS
-                </span>
-                <h2>
-                    Real People.
-                    <br />
-                    <span>Real Financial Freedom.</span>
-                </h2>
-                <p>
-                    See how Bankist Pro helps people manage their
-                    finances with more confidence, clarity, and control.
-                </p>
-            </div>
-            <div className="testimonials-grid">
-                {testimonials.map((testimonial) => (
-                    <article
-                        className="testimonial-card"
-                        key={testimonial.name}
-                    >
-                        <div className="testimonial-quote">
-                            “
-                        </div>
-                        <h3>{testimonial.title}</h3>
-                        <p className="testimonial-text">
-                            {testimonial.text}
-                        </p>
-                        <div className="testimonial-author">
-                            <img
-                                src={testimonial.image}
-                                alt={testimonial.name}
-                                className="testimonial-photo"
-                            />
-                            <div>
-                                <h4>{testimonial.name}</h4>
-                                <span>{testimonial.location}</span>
-                            </div>
-                        </div>
-                    </article>
-                ))}
-            </div>
-        </section>
+  const [activeSlide, setActiveSlide] = useState(0);
+  const testimonials = [
+    {
+      title: "Best financial decision ever!",
+      text: "Bankist Pro completely changed the way I manage my money. Everything is simple, clear, and available exactly when I need it.",
+      name: "Aarav Lynn",
+      location: "San Francisco, USA",
+      image: user_1,
+    },
+    {
+      title: "Finally banking that feels simple",
+      text: "I used to find managing my finances complicated. Bankist Pro gives me everything I need without making things unnecessarily difficult.",
+      name: "Miyah Miles",
+      location: "London, UK",
+      image: user_2,
+    },
+    {
+      title: "Finally free from old-school banks",
+      text: "Transfers are fast, my finances are easy to understand, and I can manage everything from one place. It feels like banking should have always been this way.",
+      name: "Francisco Gomes",
+      location: "Lisbon, Portugal",
+      image: user_3,
+    },
+  ];
+  const nextSlide = () => {
+    setActiveSlide((current) =>
+      current === testimonials.length - 1
+        ? 0
+        : current + 1
     );
+  };
+  const previousSlide = () => {
+    setActiveSlide((current) =>
+      current === 0
+        ? testimonials.length - 1
+        : current - 1
+    );
+  };
+  return (
+    <section className="testimonials-section" id="testimonials">
+      <div className="testimonials-heading">
+        <span className="testimonials-label">
+          CUSTOMER STORIES
+        </span>
+        <h2>
+          Trusted by people who
+          <span> value better banking.</span>
+        </h2>
+        <p>
+          Real experiences from people using
+          Bankist Pro to manage their money with
+          more confidence and control.
+        </p>
+      </div>
+      <div className="testimonial-slider">
+        <div
+          className="testimonial-track"
+          style={{
+            transform: `translateX(-${activeSlide * 100}%)`,
+          }}
+        >
+          {testimonials.map((testimonial, index) => (
+            <div
+              className="testimonial-slide"
+              key={index}
+            >
+              <div className="testimonial-card">
+                <div className="testimonial-quote">
+                  “
+                </div>
+                <h3>
+                  {testimonial.title}
+                </h3>
+                <p className="testimonial-text">
+                  {testimonial.text}
+                </p>
+                <div className="testimonial-author">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="testimonial-photo"
+                  />
+                  <div>
+                    <h4>
+                      {testimonial.name}
+                    </h4>
+                    <p>
+                      {testimonial.location}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button
+          className="testimonial-btn testimonial-btn-left"
+          onClick={previousSlide}
+          aria-label="Previous testimonial"
+        >
+          ←
+        </button>
+        <button
+          className="testimonial-btn testimonial-btn-right"
+          onClick={nextSlide}
+          aria-label="Next testimonial"
+        >
+          →
+        </button>
+      </div>
+      <div className="testimonial-dots">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            className={`testimonial-dot ${
+              activeSlide === index
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              setActiveSlide(index)
+            }
+            aria-label={`Go to testimonial ${index + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }
 export default Testimonials;
