@@ -106,6 +106,72 @@ function Hero() {
                 <div className="progress-fill"></div>
             </div>
         </div>
+        <div className="dashboard-chart">
+        <div className="chart-header">
+                <span>Weekly Activity</span>
+                <small>Last 7 Days</small>
+            </div>
+            <svg
+                className="chart-svg"
+                viewBox="0 0 300 120"
+            >
+                <defs>
+                    <linearGradient
+                        id="chartGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0%"
+                            stopColor="#d4af37"
+                            stopOpacity=".45"
+                        />
+                        <stop
+                            offset="100%"
+                            stopColor="#d4af37"
+                            stopOpacity="0"
+                        />
+                    </linearGradient>
+                </defs>
+                {/* Filled Area */}
+                <path
+                    className="chart-area"
+                    d="
+                    M10 90
+                    L55 65
+                    L100 75
+                    L145 35
+                    L190 55
+                    L235 25
+                    L280 45
+                    L280 120
+                    L10 120
+                    Z"
+                />
+                {/* Gold Line */}
+                <path
+                    className="chart-line"
+                    d="
+                    M10 90
+                    L55 65
+                    L100 75
+                    L145 35
+                    L190 55
+                    L235 25
+                    L280 45"
+                />
+                {/* Points */}
+                <circle cx="10" cy="90" r="4"/>
+                <circle cx="55" cy="65" r="4"/>
+                <circle cx="100" cy="75" r="4"/>
+                <circle cx="145" cy="35" r="4"/>
+                <circle cx="190" cy="55" r="4"/>
+                <circle cx="235" cy="25" r="4"/>
+                <circle cx="280" cy="45" r="4"/>
+            </svg>
+        </div>
         <div className="dashboard-transactions">
             <div className="transaction-row">
                 <div className="transaction-icon income-icon">
