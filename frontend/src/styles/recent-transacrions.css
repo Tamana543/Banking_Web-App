@@ -193,14 +193,3 @@
     align-items:center;
     gap:14px;
 }
-/* mdeia  */
-@media (max-width:768px){
-.transaction-toolbar{
-    flex-direction:column;
-    align-items:stretch;
-}
-.transaction-filter,
-.transaction-sort{
-    width:100%;
-}
-}

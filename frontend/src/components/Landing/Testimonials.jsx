@@ -3,7 +3,6 @@ import user_1 from "../../assets/images/user-1.jpg";
 import user_2 from "../../assets/images/user-2.jpg";
 import user_3 from "../../assets/images/user-3.jpg";
 import "../../styles/landing/testimonials.css";
-
 function Testimonials() {
   const sectionRef = useRef(null)
   const [activeSlide, setActiveSlide] = useState(0);
@@ -46,14 +45,11 @@ function Testimonials() {
   };
   useEffect(() => {
 const section = sectionRef.current;
-
 if (!section) return;
-
 const observer = new IntersectionObserver(
   ([entry]) => {
     if (entry.isIntersecting) {
       section.classList.add("testimonials-visible");
-
       observer.unobserve(section);
     }
   },
@@ -61,9 +57,7 @@ const observer = new IntersectionObserver(
     threshold: 0.15,
   }
 );
-
 observer.observe(section);
-
 return () => {
   observer.disconnect();
 };
