@@ -16,8 +16,8 @@ function LandingPage() {
       <Hero />
       <Features />
       <Services />
-      <Statistics />
       <Testimonials />
+      {/* <Statistics /> */}
       <CTA />
       <Footer />
     </main>
