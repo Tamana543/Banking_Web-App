@@ -28,25 +28,25 @@ function Statistics() {
         "Your financial tools are available whenever you need them.",
     },
   ];
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          section.classList.add("statistics-visible");
-          observer.unobserve(section);
-        }
-      },
-      {
-        threshold: 0.15,
+ useEffect(() => {
+  const section = sectionRef.current;
+  if (!section) return;
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        section.classList.add("statistics-visible");
+        observer.disconnect();
       }
-    );
-    observer.observe(section);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    },
+    {
+      threshold: 0.05,
+    }
+  );
+  observer.observe(section);
+  return () => {
+    observer.disconnect();
+  };
+}, []);
   return (
     <section
       ref={sectionRef}
