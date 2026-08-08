@@ -11,8 +11,9 @@ function Navbar() {
       <nav className="landing-nav-links">
         <a href="#features">Features</a>
         <a href="#services">Services</a>
-        <a href="#statistics">Statistics</a>
         <a href="#testimonials">Reviews</a>
+        <a href="#statistics">Statistics</a>
+        <a href="#cta">CTA</a>
       </nav>
       <div className="landing-actions">
         <Link to="/login" className="login-link">
