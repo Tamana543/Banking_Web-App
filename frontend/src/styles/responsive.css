@@ -133,6 +133,10 @@ display: none;
     .testimonial-card h3 {
         font-size: 1.5rem;
     }
+     /* statistic : Landing page*/
+    .statistics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 @media (max-width:768px){
     .analytics-card{
@@ -224,10 +228,64 @@ display: none;
     flex-direction:column;
     align-items:stretch;
 }
-.transaction-filter,
-.transaction-sort{
-    width:100%;
+    .transaction-filter,
+    .transaction-sort{
+        width:100%;
+    }
+    /* statistic : Landing page*/
+    .statistics-section {
+        padding: 90px 6%;
+    }
+    .statistics-heading {
+        margin-bottom: 45px;
+    }
+    .statistics-heading h2 {
+        font-size: 2.4rem;
+    }
+    .statistics-heading p {
+        font-size: 1rem;
+    }
+    .statistics-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .stat-card {
+        min-height: auto;
+        padding: 30px;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    .statistics-section::before {
+        width: 300px;
+        height: 300px;
+        left: -180px;
+    }
 }
+@media (max-width: 480px) {
+    .statistics-section {
+        padding: 75px 5%;
+    }
+    .statistics-heading h2 {
+        font-size: 2rem;
+    }
+    .statistics-heading p {
+        font-size: .95rem;
+        line-height: 1.7;
+    }
+    .stat-card {
+        padding: 26px;
+        border-radius: 18px;
+    }
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    .stat-card h3 {
+        font-size: 1.1rem;
+    }
+    .stat-card p {
+        font-size: .95rem;
+    }
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :))  */
 @media (prefers-reduced-motion: reduce) {
