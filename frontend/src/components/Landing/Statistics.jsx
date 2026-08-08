@@ -1,29 +1,55 @@
+import { useEffect, useRef } from "react";
 import "../../styles/landing/statistics.css";
 function Statistics() {
+  const sectionRef = useRef(null);
   const statistics = [
     {
       value: "10K+",
       label: "Active Users",
-      description: "People managing their finances with Bankist Pro.",
+      description:
+        "People managing their finances with Bankist Pro.",
     },
     {
       value: "250K+",
       label: "Transactions",
-      description: "Transfers and banking activities processed securely.",
+      description:
+        "Transfers and banking activities processed securely.",
     },
     {
       value: "99.9%",
       label: "Platform Reliability",
-      description: "Built to keep your financial activity available when you need it.",
+      description:
+        "Built to keep your financial activity available when you need it.",
     },
     {
       value: "24/7",
       label: "Access",
-      description: "Your financial tools are available whenever you need them.",
+      description:
+        "Your financial tools are available whenever you need them.",
     },
   ];
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add("statistics-visible");
+          observer.unobserve(section);
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
   return (
     <section
+      ref={sectionRef}
       className="statistics-section"
       id="statistics"
     >
@@ -50,12 +76,8 @@ function Statistics() {
             <span className="stat-number">
               {stat.value}
             </span>
-            <h3>
-              {stat.label}
-            </h3>
-            <p>
-              {stat.description}
-            </p>
+            <h3>{stat.label}</h3>
+            <p>{stat.description}</p>
           </div>
         ))}
       </div>
