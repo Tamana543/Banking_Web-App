@@ -228,5 +228,21 @@ display: none;
 .transaction-sort{
     width:100%;
 }
+}
+/* To avoide unnecessary motions for the user with deisabled motion browsers :))  */
+@media (prefers-reduced-motion: reduce) {
 
+    .testimonials-heading,
+    .testimonial-slider,
+    .testimonial-dots,
+    .testimonial-card,
+    .testimonial-quote,
+    .testimonial-photo,
+    .testimonial-btn {
+        transition: none;
+    }
+
+    .testimonial-track {
+        transition: none;
+    }
 }
