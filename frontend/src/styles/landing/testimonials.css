@@ -210,9 +210,47 @@
         box-shadow .35s ease;
 }
 .testimonial-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(35px,-25px);
     border-color:
         rgba(212, 175, 55, .3);
     box-shadow:
         0 30px 75px rgba(0, 0, 0, .45);
+}
+/* glowing style :) */
+.testimonials-section::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 15%;
+    right: -250px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, .08),
+            transparent 70%
+        );
+    filter: blur(30px);
+    pointer-events: none;
+}
+.testimonial-card::after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    bottom: -180px;
+    left: -120px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, .07),
+            transparent 70%
+        );
+    filter: blur(20px);
+    pointer-events: none;
+    transition:
+        transform .6s ease,
+        opacity .6s ease;
 }
