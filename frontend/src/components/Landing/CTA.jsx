@@ -1,24 +1,31 @@
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-
+import "../../styles/landing/cta.css";
 function CTA() {
-     const navigate = useNavigate();
-
   return (
-     <section className="section section--sign-up">
-      <div className="section__title">
-        <h3 className="section__header">
-          The best day to join Bankist was one year ago. The second best is
-          today!
-        </h3>
+    <section className="cta-section" id="cta">
+      <div className="cta-glow"></div>
+      <div className="cta-content">
+        <span className="cta-label">
+          READY TO GET STARTED?
+        </span>
+        <h2>
+          Take control of your
+          <span> financial future.</span>
+        </h2>
+        <p>
+          Join Bankist Pro and manage your money with
+          confidence, simplicity, and complete control.
+        </p>
+        <div className="cta-actions">
+          <Link to="/register" className="cta-primary">
+            Open Your Account
+          </Link>
+          <Link to="/login" className="cta-secondary">
+            Login to Your Account
+          </Link>
+        </div>
       </div>
-       <Link to="/register" className="btn">
-        Open your free account today!
-      </Link>
     </section>
-    
   );
 }
-
 export default CTA;
