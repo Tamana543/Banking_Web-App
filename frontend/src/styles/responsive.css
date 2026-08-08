@@ -231,7 +231,6 @@ display: none;
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :))  */
 @media (prefers-reduced-motion: reduce) {
-
     .testimonials-heading,
     .testimonial-slider,
     .testimonial-dots,
@@ -241,7 +240,6 @@ display: none;
     .testimonial-btn {
         transition: none;
     }
-
     .testimonial-track {
         transition: none;
     }

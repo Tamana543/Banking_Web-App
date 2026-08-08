@@ -70,22 +70,15 @@
 }
 .testimonial-quote {
     color: var(--gold);
-
     font-size: 5rem;
-
     line-height: .7;
-
     margin-bottom: 25px;
-
     opacity: .65;
-
     font-family: Georgia, serif;
-
     transition: transform .35s ease, opacity .35s ease;
 }
 .testimonial-card:hover .testimonial-quote {
     transform: translateY(-3px);
-
     opacity: .9;
 }
 .testimonial-card h3 {
@@ -115,9 +108,7 @@
 }
 .testimonial-card:hover .testimonial-photo {
     transform: scale(1.05);
-
     border-color: var(--gold);
-
     box-shadow: 0 0 0 4px rgba(212, 175, 55, .08);
 }
 .testimonial-author h4 {
