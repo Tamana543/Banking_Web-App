@@ -80,3 +80,32 @@
     filter: blur(25px);
     pointer-events: none;
 }
+.cta-content {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+.cta-visible .cta-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+.cta-glow {
+    animation: ctaGlow 8s ease-in-out infinite;
+}
+@keyframes ctaGlow {
+    0%,
+    100% {
+        opacity: .7;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.08);
+    }
+}
