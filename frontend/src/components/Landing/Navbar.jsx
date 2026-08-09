@@ -9,9 +9,7 @@ function Navbar() {
     };
     return (
         <>
-            {/* =========================
-                DESKTOP / MOBILE NAVBAR
-            ========================== */}
+
             <header className="landing-navbar">
                 <div className="landing-logo">
                     <span className="logo-gold">

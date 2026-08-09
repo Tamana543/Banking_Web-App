@@ -289,10 +289,11 @@ display: none;
     .landing-logo {
         display: flex;
         align-items: center;
-
+        position: absolute;
         font-size: 1.25rem;
         font-weight: 700;
         letter-spacing: -0.5px;
+        right: 20px;
     }
 
     .logo-gold {
@@ -302,7 +303,16 @@ display: none;
     .logo-white {
         color: white;
     }
+    .landing-mobile-toggle {
+        display: block;
+    }
 
+    .mobile-menu {
+        display: flex;
+    }
+ .landing-page {
+        padding-top: 72px;
+    }
 
 
     .landing-nav-links,
