@@ -7,7 +7,7 @@
     align-items:center;
     padding:22px 70px;
     backdrop-filter:blur(18px);
-    background:rgba(15,15,15,.72);
+    background:#0f0f0fb8;
     border-bottom:1px solid rgba(212,175,55,.08);
   color: red;
 }
@@ -67,4 +67,10 @@
     box-shadow:
         0 12px 30px
         rgba(212,175,55,.30);
+}
+.landing-hamburger {
+    display: none;
+}
+.landing-mobile-menu {
+    display: none;
 }
