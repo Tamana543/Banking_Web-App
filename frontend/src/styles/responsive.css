@@ -137,6 +137,7 @@ display: none;
     .statistics-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+   
 }
 @media (max-width:768px){
     .analytics-card{
@@ -261,6 +262,26 @@ display: none;
         height: 300px;
         left: -180px;
     }
+     /* Footer */
+     .landing-footer {
+        padding: 65px 6% 25px;
+    }
+    .footer-main {
+        flex-direction: column;
+        gap: 50px;
+        padding-bottom: 45px;
+    }
+    .footer-brand {
+        max-width: 500px;
+    }
+    .footer-links {
+        gap: 70px;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
 }
 @media (max-width: 480px) {
     .statistics-section {
@@ -285,6 +306,25 @@ display: none;
     }
     .stat-card p {
         font-size: .95rem;
+    }
+    /* Footer */
+    .landing-footer {
+        padding: 55px 5% 22px;
+    }
+    .footer-brand h2 {
+        font-size: 1.6rem;
+    }
+    .footer-links {
+        gap: 45px;
+    }
+    .footer-column h3 {
+        font-size: .9rem;
+    }
+    .footer-column a {
+        font-size: .85rem;
+    }
+    .footer-bottom {
+        padding-top: 20px;
     }
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :))  */

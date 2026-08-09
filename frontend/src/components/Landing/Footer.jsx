@@ -33,9 +33,14 @@ function Footer() {
         <p>
           © 2026 Bankist Pro. All rights reserved.
         </p>
-        <span>
-          Secure. Simple. Yours.
-        </span>
+        <a
+            href="https://github.com/Tamana543/Banking_Web-App"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-github"
+          >
+            GitHub
+        </a>
       </div>
     </footer>
   );
