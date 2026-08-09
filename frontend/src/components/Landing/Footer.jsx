@@ -1,41 +1,43 @@
-import { Links } from "react-router-dom";
-
-function Footer(){
- <footer className="footer">
-      <ul className="footer__nav">
-        <li className="footer__item">
-          <link className="footer__link" to="#">About</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Pricing</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Terms of Use</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Privacy Policy</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Careers</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Blog</link>
-        </li>
-        <li className="footer__item">
-          <link className="footer__link" to="#">Contact Us</link>
-        </li>
-      </ul>
-      <img src="img/icon.png" alt="Logo" className="footer__logo" />
-      <p className="footer__copyright">
-        Cooded by
-        <link
-          className="footer__link twitter-link"
-          target="_blank"
-          to=" https://github.com/Tamana543"
-          title="contact me 👩‍💻 "
-          >Tamana Farzami</link>
-        . Use for Practicing. .
-      </p>
+import { Link } from "react-router-dom";
+import "../../styles/landing/footer.css";
+function Footer() {
+  return (
+    <footer className="landing-footer">
+      <div className="footer-main">
+        <div className="footer-brand">
+          <h2>
+            <span>BANKIST</span> PRO
+          </h2>
+          <p>
+            Modern digital banking designed for
+            simplicity, security, and complete
+            financial control.
+          </p>
+        </div>
+        <div className="footer-links">
+          <div className="footer-column">
+            <h3>Platform</h3>
+            <a href="#features">Features</a>
+            <a href="#services">Services</a>
+            <a href="#statistics">Statistics</a>
+            <a href="#testimonials">Reviews</a>
+          </div>
+          <div className="footer-column">
+            <h3>Account</h3>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Open Account</Link>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>
+          © 2026 Bankist Pro. All rights reserved.
+        </p>
+        <span>
+          Secure. Simple. Yours.
+        </span>
+      </div>
     </footer>
+  );
 }
 export default Footer;
