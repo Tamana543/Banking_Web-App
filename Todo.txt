@@ -123,6 +123,7 @@ Phase 10.5
 * remove duplicated code ✔️
 * reusable components ✔️ 
 * improve UI consistency ✔️  
+*fix the dashboard page bug
 * animations
 * accessibility
 * code cleanup
