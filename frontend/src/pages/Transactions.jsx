@@ -86,7 +86,7 @@ function Transactions() {
     </div>
     <TransactionList
       title="Transaction History"
-      transactions={transactions}
+      transactions={sortedTransactions}
     loading={loading}
     />
   </DashboardLayout>
