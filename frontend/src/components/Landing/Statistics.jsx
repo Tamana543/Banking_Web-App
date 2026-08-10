@@ -70,7 +70,7 @@ function Statistics() {
       <div className="statistics-grid">
         {statistics.map((stat, index) => (
           <div
-            className="stat-card"
+            className="stat-card_statistic"
             key={index}
           >
             <span className="stat-number">

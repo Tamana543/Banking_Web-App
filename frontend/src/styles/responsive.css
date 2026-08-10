@@ -42,22 +42,22 @@
     width:100%;
 }
 .balance-section{
-    grid-column:1/-1;
+    grid-column:1/-1 !important;
 }
 .stats-section{
-    grid-column:1/-1;
+    grid-column:1/-1 !important;
 }
 .stats-cards{
     grid-template-columns:1fr;
 }
 .overview-section{
-    grid-column:1/-1;
+    grid-column:1/-1 !important;
 }
 .actions-section{
-    grid-column:1/-1;
+    grid-column:1/-1 !important;
 }
 .transactions-section{
-    grid-column:1/-1;
+    grid-column:1/-1 !important;
 }
 .header-left h1{
     font-size:2.3rem;
@@ -225,10 +225,7 @@ display: none;
         right: 0;
     }
     /* recent transaction */
-    .transaction-toolbar{
-    flex-direction:column;
-    align-items:stretch;
-}
+   
     .transaction-filter,
     .transaction-sort{
         width:100%;
