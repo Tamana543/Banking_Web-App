@@ -369,22 +369,22 @@
     box-shadow:0 0 12px #34d17d;
 }
 /* Analytics */
-.analytics-card{
+.analytics-card_hero{
     right:-70px;
     bottom:-35px;
     width:180px;
     text-align:center;
     animation-delay:3s;
 }
-.analytics-card h4{
+.analytics-card_hero h4{
     color:#999;
     margin-bottom:12px;
 }
-.analytics-card strong{
+.analytics-card_hero strong{
     color:var(--gold);
     font-size:2rem;
 }
-.analytics-card small{
+.analytics-card_hero small{
     color:#888;
 }
 .dashboard-header{

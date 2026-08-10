@@ -8,8 +8,7 @@ import "../styles/analytics.css";
 function Analytics() {
     const [transactions, setTransactions] = useState([]);
     const loadTransactions = async () => {
-        try {
-            const data =
+        try { const data =
                 await getTransactions();
             setTransactions(
                 data.transactions

@@ -211,7 +211,7 @@ function Hero() {
             </div>
         </div>
     </div>
-        <div className="floating-card analytics-card">
+        <div className="floating-card analytics-card_hero">
             <h4>Investments</h4>
             <strong>+18.4%</strong>
             <small>This Month</small>

@@ -3,24 +3,12 @@
 .analytics-page{
     display:flex;
     flex-direction:column;
-    gap:28px;
+    gap:32px;
 }
 /*
    Summary Cards
 */
-.analytics-overview{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
-}
-.analytics-card{
-    padding:28px;
-    border-radius:24px;
-    background:rgba(20,20,20,.82);
-    border:1px solid rgba(212,175,55,.10);
-    backdrop-filter:blur(18px);
-    transition:.35s;
-}
+
 .analytics-card:hover{
     transform:translateY(-6px);
     border-color:rgba(212,175,55,.25);
@@ -99,11 +87,7 @@
     color:var(--gold);
     font-size:1.1rem;
 }
-.analytics-page{
-    display:flex;
-    flex-direction:column;
-    gap:32px;
-}
+
 .analytics-header{
     margin-bottom:10px;
 }
@@ -120,15 +104,17 @@
     display:grid;
     grid-template-columns:
     repeat(3,1fr);
-    gap:22px;
+    gap:24px;
 }
 .analytics-card{
-    background:#181818;
-    border:1px solid rgba(212,175,55,.12);
-    border-radius:18px;
-    padding:25px;
-    transition:.3s;
+    padding:28px;
+    border-radius:24px;
+    background:rgba(20,20,20,.82);
+    border:1px solid rgba(212,175,55,.10);
+    backdrop-filter:blur(18px);
+    transition:.35s;
 }
+
 .analytics-card:hover{
     transform:translateY(-4px);
     border-color:var(--gold);
