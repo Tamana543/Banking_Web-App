@@ -3,11 +3,8 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import TransactionList from "../components/dashboard/TransactionList";
 import useTransactions from "../hooks/useTransactions";
-
 import { getTransactions } from "../api/transactionApi";
-
 import "../styles/dashboard/dashboard.css";
-
 function Transactions() {
   // states 
     
@@ -18,60 +15,42 @@ function Transactions() {
   
      
   const filteredTransactions = transactions.filter((transaction) => {
-
     const search = searchTerm.toLowerCase();
-
     const matchesSearch =
         transaction.type
             .toLowerCase()
             .includes(search) ||
-
         transaction.description
             ?.toLowerCase()
             .includes(search) ||
-
         transaction.status
             .toLowerCase()
             .includes(search);
-
     const matchesFilter =
         filter === "all"
             ? true
             : transaction.type === filter;
-
     return matchesSearch && matchesFilter;
-
 });
-
   const sortedTransactions = [...filteredTransactions].sort(// never forgot that sort change the main array so get a copy
       (a, b) => {
-
           switch (sortBy) {
-
               case "oldest":
                   return new Date(a.createdAt) - new Date(b.createdAt);
-
               case "highest":
                   return b.amount - a.amount;
-
               case "lowest":
                   return a.amount - b.amount;
-
               case "newest":
               default:
                   return new Date(b.createdAt) - new Date(a.createdAt);
-
           }
-
       }
   );
  return (
   <DashboardLayout>
-
     <DashboardHeader />
-
     <div className="transaction-toolbar">
-
       <div className="transaction-sort">
         <select
           value={sortBy}
@@ -84,7 +63,6 @@ function Transactions() {
           <option value="lowest">Lowest Amount</option>
         </select>
       </div>
-
       <div className="transaction-search">
         <input
           type="text"
@@ -93,7 +71,6 @@ function Transactions() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
       <div className="transaction-filter">
         <select
           value={filter}
@@ -106,17 +83,13 @@ function Transactions() {
           <option value="loan">Loans</option>
         </select>
       </div>
-
     </div>
-
     <TransactionList
       title="Transaction History"
       transactions={transactions}
     loading={loading}
     />
-
   </DashboardLayout>
 );
 }
-
 export default Transactions;
