@@ -164,14 +164,17 @@
 .auth-footer span:hover{
     text-decoration:underline;
 }
-.auth-decoration{
-     position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:0;
+.auth-decoration {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: authDecorationReveal .8s ease-out forwards;
+    animation-delay: .15s;
 }
 .name-row{
     display:grid;
@@ -197,22 +200,24 @@
     top: 70px;
     right: -60px;
     animation:
-        floatCardOne 8s ease-in-out infinite;
+        floatCardOne 8s ease-in-out .35s infinite;
 }
 .card-two {
+    rotate: 15deg;
     bottom: 80px;
     left: -80px;
     animation:
-        floatCardTwo 8s ease-in-out infinite;
+        floatCardTwo 8s ease-in-out .55s infinite;
     animation-delay: 3s;
 }
 .card-three {
+    rotate: 22deg;
     top: 12%;
     left: 42%;
     width: 170px;
     height: 110px;
     animation:
-        floatCardThree 8s ease-in-out infinite;
+        floatCardThree 8s ease-in-out .45s infinite;
     animation-delay: 1.5s;
 }
 .card-four {
@@ -220,7 +225,7 @@
     right: 4%;
     width: 240px;
     height: 150px;
-    animation: floatCardFour 8s ease-in-out infinite;
+    animation: floatCardFour 8s ease-in-out .65s infinite;
     animation-delay: 5s;
 }
 .star{
@@ -272,70 +277,46 @@
 }
 @keyframes floatCardOne {
     0% {
-        transform:
-            translateY(0)
-            rotate(-18deg);
+        transform: translate3d(0, 0, 0) rotate(-18deg);
     }
     50% {
-        transform:
-            translateY(-18px)
-            rotate(-15deg);
+        transform: translate3d(0, -18px, 0) rotate(-15deg);
     }
     100% {
-        transform:
-            translateY(0)
-            rotate(-18deg);
+        transform: translate3d(0, 0, 0) rotate(-18deg);
     }
 }
 @keyframes floatCardTwo {
     0% {
-        transform:
-            translateY(0)
-            rotate(15deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
     50% {
-        transform:
-            translateY(-18px)
-            rotate(18deg);
+        transform: translate3d(0, -18px, 0) rotate(18deg);
     }
     100% {
-        transform:
-            translateY(0)
-            rotate(15deg);
+        transform: translate3d(0, 0, 0) rotate(15deg);
     }
 }
 @keyframes floatCardThree {
     0% {
-        transform:
-            translateY(0)
-            rotate(22deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
     50% {
-        transform:
-            translateY(-18px)
-            rotate(25deg);
+        transform: translate3d(0, -18px, 0) rotate(25deg);
     }
     100% {
-        transform:
-            translateY(0)
-            rotate(22deg);
+        transform: translate3d(0, 0, 0) rotate(22deg);
     }
 }
 @keyframes floatCardFour {
     0% {
-        transform:
-            translateY(0)
-            rotate(-28deg);
+        transform: translate3d(0, 0, 0) rotate(-28deg);
     }
     50% {
-        transform:
-            translateY(-18px)
-            rotate(-25deg);
+        transform: translate3d(0, -18px, 0) rotate(-25deg);
     }
     100% {
-        transform:
-            translateY(0)
-            rotate(-28deg);
+        transform: translate3d(0, 0, 0) rotate(-28deg);
     }
 }
 @keyframes twinkle{
@@ -346,5 +327,13 @@
     50%{
         opacity:1;
         transform:scale(1.6);
+    }
+}
+@keyframes authDecorationReveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
