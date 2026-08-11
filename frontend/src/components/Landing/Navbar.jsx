@@ -55,16 +55,15 @@ function Navbar() {
                 <div className="landing-mobile-toggle">
                     <HamburgerButton
                         sidebarOpen={menuOpen}
-                        onClick={() =>
-                            setMenuOpen(!menuOpen)
-                        }
+                        onClick={() => setMenuOpen(!menuOpen) }
+                        aria-expanded={menuOpen}
+                        aria-controls="landing-mobile-menu"
                     />
                 </div>
             </header>
             <div
-                className={`mobile-menu ${
-                    menuOpen ? "mobile-menu-open" : ""
-                }`}
+                className={`mobile-menu ${menuOpen ? "mobile-menu-open" : ""}`}
+                aria-hidden={!menuOpen}
             >
                 <div className="mobile-menu-header">
                     <div className="landing-logo">
@@ -78,12 +77,12 @@ function Navbar() {
                     <button
                         className="mobile-menu-close"
                         onClick={closeMenu}
-                        aria-label="Close menu"
+                        aria-label="Close navigation menu"
                     >
                         ×
                     </button>
                 </div>
-                <nav className="mobile-menu-links">
+                <nav className="mobile-menu-links" aria-label="Mobile navigation">
                     <a
                         href="#features"
                         onClick={closeMenu}

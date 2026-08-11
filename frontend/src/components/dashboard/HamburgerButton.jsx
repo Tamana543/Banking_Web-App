@@ -3,6 +3,8 @@ import "../../styles/dashboard/hamburger.css";
 function HamburgerButton({
     sidebarOpen,
     onClick,
+    "aria-expanded": ariaExpanded,
+    "aria-controls": ariaControls,
 }) {
     return (
         <button
@@ -10,7 +12,14 @@ function HamburgerButton({
                 sidebarOpen ? "active" : ""
             }`}
             onClick={onClick}
-            aria-label="Toggle Menu"
+            aria-label={
+                sidebarOpen
+                    ? "Close navigation menu"
+                    : "Open navigation menu"
+            }
+            aria-expanded={ariaExpanded}
+            aria-controls={ariaControls}
+            type="button"
         >
             <span></span>
             <span></span>
