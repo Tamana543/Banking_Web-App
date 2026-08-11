@@ -294,7 +294,7 @@
         transform: translate3d(0, -18px, 0) rotate(18deg);
     }
     100% {
-        transform: translate3d(0, 0, 0) rotate(15deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
 }
 @keyframes floatCardThree {
@@ -305,7 +305,7 @@
         transform: translate3d(0, -18px, 0) rotate(25deg);
     }
     100% {
-        transform: translate3d(0, 0, 0) rotate(22deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
 }
 @keyframes floatCardFour {
