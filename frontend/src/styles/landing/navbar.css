@@ -11,6 +11,13 @@
     border-bottom:1px solid rgba(212,175,55,.08);
   color: red;
 }
+.landing-navbar a:focus-visible,
+.mobile-menu a:focus-visible,
+.mobile-menu-close:focus-visible,
+.landing-mobile-toggle button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+}
 .landing-logo{
     font-size:1.8rem;
     font-weight:700;

@@ -1,12 +1,40 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import HamburgerButton from "../dashboard/HamburgerButton";
 import "../../styles/landing/navbar.css";
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
+    const menuButtonRef = useRef(null);
+    const firstMenuLinkRef = useRef(null);
     const closeMenu = () => {
         setMenuOpen(false);
     };
+    // React use_efect for keyboards
+    useEffect(() => {
+    if (!menuOpen) return;
+
+    firstMenuLinkRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+            menuButtonRef.current?.focus();
+        }
+    };
+
+    document.addEventListener(
+        "keydown",
+        handleKeyDown
+    );
+
+    return () => {
+        document.removeEventListener(
+            "keydown",
+            handleKeyDown
+        );
+    };
+}, [menuOpen]);
     return (
         <>
 
@@ -20,7 +48,7 @@ function Navbar() {
                     </span>
                 </div>
                 {/* Desktop navigation */}
-                <nav className="landing-nav-links">
+                <nav className="landing-nav-links" aria-label="Main navigation">
                     <a href="#features">
                         Features
                     </a>
@@ -34,7 +62,7 @@ function Navbar() {
                         Statistics
                     </a>
                     <a href="#cta">
-                        CTA
+                         Get Started
                     </a>
                 </nav>
                 <div className="landing-actions">
@@ -54,6 +82,7 @@ function Navbar() {
                 {/* Mobile hamburger */}
                 <div className="landing-mobile-toggle">
                     <HamburgerButton
+                        ref={menuButtonRef}
                         sidebarOpen={menuOpen}
                         onClick={() => setMenuOpen(!menuOpen) }
                         aria-expanded={menuOpen}
@@ -61,7 +90,8 @@ function Navbar() {
                     />
                 </div>
             </header>
-            <div
+            <nav
+            ref={menuRef}
                 className={`mobile-menu ${menuOpen ? "mobile-menu-open" : ""}`}
                 aria-hidden={!menuOpen}
             >
@@ -75,11 +105,13 @@ function Navbar() {
                         </span>
                     </div>
                     <button
+                        type="button"
                         className="mobile-menu-close"
                         onClick={closeMenu}
                         aria-label="Close navigation menu"
+                        aria-controls="landing-mobile-menu"
                     >
-                        ×
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <nav className="mobile-menu-links" aria-label="Mobile navigation">
@@ -90,6 +122,7 @@ function Navbar() {
                         Features
                     </a>
                     <a
+                        ref={firstMenuLinkRef}
                         href="#services"
                         onClick={closeMenu}
                     >
@@ -130,7 +163,7 @@ function Navbar() {
                         Open Account
                     </Link>
                 </div>
-            </div>
+            </nav>
             {/* Background overlay */}
             {menuOpen && (
                 <div
