@@ -94,6 +94,7 @@ function Navbar() {
             ref={menuRef}
                 className={`mobile-menu ${menuOpen ? "mobile-menu-open" : ""}`}
                 aria-hidden={!menuOpen}
+                aria-label="Mobile navigation"
             >
                 <div className="mobile-menu-header">
                     <div className="landing-logo">
@@ -116,13 +117,14 @@ function Navbar() {
                 </div>
                 <nav className="mobile-menu-links" aria-label="Mobile navigation">
                     <a
+                        ref={firstMenuLinkRef}
                         href="#features"
                         onClick={closeMenu}
                     >
                         Features
                     </a>
+
                     <a
-                        ref={firstMenuLinkRef}
                         href="#services"
                         onClick={closeMenu}
                     >
