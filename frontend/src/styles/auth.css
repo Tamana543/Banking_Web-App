@@ -178,44 +178,50 @@
     grid-template-columns:1fr 1fr;
     gap:18px;
 }
-.floating-card{
-    position:absolute;
-    width:220px;
-    height:140px;
-    border-radius:20px;
-   background: linear-gradient( 135deg, rgba(212,175,55,.10), rgba(255,255,255,.02) );
-backdrop-filter:blur(18px);
-    border:1px solid rgba(212,175,55,.2);
-    backdrop-filter:blur(8px);
-    animation:floatCard 8s ease-in-out infinite;
+.floating-card {
+    position: absolute;
+    width: 220px;
+    height: 140px;
+    border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(212,175,55,.10),
+            rgba(255,255,255,.02)
+        );
+    border: 1px solid rgba(212,175,55,.2);
+    backdrop-filter: blur(8px);
     z-index: 0;
 }
-.card-one{
-    top:70px;
-    right:-60px;
-    transform:rotate(-18deg);
+.card-one {
+    top: 70px;
+    right: -60px;
+    animation:
+        floatCardOne 8s ease-in-out infinite;
 }
-.card-two{
-    bottom:80px;
-    left:-80px;
-    transform:rotate(15deg);
-    animation-delay:3s;
+.card-two {
+    bottom: 80px;
+    left: -80px;
+    animation:
+        floatCardTwo 8s ease-in-out infinite;
+    animation-delay: 3s;
 }
-.card-three{
-    top:12%;
-    left:42%;
-    width:170px;
-    height:110px;
-    transform:rotate(22deg);
-    animation-delay:1.5s;
+.card-three {
+    top: 12%;
+    left: 42%;
+    width: 170px;
+    height: 110px;
+    animation:
+        floatCardThree 8s ease-in-out infinite;
+    animation-delay: 1.5s;
 }
-.card-four{
-    bottom:8%;
-    right:4%;
-    width:240px;
-    height:150px;
-    transform:rotate(-28deg);
-    animation-delay:5s;
+.card-four {
+    bottom: 8%;
+    right: 4%;
+    width: 240px;
+    height: 150px;
+    animation: floatCardFour 8s ease-in-out infinite;
+    animation-delay: 5s;
 }
 .star{
     position:absolute;
@@ -264,38 +270,72 @@ backdrop-filter:blur(18px);
     left:35%;
     opacity:.4;
 }
-@keyframes floatCard{
-    0%{
+@keyframes floatCardOne {
+    0% {
         transform:
             translateY(0)
             rotate(-18deg);
     }
-    50%{
+    50% {
         transform:
             translateY(-18px)
             rotate(-15deg);
     }
-    100%{
+    100% {
         transform:
             translateY(0)
             rotate(-18deg);
     }
 }
-@keyframes floatCard{
-    0%{
+@keyframes floatCardTwo {
+    0% {
         transform:
             translateY(0)
-            rotate(-18deg);
+            rotate(15deg);
     }
-    50%{
+    50% {
         transform:
             translateY(-18px)
-            rotate(-15deg);
+            rotate(18deg);
     }
-    100%{
+    100% {
         transform:
             translateY(0)
-            rotate(-18deg);
+            rotate(15deg);
+    }
+}
+@keyframes floatCardThree {
+    0% {
+        transform:
+            translateY(0)
+            rotate(22deg);
+    }
+    50% {
+        transform:
+            translateY(-18px)
+            rotate(25deg);
+    }
+    100% {
+        transform:
+            translateY(0)
+            rotate(22deg);
+    }
+}
+@keyframes floatCardFour {
+    0% {
+        transform:
+            translateY(0)
+            rotate(-28deg);
+    }
+    50% {
+        transform:
+            translateY(-18px)
+            rotate(-25deg);
+    }
+    100% {
+        transform:
+            translateY(0)
+            rotate(-28deg);
     }
 }
 @keyframes twinkle{

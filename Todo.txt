@@ -123,7 +123,7 @@ Phase 10.5
 * remove duplicated code ✔️
 * reusable components ✔️ 
 * improve UI consistency ✔️  
-* animations
+* animations 
 * accessibility
 * code cleanup
 * reusable hooks
@@ -145,6 +145,7 @@ phase 12 — Security
 * Authentication middleware
 * User authorization
 * Role-based access (User/Admin)
+* fix the logout issue (when user logged in and logged out it can go back to login with back btn from browser)
 
 phase 13 — Admin Dashboard
 * Admin authentication
