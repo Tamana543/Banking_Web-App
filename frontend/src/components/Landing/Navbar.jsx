@@ -8,28 +8,40 @@ function Navbar() {
     const menuButtonRef = useRef(null);
     const firstMenuLinkRef = useRef(null);
     const lastMenuLinkRef = useRef(null);
-
     const closeMenu = () => {
         setMenuOpen(false);
     };
     // React use_efect for keyboards
     useEffect(() => {
     if (!menuOpen) return;
-
     firstMenuLinkRef.current?.focus();
-
     const handleKeyDown = (event) => {
-        if (event.key === "Escape") {
-            closeMenu();
-            menuButtonRef.current?.focus();
-        }
-    };
-
+            if (event.key === "Escape") {
+                closeMenu();
+                menuButtonRef.current?.focus();
+                return;
+            }
+            if (event.key !== "Tab") {
+                return;
+            }
+            const firstElement = firstMenuLinkRef.current;
+            const lastElement = lastMenuLinkRef.current;
+            if (!firstElement || !lastElement) {
+                return;
+            }
+            if (event.shiftKey && document.activeElement === firstElement) {
+                event.preventDefault();
+                lastElement.focus();
+            }
+            if (!event.shiftKey && document.activeElement === lastElement) {
+                event.preventDefault();
+                firstElement.focus();
+            }
+        };
     document.addEventListener(
         "keydown",
         handleKeyDown
     );
-
     return () => {
         document.removeEventListener(
             "keydown",
@@ -39,7 +51,6 @@ function Navbar() {
 }, [menuOpen]);
     return (
         <>
-
             <header className="landing-navbar">
                 <div className="landing-logo">
                     <span className="logo-gold">
@@ -124,7 +135,6 @@ function Navbar() {
                     >
                         Features
                     </a>
-
                     <a
                         href="#services"
                         onClick={closeMenu}
@@ -162,6 +172,7 @@ function Navbar() {
                         to="/register"
                         className="mobile-open-account"
                         onClick={closeMenu}
+                        ref={lastMenuLinkRef}
                     >
                         Open Account
                     </Link>
