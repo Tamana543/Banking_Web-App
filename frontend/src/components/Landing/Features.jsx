@@ -34,27 +34,32 @@ function Features() {
         "Manage your profile, security settings, PIN, password, and financial activity in one place.",
     },
   ];
-  useEffect(() => {
-  const section = sectionRef.current;
-  if (!section) return;
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        section.classList.add(
-          "features-visible"
-        );
-        observer.unobserve(section);
-      }
-    },
-    {
-      threshold: 0.15,
+ useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) {
+        section.classList.add("features-visible");
+        return;
     }
-  );
-  observer.observe(section);
-  return () => {
-    observer.disconnect();
-  };
-}, []);
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                section.classList.add("features-visible");
+                observer.unobserve(section);
+            }
+        },
+        {
+            threshold: 0.15,
+        }
+    );
+    observer.observe(section);
+    return () => {
+        observer.disconnect();
+    };
+  }, []);
   return (
     <section
       ref={sectionRef}
