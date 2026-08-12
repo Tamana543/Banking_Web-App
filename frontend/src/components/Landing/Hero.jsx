@@ -4,20 +4,27 @@ function Hero() {
   // Animations :)
       const [balance, setBalance] = useState(0);
     useEffect(() => {
-        const target = 18450;
-        const duration = 1000;
-        const stepTime = 16;
-        const increment = target / (duration / stepTime);
-        let current = 0;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
+            const target = 18450;
+            const prefersReducedMotion = window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+            if (prefersReducedMotion) {
+                setBalance(target);
+                return;
             }
-            setBalance(current);
-        }, stepTime);
-        return () => clearInterval(timer);
+            const duration = 1000;
+            const stepTime = 16;
+            const increment = target / (duration / stepTime);
+            let current = 0;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                setBalance(current);
+            }, stepTime);
+            return () => clearInterval(timer);
     }, []);
   return (
     <section className="hero">
