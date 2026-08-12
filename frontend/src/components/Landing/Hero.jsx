@@ -21,7 +21,7 @@ function Hero() {
     }, []);
   return (
     <section className="hero">
-      <div className="hero-particles">
+      <div className="hero-particles" aria-hidden="true">
         <span className="particle p1"></span>
         <span className="particle p2"></span>
         <span className="particle p3"></span>
@@ -55,7 +55,7 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="hero-right">
+      <div className="hero-right" aria-hidden="true">
     <div className="floating-card credit-card"> <span>VISA</span> <h3>**** 2458</h3> <small>Bankist Pro</small>
         </div>
         <div className="floating-card transaction-card">
