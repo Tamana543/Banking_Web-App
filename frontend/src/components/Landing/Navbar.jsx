@@ -7,6 +7,8 @@ function Navbar() {
     const menuRef = useRef(null);
     const menuButtonRef = useRef(null);
     const firstMenuLinkRef = useRef(null);
+    const lastMenuLinkRef = useRef(null);
+
     const closeMenu = () => {
         setMenuOpen(false);
     };
@@ -110,7 +112,6 @@ function Navbar() {
                         className="mobile-menu-close"
                         onClick={closeMenu}
                         aria-label="Close navigation menu"
-                        aria-controls="landing-mobile-menu"
                     >
                         <span aria-hidden="true">×</span>
                     </button>
