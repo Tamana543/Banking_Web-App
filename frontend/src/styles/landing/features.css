@@ -4,9 +4,7 @@
     background: #0f0f0f;
     overflow: hidden;
 }
-/* =========================
-   Heading
-========================= */
+/*  Heading */
 .features-heading {
     max-width: 700px;
     margin-bottom: 70px;
@@ -35,17 +33,13 @@
     font-size: 1.05rem;
     line-height: 1.8;
 }
-/* =========================
-   Feature Grid
-========================= */
+/*  Feature Grid */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 22px;
 }
-/* =========================
-   Feature Card
-========================= */
+/*  Feature Card */
 .feature-card {
     position: relative;
     min-height: 260px;
@@ -57,27 +51,19 @@
     /* Reveal animation */
     opacity: 0;
     transform: translateY(35px);
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .features-visible .feature-card {
     opacity: 1;
     transform: translateY(0);
 }
-/* =========================
-   Hover
-========================= */
+/*  Hover */
 .feature-card:hover {
     transform: translateY(-8px);
     border-color: rgba(212, 175, 55, 0.4);
     box-shadow: 0 25px 55px rgba(0, 0, 0, 0.35);
 }
-/* =========================
-   Number
-========================= */
+/* Number*/
 .feature-number {
     display: block;
     color: rgba(212, 175, 55, 0.5);
@@ -85,9 +71,7 @@
     font-weight: 700;
     letter-spacing: 2px;
 }
-/* =========================
-   Gold Accent
-========================= */
+/*  Gold Accent */
 .feature-accent {
     width: 42px;
     height: 3px;
@@ -100,9 +84,7 @@
 .feature-card:hover .feature-accent {
     width: 70px;
 }
-/* =========================
-   Text
-========================= */
+/*  Text */
 .feature-card h3 {
     margin: 0 0 14px;
     color: white;
@@ -113,9 +95,7 @@
     color: #888;
     line-height: 1.7;
 }
-/* =========================
-   Arrow
-========================= */
+/*  Arrow */
 .feature-arrow {
     position: absolute;
     right: 28px;
@@ -127,9 +107,7 @@
 .feature-card:hover .feature-arrow {
     transform: translateX(7px);
 }
-/* =========================
-   Staggered Reveal
-========================= */
+/*  Staggered Reveal */
 .feature-card:nth-child(1) {
     transition-delay: 0.1s;
 }
