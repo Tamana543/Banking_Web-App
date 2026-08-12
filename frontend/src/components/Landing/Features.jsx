@@ -62,7 +62,7 @@ function Features() {
       id="features"
     >
       <div className="features-heading">
-        <span className="features-label">
+        <span className="features-label" aria-hidden="true">
           WHY BANKIST PRO
         </span>
         <h2>
@@ -82,17 +82,17 @@ function Features() {
             className="feature-card"
             key={feature.title}
           >
-            <span className="feature-number">
+            <span className="feature-number" aria-hidden="true">
               0{index + 1}
             </span>
-            <div className="feature-accent"></div>
+            <div className="feature-accent" aria-hidden="true"></div>
             <h3>
               {feature.title}
             </h3>
             <p>
               {feature.description}
             </p>
-            <span className="feature-arrow">
+            <span className="feature-arrow" aria-hidden="true">
               →
             </span>
           </article>
