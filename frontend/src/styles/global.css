@@ -86,6 +86,7 @@ input {
     .feature-card:nth-child(6) {
         transition-delay: 0s;
     }
+    /* services */
     .service-card {
         opacity: 1;
         transform: none;
@@ -103,5 +104,17 @@ input {
     }
     .service-card:hover .service-arrow {
         transform: none;
+    }
+  /* Testimonial  */
+  .testimonial-track,
+    .testimonial-card,
+    .testimonial-quote,
+    .testimonial-photo,
+    .testimonial-btn,
+    .testimonial-dot,
+    .testimonials-heading,
+    .testimonial-slider,
+    .testimonial-dots {
+        transition: none;
     }
 }

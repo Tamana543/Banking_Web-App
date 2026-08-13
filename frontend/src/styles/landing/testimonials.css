@@ -199,7 +199,8 @@
     transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
 .testimonial-card:hover {
-    transform: translateY(35px,-25px);
+    /* transform: translateY(35px,-25px); */
+    transform: translateY(-8px);
     border-color: rgba(212, 175, 55, .3);
     box-shadow: 0 30px 75px rgba(0, 0, 0, .45);
 }
@@ -228,4 +229,9 @@
     filter: blur(20px);
     pointer-events: none;
     transition: transform .6s ease, opacity .6s ease;
+}
+.testimonial-btn:focus-visible,
+.testimonial-dot:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
