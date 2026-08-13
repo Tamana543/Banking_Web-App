@@ -52,12 +52,13 @@ function Statistics() {
       ref={sectionRef}
       className="statistics-section"
       id="statistics"
+      aria-labelledby="statistics-heading"
     >
       <div className="statistics-heading">
         <span className="statistics-label">
           BANKIST PRO IN NUMBERS
         </span>
-        <h2>
+        <h2 id="statistics-heading">
           Banking built around
           <span> trust and simplicity.</span>
         </h2>
