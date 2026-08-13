@@ -123,4 +123,16 @@ input {
     .stat-card_statistic {
         transition: none;
     }
+     .cta-content {
+        transition: none;
+    }
+
+    .cta-glow {
+        animation: none;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+        transition: none;
+    }
 }

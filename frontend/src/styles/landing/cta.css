@@ -56,8 +56,7 @@
 }
 .cta-primary:hover {
     transform: translateY(-3px);
-    box-shadow:
-        0 12px 30px rgba(212, 175, 55, .25);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, .25);
 }
 .cta-secondary {
     border: 1px solid rgba(212, 175, 55, .25);
@@ -93,6 +92,12 @@
 }
 .cta-glow {
     animation: ctaGlow 8s ease-in-out infinite;
+}
+/* Accessibility */
+.cta-primary:focus-visible,
+.cta-secondary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
 @keyframes ctaGlow {
     0%,

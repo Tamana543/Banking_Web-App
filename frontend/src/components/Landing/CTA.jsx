@@ -28,7 +28,7 @@ function CTA() {
       className="cta-section"
       id="cta"
     >
-      <div className="cta-glow"></div>
+      <div className="cta-glow" aria-hidden="true"></div>
       <div className="cta-content">
         <span className="cta-label">
           READY TO GET STARTED?
