@@ -50,12 +50,13 @@ function Services() {
             ref={sectionRef}
             className="services-section"
             id="services"
+            aria-labelledby="services-heading"
         >
             <div className="services-heading">
                 <span className="services-label">
                     BANKING MADE SIMPLE
                 </span>
-                <h2>
+                <h2 id="services-heading">
                     One Platform.
                     <br />
                     <span>Everything Financial.</span>
@@ -72,13 +73,13 @@ function Services() {
                         className="service-card"
                         key={service.number}
                     >
-                        <span className="service-number">
+                        <span className="service-number" aria-hidden="true"> {/**Aria hidden goal is to avoid screen reader read it  */}
                             {service.number}
                         </span>
-                        <div className="service-line"></div>
+                        <div className="service-line" aria-hidden="true"></div>
                         <h3>{service.title}</h3>
                         <p>{service.description}</p>
-                        <span className="service-arrow">
+                        <span className="service-arrow" aria-hidden="true">
                             →
                         </span>
                     </article>
