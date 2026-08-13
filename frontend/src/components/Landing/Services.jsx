@@ -28,13 +28,22 @@ function Services() {
                 "Understand where your money goes through clear insights into your income, spending, and transactions.",
         },
     ];
-    useEffect(() => {
+  useEffect(() => {
         const section = sectionRef.current;
         if (!section) return;
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+        if (prefersReducedMotion) {
+            section.classList.add("services-visible");
+            return;
+        }
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    section.classList.add("services-visible");
+                    section.classList.add(
+                        "services-visible"
+                    );
                     observer.unobserve(section);
                 }
             },
@@ -43,7 +52,9 @@ function Services() {
             }
         );
         observer.observe(section);
-        return () => observer.disconnect();
+        return () => {
+            observer.disconnect();
+        };
     }, []);
     return (
         <section
@@ -62,7 +73,7 @@ function Services() {
                     <span>Everything Financial.</span>
                 </h2>
                 <p>
-                    From  y banking to long-term financial
+                    From  everyday banking to long-term financial
                     planning, Bankist Pro gives you the tools to
                     stay in control of your money.
                 </p>
