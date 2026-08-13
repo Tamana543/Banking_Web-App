@@ -86,4 +86,22 @@ input {
     .feature-card:nth-child(6) {
         transition-delay: 0s;
     }
+    .service-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .service-card:hover {
+        transform: none;
+    }
+    .service-line,
+    .service-arrow {
+        transition: none;
+    }
+    .service-card:hover .service-line {
+        width: 42px;
+    }
+    .service-card:hover .service-arrow {
+        transform: none;
+    }
 }
