@@ -65,12 +65,13 @@ function Features() {
       ref={sectionRef}
       className="features-section"
       id="features"
+      aria-labelledby="features-heading"// connect the section with its header (for screen readers :))
     >
       <div className="features-heading">
         <span className="features-label" aria-hidden="true">
           WHY BANKIST PRO
         </span>
-        <h2>
+        <h2 id="features-heading">
           Everything You Need
           <br />
           <span>To Manage Your Money.</span>
