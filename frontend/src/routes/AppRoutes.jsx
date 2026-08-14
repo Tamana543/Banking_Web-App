@@ -21,14 +21,15 @@ function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/transfer" element={<Transfer/>}/>
-        <Route path="/loans" element={<Loan/>}/>
-        <Route path="/analytics" element={<Analytics/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/settings" element={<Settings/>}/>
+        <Route path="/transactions" element={ <ProtectedRoute><Transactions /></ProtectedRoute>} />
+        <Route path="/transfer" element={<ProtectedRoute><Transfer/></ProtectedRoute>}/>
+        <Route path="/loans" element={<ProtectedRoute><Loan/></ProtectedRoute>}/>
+        <Route path="/analytics" element={<ProtectedRoute><Analytics/></ProtectedRoute>}/>
+        <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+        <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     
   );
 }
