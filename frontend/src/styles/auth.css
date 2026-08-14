@@ -36,6 +36,11 @@
     font-weight:700;
     margin-bottom:18px;
 }
+.auth-logo:hover{
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
 .auth-tagline{
     color:white;
     font-size:2.3rem;
@@ -44,14 +49,7 @@
     max-width:500px;
     z-index:1111;
 }
-.auth-description{
-    margin-top:25px;
-    color:#999;
-    line-height:1.8;
-    max-width:480px;
-    font-size:1.05rem;
-    z-index: 1111;
-}
+
 .auth-description{
     margin-top:25px;
     color:#999;

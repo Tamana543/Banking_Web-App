@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import "../../styles/auth.css";
 function AuthLayout({
     title,
     subtitle,
     children,
 }) {
+    const navigate = useNavigate();
     return (
         <div className="auth-page">
             <div className="auth-decoration">
@@ -21,7 +23,7 @@ function AuthLayout({
                 <div className="star s5"></div>
             </div>
             <div className="auth-left">
-                <h1 className="auth-logo">
+                <h1 className="auth-logo" onClick={() => { navigate("/") }}>
                     BANKIST PRO
                 </h1>
                 <h2 className="auth-tagline">
