@@ -27,25 +27,27 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="footer-column">
+      <div className="footer-column">
           <h4>Banking</h4>
           <Link to="/dashboard">Dashboard</Link>
-          <Link to="/accounts">Accounts</Link>
-          <Link to="/transfers">Transfers</Link>
+          <Link to="/transactions">Transactions</Link>
+          <Link to="/transfer">Transfers</Link>
           <Link to="/loans">Loans</Link>
         </div>
+
         <div className="footer-column">
-          <h4>Company</h4>
-          <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/careers">Careers</Link>
-          <Link to="/support">Support</Link>
+          <h4>Tools</h4>
+          <Link to="/analytics">Analytics</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/settings">Settings</Link>
         </div>
+
         <div className="footer-column">
-          <h4>Legal</h4>
-          <Link to="/privacy">Privacy Policy</Link>
-          <Link to="/terms">Terms & Conditions</Link>
-          <Link to="/security">Security</Link>
+          <h4>Account</h4>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Create Account</Link>
+          <Link to="/#features">Features</Link>
+          <Link to="/#services">Services</Link>
         </div>
       </div>
       <div className="footer-bottom">

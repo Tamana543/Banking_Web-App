@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/landing/hero.css";
 function Hero() {
   // Animations :)
       const [balance, setBalance] = useState(0);
+      const navigate = useNavigate();
     useEffect(() => {
             const target = 18450;
             const prefersReducedMotion = window.matchMedia(
@@ -48,7 +50,7 @@ function Hero() {
         <p> Experience premium digital banking with secure payments, instant transfers, smart savings, powerful analytics, and complete financial control—all in one beautiful platform.
         </p>
         <div className="hero-buttons">
-            <button className="hero-primary-btn"> <span>Open Free Account</span>
+            <button className="hero-primary-btn" onClick={() => { navigate("/register") }}> <span>Open Free Account</span>
             </button>
             <button className="hero-secondary-btn"> <span>Learn More</span>
             </button>

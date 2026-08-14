@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css"
 import "../../styles/dashboard/sidebar.css"
 import {
@@ -14,10 +15,11 @@ function Sidebar({
   sidebarOpen,
   setSidebarOpen
 }) {
+  const navigate = useNavigate();
  return (
   <>
     <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-      <div className="sidebar-logo">
+      <div className="sidebar-logo" onClick={() => { navigate("/") }}>
         <h2>BANKIST</h2>
         <span>PRO</span>
       </div>

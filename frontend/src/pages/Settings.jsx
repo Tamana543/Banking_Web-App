@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import "../styles/settings.css";
+
 function Settings() {
     const navigate = useNavigate();
     const { logout } = useAuth();
@@ -51,7 +52,7 @@ function Settings() {
             </div>
             <span>›</span>
         </div>
-        <div className="setting-item logout"  onClick={() => { logout(); navigate("/login") }}>
+        <div className="setting-item logout"  onClick={() => { logout(); navigate("/") }}>
             <div>
                 <h4> Logout</h4>
                 <p>Sign out of your account</p>
