@@ -458,4 +458,20 @@ display: none;
     .testimonial-track {
         transition: none;
     }
+     .auth-logo,
+    .auth-logo::after,
+    .auth-btn,
+    .form-group input,
+    .auth-card { 
+transition: none;
+    }
+    .auth-decoration,
+    .floating-card,
+    .floating-circle,
+    .star { 
+animation: none;
+    }
+    .auth-decoration { 
+opacity: 1;
+    }
 }
