@@ -1,14 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/auth.css";
 function AuthLayout({
     title,
     subtitle,
     children,
 }) {
-    const navigate = useNavigate();
     return (
-        <div className="auth-page">
-            <div className="auth-decoration">
+        <main className="auth-page">
+            <div
+                className="auth-decoration"
+                aria-hidden="true"
+            >
                 <div className="floating-card card-one"></div>
                 <div className="floating-card card-two"></div>
                 <div className="floating-card card-three"></div>
@@ -22,31 +24,35 @@ function AuthLayout({
                 <div className="star s4"></div>
                 <div className="star s5"></div>
             </div>
-            <div className="auth-left">
-                <h1 className="auth-logo" onClick={() => { navigate("/") }}>
+            <section className="auth-left">
+                <Link
+                    to="/"
+                    className="auth-logo"
+                    aria-label="Bankist Pro home"
+                >
                     BANKIST PRO
-                </h1>
-                <h2 className="auth-tagline">
+                </Link>
+                <h1 className="auth-tagline">
                     Modern Banking
                     <br />
                     Built For Everyone.
-                </h2>
+                </h1>
                 <p className="auth-description">
                     Secure digital banking with instant transfers,
                     savings goals, loans, analytics and complete
                     financial control—all in one place.
                 </p>
-            </div>
-            <div className="auth-right">
+            </section>
+            <section className="auth-right">
                 <div className="auth-card">
-                    <div className="auth-header">
+                    <header className="auth-header">
                         <h2>{title}</h2>
                         <p>{subtitle}</p>
-                    </div>
+                    </header>
                     {children}
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     );
 }
 export default AuthLayout;
