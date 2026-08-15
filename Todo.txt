@@ -126,7 +126,7 @@ Phase 10.5
 * animations ✔️ 
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
-* accessibility (goal: make website accssible for everyone)(remember after you finished this you will change the links which is not leading to anywhere :Routing & navigation )
+* accessibility (goal: make website accssible for everyone)
 * code cleanup
 
 phase 11 — Savings Features
