@@ -59,6 +59,14 @@ transform: translateY(-2px);
 .auth-logo:hover::after {
 width: 100%;
 }
+.auth-logo:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+.auth-logo:focus-visible::after {
+    width: 100%;
+}
 .auth-tagline{
     color:white;
     font-size:2.3rem;
@@ -83,9 +91,8 @@ width: 100%;
     padding:45px;
     border-radius:24px;
     border:1px solid rgba(212,175,55,.12);
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45);
-        margin: 5%;
+    box-shadow: 0 25px 70px rgba(0,0,0,.45);
+    margin: 5%;
 }
 .auth-card:hover{
     border-color:rgba(212,175,55,.35);
