@@ -15,24 +15,45 @@ function Login() {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    form: "",
+  });
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+      form: "",
     }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const newErrors = {
+      email: "",
+      password: "",
+      form: "",
+    };
     if (isEmpty(formData.email)) {
-      showToast("Email is required.", "error");
-      return;
-    }
-    if (!isValidEmail(formData.email)) {
-      showToast("Please enter a valid email.", "error");
-      return;
+      newErrors.email = "Email is required.";
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
     }
     if (isEmpty(formData.password)) {
-      showToast("Password is required.", "error");
+      newErrors.password = "Password is required.";
+    }
+    if (newErrors.email || newErrors.password) {
+      setErrors(newErrors);
+      if (newErrors.email) {
+        document.getElementById("login-email")?.focus();
+      } else if (newErrors.password) {
+        document.getElementById("login-password")?.focus();
+      }
       return;
     }
     try {
@@ -47,8 +68,13 @@ function Login() {
       );
       navigate("/dashboard");
     } catch (error) {
+      const errorMessage = handleApiError(error);
+      setErrors((prev) => ({
+        ...prev,
+        form: errorMessage,
+      }));
       showToast(
-        handleApiError(error),
+        errorMessage,
         "error"
       );
     }
@@ -61,7 +87,18 @@ function Login() {
       <form
         className="auth-form"
         onSubmit={handleSubmit}
+        noValidate
+        aria-describedby={errors.form ? "login-form-error" : undefined}
       >
+        {errors.form && (
+          <div
+            id="login-form-error"
+            className="form-error form-error-general"
+            role="alert"
+          >
+            {errors.form}
+          </div>
+        )}
         <div className="form-group">
           <label htmlFor="login-email">
             Email
@@ -76,7 +113,21 @@ function Login() {
             autoComplete="email"
             required
             aria-required="true"
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={
+              errors.email
+                ? "login-email-error"
+                : undefined
+            }
           />
+          {errors.email && (
+            <span
+              id="login-email-error"
+              className="form-error"
+            >
+              {errors.email}
+            </span>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="login-password">
@@ -92,7 +143,21 @@ function Login() {
             autoComplete="current-password"
             required
             aria-required="true"
+            aria-invalid={Boolean(errors.password)}
+            aria-describedby={
+              errors.password
+                ? "login-password-error"
+                : undefined
+            }
           />
+          {errors.password && (
+            <span
+              id="login-password-error"
+              className="form-error"
+            >
+              {errors.password}
+            </span>
+          )}
         </div>
         <button
           type="submit"
