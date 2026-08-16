@@ -126,7 +126,7 @@ Phase 10.5
 * animations ✔️ 
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
-* accessibility (register.jsx is next ) (goal: make website accssible for everyone)
+* accessibility ()(goal: make website accssible for everyone)
 * code cleanup
 
 phase 11 — Savings Features
