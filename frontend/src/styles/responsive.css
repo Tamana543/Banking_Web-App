@@ -114,30 +114,82 @@ display: none;
     z-index: 1111;
 }
 /* Features */
-  .features-grid {
+.features-grid {
         grid-template-columns: repeat(2, 1fr);
+}
+/* Testimonial */
+.testimonials-section {
+    padding: 100px 6%;
+}
+.testimonials-heading h2 {
+    font-size: 2.5rem;
+}
+.testimonial-slide {
+    padding: 10px 55px;
+}
+.testimonial-card {
+    padding: 45px;
+}
+.testimonial-card h3 {
+    font-size: 1.5rem;
+}
+ /* statistic : Landing page*/
+.statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+/* hamberger  */
+     .hamburger-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 54px;
+        height: 54px;
+        border: 1px solid rgba(212, 175, 55, .18);
+        border-radius: 16px;
+        background: rgba(18, 18, 18, .92);
+        cursor: pointer;
+        z-index: 1200;
+        transition: .35s ease;
     }
-    /* Testimonial */
-    .testimonials-section {
-        padding: 100px 6%;
+    .hamburger-btn:hover {
+        background: var(--gold);
+        transform: scale(1.05);
     }
-    .testimonials-heading h2 {
-        font-size: 2.5rem;
+    .hamburger-btn:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 4px;
     }
-    .testimonial-slide {
-        padding: 10px 55px;
+    .hamburger-btn span {
+        width: 24px;
+        height: 2.5px;
+        background: white;
+        border-radius: 10px;
+        transition:
+            transform .35s ease,
+            opacity .35s ease,
+            background .35s ease;
     }
-    .testimonial-card {
-        padding: 45px;
+    .hamburger-btn:hover span {
+        background: black;
     }
-    .testimonial-card h3 {
-        font-size: 1.5rem;
+    .hamburger-btn.active span:nth-child(1) {
+        transform:
+            translateY(8px)
+            rotate(45deg);
     }
-     /* statistic : Landing page*/
-    .statistics-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .hamburger-btn.active span:nth-child(2) {
+        opacity: 0;
     }
-   
+    .hamburger-btn.active span:nth-child(3) {
+        transform:
+            translateY(-8px)
+            rotate(-45deg);
+    }
 }
 @media (max-width:768px){
     .analytics-card{
@@ -473,5 +525,13 @@ animation: none;
     }
     .auth-decoration { 
 opacity: 1;
+    }
+/* Hambergar */
+ .hamburger-btn,
+    .hamburger-btn span {
+        transition: none;
+    }
+    .hamburger-btn:hover {
+        transform: none;
     }
 }
