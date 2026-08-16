@@ -74,11 +74,7 @@
 .sidebar-nav a.active svg {
   color: var(--gold-light);
 }
-/* 
-.sidebar-nav svg {
-  color: var(--gold);
-  transition: 0.3s ease;
-} */
+
 .sidebar-nav a:hover svg {
   transform: scale(1.15);
   filter: drop-shadow(
