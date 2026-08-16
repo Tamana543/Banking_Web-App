@@ -11,6 +11,8 @@ function DashboardLayout({ children }) {
       <HamburgerButton
         sidebarOpen={sidebarOpen}
         onClick={toggleSidebar}
+        aria-expanded={sidebarOpen}
+        aria-controls="dashboard-sidebar"
       />
       <Sidebar
         sidebarOpen={sidebarOpen}
