@@ -14,11 +14,16 @@
   flex-direction: column;
 }
 .sidebar-logo {
+  display: block;
   text-align: center;
   margin-bottom: 55px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
 }
-.sidebar-logo:hover {
-  cursor: pointer;
+.sidebar-logo:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
 }
 .sidebar-logo h2 {
   color: white;
@@ -74,7 +79,6 @@
 .sidebar-nav a.active svg {
   color: var(--gold-light);
 }
-
 .sidebar-nav a:hover svg {
   transform: scale(1.15);
   filter: drop-shadow(
