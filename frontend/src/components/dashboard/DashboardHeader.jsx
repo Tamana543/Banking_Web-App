@@ -4,15 +4,12 @@ function DashboardHeader() {
   const { user } = useAuth();
   // daytime 
   const hour = new Date().getHours();
-
     let greeting = "Good Evening";
-
     if (hour < 12) {
         greeting = "Good Morning";
     } else if (hour < 18) {
         greeting = "Good Afternoon";
     }
-
     const today = new Date().toLocaleDateString(
         "en-US",
         {
@@ -22,7 +19,6 @@ function DashboardHeader() {
             year: "numeric",
         }
     );
-
     // personalized quote generator 
     const quotes = [
     "Every transaction is another step toward financial freedom.",
@@ -31,13 +27,13 @@ function DashboardHeader() {
     "Invest in your future, one decision at a time.",
     "Financial confidence starts with consistency."
   ];
-
 const quote =
     quotes[
         new Date().getDate() %
         quotes.length
     ];
-
+    const firstName = user?.firstName || "User";
+    const lastName = user?.lastName || "";
   return (
     <header className="dashboard-header">
       <div className="header-left">
@@ -47,7 +43,6 @@ const quote =
        <p className="greeting">
                     {greeting}
                 </p>
-
         <h1>
           Welcome back,
           <span>
@@ -55,7 +50,6 @@ const quote =
             {user?.firstName}
           </span>
         </h1>
-
         <p className="header-subtitle">
             {quote}
         </p>
@@ -63,29 +57,25 @@ const quote =
                     {today}
         </p>
       </div>
-
       <div className="dashboard-profile">
        <div className="profile-avatar">
           {user?.avatar ? (
             <img
               src={`http://localhost:5000${user.avatar}`}
-              alt="Profile"
+              alt={`${firstName} ${lastName}'s profile`}
             />
           ) : (
             user?.firstName?.charAt(0)
           )}
         </div>
-
         <div>
           <h4>
             {user?.firstName} {user?.lastName}
           </h4>
-
           <p>Premium Member</p>
         </div>
       </div>
     </header>
   );
 }
-
 export default DashboardHeader;
