@@ -9,7 +9,7 @@ function StatsCards({
   if (loading) {
     return <StatsCardsSkeleton />;
   }
-  const currency = user?.currency || "USD";
+  const currency = user?.currency || "$";
   const totalIncome = transactions
     .filter(
       (transaction) =>
@@ -51,14 +51,9 @@ function StatsCards({
       className="stats-cards"
       aria-labelledby="financial-stats-title"
     >
-      <h2
-        id="financial-stats-title"
-        className="sr-only"
-      >
-        Financial Statistics
-      </h2>
+      
       <div className="stat-card income">
-        <h3>Total Deposits</h3>
+        <>Total Deposits</>
         <p
           className="stat-value"
           aria-label={`Total deposits: ${currency} ${formatAmount(totalIncome)}`}
@@ -88,9 +83,9 @@ function StatsCards({
         <h3>Transactions</h3>
         <p
           className="stat-value"
-          aria-label={`Total number of transactions: ${totalTransactions}`}
+          aria-label={`Total number of transactions: ${currency} ${totalTransactions}`}
         >
-          {totalTransactions}
+           {currency} {formatAmount(totalTransactions)}
         </p>
       </div>
     </section>

@@ -6,7 +6,7 @@ function BalanceCard({ loading = false }) {
   if (loading) {
     return <BalanceCardSkeleton />;
   }
-  const currency = user?.currency || "USD";
+  const currency = user?.currency || "$";
   const balance = user?.balance ?? 0;
   const formattedBalance = balance.toLocaleString(
     "en-US",

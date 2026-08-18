@@ -10,9 +10,6 @@ function QuickActions({
       className="quick-actions"
       aria-labelledby="quick-actions-title"
     >
-      <h2 id="quick-actions-title">
-        Quick Actions
-      </h2>
       <button type="button" className="action-card" onClick={() => navigate("/transfer")} aria-label="Transfer money" >
         Transfer
       </button>

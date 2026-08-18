@@ -4,7 +4,7 @@ function FinancialOverview({
   transactions = [],
 }) {
   const { user } = useAuth();
-  const currency = user?.currency || "USD";
+  const currency = user?.currency || "$";
   const income = transactions
     .filter(
       (transaction) =>
