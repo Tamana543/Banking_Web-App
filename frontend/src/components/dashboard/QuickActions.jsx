@@ -1,37 +1,28 @@
-import "../../styles/dashboard/quick-actions.css"
-
+import "../../styles/dashboard/quick-actions.css";
 import { useNavigate } from "react-router-dom";
-
-
 function QuickActions({
   onDeposit,
   onWithdraw,
-  onTransfer,
 }) {
   const navigate = useNavigate();
   return (
-    <section className="quick-actions">
-
-      <button onClick={() => navigate("/transfer")}>
-          Transfer
+    <section
+      className="quick-actions"
+      aria-labelledby="quick-actions-title"
+    >
+      <h2 id="quick-actions-title">
+        Quick Actions
+      </h2>
+      <button type="button" className="action-card" onClick={() => navigate("/transfer")} aria-label="Transfer money" >
+        Transfer
       </button>
-
-      <button
-        className="action-card"
-        onClick={onWithdraw}
-      >
+      <button type="button" className="action-card" onClick={onWithdraw} aria-label="Withdraw money" >
         Withdraw
       </button>
-
-      <button
-        className="action-card"
-        onClick={onDeposit}
-      >
+      <button type="button" className="action-card" onClick={onDeposit} aria-label="Deposit money" >
         Deposit
       </button>
-
     </section>
   );
 }
-
 export default QuickActions;
