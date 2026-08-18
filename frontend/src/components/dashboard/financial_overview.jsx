@@ -12,7 +12,6 @@ function FinancialOverview({
                 sum + Number(transaction.amount),
             0
         );
-
     const expenses = transactions
         .filter(
             transaction =>
@@ -23,7 +22,6 @@ function FinancialOverview({
                 sum + Number(transaction.amount),
             0
         );
-
     const transfers = transactions
         .filter(
             transaction =>
@@ -31,137 +29,71 @@ function FinancialOverview({
         )
         .reduce(
             (sum, transaction) =>
-                sum + Number(transaction.amount),
+            sum + Number(transaction.amount),
             0
      );
-
     const cashFlow =
         income - expenses;
-
     const savingsRate =
         income === 0
             ? 0
             : Math.round(
-                  (cashFlow / income) * 100
+            (cashFlow / income) * 100
      );
       return (
-
         <section className="financial-overview">
-
             <div className="overview-header">
-
                 <h3>
                     Financial Overview
                 </h3>
-
                 <span>
                     This Month
                 </span>
-
             </div>
-
-            <OverviewRow
-                label="Income"
-                value={income}
-                percent={100}
-                color="income"
-            />
-
-            <OverviewRow
-                label="Expenses"
-                value={expenses}
-                percent={
-                    income
-                        ? (expenses / income) * 100
-                        : 0
-                }
-                color="expense"
-            />
-
-            <OverviewRow
-                label="Transfers"
-                value={transfers}
-                percent={
-                    income
-                        ? (transfers / income) * 100
-                        : 0
-                }
-                color="transfer"
-            />
-
+            <OverviewRow label="Income" value={income} percent={100} color="income" />
+            <OverviewRow label="Expenses" value={expenses} percent={ income ? (expenses / income) * 100 : 0 } color="expense" />
+            <OverviewRow label="Transfers" value={transfers} percent={ income ? (transfers / income) * 100 : 0 } color="transfer" />
             <div className="overview-divider" />
-
             <div className="overview-summary">
-
                 <div>
-
                     <small>
                         Net Cash Flow
                     </small>
-
                     <h2>
                         {cashFlow >= 0 ? "+" : "-"}$
                         {Math.abs(cashFlow).toLocaleString()}
                     </h2>
-
                 </div>
-
                 <div>
-
                     <small>
                         Savings Rate
                     </small>
-
                     <h2>
                         {savingsRate}%
                     </h2>
-
                 </div>
-
             </div>
-
         </section>
-
     );
 }
-
-
-function OverviewRow({
-    label,
-    value,
-    percent,
-    color,
-}) {
-
+function OverviewRow({ label, value, percent, color, }) {
     return (
-
         <div className="overview-row">
-
             <div className="overview-info">
-
                 <p>{label}</p>
-
                 <strong>
                     ${value.toLocaleString()}
                 </strong>
-
             </div>
-
             <div className="progress">
-
                 <div
                     className={`progress-fill ${color}`}
                     style={{
                         width: `${Math.min(percent,100)}%`,
                     }}
                 />
-
             </div>
-
         </div>
-
     );
-
 }
-
 export default FinancialOverview;
