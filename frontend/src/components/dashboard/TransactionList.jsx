@@ -78,8 +78,9 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
                   transaction.createdAt
                 ).toLocaleString();
               return (
-                <button key={transaction._id} type="button" className="transaction-item" onClick={() => openDetails(transaction) } aria-label={`View details for ${category.label}: ${transaction.description}`}
-                >
+                // < 
+                // >
+                <div key={transaction._id}  className="transaction-item" onClick={() => openDetails(transaction) } aria-label={`View details for ${category.label}: ${transaction.description}`}>
                   <div className="transaction-main">
                     <div className="transaction-category">
                       <h4>
@@ -106,7 +107,7 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
                       ${transaction.amount}
                     </strong>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>

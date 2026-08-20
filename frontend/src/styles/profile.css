@@ -32,12 +32,12 @@
 
 
 .profile-avatar::before {
-        content: "📷";
+        content: " ";
     position: absolute;
     bottom: 15px;
     right: 15px;
-    width: 34px;
-    height: 34px;
+    width: 17px;
+    height: 16px;
     margin: 0 auto;
     border-radius: 50%;
     background: var(--gold);
