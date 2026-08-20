@@ -35,22 +35,12 @@ const getCategory = (type) => {
             };
     }
 };
-function TransactionDetailsModal({
-  transaction,
-  isOpen,
-  onClose,
-}) {
+function TransactionDetailsModal({ transaction, isOpen, onClose, }) {
   if (!isOpen || !transaction) return null;
   const category = getCategory(transaction.type);
   return (
-    <div
-      className="modal-overlay"
-      onClick={onClose}
-    >
-      <div
-        className="transaction-modal"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="modal-overlay" onClick={onClose} >
+      <div className="transaction-modal" onClick={(e) => e.stopPropagation()} >
         <h2>Transaction Details</h2>
 
        <div className="detail-row">

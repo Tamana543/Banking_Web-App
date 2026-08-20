@@ -13,14 +13,12 @@
         0 25px 60px rgba(0,0,0,.45);
     animation:receiptPop .35s ease;
 }
-
 .transaction-modal h2{
     text-align:center;
     color:var(--gold);
     margin-bottom:30px;
     letter-spacing:1px;
 }
-
 .detail-row{
     display:flex;
     justify-content:space-between;
@@ -29,26 +27,21 @@
     border-bottom:
         1px solid rgba(255,255,255,.06);
 }
-
 .detail-row:last-of-type{
     border-bottom:none;
 }
-
 .detail-row span{
     color:#9c9c9c;
 }
-
 .detail-row strong{
     color:white;
     max-width:58%;
     text-align:right;
     word-break:break-word;
 }
-
 .status.completed{
     color:#53d983;
 }
-
 .transaction-close-btn{
     width:100%;
     margin-top:32px;
@@ -66,7 +59,6 @@
     font-size:1rem;
     transition:.3s;
 }
-
 .transaction-close-btn:hover{
     transform:translateY(-3px);
     box-shadow:
@@ -83,33 +75,24 @@
     display:inline-flex;
     align-items:center;
     justify-content:center;
-
     padding:6px 14px;
-
     border-radius:999px;
-
     font-size:.8rem;
-
     font-weight:700;
-
     text-transform:uppercase;
 }
-
 .status.completed{
     background:rgba(34,197,94,.15);
     color:#22c55e;
 }
-
 .status.pending{
     background:rgba(250,204,21,.15);
     color:#facc15;
 }
-
 .status.failed{
     background:rgba(239,68,68,.15);
     color:#ef4444;
 }
-
 .status.processing{
     background:rgba(59,130,246,.15);
     color:#60a5fa;
@@ -117,19 +100,15 @@
 .category-text.deposit{
     color:#22c55e;
 }
-
 .category-text.withdrawal{
     color:#ef4444;
 }
-
 .category-text.transfer{
     color:#60a5fa;
 }
-
 .category-text.loan{
     color:#facc15;
 }
-
 .category-text.default{
     color:var(--gold);
 }
