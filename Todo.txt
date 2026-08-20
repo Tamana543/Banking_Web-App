@@ -126,7 +126,7 @@ Phase 10.5
 * animations ✔️ 
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
-* accessibility (Dashboard started, fix the currnecy change to $)(goal: make website accssible for everyone)
+* accessibility (Dashboard started)(goal: make website accssible for everyone)
 * code cleanup
 
 phase 11 — Savings Features

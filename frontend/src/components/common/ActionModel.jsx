@@ -1,17 +1,9 @@
 import "../../styles/components/modal.css"
 import LoadingSpinner from "./LoadingSpinner";
 import { useEffect } from "react";
-function ActionModal({
-    isOpen,
-    title,
-    children,
-    onClose,
-    onSubmit,
-    submitText,
-    loading = false,
-}) {
-  if (!isOpen) return null;
 
+function ActionModal({ isOpen, title, children, onClose, onSubmit, submitText, loading = false, }) {
+  
   useEffect(() => {
     const handleEsc = (e) => {
         if (e.key === "Escape") {
@@ -28,6 +20,7 @@ function ActionModal({
             handleEsc
         );
 }, [onClose]);
+if (!isOpen) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
