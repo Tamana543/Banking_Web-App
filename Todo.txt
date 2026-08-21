@@ -126,8 +126,8 @@ Phase 10.5
 * animations ✔️ 
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
-* accessibility ()(goal: make website accssible for everyone) ✔️
-* code cleanup
+* accessibility (goal: make website accssible for everyone) ✔️
+* code cleanup(Quick action.css next)
 
 phase 11 — Savings Features
 * Savings goals
