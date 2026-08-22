@@ -6,7 +6,7 @@ import Statistics from "../components/landing/Statistics";
 import Testimonials from "../components/landing/Testimonials";
 import CTA from "../components/landing/CTA";
 import Footer from "../components/landing/Footer";
-import "../styles/landing/landing.css"
+
 
 function LandingPage() {
   return (
