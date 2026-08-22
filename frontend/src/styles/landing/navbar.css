@@ -14,10 +14,7 @@
 .landing-navbar a:focus-visible,
 .mobile-menu a:focus-visible,
 .mobile-menu-close:focus-visible,
-.landing-mobile-toggle button:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 4px;
-}
+.landing-mobile-toggle button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 /* Logo */
 .landing-logo {
     font-size: 1.8rem;
@@ -61,20 +58,14 @@
     color: var(--gold);
 }
 .open-account-btn {
-    padding: 12px 26px;
-    background: linear-gradient(
-        135deg,
-        #e4c04b,
-        #d4af37
-    );
+    padding: 12px 26px; 
+    background: linear-gradient( 135deg, #e4c04b, #d4af37 );
     color: #111;
     border-radius: 999px;
     text-decoration: none;
     font-weight: 700;
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+ }
 .open-account-btn:hover {
     transform: translateY(-2px);
     box-shadow:
@@ -83,7 +74,7 @@
 /* Mobile Controls */
 .landing-hamburger,
 .landing-mobile-menu,
-.landing-mobile-toggle {
+.landing-mobile-toggle { 
     display: none;
 }
 /* Mobile Menu */
@@ -99,11 +90,9 @@
     padding: 22px;
     background: #111;
     border-left: 1px solid rgba(212, 175, 55, 0.15);
-    box-shadow:
-        -20px 0 60px rgba(0, 0, 0, 0.55);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.55);
     transform: translateX(100%);
-    transition:
-        transform 0.45s cubic-bezier(.22, .61, .36, 1);
+    transition: transform 0.45s cubic-bezier(.22, .61, .36, 1);
 }
 .mobile-menu-open {
     transform: translateX(0);
@@ -133,14 +122,11 @@
     font-size: 1.8rem;
     line-height: 1;
     cursor: pointer;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .mobile-menu-close:hover {
     transform: rotate(90deg);
-    box-shadow:
-        0 8px 25px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 /* Mobile Links */
 .mobile-menu-links {
@@ -157,10 +143,7 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        transform 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 .mobile-menu-links a:hover {
     color: white;
@@ -196,22 +179,15 @@
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: linear-gradient(
-        135deg,
-        #e4c04b,
-        #d4af37
-    );
+    background: linear-gradient( 135deg, #e4c04b, #d4af37 );
     color: #111;
     text-decoration: none;
     font-weight: 700;
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .mobile-open-account:hover {
     transform: translateY(-2px);
-    box-shadow:
-        0 12px 30px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
 }
 /* Mobile Menu Overlay */
 .mobile-menu-overlay {
