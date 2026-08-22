@@ -10,12 +10,15 @@
     z-index: 2;
     max-width: 800px;
     margin: 0 auto;
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .cta-label {
     display: inline-block;
     margin-bottom: 20px;
     color: var(--gold);
-    font-size: .8rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 2px;
 }
@@ -48,7 +51,7 @@
     border-radius: 14px;
     text-decoration: none;
     font-weight: 700;
-    transition: .3s ease;
+    transition: 0.3s ease;
 }
 .cta-primary {
     background: var(--gold);
@@ -56,16 +59,21 @@
 }
 .cta-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(212, 175, 55, .25);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
 }
 .cta-secondary {
-    border: 1px solid rgba(212, 175, 55, .25);
+    border: 1px solid rgba(212, 175, 55, 0.25);
     color: var(--gold);
     background: #181818;
 }
 .cta-secondary:hover {
     transform: translateY(-3px);
     border-color: var(--gold);
+}
+.cta-primary:focus-visible,
+.cta-secondary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
 .cta-glow {
     position: absolute;
@@ -75,34 +83,19 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient( circle, rgba(212, 175, 55, .09), transparent 70% );
+    background: radial-gradient( circle, rgba(212, 175, 55, 0.09), transparent 70% );
     filter: blur(25px);
     pointer-events: none;
-}
-.cta-content {
-    opacity: 0;
-    transform: translateY(35px);
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
+    animation: ctaGlow 8s ease-in-out infinite;
 }
 .cta-visible .cta-content {
     opacity: 1;
     transform: translateY(0);
 }
-.cta-glow {
-    animation: ctaGlow 8s ease-in-out infinite;
-}
-/* Accessibility */
-.cta-primary:focus-visible,
-.cta-secondary:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 4px;
-}
 @keyframes ctaGlow {
     0%,
     100% {
-        opacity: .7;
+        opacity: 0.7;
         transform:
             translate(-50%, -50%)
             scale(1);
