@@ -4,6 +4,7 @@
     background: #111;
     overflow: hidden;
 }
+/* Heading */
 .services-heading {
     max-width: 720px;
     margin-bottom: 70px;
@@ -32,12 +33,13 @@
     font-size: 1.05rem;
     line-height: 1.8;
 }
-  
+/* Services Grid */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 22px;
 }
+/* Service Card */
 .service-card {
     position: relative;
     min-height: 280px;
@@ -55,7 +57,7 @@
     opacity: 1;
     transform: translateY(0);
 }
-/* Stagger */
+/* Staggered Reveal */
 .service-card:nth-child(1) {
     transition-delay: 0.1s;
 }
@@ -68,11 +70,13 @@
 .service-card:nth-child(4) {
     transition-delay: 0.4s;
 }
+/* Hover */
 .service-card:hover {
     transform: translateY(-8px);
     border-color: rgba(212, 175, 55, 0.4);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
 }
+/* Number */
 .service-number {
     display: block;
     color: rgba(212, 175, 55, 0.55);
@@ -80,6 +84,7 @@
     font-weight: 700;
     letter-spacing: 2px;
 }
+/* Accent Line */
 .service-line {
     width: 42px;
     height: 3px;
@@ -92,6 +97,7 @@
 .service-card:hover .service-line {
     width: 75px;
 }
+/* Content */
 .service-card h3 {
     margin: 0 0 14px;
     color: white;
@@ -102,6 +108,7 @@
     color: #888;
     line-height: 1.7;
 }
+/* Arrow */
 .service-arrow {
     position: absolute;
     right: 30px;
