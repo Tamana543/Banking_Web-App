@@ -506,6 +506,7 @@ display: none;
     .testimonial-photo,
     .testimonial-btn {
         transition: none;
+           transition: none;
     }
     .testimonial-track {
         transition: none;
