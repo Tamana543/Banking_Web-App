@@ -127,7 +127,7 @@ Phase 10.5
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
 * accessibility (goal: make website accssible for everyone) ✔️
-* code cleanup()
+* code cleanup(auth.css done go for the next one)
 * fix the quick action, transfer bug 
 
 phase 11 — Savings Features
