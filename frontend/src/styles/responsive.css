@@ -498,6 +498,86 @@ display: none;
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :))  */
 @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+   
+    .feature-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .features-visible .feature-card {
+        opacity: 1;
+        transform: none;
+    }
+    .feature-card:hover {
+        transform: none;
+    }
+    .feature-accent,
+    .feature-arrow {
+        transition: none;
+    }
+    .feature-card:nth-child(1),
+    .feature-card:nth-child(2),
+    .feature-card:nth-child(3),
+    .feature-card:nth-child(4),
+    .feature-card:nth-child(5),
+    .feature-card:nth-child(6) {
+        transition-delay: 0s;
+    }
+ 
+    .service-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .service-card:hover {
+        transform: none;
+    }
+    .service-line,
+    .service-arrow {
+        transition: none;
+    }
+    .service-card:hover .service-line {
+        width: 42px;
+    }
+    .service-card:hover .service-arrow {
+        transform: none;
+    }
+ 
+    .testimonial-track,
+    .testimonial-card,
+    .testimonial-quote,
+    .testimonial-photo,
+    .testimonial-btn,
+    .testimonial-dot,
+    .testimonials-heading,
+    .testimonial-slider,
+    .testimonial-dots {
+        transition: none;
+    }
+ 
+    .statistics-heading,
+    .stat-card_statistic {
+        transition: none;
+    }
+   
+    .cta-content {
+        transition: none;
+    }
+    .cta-glow {
+        animation: none;
+    }
+    .cta-primary,
+    .cta-secondary {
+        transition: none;
+    }
     .testimonials-heading,
     .testimonial-slider,
     .testimonial-dots,

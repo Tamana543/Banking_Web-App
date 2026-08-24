@@ -1,138 +1,55 @@
 :root {
-  --bg-primary: #070707;
-  --bg-secondary: #111111;
-  --bg-card: rgba(22, 22, 22, 0.75);
-  --gold: #d4af37;
-  --gold-light: #f4d06f;
-  --gold-dark: #9b7a17;
-  --text-primary: #ffffff;
-  --text-secondary: #b8b8b8;
-  --border: rgba(212, 175, 55, 0.15);
-  --shadow:
-    0 10px 40px rgba(0, 0, 0, 0.35);
-  --transition: all 0.35s ease;
+    --bg-primary: #070707;
+    --bg-secondary: #111111;
+    --bg-card: rgba(22, 22, 22, 0.75);
+    --gold: #d4af37;
+    --gold-light: #f4d06f;
+    --gold-dark: #9b7a17;
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8b8;
+    --border: rgba(212, 175, 55, 0.15);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    --transition: all 0.35s ease;
 }
-/* Default style removers */
+/*  Default Style Removers */
 input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button{
-  -webkit-appearance: none;
-  margin: 0;
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-input[type="number"]{/* Firefox */
-  -moz-appearance: textfield;
-  appearance: textfield;
+input[type="number"] {
+    /* Firefox */
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 body {
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(212, 175, 55, 0.08),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(212, 175, 55, 0.05),
-      transparent 35%
-    ),
-    #050505;
-  color: var(--text-primary);
-  font-family: "Outfit", sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(212, 175, 55, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(212, 175, 55, 0.05),
+            transparent 35%
+        ),
+        #050505;
+    color: var(--text-primary);
+    font-family: "Outfit", sans-serif;
 }
 button,
 input {
-  font-family: inherit;
-}
-/* user friendly less animations */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .feature-card {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    .features-visible .feature-card {
-        opacity: 1;
-        transform: none;
-    }
-    .feature-card:hover {
-        transform: none;
-    }
-    .feature-accent,
-    .feature-arrow {
-        transition: none;
-    }
-    .feature-card:nth-child(1),
-    .feature-card:nth-child(2),
-    .feature-card:nth-child(3),
-    .feature-card:nth-child(4),
-    .feature-card:nth-child(5),
-    .feature-card:nth-child(6) {
-        transition-delay: 0s;
-    }
-    /* services */
-    .service-card {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    .service-card:hover {
-        transform: none;
-    }
-    .service-line,
-    .service-arrow {
-        transition: none;
-    }
-    .service-card:hover .service-line {
-        width: 42px;
-    }
-    .service-card:hover .service-arrow {
-        transform: none;
-    }
-  /* Testimonial  */
-  .testimonial-track,
-    .testimonial-card,
-    .testimonial-quote,
-    .testimonial-photo,
-    .testimonial-btn,
-    .testimonial-dot,
-    .testimonials-heading,
-    .testimonial-slider,
-    .testimonial-dots {
-        transition: none;
-    }
-
-    /* Statistics */
-        .statistics-heading,
-    .stat-card_statistic {
-        transition: none;
-    }
-     .cta-content {
-        transition: none;
-    }
-
-    .cta-glow {
-        animation: none;
-    }
-
-    .cta-primary,
-    .cta-secondary {
-        transition: none;
-    }
+    font-family: inherit;
 }
