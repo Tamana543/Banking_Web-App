@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import TransactionList from "../components/dashboard/TransactionList";
-import handleApiError from "../util/handleApiError";
 import useApiAction from "../hooks/useApiAction";
 import { useToast } from "../context/ToastContext";
 import { applyLoan, getTransactions } from "../api/transactionApi";

@@ -1,45 +1,56 @@
-.loan-page{
-     display:grid;
-     grid-template-columns:1fr;
-     gap:30px;
-     align-items:start;
+.loan-page {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    align-items: start;
 }
-.loan-card{
-     background:rgba(20,20,20,.8);
-     padding:30px;
-     border-radius:24px;
-     border:1px solid rgba(212,175,55,.12);
-     display:flex;
-     flex-direction:column;
-     gap:18px;
+.loan-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 30px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 24px;
 }
-.loan-card h2{
-     color:white;
+.loan-card h2 {
+    color: white;
 }
-.loan-card p{
-     color:#999;
+.loan-card p {
+    color: #999;
 }
 .loan-card input,
-.loan-card textarea{
-     padding:16px;
-     border-radius:14px;
-     border:none;
-     background:#111;
-     color:white;
-     resize:none;
+.loan-card textarea {
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: #111;
+    color: white;
+    resize: none;
 }
-.loan-card textarea{
-     min-height:130px;
+.loan-card textarea {
+    min-height: 130px;
 }
-.loan-btn{
-     padding:16px;
-     border:none;
-     border-radius:14px;
-     cursor:pointer;
-     font-weight:600;
-     background:var(--gold);
-     transition:.3s;
+
+.loan-btn {
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    background: var(--gold);
+    color: #111;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
 }
-.loan-btn:hover{
-     transform:translateY(-2px);
+.loan-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+.loan-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+.loan-btn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
 }
