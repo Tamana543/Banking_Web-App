@@ -130,7 +130,7 @@ Phase 10.5
 * code cleanup() ✔️
 
 phase 11 — Savings Features
-* Savings goals
+* Savings goals (Decide the data structure/model for a savings goal,Create the backend model, Create controller logic, Create API routes, Connect frontend API, Create the savings page/component,Test creating a goal end-to-end ) 
 * Create savings targets
 * Goal progress bars
 * Savings milestones
