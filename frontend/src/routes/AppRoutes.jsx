@@ -12,6 +12,7 @@ import Loan from "../pages/Loan";
 import Analytics from "../pages/Analytics"
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
+import SavingsGoals from "../pages/SavingGoals";
 
 function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path="/analytics" element={<ProtectedRoute><Analytics/></ProtectedRoute>}/>
         <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
         <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
+        <Route path="/savings-goals" element={ <ProtectedRoute> <SavingsGoals /> </ProtectedRoute> } />
         <Route path="*" element={<NotFound />} />
       </Routes>
       
