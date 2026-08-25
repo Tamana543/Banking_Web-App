@@ -8,6 +8,7 @@ import path from "path";
 // routes
 import authRouter from "./routes/authRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js"
+import savingsGoalRoutes from "./routes/savingsGoalRoutes.js"
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 // APIs 
 app.use("/api/auth", authRouter);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/savings-goals", savingsGoalRoutes);
 app.use( "/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
