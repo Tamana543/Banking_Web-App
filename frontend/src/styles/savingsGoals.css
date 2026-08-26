@@ -133,3 +133,27 @@
   font-size: 0.85rem;
   color: var(--text-secondary);
 }
+.savings-milestone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.05);
+}
+.savings-milestone-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.savings-milestone strong {
+  display: block;
+  color: var(--gold-light);
+  font-size: 0.95rem;
+}
+.savings-milestone p {
+  margin-top: 3px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
