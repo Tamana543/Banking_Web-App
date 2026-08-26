@@ -4,7 +4,6 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { getSavingsGoals, createSavingsGoal, } from "../api/savingsGoalApi";
 import { useToast } from "../context/ToastContext";
 import "../styles/savingsGoals.css";
-
 function SavingsGoals() {
   const { showToast } = useToast();
   const [goals, setGoals] = useState([]);
@@ -85,26 +84,67 @@ function SavingsGoals() {
             </p>
           ) : (
             goals.map((goal) => (
-              <div className="savings-goal-card" key={goal._id} >
-                <h3>{goal.name}</h3>
-                <p>
-                  Target: ${goal.targetAmount.toLocaleString()}
-                </p>
-                <p>
-                  Saved: ${goal.currentAmount.toLocaleString()}
-                </p>
-                <p>
-                  Status: {goal.status}
-                </p>
-                {goal.deadline && (
-                  <p>
-                    Deadline:{" "}
-                    {new Date(
-                      goal.deadline
-                    ).toLocaleDateString()}
-                  </p>
-                )}
+            <div className="savings-goal-card" key={goal._id} >
+            <div className="savings-goal-card-header">
+              <h3>{goal.name}</h3>
+              <span className={`goal-status ${goal.status}`}>
+                {goal.status}
+              </span>
+            </div>
+            <div className="savings-goal-amounts">
+              <p>
+                Saved:{" "}
+                <strong>
+                  ${goal.currentAmount.toLocaleString()}
+                </strong>
+              </p>
+              <p>
+                Target:{" "}
+                <strong>
+                  ${goal.targetAmount.toLocaleString()}
+                </strong>
+              </p>
+            </div>
+            <div className="savings-goal-progress">
+              <div className="progress-bar">
+                <div
+                  className="progress-bar-fill"
+                  style={{
+                    width: `${Math.min(
+                      (goal.currentAmount /
+                        goal.targetAmount) *
+                        100,
+                      100
+                    )}%`,
+                  }}
+                />
               </div>
+              <div className="progress-info">
+                <span>
+                  {Math.min(
+                    Math.round(
+                      (goal.currentAmount /
+                        goal.targetAmount) *
+                        100
+                    ),
+                    100
+                  )}
+                  %
+                </span>
+                <span>
+                  ${goal.currentAmount.toLocaleString()} saved
+                </span>
+              </div>
+            </div>
+            {goal.deadline && (
+              <p className="savings-goal-deadline">
+                Deadline:{" "}
+                {new Date(
+                  goal.deadline
+                ).toLocaleDateString()}
+              </p>
+            )}
+          </div>
             ))
           )}
         </div>
