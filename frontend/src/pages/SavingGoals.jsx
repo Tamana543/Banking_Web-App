@@ -3,7 +3,9 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { getSavingsGoals, createSavingsGoal, } from "../api/savingsGoalApi";
 import { useToast } from "../context/ToastContext";
+import { getSavingsMilestone } from "../util/savingsMilestone";
 import "../styles/savingsGoals.css";
+
 function SavingsGoals() {
   const { showToast } = useToast();
   const [goals, setGoals] = useState([]);
@@ -11,6 +13,7 @@ function SavingsGoals() {
   const [name, setName] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
   const [deadline, setDeadline] = useState("");
+  const milestone = getSavingsMilestone(progressPercentage);
   const loadGoals = async () => {
     try {
       setLoading(true);
@@ -119,6 +122,18 @@ function SavingsGoals() {
                   }}
                 />
               </div>
+              {milestone && (
+                    <div className="savings-milestone">
+                      <span className="savings-milestone-icon">
+                        {milestone.icon}
+                      </span>
+
+                      <div>
+                        <strong>{milestone.label}</strong>
+                        <p>{milestone.percentage}% milestone reached</p>
+                      </div>
+                    </div>
+                  )}
               <div className="progress-info">
                 <span>
                   {Math.min(
