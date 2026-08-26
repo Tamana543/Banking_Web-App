@@ -130,10 +130,10 @@ Phase 10.5
 * code cleanup() ✔️
 
 phase 11 — Savings Features
-* Savings goals ( Work on saveManage css,Test creating a goal end-to-end ) 
-* Create savings targets
-* Goal progress bars
-* Savings milestones
+* Savings goals ()✔️ 
+* Create savings targets ✔️
+* Goal progress bars ✔️
+* Savings milestones (fix the milistone apperaring ) 
 * Savings analytics
 * Goal completion notifications
 
