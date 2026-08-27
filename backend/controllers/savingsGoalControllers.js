@@ -10,18 +10,19 @@ export const createSavingsGoal = async (req, res) => {
       });
     }
     // Validate target amount
-    const amount = Number(targetAmount);
-    if (!amount || amount <= 0) {
+    if (
+      targetAmount === undefined ||
+      Number(targetAmount) <= 0
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Target amount must be greater than zero.",
+        message: "Target amount must be greater than 0.",
       });
     }
-    // Create savings goal for the logged-in user
     const savingsGoal = await SavingsGoal.create({
       user: req.user._id,
       name: name.trim(),
-      targetAmount: amount,
+      targetAmount: Number(targetAmount),
       deadline: deadline || null,
     });
     res.status(201).json({
