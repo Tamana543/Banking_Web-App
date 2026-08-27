@@ -45,14 +45,12 @@ export const getSavingsGoals = async (req, res) => {
     }).sort({
       createdAt: -1,
     });
-
     res.status(200).json({
       success: true,
       savingsGoals,
     });
   } catch (error) {
     console.error("Get Savings Goals Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error.",
@@ -71,13 +69,11 @@ export const addSavingsContribution = async (req, res) => {
         message: "Contribution amount must be greater than 0.",
       });
     }
-
     const contributionAmount = Number(amount);
     const savingsGoal = await SavingsGoal.findOne({
       _id: req.params.id,
       user: req.user._id,
     });
-
     if (!savingsGoal) {
       return res.status(404).json({
         success: false,
@@ -106,7 +102,6 @@ export const addSavingsContribution = async (req, res) => {
     ) {
       savingsGoal.currentAmount =
         savingsGoal.targetAmount;
-
       savingsGoal.status = "completed";
     }
     await savingsGoal.save();
@@ -120,11 +115,37 @@ export const addSavingsContribution = async (req, res) => {
       "Add Savings Contribution Error:",
       error
     );
-
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
   }
 };
-
+export const deleteSavingsGoal = async (req, res) => {
+  try {
+    const savingsGoal = await SavingsGoal.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+    if (!savingsGoal) {
+      return res.status(404).json({
+        success: false,
+        message: "Savings goal not found.",
+      });
+    }
+    await savingsGoal.deleteOne();
+    res.status(200).json({
+      success: true,
+      message: "Savings goal deleted successfully.",
+    });
+  } catch (error) {
+    console.error(
+      "Delete Savings Goal Error:",
+      error
+    );
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+};
