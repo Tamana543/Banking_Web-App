@@ -127,10 +127,10 @@ Phase 10.5
 * reusable hooks ✔️ 
 * final responsive fixes ✔️ 
 * accessibility (goal: make website accssible for everyone) ✔️
-* code cleanup() ✔️
+* code cleanup ✔️
 
 phase 11 — Savings Features
-* Savings goals ()✔️ 
+* Savings goals ✔️ 
 * Create savings targets ✔️
 * Goal progress bars ✔️
 * Savings milestones (Test the route in postman,fix the milistone apperaring ) 
