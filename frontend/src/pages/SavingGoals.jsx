@@ -11,12 +11,20 @@ import { getSavingsMilestone } from "../util/savingsMilestone";
 import "../styles/savingsGoals.css";
 function SavingsGoals() {
   const { showToast } = useToast();
+  // =========================
+  // Savings Goals
+  // =========================
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  // =========================
+  // Create Goal
+  // =========================
   const [name, setName] = useState("");
-  const [targetAmount, setTargetAmount] =
-    useState("");
+  const [targetAmount, setTargetAmount] = useState("");
   const [deadline, setDeadline] = useState("");
+  // =========================
+  // Add Money Modal
+  // =========================
   const [showContributionModal, setShowContributionModal] =
     useState(false);
   const [selectedGoal, setSelectedGoal] =
@@ -25,6 +33,9 @@ function SavingsGoals() {
     useState("");
   const [contributionLoading, setContributionLoading] =
     useState(false);
+  // =========================
+  // Load Goals
+  // =========================
   const loadGoals = async () => {
     try {
       setLoading(true);
@@ -32,7 +43,7 @@ function SavingsGoals() {
       setGoals(data.savingsGoals || []);
     } catch (error) {
       showToast(
-        error.message,
+        error.message || "Failed to load savings goals.",
         "error"
       );
     } finally {
@@ -42,6 +53,9 @@ function SavingsGoals() {
   useEffect(() => {
     loadGoals();
   }, []);
+  // =========================
+  // Create Goal
+  // =========================
   const handleCreateGoal = async () => {
     if (!name.trim()) {
       showToast(
@@ -62,7 +76,7 @@ function SavingsGoals() {
     }
     try {
       await createSavingsGoal(
-        name,
+        name.trim(),
         Number(targetAmount),
         deadline
       );
@@ -76,44 +90,53 @@ function SavingsGoals() {
       await loadGoals();
     } catch (error) {
       showToast(
-        error.message,
+        error.message || "Failed to create savings goal.",
         "error"
       );
     }
   };
-  const handleOpenContribution = (goal) => {
+  // =========================
+  // Open Add Money Modal
+  // =========================
+  const openContributionModal = (goal) => {
     setSelectedGoal(goal);
     setContributionAmount("");
     setShowContributionModal(true);
   };
-  const handleCloseContribution = () => {
+  // =========================
+  // Close Add Money Modal
+  // =========================
+  const closeContributionModal = () => {
     setShowContributionModal(false);
     setSelectedGoal(null);
     setContributionAmount("");
   };
-  const handleAddContribution = async () => {
-    if (!selectedGoal) {
-      return;
-    }
+  // =========================
+  // Add Money
+  // =========================
+  const handleAddMoney = async () => {
     if (
       !contributionAmount ||
       Number(contributionAmount) <= 0
     ) {
       showToast(
-        "Enter a valid contribution amount.",
+        "Enter a valid amount.",
         "error"
       );
       return;
     }
-    const amount = Number(contributionAmount);
+    if (!selectedGoal) {
+      return;
+    }
     const remainingAmount =
       selectedGoal.targetAmount -
       selectedGoal.currentAmount;
-    if (amount > remainingAmount) {
+    if (
+      Number(contributionAmount) >
+      remainingAmount
+    ) {
       showToast(
-        `You only need $${remainingAmount.toFixed(
-          2
-        )} to complete this goal.`,
+        `You only need $${remainingAmount.toLocaleString()} to complete this goal.`,
         "error"
       );
       return;
@@ -122,17 +145,20 @@ function SavingsGoals() {
       setContributionLoading(true);
       await addSavingsContribution(
         selectedGoal._id,
-        amount
+        Number(contributionAmount)
       );
       showToast(
         "Money added to your savings goal.",
         "success"
       );
-      handleCloseContribution();
+      closeContributionModal();
+      // Reload goals so the progress bar
+      // receives the new currentAmount.
       await loadGoals();
     } catch (error) {
       showToast(
-        error.message,
+        error.message ||
+          "Failed to add money to savings goal.",
         "error"
       );
     } finally {
@@ -143,29 +169,30 @@ function SavingsGoals() {
     <DashboardLayout>
       <DashboardHeader />
       <section className="savings-goals-page">
+        {/* =========================
+            Page Header
+        ========================== */}
         <div className="savings-goals-header">
-          <h2>
-            Savings Goals
-          </h2>
+          <h2>Savings Goals</h2>
           <p>
-            Set targets and track your progress toward the things that matter to you.
+            Set targets and track your progress
+            toward the things that matter to you.
           </p>
         </div>
-       
-        
+        {/* =========================
+            Create Goal
+        ========================== */}
         <div className="savings-goal-form">
-          <h3>
-            Create a Savings Goal
-          </h3>
+          <h3>Create a Savings Goal</h3>
           <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) } />
           <input type="number" min="0" step="0.01" placeholder="Target amount" value={targetAmount} onChange={(e) => setTargetAmount(e.target.value) } />
           <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value) } />
-          <button
-            onClick={handleCreateGoal}
-          >
+          <button onClick={handleCreateGoal} >
             Create Goal
           </button>
         </div>
+        
+
         <div className="savings-goals-list">
           {loading ? (
             <p>
@@ -179,9 +206,10 @@ function SavingsGoals() {
             goals.map((goal) => {
               const progressPercentage =
                 Math.min(
-                  (goal.currentAmount /
-                    goal.targetAmount) *
-                    100,
+                  (
+                    goal.currentAmount /
+                    goal.targetAmount
+                  ) * 100,
                   100
                 );
               const milestone =
@@ -189,10 +217,7 @@ function SavingsGoals() {
                   progressPercentage
                 );
               return (
-                <div className="savings-goal-card" key={goal._id }>
-                  
-                  
-                  
+                <div className="savings-goal-card" key={goal._id} >
                   <div className="savings-goal-card-header">
                     <h3>
                       {goal.name}
@@ -203,9 +228,7 @@ function SavingsGoals() {
                       {goal.status}
                     </span>
                   </div>
-                  
                 
-                  
                   <div className="savings-goal-amounts">
                     <p>
                       Saved:{" "}
@@ -221,7 +244,6 @@ function SavingsGoals() {
                     </p>
                   </div>
                   
-                  
                   <div className="savings-goal-progress">
                     <div className="progress-bar">
                       <div
@@ -231,9 +253,7 @@ function SavingsGoals() {
                         }}
                       />
                     </div>
-                    
-                    
-                    
+                
                     {milestone && (
                       <div className="savings-milestone">
                         <span className="savings-milestone-icon">
@@ -250,7 +270,6 @@ function SavingsGoals() {
                         </div>
                       </div>
                     )}
-                    
                     
                     <div className="progress-info">
                       <span>
@@ -278,12 +297,12 @@ function SavingsGoals() {
                   
                   {goal.status !== "completed" && (
                     <button
-                      className="add-savings-btn"
+                      className="add-money-btn"
                       onClick={() =>
-                        handleOpenContribution(goal)
+                        openContributionModal(goal)
                       }
                     >
-                      Add Money
+                      + Add Money
                     </button>
                   )}
                 </div>
@@ -293,62 +312,45 @@ function SavingsGoals() {
         </div>
       </section>
       
-      
-      
       {showContributionModal && selectedGoal && (
-        <div className="savings-modal-overlay">
-          <div className="savings-modal">
-            <div className="savings-modal-header">
-              <h3>
-                Add Money
-              </h3>
-              <button
-                className="savings-modal-close"
-                onClick={handleCloseContribution}
-              >
-                ×
-              </button>
+        <div className="contribution-modal-overlay">
+          <div className="contribution-modal">
+            <button className="contribution-modal-close" onClick={closeContributionModal} disabled={contributionLoading} >
+              ×
+            </button>
+            <h3>
+              Add Money
+            </h3>
+            <p>
+              Add money to{" "}
+              <strong>
+                {selectedGoal.name}
+              </strong>
+            </p>
+            <div className="contribution-current">
+              <span>
+                Current savings
+              </span>
+              <strong>
+                ${selectedGoal.currentAmount.toLocaleString()}
+              </strong>
             </div>
-            
-            
-            
-            <div className="savings-modal-goal-info">
-              <p>
-                Goal:
-                <strong>
-                  {" "}
-                  {selectedGoal.name}
-                </strong>
-              </p>
-              <p>
-                Remaining:
-                <strong>
-                  {" "}
-                  $
-                  {(
-                    selectedGoal.targetAmount -
-                    selectedGoal.currentAmount
-                  ).toLocaleString()}
-                </strong>
-              </p>
+            <div className="contribution-target">
+              <span>
+                Target
+              </span>
+              <strong>
+                ${selectedGoal.targetAmount.toLocaleString()}
+              </strong>
             </div>
-            
-          
-            
-            <input type="number" min="0.01" step="0.01" placeholder="Enter amount" value={contributionAmount} onChange={(e) => setContributionAmount( e.target.value ) } />
-            
-            
-            
-            <div className="savings-modal-actions">
-              <button className="savings-modal-cancel" onClick={handleCloseContribution} disabled={contributionLoading} >
-                Cancel
-              </button>
-              <button className="savings-modal-submit" onClick={handleAddContribution} disabled={contributionLoading} >
-                {contributionLoading
-                  ? "Adding..."
-                  : "Add Money"}
-              </button>
-            </div>
+            <input type="number" min="0.01" step="0.01" placeholder="Enter amount" value={contributionAmount} onChange={(e) => setContributionAmount( e.target.value ) }
+              disabled={contributionLoading}
+            />
+            <button className="contribution-submit-btn" onClick={handleAddMoney} disabled={contributionLoading} >
+              {contributionLoading
+                ? "Adding..."
+                : "Add Money"}
+            </button>
           </div>
         </div>
       )}
