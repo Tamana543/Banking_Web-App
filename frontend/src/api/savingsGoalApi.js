@@ -23,3 +23,55 @@ export const getSavingsGoals = async () => {
     );
   }
 };
+
+
+export const createSavingsGoal = async (
+  name,
+  targetAmount,
+  deadline
+) => {
+  try {
+    const response = await axios.post(
+      API_URL,
+      {
+        name,
+        targetAmount,
+        deadline: deadline || null,
+      },
+      {
+        headers: getAuthHeaders(),
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Failed to create savings goal."
+    );
+  }
+};
+
+export const addSavingsContribution = async (
+  goalId,
+  amount
+) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/${goalId}/contribute`,
+      {
+        amount,
+      },
+      {
+        headers: getAuthHeaders(),
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Failed to add savings contribution."
+    );
+  }
+};
