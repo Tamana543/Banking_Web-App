@@ -133,7 +133,7 @@ phase 11 — Savings Features
 * Savings goals ✔️ 
 * Create savings targets ✔️
 * Goal progress bars ✔️
-* Savings milestones (Test the route in postman,fix the milistone apperaring ) 
+* Savings milestones (fix the milistone apperaring ) 
 * Savings analytics
 * Goal completion notifications
 
