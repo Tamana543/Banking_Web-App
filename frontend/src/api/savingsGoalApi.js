@@ -1,10 +1,7 @@
 import axios from "axios";
-
 const API_URL = "http://localhost:5000/api/savings-goals";
-
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
-
   return {
     Authorization: `Bearer ${token}`,
   };
@@ -14,7 +11,6 @@ export const getSavingsGoals = async () => {
     const response = await axios.get(API_URL, {
       headers: getAuthHeaders(),
     });
-
     return response.data;
   } catch (error) {
     throw new Error(
@@ -23,13 +19,7 @@ export const getSavingsGoals = async () => {
     );
   }
 };
-
-
-export const createSavingsGoal = async (
-  name,
-  targetAmount,
-  deadline
-) => {
+export const createSavingsGoal = async ( name, targetAmount, deadline ) => {
   try {
     const response = await axios.post(
       API_URL,
@@ -42,7 +32,6 @@ export const createSavingsGoal = async (
         headers: getAuthHeaders(),
       }
     );
-
     return response.data;
   } catch (error) {
     throw new Error(
@@ -51,11 +40,7 @@ export const createSavingsGoal = async (
     );
   }
 };
-
-export const addSavingsContribution = async (
-  goalId,
-  amount
-) => {
+export const addSavingsContribution = async ( goalId, amount ) => {
   try {
     const response = await axios.post(
       `${API_URL}/${goalId}/contribute`,
@@ -66,12 +51,27 @@ export const addSavingsContribution = async (
         headers: getAuthHeaders(),
       }
     );
-
     return response.data;
   } catch (error) {
     throw new Error(
       error.response?.data?.message ||
         "Failed to add savings contribution."
+    );
+  }
+};
+export const deleteSavingsGoal = async (goalId) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/${goalId}`,
+      {
+        headers: getAuthHeaders(),
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Failed to delete savings goal."
     );
   }
 };
