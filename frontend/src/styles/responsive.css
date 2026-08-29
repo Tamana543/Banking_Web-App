@@ -454,6 +454,12 @@
     .footer-bottom {
         padding-top: 20px;
     }
+    .savings-modal {
+    padding: 22px;
+  }
+  .savings-modal-actions {
+    flex-direction: column;
+  }
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :)) */
 @media (prefers-reduced-motion: reduce) {
