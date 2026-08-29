@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings, } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank } from "lucide-react";
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
   const navigate = useNavigate();
   const firstNavLinkRef = useRef(null);
@@ -67,6 +67,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
             />
             <span>Analytics</span>
           </NavLink>
+          <NavLink to="/saving" onClick={() => setSidebarOpen(false)} >
+              <PiggyBank size={20} aria-hidden="true" />
+              <span>Savings</span>
+            </NavLink>
           <NavLink to="/profile" onClick={() => setSidebarOpen(false)}
           >
             <UserRound size={20} aria-hidden="true"
