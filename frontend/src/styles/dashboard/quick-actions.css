@@ -3,7 +3,7 @@
 }
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 25px;
   background: rgba(20, 20, 20, 0.82);

@@ -19,6 +19,7 @@ function QuickActions({
       <button type="button" className="action-card" onClick={onDeposit} aria-label="Deposit money" >
         Deposit
       </button>
+      <button type="button" className="action-card" onClick={() => navigate("/savings-goals")} aria-label="Savings goals" > Savings </button>
     </section>
   );
 }

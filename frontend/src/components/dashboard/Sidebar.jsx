@@ -67,7 +67,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
             />
             <span>Analytics</span>
           </NavLink>
-          <NavLink to="/saving" onClick={() => setSidebarOpen(false)} >
+          <NavLink to="/savings-goals" onClick={() => setSidebarOpen(false)} >
               <PiggyBank size={20} aria-hidden="true" />
               <span>Savings</span>
             </NavLink>
