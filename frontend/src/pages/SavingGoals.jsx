@@ -5,9 +5,11 @@ import ActionModal from "../components/common/ActionModel";
 import { getSavingsGoals, createSavingsGoal, addSavingsContribution, } from "../api/savingsGoalApi";
 import { useToast } from "../context/ToastContext";
 import { getSavingsMilestone } from "../util/savingsMilestone";
+import { useAuth } from "../context/AuthContext";
 import "../styles/savingsGoals.css";
 function SavingsGoals() {
   const { showToast } = useToast();
+  const { setUser } = useAuth();
   const [goals, setGoals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
@@ -73,44 +75,56 @@ function SavingsGoals() {
     setSelectedGoal(null);
     setContributionAmount("");
   };
-  const handleContribution = async () => {
-    if (
-      !contributionAmount ||
-      Number(contributionAmount) <= 0
-    ) {
-      showToast(
-        "Enter a valid contribution amount.",
-        "error"
+ const handleContribution = async () => {
+  if (
+    !contributionAmount ||
+    Number(contributionAmount) <= 0
+  ) {
+    showToast(
+      "Enter a valid contribution amount.",
+      "error"
+    );
+    return;
+  }
+  if (!selectedGoal) {
+    return;
+  }
+  try {
+    setContributionLoading(true);
+    const data = await addSavingsContribution(
+      selectedGoal._id,
+      Number(contributionAmount)
+    );
+    // Update the savings goal
+    setGoals((currentGoals) =>
+      currentGoals.map((goal) =>
+        goal._id === data.savingsGoal._id
+          ? data.savingsGoal
+          : goal
+      )
+    );
+    // Update the user's account balance
+    setUser((currentUser) => ({ ...currentUser, balance: data.balance, }));
+    // Keep localStorage synchronized
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const updatedUser = { ...JSON.parse(storedUser), balance: data.balance, };
+      localStorage.setItem(
+        "user",
+        JSON.stringify(updatedUser)
       );
-      return;
     }
-    if (!selectedGoal) {
-      return;
-    }
-    try {
-      setContributionLoading(true);
-      const data = await addSavingsContribution(
-        selectedGoal._id,
-        Number(contributionAmount)
-      );
-      setGoals((currentGoals) =>
-        currentGoals.map((goal) =>
-          goal._id === data.savingsGoal._id
-            ? data.savingsGoal
-            : goal
-        )
-      );
-      showToast(
-        "Money added to your savings goal.",
-        "success"
-      );
-      closeContributionModal();
-    } catch (error) {
-      showToast(error.message, "error");
-    } finally {
-      setContributionLoading(false);
-    }
-  };
+    showToast(
+      "Money added to your savings goal.",
+      "success"
+    );
+    closeContributionModal();
+  } catch (error) {
+    showToast(error.message, "error");
+  } finally {
+    setContributionLoading(false);
+  }
+};
   return (
     <DashboardLayout>
       <DashboardHeader />
@@ -211,7 +225,6 @@ function SavingsGoals() {
                       </span>
                     </div>
                   </div>
-
                   {goal.deadline && (
                     <p className="savings-goal-deadline">
                       Deadline:{" "}
