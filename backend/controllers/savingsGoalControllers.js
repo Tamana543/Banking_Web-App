@@ -19,6 +19,30 @@ export const createSavingsGoal = async (req, res) => {
         message: "Target amount must be greater than 0.",
       });
     }
+    // Validate deadline
+    if (deadline) {
+      const deadlineDate = new Date(deadline);
+      const today = new Date();
+      // Remove time from today's date
+      today.setHours(0, 0, 0, 0);
+      // Check whether deadline is a valid date
+      if (isNaN(deadlineDate.getTime())) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid deadline date.",
+        });
+      }
+      // Remove time from deadline
+      deadlineDate.setHours(0, 0, 0, 0);
+      // Prevent past deadlines
+      if (deadlineDate < today) {
+        return res.status(400).json({
+          success: false,
+          message: "Deadline cannot be in the past.",
+        });
+      }
+    }
+    // Create savings goal
     const savingsGoal = await SavingsGoal.create({
       user: req.user._id,
       name: name.trim(),
@@ -31,7 +55,10 @@ export const createSavingsGoal = async (req, res) => {
       savingsGoal,
     });
   } catch (error) {
-    console.error("Create Savings Goal Error:", error);
+    console.error(
+      "Create Savings Goal Error:",
+      error
+    );
     res.status(500).json({
       success: false,
       message: "Server error.",

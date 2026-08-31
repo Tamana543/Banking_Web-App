@@ -126,7 +126,7 @@ function SavingsGoals() {
           <h3>Create a Savings Goal</h3>
           <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) } />
           <input type="number" min="0" step="0.01" placeholder="Target amount" value={targetAmount} onChange={(e) => setTargetAmount(e.target.value) } />
-          <input type="date" value={deadline} onChange={(e) => setDeadline(e.target.value) } />
+          <input type="date" min={today} value={deadline} onChange={(e) => setDeadline(e.target.value) } />
           <button type="button" onClick={handleCreateGoal} >
             Create Goal
           </button>
@@ -211,7 +211,7 @@ function SavingsGoals() {
                       </span>
                     </div>
                   </div>
-                  
+
                   {goal.deadline && (
                     <p className="savings-goal-deadline">
                       Deadline:{" "}
