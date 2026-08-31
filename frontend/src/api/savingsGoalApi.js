@@ -40,17 +40,9 @@ export const createSavingsGoal = async ( name, targetAmount, deadline ) => {
     );
   }
 };
-export const addSavingsContribution = async ( goalId, amount ) => {
+export const addSavingsContribution = async (goalId,amount) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/${goalId}/contribute`,
-      {
-        amount,
-      },
-      {
-        headers: getAuthHeaders(),
-      }
-    );
+    const response = await axios.post( "http://localhost:5000/api/transactions/savings-contribution", { goalId, amount, }, { headers: getAuthHeaders(), } );
     return response.data;
   } catch (error) {
     throw new Error(
