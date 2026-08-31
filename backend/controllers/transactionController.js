@@ -301,5 +301,46 @@ try {
 };
 
 export const addMoneyToSavingsGoal = async (req,res)=>{
-  
+  try {
+    const { goalId, amount } = req.body;
+    const amountNumber = Number(amount);
+
+    if (!amountNumber || amountNumber <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    // logged-in user
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    // Users SavingGoals detection 
+     const savingsGoal = await SavingsGoal.findOne({
+      _id: goalId,
+      user: req.user._id,
+    });
+
+    if (!savingsGoal) {
+      return res.status(404).json({
+        success: false,
+        message: "Savings goal not found.",
+      });
+    }
+    //no adding money to completed goal
+    if (savingsGoal.status === "completed") {
+      return res.status(400).json({
+        success: false,
+        message:
+          "This savings goal has already been completed.",
+      });
+    }
+  } catch (error) {
+    
+  }
 }
