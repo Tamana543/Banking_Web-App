@@ -1,25 +1,19 @@
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
-
 export const depositMoney = async (req, res) => {
   try {
     const { amount } = req.body;
     const amountNumber = Number(amount)
-
     if (!amountNumber || amountNumber <= 0) {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid amount.",
       });
     }
-
     const user = await User.findById(req.user._id);
-
     user.balance += Number(amount);
-
     await user.save();
-
     const transaction = await Transaction.create({
       user: user._id,
       type: "deposit",
@@ -27,7 +21,6 @@ export const depositMoney = async (req, res) => {
       description: "Account Deposit",
       status: "completed",
     });
-
     res.status(200).json({
       success: true,
       message: "Deposit successful.",
@@ -36,20 +29,17 @@ export const depositMoney = async (req, res) => {
     });
   } catch (error) {
     console.error("Deposit Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
   }
 };
-
 export const getTransactions = async (req,res)=>{
    try {
     const transactions = await Transaction.find({
       user: req.user._id,
     }).sort({ createdAt: -1 });
-
     res.status(200).json({
       success: true,
       count: transactions.length,
@@ -57,15 +47,12 @@ export const getTransactions = async (req,res)=>{
     });
   } catch (error) {
     console.error("Get Transactions Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
   }
 };
-
-
 export const transferMoney = async (req,res)=>{
   /**
    * Conditions for transfer : 
@@ -82,14 +69,12 @@ export const transferMoney = async (req,res)=>{
   try {
     const { recipientEmail, amount } = req.body;
     const amountNumber = Number(amount);
-
     if (!recipientEmail || !amountNumber) {
       return res.status(400).json({
         success: false,
         message: "Recipient email and amount are required.",
       });
     }
-
     if (amountNumber <= 0) {
       return res.status(400).json({
         success: false,
@@ -97,32 +82,27 @@ export const transferMoney = async (req,res)=>{
       });
     }
      const sender = await User.findById(req.user._id);
-
     const receiver = await User.findOne({
       email: recipientEmail.toLowerCase().trim(),
     });
-
     if (!receiver) {
       return res.status(404).json({
         success: false,
         message: "Recipient not found.",
       });
     }
-
     if (String(sender._id) === String(receiver._id)) {
       return res.status(400).json({
         success: false,
         message: "You cannot transfer money to yourself.",
       });
     }
-
     if (sender.balance < amountNumber) {
       return res.status(400).json({
         success: false,
         message: "Insufficient balance.",
       });
     }
-
      sender.balance -= amountNumber;
     receiver.balance += amountNumber;
     
@@ -154,42 +134,33 @@ export const transferMoney = async (req,res)=>{
             date: senderTransaction.createdAt,
         },
       });
-
   } catch (error) {
     console.error("Transfer Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
   }
 }
-
 export const withdrawMoney = async(req,res)=>{
   try {
      const { amount } = req.body;
     const amountNumber = Number(amount);
-
     if (!amountNumber || amountNumber <= 0) {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid amount.",
       });
     }
-
       const user = await User.findById(req.user._id);
-
     if (user.balance < amountNumber) {
       return res.status(400).json({
         success: false,
         message: "Insufficient balance.",
       });
     }
-
     user.balance -= amountNumber
-
     await user.save();
-
     const transaction = await Transaction.create({
       user: user._id,
       type: "withdrawal",
@@ -197,7 +168,6 @@ export const withdrawMoney = async(req,res)=>{
       description: "Cash Withdrawal",
       status: "completed",
     });
-
     res.status(200).json({
       success: true,
       message: "Withdrawal successful.",
@@ -206,32 +176,27 @@ export const withdrawMoney = async(req,res)=>{
     });
   } catch (error) {
      console.error("Withdraw Error:", error);
-
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
   }
 }
-
 export const applyLoan = async(req,res)=>{
 try {
    const userId = req.user.id;
         const { amount, purpose } = req.body;
-
         if (!amount || Number(amount) <= 0) {
             return res.status(400).json({
                 message: "Invalid loan amount.",
             });
         }
-
         if (!purpose || purpose.trim() === "") {
             return res.status(400).json({
                 message: "Loan purpose is required.",
             });
         }
         const user = await User.findById(userId);
-
         if (!user) {
             return res.status(404).json({
                 message: "User not found.",
@@ -239,7 +204,6 @@ try {
         }
         // max loan two times greater than balance 
         const maximumLoan = user.balance * 2;
-
         if (amount > maximumLoan) {
             return res.status(400).json({
                 message:
@@ -249,62 +213,40 @@ try {
         // if there is an other loan do not give the new one
          const activeLoan =
             await Transaction.findOne({
-
                 user: userId,
-
                 type: "loan",
-
                 status: "pending",
-
             });
-
         if (activeLoan) {
             return res.status(400).json({
                 message:
                     "You already have an active loan.",
             });
         }
-
         user.balance += Number(amount);
-
         await user.save();
-
         const transaction =
             await Transaction.create({
-
                 user: userId,
-
                 type: "loan",
-
                 amount,
-
                 description: purpose,
-
                 status: "pending",
-
             });
-
         res.status(201).json({
-
             message: "Loan approved.",
-
             transaction,
-
         });
-
-
 } catch (error) {
   res.status(500).json({
     message:error.message,
   })
 }
 };
-
 export const addMoneyToSavingsGoal = async (req,res)=>{
   try {
     const { goalId, amount } = req.body;
     const amountNumber = Number(amount);
-
     if (!amountNumber || amountNumber <= 0) {
       return res.status(400).json({
         success: false,
@@ -313,7 +255,6 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
     }
     // logged-in user
     const user = await User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -325,7 +266,6 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
       _id: goalId,
       user: req.user._id,
     });
-
     if (!savingsGoal) {
       return res.status(404).json({
         success: false,
@@ -348,7 +288,6 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
       });
     }
     const remainingAmount = savingsGoal.targetAmount - savingsGoal.currentAmount;
-
     // No contribution from exceeding target
     if (amountNumber > remainingAmount) {
       return res.status(400).json({
@@ -369,7 +308,30 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
     }
      await user.save();
     await savingsGoal.save();
+     // transaction records
+    const transaction = await Transaction.create({
+      user: user._id,
+      type: "withdrawal",
+      amount: amountNumber,
+      description: `Savings contribution: ${savingsGoal.name}`,
+      status: "completed",
+    });
+    res.status(200).json({
+      success: true,
+      message:
+        "Money added to savings goal successfully.",
+      balance: user.balance,
+      savingsGoal,
+      transaction,
+    });
   } catch (error) {
-    
+    console.error(
+      "Add Money to Savings Goal Error:",
+      error
+    );
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
   }
 }
