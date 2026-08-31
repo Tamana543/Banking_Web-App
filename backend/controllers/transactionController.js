@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
+import SavingsGoal from "../models/SavingsGoal.js";
 
 export const depositMoney = async (req, res) => {
   try {
@@ -298,3 +299,7 @@ try {
   })
 }
 };
+
+export const addMoneyToSavingsGoal = async (req,res)=>{
+  
+}
