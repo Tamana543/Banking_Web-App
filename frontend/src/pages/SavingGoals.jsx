@@ -17,7 +17,7 @@ function SavingsGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [contributionAmount, setContributionAmount] = useState("");
   const [contributionLoading, setContributionLoading] = useState(false);
-
+  const today = new Date().toISOString().split("T")[0];
   const loadGoals = async () => {
     try {
       setLoading(true);
@@ -38,6 +38,13 @@ function SavingsGoals() {
     if (!targetAmount || Number(targetAmount) <= 0) {
       showToast(
         "Enter a valid target amount.",
+        "error"
+      );
+      return;
+    }
+    if (deadline && deadline < today) {
+      showToast(
+        "Deadline cannot be in the past.",
         "error"
       );
       return;
@@ -204,6 +211,7 @@ function SavingsGoals() {
                       </span>
                     </div>
                   </div>
+                  
                   {goal.deadline && (
                     <p className="savings-goal-deadline">
                       Deadline:{" "}
