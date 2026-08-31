@@ -340,6 +340,35 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
           "This savings goal has already been completed.",
       });
     }
+    // account balance checker
+    if (user.balance < amountNumber) {
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+    const remainingAmount = savingsGoal.targetAmount - savingsGoal.currentAmount;
+
+    // No contribution from exceeding target
+    if (amountNumber > remainingAmount) {
+      return res.status(400).json({
+        success: false,
+        message: `You only need $${remainingAmount.toFixed(
+          2
+        )} to complete this goal.`,
+      });
+    }
+    user.balance -= amountNumber;
+    savingsGoal.currentAmount += amountNumber;
+    // Check if goal is now completed
+    if (
+      savingsGoal.currentAmount >= savingsGoal.targetAmount
+    ) {
+      savingsGoal.currentAmount = savingsGoal.targetAmount;
+      savingsGoal.status = "completed";
+    }
+     await user.save();
+    await savingsGoal.save();
   } catch (error) {
     
   }
