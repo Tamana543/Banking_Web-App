@@ -19,17 +19,19 @@ function SavingsGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [contributionAmount, setContributionAmount] = useState("");
   const [contributionLoading, setContributionLoading] = useState(false);
+  const data = await deleteSavingsGoal(goal._id);
   const today = new Date().toISOString().split("T")[0];
+
   const loadGoals = async () => {
-    try {
-      setLoading(true);
-      const data = await getSavingsGoals();
-      setGoals(data.savingsGoals);
-    } catch (error) {
-      showToast(error.message, "error");
-    } finally {
-      setLoading(false);
-    }
+      try {
+        setLoading(true);
+        const data = await getSavingsGoals();
+        setGoals(data.savingsGoals);
+      } catch (error) {
+        showToast(error.message, "error");
+      } finally {
+        setLoading(false);
+      }
   };
   useEffect(() => { loadGoals(); }, []);
   const handleCreateGoal = async () => {

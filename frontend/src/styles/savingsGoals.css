@@ -288,6 +288,7 @@
   cursor: not-allowed;
 }
 .add-money-btn {
+  width: 100%;
   margin-top: 22px;
   padding: 12px 22px;
   border: none;
@@ -304,7 +305,47 @@
   background: var(--gold-light);
   transform: translateY(-2px);
 }
-
+.add-money-btn:active {
+  transform: translateY(0);
+}
+/* Delete Goal */
+.delete-goal-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 18px;
+  border: 1px solid rgba(220, 70, 70, 0.45);
+  border-radius: 10px;
+  background: transparent;
+  color: #e57373;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+.delete-goal-btn:hover {
+  background: rgba(220, 70, 70, 0.1);
+  border-color: rgba(220, 70, 70, 0.75);
+  color: #ff8a8a;
+  transform: translateY(-1px);
+}
+.delete-goal-btn:active {
+  transform: translateY(0);
+}
+.delete-goal-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.savings-goal-completed {
+  margin-top: 22px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: rgba(46, 204, 113, 0.08);
+  color: #2ecc71;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
 .contribution-modal-overlay {
   position: fixed;
   inset: 0;
