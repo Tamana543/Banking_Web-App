@@ -115,7 +115,7 @@ phase 10 — Notifications & UX
 * Success messages ✔️
 * Error handling messages ✔️
 * Empty state screens ✔️
-* Skeleton loading effects () (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
+* Skeleton loading effects (main goal to not allow user see empty lines till the informations loads completly ) ✔️ 
 * Better mobile responsiveness (Fix the profile page sidebar)✔️
 
 Phase 10.5
@@ -134,7 +134,7 @@ phase 11 — Savings Features
 * Create savings targets ✔️
 * Goal progress bars ✔️
 * Savings milestones (fix the milistone apperaring ) ✔️
-* Goal completion notifications (add the required pop up )✔️
+* Goal completion notifications✔️
 * Savings analytics 
 
 phase 12 — Security
