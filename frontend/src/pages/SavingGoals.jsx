@@ -290,7 +290,7 @@ function SavingsGoals() {
                     </p>
                   )}
                   {/* Delete Goal */}
-                  <button type="button" className="delete-goal-btn" onClick={() => handleDeleteGoal(goal) } disabled={deleteLoading} >
+                  <button type="button" className="delete-goal-btn" onClick={() => openDeleteModal(goal) } disabled={deleteLoading} >
                     {deleteLoading
                       ? "Deleting..."
                       : "Delete Goal"}

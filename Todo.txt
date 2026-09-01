@@ -133,9 +133,9 @@ phase 11 — Savings Features
 * Savings goals ✔️ 
 * Create savings targets ✔️
 * Goal progress bars ✔️
-* Savings milestones (fix the milistone apperaring ) 
-* Savings analytics
-* Goal completion notifications (add the required pop up )
+* Savings milestones (fix the milistone apperaring ) ✔️
+* Goal completion notifications (add the required pop up )✔️
+* Savings analytics 
 
 phase 12 — Security
 * Session management
