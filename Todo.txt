@@ -135,7 +135,7 @@ phase 11 — Savings Features
 * Goal progress bars ✔️
 * Savings milestones (fix the milistone apperaring ) ✔️
 * Goal completion notifications✔️
-* Savings analytics 
+* Savings analytics (add the analytics, fix the pie charm to show and include savings too) 
 
 phase 12 — Security
 * Session management
