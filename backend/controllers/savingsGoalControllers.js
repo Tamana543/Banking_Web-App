@@ -160,16 +160,26 @@ export const deleteSavingsGoal = async (req, res) => {
         message: "Savings goal not found.",
       });
     }
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    // Return the money saved in this goal to the user's account
+    const refundedAmount = Number(savingsGoal.currentAmount);
+    user.balance += refundedAmount;
+    await user.save();
     await savingsGoal.deleteOne();
     res.status(200).json({
       success: true,
       message: "Savings goal deleted successfully.",
+      balance: user.balance,
+      refundedAmount,
     });
   } catch (error) {
-    console.error(
-      "Delete Savings Goal Error:",
-      error
-    );
+    console.error("Delete Savings Goal Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error.",
