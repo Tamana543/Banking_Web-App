@@ -315,6 +315,27 @@ function SavingsGoals() {
       >
         <input type="number" min="0.01" step="0.01" placeholder="Enter amount" value={contributionAmount} onChange={(e) => setContributionAmount( e.target.value ) } />
       </ActionModal>
+      <ActionModal
+  isOpen={showDeleteModal}
+  title="Delete Savings Goal"
+  submitText="Delete Goal"
+  loading={deleteLoading}
+  onClose={closeDeleteModal}
+  onSubmit={handleDeleteGoal}
+>
+  <p>
+    Are you sure you want to delete{" "}
+    <strong>
+      {selectedGoal?.name}
+    </strong>
+    ?
+  </p>
+  <p>
+    {selectedGoal?.currentAmount > 0
+      ? `$${selectedGoal.currentAmount.toLocaleString()} will be returned to your account balance.`
+      : "This savings goal has no saved money."}
+  </p>
+</ActionModal>
     </DashboardLayout>
   );
 }
