@@ -19,38 +19,31 @@ function SavingsGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [contributionAmount, setContributionAmount] = useState("");
   const [contributionLoading, setContributionLoading] = useState(false);
-  const data = await deleteSavingsGoal(goal._id);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const today = new Date().toISOString().split("T")[0];
-
   const loadGoals = async () => {
-      try {
-        setLoading(true);
-        const data = await getSavingsGoals();
-        setGoals(data.savingsGoals);
-      } catch (error) {
-        showToast(error.message, "error");
-      } finally {
-        setLoading(false);
-      }
+    try {
+      setLoading(true);
+      const data = await getSavingsGoals();
+      setGoals(data.savingsGoals);
+    } catch (error) {
+      showToast(error.message, "error");
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => { loadGoals(); }, []);
   const handleCreateGoal = async () => {
     if (!name.trim()) {
-      showToast( "Enter a savings goal name.", "error" );
+      showToast("Enter a savings goal name.", "error");
       return;
     }
-    if ( !targetAmount || Number(targetAmount) <= 0 ) {
-      showToast(
-        "Enter a valid target amount.",
-        "error"
-      );
+    if (!targetAmount || Number(targetAmount) <= 0) {
+      showToast("Enter a valid target amount.", "error");
       return;
     }
     if (deadline && deadline < today) {
-      showToast(
-        "Deadline cannot be in the past.",
-        "error"
-      );
+      showToast("Deadline cannot be in the past.", "error");
       return;
     }
     try {
@@ -78,7 +71,10 @@ function SavingsGoals() {
     setContributionAmount("");
   };
   const handleContribution = async () => {
-    if ( !contributionAmount || Number(contributionAmount) <= 0 ) {
+    if (
+      !contributionAmount ||
+      Number(contributionAmount) <= 0
+    ) {
       showToast(
         "Enter a valid contribution amount.",
         "error"
@@ -108,8 +104,7 @@ function SavingsGoals() {
         balance: data.balance,
       }));
       // Keep localStorage synchronized
-      const storedUser =
-        localStorage.getItem("user");
+      const storedUser = localStorage.getItem("user");
       if (storedUser) {
         const updatedUser = {
           ...JSON.parse(storedUser),
@@ -139,19 +134,39 @@ function SavingsGoals() {
       return;
     }
     try {
-      await deleteSavingsGoal(goal._id);
+      setDeleteLoading(true);
+      const data = await deleteSavingsGoal(goal._id);
+      // Remove the deleted goal from the page
       setGoals((currentGoals) =>
         currentGoals.filter(
           (currentGoal) =>
             currentGoal._id !== goal._id
         )
       );
+      // Update the user's account balance
+      setUser((currentUser) => ({ ...currentUser, balance: data.balance, }));
+      // Keep localStorage synchronized
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const updatedUser = {
+          ...JSON.parse(storedUser),
+          balance: data.balance,
+        };
+        localStorage.setItem(
+          "user",
+          JSON.stringify(updatedUser)
+        );
+      }
       showToast(
-        "Savings goal deleted successfully.",
+        data.refundedAmount > 0
+          ? `$${data.refundedAmount.toLocaleString()} returned to your account.`
+          : "Savings goal deleted successfully.",
         "success"
       );
     } catch (error) {
       showToast(error.message, "error");
+    } finally {
+      setDeleteLoading(false);
     }
   };
   return (
@@ -167,7 +182,7 @@ function SavingsGoals() {
         </div>
         <div className="savings-goal-form">
           <h3>Create a Savings Goal</h3>
-          <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) }/>
+          <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) } />
           <input type="number" min="0" step="0.01" placeholder="Target amount" value={targetAmount} onChange={(e) => setTargetAmount(e.target.value) } />
           <input type="date" min={today} value={deadline} onChange={(e) => setDeadline(e.target.value) } />
           <button type="button" onClick={handleCreateGoal} > Create Goal </button>
@@ -200,7 +215,10 @@ function SavingsGoals() {
                 <div className="savings-goal-card" key={goal._id} >
                   {/* Card Header */}
                   <div className="savings-goal-card-header">
-                    <h3>{goal.name}</h3> <span className={`goal-status ${goal.status}`} > {goal.status} </span>
+                    <h3>{goal.name}</h3>
+                    <span className={`goal-status ${goal.status}`} >
+                      {goal.status}
+                    </span>
                   </div>
                   <div className="savings-goal-amounts">
                     <p>
@@ -266,7 +284,11 @@ function SavingsGoals() {
                     </p>
                   )}
                   {/* Delete Goal */}
-                  <button type="button" className="delete-goal-btn" onClick={() => handleDeleteGoal(goal) } > Delete Goal </button>
+                  <button type="button" className="delete-goal-btn" onClick={() => handleDeleteGoal(goal) } disabled={deleteLoading} >
+                    {deleteLoading
+                      ? "Deleting..."
+                      : "Delete Goal"}
+                  </button>
                 </div>
               );
             })
