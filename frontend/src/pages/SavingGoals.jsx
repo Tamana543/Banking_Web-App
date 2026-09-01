@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import ActionModal from "../components/common/ActionModel";
-import { getSavingsGoals, createSavingsGoal, addSavingsContribution, } from "../api/savingsGoalApi";
+import { getSavingsGoals, createSavingsGoal, addSavingsContribution, deleteSavingsGoal, } from "../api/savingsGoalApi";
 import { useToast } from "../context/ToastContext";
 import { getSavingsMilestone } from "../util/savingsMilestone";
 import { useAuth } from "../context/AuthContext";
@@ -34,10 +34,10 @@ function SavingsGoals() {
   useEffect(() => { loadGoals(); }, []);
   const handleCreateGoal = async () => {
     if (!name.trim()) {
-      showToast("Enter a savings goal name.", "error");
+      showToast( "Enter a savings goal name.", "error" );
       return;
     }
-    if (!targetAmount || Number(targetAmount) <= 0) {
+    if ( !targetAmount || Number(targetAmount) <= 0 ) {
       showToast(
         "Enter a valid target amount.",
         "error"
@@ -75,56 +75,83 @@ function SavingsGoals() {
     setSelectedGoal(null);
     setContributionAmount("");
   };
- const handleContribution = async () => {
-  if (
-    !contributionAmount ||
-    Number(contributionAmount) <= 0
-  ) {
-    showToast(
-      "Enter a valid contribution amount.",
-      "error"
-    );
-    return;
-  }
-  if (!selectedGoal) {
-    return;
-  }
-  try {
-    setContributionLoading(true);
-    const data = await addSavingsContribution(
-      selectedGoal._id,
-      Number(contributionAmount)
-    );
-    // Update the savings goal
-    setGoals((currentGoals) =>
-      currentGoals.map((goal) =>
-        goal._id === data.savingsGoal._id
-          ? data.savingsGoal
-          : goal
-      )
-    );
-    // Update the user's account balance
-    setUser((currentUser) => ({ ...currentUser, balance: data.balance, }));
-    // Keep localStorage synchronized
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const updatedUser = { ...JSON.parse(storedUser), balance: data.balance, };
-      localStorage.setItem(
-        "user",
-        JSON.stringify(updatedUser)
+  const handleContribution = async () => {
+    if ( !contributionAmount || Number(contributionAmount) <= 0 ) {
+      showToast(
+        "Enter a valid contribution amount.",
+        "error"
       );
+      return;
     }
-    showToast(
-      "Money added to your savings goal.",
-      "success"
+    if (!selectedGoal) {
+      return;
+    }
+    try {
+      setContributionLoading(true);
+      const data = await addSavingsContribution(
+        selectedGoal._id,
+        Number(contributionAmount)
+      );
+      // Update the savings goal
+      setGoals((currentGoals) =>
+        currentGoals.map((goal) =>
+          goal._id === data.savingsGoal._id
+            ? data.savingsGoal
+            : goal
+        )
+      );
+      // Update the user's account balance
+      setUser((currentUser) => ({
+        ...currentUser,
+        balance: data.balance,
+      }));
+      // Keep localStorage synchronized
+      const storedUser =
+        localStorage.getItem("user");
+      if (storedUser) {
+        const updatedUser = {
+          ...JSON.parse(storedUser),
+          balance: data.balance,
+        };
+        localStorage.setItem(
+          "user",
+          JSON.stringify(updatedUser)
+        );
+      }
+      showToast(
+        "Money added to your savings goal.",
+        "success"
+      );
+      closeContributionModal();
+    } catch (error) {
+      showToast(error.message, "error");
+    } finally {
+      setContributionLoading(false);
+    }
+  };
+  const handleDeleteGoal = async (goal) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${goal.name}"?`
     );
-    closeContributionModal();
-  } catch (error) {
-    showToast(error.message, "error");
-  } finally {
-    setContributionLoading(false);
-  }
-};
+    if (!confirmed) {
+      return;
+    }
+    try {
+      await deleteSavingsGoal(goal._id);
+      setGoals((currentGoals) =>
+        currentGoals.filter(
+          (currentGoal) =>
+            currentGoal._id !== goal._id
+        )
+      );
+      showToast(
+        "Savings goal deleted successfully.",
+        "success"
+      );
+    } catch (error) {
+      showToast(error.message, "error");
+    }
+  };
   return (
     <DashboardLayout>
       <DashboardHeader />
@@ -138,12 +165,10 @@ function SavingsGoals() {
         </div>
         <div className="savings-goal-form">
           <h3>Create a Savings Goal</h3>
-          <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) } />
+          <input type="text" placeholder="Goal name" value={name} onChange={(e) => setName(e.target.value) }/>
           <input type="number" min="0" step="0.01" placeholder="Target amount" value={targetAmount} onChange={(e) => setTargetAmount(e.target.value) } />
           <input type="date" min={today} value={deadline} onChange={(e) => setDeadline(e.target.value) } />
-          <button type="button" onClick={handleCreateGoal} >
-            Create Goal
-          </button>
+          <button type="button" onClick={handleCreateGoal} > Create Goal </button>
         </div>
         {/* Savings Goals List */}
         <div className="savings-goals-list">
@@ -173,10 +198,7 @@ function SavingsGoals() {
                 <div className="savings-goal-card" key={goal._id} >
                   {/* Card Header */}
                   <div className="savings-goal-card-header">
-                    <h3>{goal.name}</h3>
-                    <span className={`goal-status ${goal.status}`} >
-                      {goal.status}
-                    </span>
+                    <h3>{goal.name}</h3> <span className={`goal-status ${goal.status}`} > {goal.status} </span>
                   </div>
                   <div className="savings-goal-amounts">
                     <p>
@@ -238,17 +260,30 @@ function SavingsGoals() {
                   )}
                   {goal.status === "completed" && (
                     <p className="savings-goal-completed">
-                       Savings goal completed!
+                      Savings goal completed!
                     </p>
                   )}
+                  {/* Delete Goal */}
+                  <button type="button" className="delete-goal-btn" onClick={() => handleDeleteGoal(goal) } > Delete Goal </button>
                 </div>
               );
             })
           )}
         </div>
       </section>
-      <ActionModal isOpen={showContributionModal} title={ selectedGoal ? `Add Money to ${selectedGoal.name}`: "Add Money" } submitText="Add Money" loading={contributionLoading} onClose={closeContributionModal} onSubmit={handleContribution} >
-        <input type="number" min="0.01" step="0.01" placeholder="Enter amount" value={contributionAmount} onChange={(e) => setContributionAmount(e.target.value) } />
+      <ActionModal
+        isOpen={showContributionModal}
+        title={
+          selectedGoal
+            ? `Add Money to ${selectedGoal.name}`
+            : "Add Money"
+        }
+        submitText="Add Money"
+        loading={contributionLoading}
+        onClose={closeContributionModal}
+        onSubmit={handleContribution}
+      >
+        <input type="number" min="0.01" step="0.01" placeholder="Enter amount" value={contributionAmount} onChange={(e) => setContributionAmount( e.target.value ) } />
       </ActionModal>
     </DashboardLayout>
   );
