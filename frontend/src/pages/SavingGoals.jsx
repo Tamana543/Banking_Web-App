@@ -19,6 +19,7 @@ function SavingsGoals() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [contributionAmount, setContributionAmount] = useState("");
   const [contributionLoading, setContributionLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false);
   const today = new Date().toISOString().split("T")[0];
   const loadGoals = async () => {
@@ -70,6 +71,15 @@ function SavingsGoals() {
     setSelectedGoal(null);
     setContributionAmount("");
   };
+  const openDeleteModal = (goal) => {
+  setSelectedGoal(goal);
+  setShowDeleteModal(true);
+  };
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setSelectedGoal(null);
+  };
+  
   const handleContribution = async () => {
     if (
       !contributionAmount ||
@@ -126,49 +136,45 @@ function SavingsGoals() {
       setContributionLoading(false);
     }
   };
-  const handleDeleteGoal = async (goal) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete "${goal.name}"?`
+ const handleDeleteGoal = async () => {
+  if (!selectedGoal)  return; 
+  try {
+    setDeleteLoading(true);
+    const data = await deleteSavingsGoal(selectedGoal._id);
+    // Remove the deleted goal from the list
+    setGoals((currentGoals) =>
+      currentGoals.filter(
+        (goal) => goal._id !== selectedGoal._id
+      )
     );
-    if (!confirmed) {
-      return;
-    }
-    try {
-      setDeleteLoading(true);
-      const data = await deleteSavingsGoal(goal._id);
-      // Remove the deleted goal from the page
-      setGoals((currentGoals) =>
-        currentGoals.filter(
-          (currentGoal) =>
-            currentGoal._id !== goal._id
-        )
+    // Update user's account balance
+    setUser((currentUser) => ({
+      ...currentUser,
+      balance: data.balance,
+    }));
+    // Keep localStorage synchronized
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const updatedUser = {
+        ...JSON.parse(storedUser),
+        balance: data.balance,
+      };
+      localStorage.setItem(
+        "user",
+        JSON.stringify(updatedUser)
       );
-      // Update the user's account balance
-      setUser((currentUser) => ({ ...currentUser, balance: data.balance, }));
-      // Keep localStorage synchronized
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const updatedUser = {
-          ...JSON.parse(storedUser),
-          balance: data.balance,
-        };
-        localStorage.setItem(
-          "user",
-          JSON.stringify(updatedUser)
-        );
-      }
-      showToast(
-        data.refundedAmount > 0
-          ? `$${data.refundedAmount.toLocaleString()} returned to your account.`
-          : "Savings goal deleted successfully.",
-        "success"
-      );
-    } catch (error) {
-      showToast(error.message, "error");
-    } finally {
-      setDeleteLoading(false);
     }
-  };
+    showToast(
+      "Savings goal deleted and money returned to your account.",
+      "success"
+    );
+    closeDeleteModal();
+  } catch (error) {
+    showToast(error.message, "error");
+  } finally {
+    setDeleteLoading(false);
+  }
+};
   return (
     <DashboardLayout>
       <DashboardHeader />
