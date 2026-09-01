@@ -1,4 +1,6 @@
 import SavingsGoal from "../models/SavingsGoal.js";
+import User from "../models/User.js";
+
 export const createSavingsGoal = async (req, res) => {
   try {
     const { name, targetAmount, deadline } = req.body;
