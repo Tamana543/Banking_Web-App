@@ -214,3 +214,6 @@ phase 19 — Real-Time Features
 * Instant transfer notifications
 * Live admin dashboard
 * Online users indicator
+
+phase 20 — AgentAI
+* add your first AI agent 
