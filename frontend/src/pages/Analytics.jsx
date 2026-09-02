@@ -12,10 +12,16 @@ function Analytics() {
   const [loading, setLoading] = useState(true);
   const loadAnalyticsData = async () => {
     try {
-      setLoading(true);
-      const [transactionData, savingsData] = await Promise.all([getTransactions(),getSavingsGoals(), ]);
-      setTransactions(transactionData.transactions || []);
-      setSavingsGoals(savingsData.goals || []);
+      const [transactionData, savingsData] = await Promise.all([
+     getTransactions(),
+     getSavingsGoals(),
+     ]);
+     setTransactions(transactionData.transactions || []);
+     setSavingsGoals(
+     savingsData.goals ||
+     savingsData.savingsGoals ||
+     []
+     );
     } catch (error) {
       console.error(error);
     } finally {
@@ -101,7 +107,14 @@ function Analytics() {
           (sum, t) => sum + Number(t.amount),
           0
         ),
-    },
+    }, {
+    name: "Savings",
+    value: savingsGoals.reduce(
+      (sum, goal) =>
+        sum + Number(goal.currentAmount || 0),
+      0
+    ),
+     },
   ];
       /* TRANSACTION */
   const totalTransactions = transactions.length;
@@ -278,11 +291,8 @@ function Analytics() {
               </ResponsiveContainer>
             </section>
             <section className="analytics-card">
-              <h3>Spending by Category</h3>
-              <ResponsiveContainer
-                width="100%"
-                height={320}
-              >
+              <h3>Money Out by Category</h3>
+              <ResponsiveContainer width="100%" height={320} >
                 <PieChart>
                   <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label >
                     {categoryData.map(
@@ -340,99 +350,99 @@ function Analytics() {
               </div>
             </section>
             <section className="analytics-card savings-analytics-card">
-              <div className="savings-analytics-header">
-                <div>
-                  <h3>Savings Goals</h3>
-                  <p>
-                    Track your progress toward your
-                    savings targets.
-                  </p>
-                </div>
-                <span className="savings-progress-label">
-                  {overallSavingsProgress.toFixed(0)}%
-                </span>
-              </div>
-              {savingsGoals.length === 0 ? (
-                <div className="savings-analytics-empty">
-                  <h4>No Savings Goals Yet</h4>
-                  <p>
-                    Create a savings goal to start
-                    tracking your progress here.
-                  </p>
-                </div>
-              ) : (
-                <>
-                <div className="savings-analytics-stats">
-                    <div className="savings-stat-box">
-                      <span>Total Saved</span>
-                      <strong>
-                        $
-                        {totalSaved.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="savings-stat-box">
-                      <span>Total Target</span>
-                      <strong>
-                        $
-                        {totalSavingsTarget.toLocaleString()}
-                      </strong>
-                    </div>
-                    <div className="savings-stat-box">
-                      <span>Active Goals</span>
-                      <strong>
-                        {activeSavingsGoals}
-                      </strong>
-                    </div>
-                    <div className="savings-stat-box">
-                      <span>Completed Goals</span>
-                      <strong>
-                        {completedSavingsGoals}
-                      </strong>
-                    </div>
-                  </div>
-                  <div className="savings-overall-progress">
-                    <div className="savings-progress-track">
-                      <div
-                        className="savings-progress-fill"
-                        style={{
-                          width: `${overallSavingsProgress}%`,
-                        }}
-                      />
-                    </div>
-                    <div className="savings-progress-values">
-                      <span>
-                        $
-                        {totalSaved.toLocaleString()}
-                      </span>
-                      <span>
-                        $
-                        {totalSavingsTarget.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="savings-goals-chart">
-                    <h4>Goal Progress</h4>
-                    <ResponsiveContainer width="100%" height={320} >
-                      <BarChart data={savingsGoalData} margin={{ top: 10, right: 10, left: 0, bottom: 10, }} >
-                        <CartesianGrid
-                          strokeDasharray="3 3"
-                        />
-                        <XAxis
-                          dataKey="name"
-                        />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="saved" name="Saved" fill="#d4af37" radius={[ 8, 8, 0, 0, ]} />
-                        <Bar dataKey="target" name="Target" fill="#555" radius={[ 8, 8, 0, 0, ]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </>
-              )}
-            </section>
+          <div className="savings-analytics-header">
+          <div>
+               <h3>Savings Goals</h3>
+               <p>
+               Track your progress toward your savings targets.
+               </p>
           </div>
-        )}
+          <span className="savings-progress-label">
+               {overallSavingsProgress.toFixed(0)}%
+          </span>
+          </div>
+          {savingsGoals.length === 0 ? (
+          <div className="savings-analytics-empty">
+               <h4>No Savings Goals Yet</h4>
+               <p>
+               Create a savings goal to start tracking
+               your progress here.
+               </p>
+          </div>
+          ) : (
+          <>
+               <div className="savings-analytics-stats">
+               <div className="savings-stat-box">
+                    <span>Total Saved</span>
+                    <strong>
+                    ${totalSaved.toLocaleString()}
+                    </strong>
+               </div>
+               <div className="savings-stat-box">
+                    <span>Total Target</span>
+                    <strong>
+                    ${totalSavingsTarget.toLocaleString()}
+                    </strong>
+               </div>
+               <div className="savings-stat-box">
+                    <span>Active Goals</span>
+                    <strong>
+                    {activeSavingsGoals}
+                    </strong>
+               </div>
+               <div className="savings-stat-box">
+                    <span>Completed</span>
+                    <strong>
+                    {completedSavingsGoals}
+                    </strong>
+               </div>
+               </div>
+               <div className="savings-overall-progress">
+               <div className="savings-progress-track">
+                    <div
+                    className="savings-progress-fill"
+                    style={{
+                    width: `${overallSavingsProgress}%`,
+                    }}
+                    />
+               </div>
+               <div className="savings-progress-values">
+                    <span>
+                    ${totalSaved.toLocaleString()}
+                    </span>
+                    <span>
+                    ${totalSavingsTarget.toLocaleString()}
+                    </span>
+               </div>
+               </div>
+               <div className="savings-goals-chart">
+               <h4>Goal Progress</h4>
+               <ResponsiveContainer
+                    width="100%"
+                    height={190}
+               >
+                    <BarChart
+                    data={savingsGoalData}
+                    margin={{ top: 5, right: 5, left: 0, bottom: 5, }} >
+                    <CartesianGrid
+                    strokeDasharray="3 3"
+                    />
+                    <XAxis
+                    dataKey="name"
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="saved" name="Saved" fill="#d4af37" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="target" name="Target" fill="#555" radius={[6, 6, 0, 0]} />
+                    </BarChart>
+               </ResponsiveContainer>
+               </div>
+          </>
+          )}
+                    </section>
+                    </div>
+               )}
       </section>
     </DashboardLayout>
     );
