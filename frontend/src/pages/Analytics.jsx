@@ -4,127 +4,135 @@ import { ResponsiveContainer, BarChart, Bar, LineChart, Line, PieChart, Pie, Cel
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { getTransactions } from "../api/transactionApi";
+import { getSavingsGoals } from "../api/savingsGoalApi";
 import "../styles/analytics.css";
 function Analytics() {
-    const [transactions, setTransactions] = useState([]);
-    const loadTransactions = async () => {
-        try { const data =
-                await getTransactions();
-            setTransactions(
-                data.transactions
-            );
-        }
-        catch (error) {
-            console.error(error);
-        }
-    };
-    useEffect(() => {
-        loadTransactions();
-    }, []);
-    const totalIncome = transactions.filter(
-          (transaction) =>
-               transaction.type === "deposit" ||
-               transaction.type === "loan"
-          )
-          .reduce(
-          (sum, transaction) =>
-               sum + Number(transaction.amount),
+  const [transactions, setTransactions] = useState([]);
+  const [savingsGoals, setSavingsGoals] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadAnalyticsData = async () => {
+    try {
+      setLoading(true);
+
+      const [transactionData, savingsData] = await Promise.all([
+        getTransactions(),
+        getSavingsGoals(),
+      ]);
+
+      setTransactions(transactionData.transactions || []);
+      setSavingsGoals(savingsData.goals || []);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAnalyticsData();
+  }, []);
+
+  /* TRANSACTION ANALYTICS*/
+
+  const totalIncome = transactions
+    .filter(
+      (transaction) =>
+        transaction.type === "deposit" ||
+        transaction.type === "loan"
+    )
+    .reduce(
+      (sum, transaction) =>
+        sum + Number(transaction.amount),
+      0
+    );
+
+  const totalExpense = transactions
+    .filter(
+      (transaction) =>
+        transaction.type === "withdrawal" ||
+        transaction.type === "transfer"
+    )
+    .reduce(
+      (sum, transaction) =>
+        sum + Number(transaction.amount),
+      0
+    );
+
+  // transaction-based balance
+  const balance = totalIncome - totalExpense;
+
+  /*  MONTHLY ANALYTICS*/
+
+  const monthlyMap = {};
+
+  transactions.forEach((transaction) => {
+    const month = new Date(
+      transaction.createdAt
+    ).toLocaleString("default", {
+      month: "short",
+    });
+
+    if (!monthlyMap[month]) {
+      monthlyMap[month] = {
+        month,
+        income: 0,
+        expense: 0,
+      };
+    }
+
+    if (
+      transaction.type === "deposit" ||
+      transaction.type === "loan"
+    ) {
+      monthlyMap[month].income += Number(
+        transaction.amount
+      );
+    }
+
+    if (
+      transaction.type === "withdrawal" ||
+      transaction.type === "transfer"
+    ) {
+      monthlyMap[month].expense += Number(
+        transaction.amount
+      );
+    }
+  });
+
+  const monthlyData = Object.values(monthlyMap);
+
+  /*CATEGORY ANALYTICS*/
+
+  const categoryData = [
+    {
+      name: "Withdrawals",
+      value: transactions
+        .filter((t) => t.type === "withdrawal")
+        .reduce(
+          (sum, t) => sum + Number(t.amount),
           0
-          );
-     const totalExpense = transactions
-     .filter(
-     (transaction) =>
-          transaction.type === "withdrawal" ||
-          transaction.type === "transfer"
-     )
-     .reduce(
-     (sum, transaction) =>
-          sum + Number(transaction.amount),
-     0
-     );
-     const balance = totalIncome - totalExpense; // remember this is not the user real balance we will fix that in future 
-     const monthlyMap = {};
-     transactions.forEach((transaction) => {
-     const month = new Date(
-     transaction.createdAt
-     ).toLocaleString("default", {
-     month: "short",
-     });
-     if (!monthlyMap[month]) {
-     monthlyMap[month] = {
-          month,
-          income: 0,
-          expense: 0,
-     };
-     }
-     if (
-     transaction.type === "deposit" ||
-     transaction.type === "loan"
-     ) {
-     monthlyMap[month].income += Number(
-          transaction.amount
-     );
-     }
-     if (
-     transaction.type === "withdrawal" ||
-     transaction.type === "transfer"
-     ) {
-     monthlyMap[month].expense += Number(
-          transaction.amount
-     );
-     }
-     });
-     const monthlyData = Object.values(monthlyMap);
-     const categoryData = [
-          {
-               name: "Withdrawals",
-               value: transactions
-                    .filter(t => t.type === "withdrawal")
-                    .reduce((sum, t) => sum + Number(t.amount), 0),
-          },
-          {
-               name: "Transfers",
-               value: transactions
-                    .filter(t => t.type === "transfer")
-                    .reduce((sum, t) => sum + Number(t.amount), 0),
-          },
-          {
-               name: "Loans",
-               value: transactions
-                    .filter(t => t.type === "loan")
-                    .reduce((sum, t) => sum + Number(t.amount), 0),
-          },
-     ];
-     // Transaction Insights
-     const totalTransactions = transactions.length;
-          const averageTransaction =
-          totalTransactions === 0
-               ? 0
-               : transactions.reduce(
-                    (sum, transaction) =>
-                         sum + Number(transaction.amount),
-                    0
-                    ) / totalTransactions;
-          const highestTransaction =
-          transactions.length > 0
-               ? Math.max(
-                    ...transactions.map(transaction =>
-                         Number(transaction.amount)
-                    )
-                    )
-               : 0;
-          const transactionTypes = {};
-          transactions.forEach(transaction => {
-          transactionTypes[transaction.type] =
-               (transactionTypes[transaction.type] || 0) + 1;
-          });
-          const mostUsedTransaction =
-          Object.keys(transactionTypes).length
-               ? Object.entries(transactionTypes).sort(
-                    (a, b) => b[1] - a[1]
-                    )[0][0]
-               : "N/A";
-     const COLORS = [ "#d4af37", "#4f46e5", "#22c55e", ];
+        ),
+    },
+    {
+      name: "Transfers",
+      value: transactions
+        .filter((t) => t.type === "transfer")
+        .reduce(
+          (sum, t) => sum + Number(t.amount),
+          0
+        ),
+    },
+    {
+      name: "Loans",
+      value: transactions
+        .filter((t) => t.type === "loan")
+        .reduce(
+          (sum, t) => sum + Number(t.amount),
+          0
+        ),
+    },
+  ];
      
     return (
         <DashboardLayout>
