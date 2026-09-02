@@ -520,6 +520,145 @@ function Analytics() {
               ) : (
 
                 <>
+                <div className="savings-analytics-stats">
+
+                    <div className="savings-stat-box">
+                      <span>Total Saved</span>
+
+                      <strong>
+                        $
+                        {totalSaved.toLocaleString()}
+                      </strong>
+                    </div>
+
+                    <div className="savings-stat-box">
+                      <span>Total Target</span>
+
+                      <strong>
+                        $
+                        {totalSavingsTarget.toLocaleString()}
+                      </strong>
+                    </div>
+
+                    <div className="savings-stat-box">
+                      <span>Active Goals</span>
+
+                      <strong>
+                        {activeSavingsGoals}
+                      </strong>
+                    </div>
+
+                    <div className="savings-stat-box">
+                      <span>Completed Goals</span>
+
+                      <strong>
+                        {completedSavingsGoals}
+                      </strong>
+                    </div>
+
+                  </div>
+
+                  <div className="savings-overall-progress">
+
+                    <div className="savings-progress-track">
+
+                      <div
+                        className="savings-progress-fill"
+                        style={{
+                          width: `${overallSavingsProgress}%`,
+                        }}
+                      />
+
+                    </div>
+
+                    <div className="savings-progress-values">
+
+                      <span>
+                        $
+                        {totalSaved.toLocaleString()}
+                      </span>
+
+                      <span>
+                        $
+                        {totalSavingsTarget.toLocaleString()}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div className="savings-goals-chart">
+
+                    <h4>Goal Progress</h4>
+
+                    <ResponsiveContainer
+                      width="100%"
+                      height={320}
+                    >
+                      <BarChart
+                        data={savingsGoalData}
+                        margin={{
+                          top: 10,
+                          right: 10,
+                          left: 0,
+                          bottom: 10,
+                        }}
+                      >
+
+                        <CartesianGrid
+                          strokeDasharray="3 3"
+                        />
+
+                        <XAxis
+                          dataKey="name"
+                        />
+
+                        <YAxis />
+
+                        <Tooltip />
+
+                        <Legend />
+
+                        <Bar
+                          dataKey="saved"
+                          name="Saved"
+                          fill="#d4af37"
+                          radius={[
+                            8,
+                            8,
+                            0,
+                            0,
+                          ]}
+                        />
+
+                        <Bar
+                          dataKey="target"
+                          name="Target"
+                          fill="#555"
+                          radius={[
+                            8,
+                            8,
+                            0,
+                            0,
+                          ]}
+                        />
+
+                      </BarChart>
+                    </ResponsiveContainer>
+
+                  </div>
+
+                </>
+
+              )}
+
+            </section>
+
+          </div>
+        )}
+
+      </section>
+    </DashboardLayout>
     );
 }
 export default Analytics;
