@@ -174,7 +174,7 @@ function Analytics() {
     saved: Number(goal.currentAmount || 0),
     target: Number(goal.targetAmount || 0),
   }));
-  const COLORS = [ "#d4af37", "#4f46e5", "#22c55e",];
+  const COLORS = [ "#d4af37", "#4f46e5", "#22c55e", "#b814b0"];
     /* LOADING STATE*/
   if (loading) {
     return (
@@ -218,7 +218,7 @@ function Analytics() {
             </h2>
           </div>
         </div>
-        {transactions.length === 0 ? (
+        {transactions.length === 0 && savingsGoals.length === 0 ? (
           <div className="analytics-empty">
             <h3>No Analytics Available</h3>
             <p>

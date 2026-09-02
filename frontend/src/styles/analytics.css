@@ -197,67 +197,67 @@
     font-size: 0.95rem;
 }
 .savings-analytics-card {
-    grid-column: 1 / -1;
+    min-width: 0;
 }
 .savings-analytics-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 22px;
 }
 .savings-analytics-header h3 {
-    margin-bottom: 6px;
+    margin-bottom: 0 0 6px;
 }
 .savings-analytics-header p {
     margin: 0;
     color: #8f8f8f;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     line-height: 1.5;
 }
 .savings-progress-label {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 68px;
-    height: 40px;
-    padding: 0 14px;
+    min-width: 58px;
+    height: 36px;
+    padding: 0 12px;
     border: 1px solid rgba(212, 175, 55, 0.22);
-    border-radius: 12px;
+    border-radius: 11px;
     background: rgba(212, 175, 55, 0.08);
     color: var(--gold);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
 }
 .savings-analytics-stats {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    margin-bottom: 26px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
 }
 .savings-stat-box {
-    padding: 18px;
+    padding: 15px;
     border: 1px solid rgba(212, 175, 55, 0.09);
-    border-radius: 16px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.025);
 }
 .savings-stat-box span {
     display: block;
-    margin-bottom: 9px;
+    margin-bottom: 7px;
     color: #929292;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
 }
 .savings-stat-box strong {
     color: var(--gold);
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 .savings-overall-progress {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .savings-progress-track {
     width: 100%;
-    height: 12px;
+    height: 10px;
     overflow: hidden;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.07);
@@ -271,34 +271,34 @@
 .savings-progress-values {
     display: flex;
     justify-content: space-between;
-    margin-top: 9px;
+    margin-top: 7px;
     color: #888;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
 }
 .savings-goals-chart {
-    margin-top: 8px;
+    margin-top: 4px;
 }
 .savings-goals-chart h4 {
-    margin: 0 0 16px;
+    margin: 0 0 10px;
     color: #ddd;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
 }
 .savings-analytics-empty {
-    padding: 35px 20px;
+    padding: 28px 18px;
     text-align: center;
     border: 1px dashed rgba(212, 175, 55, 0.16);
-    border-radius: 16px;
+    border-radius: 15px;
     background: rgba(255, 255, 255, 0.02);
 }
 .savings-analytics-empty h4 {
-    margin: 0 0 8px;
+    margin: 0 0 7px;
     color: var(--gold);
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 .savings-analytics-empty p {
     margin: 0;
     color: #888;
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     line-height: 1.5;
 }
