@@ -133,14 +133,86 @@ function Analytics() {
         ),
     },
   ];
-     
+      /* TRANSACTION */
+
+  const totalTransactions = transactions.length;
+
+  const averageTransaction =
+    totalTransactions === 0
+      ? 0
+      : transactions.reduce(
+          (sum, transaction) =>
+            sum + Number(transaction.amount),
+          0
+        ) / totalTransactions;
+
+  const highestTransaction =
+    transactions.length > 0
+      ? Math.max(
+          ...transactions.map((transaction) =>
+            Number(transaction.amount)
+          )
+        )
+      : 0;
+
+  const transactionTypes = {};
+
+  transactions.forEach((transaction) => {
+    transactionTypes[transaction.type] =
+      (transactionTypes[transaction.type] || 0) + 1;
+  });
+
+  const mostUsedTransaction =
+    Object.keys(transactionTypes).length
+      ? Object.entries(transactionTypes).sort(
+          (a, b) => b[1] - a[1]
+        )[0][0]
+      : "N/A";
+
+  /* SAVINGS ANALYTICS*/
+
+  const totalSavingsTarget = savingsGoals.reduce(
+    (sum, goal) =>
+      sum + Number(goal.targetAmount || 0),
+    0
+  );
+
+  const totalSaved = savingsGoals.reduce(
+    (sum, goal) =>
+      sum + Number(goal.currentAmount || 0),
+    0
+  );
+
+  const activeSavingsGoals = savingsGoals.filter(
+    (goal) => goal.status !== "completed"
+  ).length;
+
+  const completedSavingsGoals = savingsGoals.filter(
+    (goal) => goal.status === "completed"
+  ).length;
+
+  const overallSavingsProgress =
+    totalSavingsTarget > 0
+      ? Math.min(
+          (totalSaved / totalSavingsTarget) * 100,
+          100
+        )
+      : 0;
+
+  const savingsGoalData = savingsGoals.map((goal) => ({
+    name: goal.name,
+    saved: Number(goal.currentAmount || 0),
+    target: Number(goal.targetAmount || 0),
+  }));
+
+  const COLORS = [ "#d4af37", "#4f46e5", "#22c55e",];
     return (
         <DashboardLayout>
             <DashboardHeader />
                <div className="analytics-header">
                     <h1>Analytics Dashboard</h1>
                     <p>
-                         Monitor your financial performance and spending insights.
+                         Monitor your financial performance and spending .
                     </p>
                </div>
      
@@ -169,7 +241,7 @@ function Analytics() {
                <div className="analytics-empty">
                     <h3>No Analytics Available</h3>
                     <p>
-                         Complete some transactions to unlock your financial insights.
+                         Complete some transactions to unlock your financial .
                     </p>
                </div>
                ) : (
@@ -266,8 +338,8 @@ function Analytics() {
                     </ResponsiveContainer>
                     </section>
                     <section className="analytics-card">
-                         <h3>Transaction Insights</h3>
-                         <div className="insights-grid">
+                         <h3>Transaction </h3>
+                         <div className="-grid">
                               <div className="insight-box">
                                    <p>Highest Transaction</p>
                                    <h2>
