@@ -22,38 +22,31 @@ const userSchema = new mongoose.Schema(
                type: String,
                required: true,
           },
-
           pin: {
                     type: String,
                     required: true,
                },
-
           balance: {
                type: Number,
                default: 0,
           },
-
           currency: {
                type: String,
                default: "$",
           },
-
           role: {
                type: String,
                enum: ["user", "admin"],
                default: "user",
           },
-
           avatar: {
                type: String,
                default: "",
           },
-
           isVerified: {
                type: Boolean,
                default: false,
           },
-
           failedLoginAttempts: {
                type: Number,
                default: 0,
