@@ -1,70 +1,84 @@
-import { createContext, useContext, useEffect, useState, useRef, } from "react";
+import { createContext, useContext, useEffect, useRef, useState, } from "react";
 const AuthContext = createContext();
+const getTokenExpiration = (jwtToken) => {
+  try {
+    const payload = JSON.parse(atob(jwtToken.split(".")[1]));
+    return payload.exp ? payload.exp * 1000 : null;
+  } catch (error) {
+    return null;
+  }
+};
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const logoutTimer = useRef(null);
-  const logout = () => {
+  const clearLogoutTimer = () => {
     if (logoutTimer.current) {
       clearTimeout(logoutTimer.current);
       logoutTimer.current = null;
     }
+  };
+  const clearAuth = () => {
+    clearLogoutTimer();
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setUser(null);
     setToken(null);
   };
-  const startLogoutTimer = () => {
-    if (logoutTimer.current) {
-      clearTimeout(logoutTimer.current);
+  const startLogoutTimer = (jwtToken) => {
+    clearLogoutTimer();
+    const expiration = getTokenExpiration(jwtToken);
+    if (!expiration) {
+      clearAuth();
+      return;
     }
-    /*
-      Temporary client-side session timer. replace this with JWT-based
-      expiration handling 
-    */
+    const remainingTime = expiration - Date.now();
+    if (remainingTime <= 0) {
+      clearAuth();
+      return;
+    }
     logoutTimer.current = setTimeout(() => {
-      logout();
-    }, 6 * 24 * 60 * 60 * 1000);
+      clearAuth();
+    }, remainingTime);
   };
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
     if (!storedUser || !storedToken) {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      clearAuth();
       setAuthLoading(false);
       return;
     }
     try {
       const parsedUser = JSON.parse(storedUser);
+      const expiration = getTokenExpiration(storedToken);
+      if (!expiration || expiration <= Date.now()) {
+        clearAuth();
+        setAuthLoading(false);
+        return;
+      }
       setUser(parsedUser);
       setToken(storedToken);
-      startLogoutTimer();
+      startLogoutTimer(storedToken);
     } catch (error) {
-      console.error("Failed to restore authentication session.");
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-      setUser(null);
-      setToken(null);
+      clearAuth();
     }
     setAuthLoading(false);
+    return () => {
+      clearLogoutTimer();
+    };
   }, []);
   const login = (userData, jwtToken) => {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", jwtToken);
     setUser(userData);
     setToken(jwtToken);
-    setAuthLoading(false);
-    startLogoutTimer();
+    startLogoutTimer(jwtToken);
   };
-  useEffect(() => {
-    return () => {
-      if (logoutTimer.current) {
-        clearTimeout(logoutTimer.current);
-      }
-    };
-  }, []);
+  const logout = () => {
+    clearAuth();
+  };
   return (
     <AuthContext.Provider value={{ user, token, login, logout, setUser, authLoading, }} > {children} </AuthContext.Provider>
   );
