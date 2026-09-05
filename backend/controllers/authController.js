@@ -233,118 +233,106 @@ export const updateProfile = async (req, res) => {
   }
 };
 export const changePassword = async (req, res) => {
-    try {
-         const {
-            currentPassword,
-            newPassword,
-            confirmPassword,
-        } = req.body;
-        // Guardians 
-         if (
-            !currentPassword ||
-            !newPassword ||
-            !confirmPassword
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required.",
-            });
-        }
-        if (newPassword !== confirmPassword) {
-            return res.status(400).json({
-                success: false,
-                message: "Passwords do not match.",
-            });
-        }
-        if (newPassword.length < 6) {
-            return res.status(400).json({
-                success: false,
-                message:
-                    "Password must be at least 6 characters.",
-            });
-        }
-        const user = await User.findById(req.user._id).select("+password");
-        const isMatch = await bcrypt.compare(
-            currentPassword,
-            user.password
-        );
-        if (!isMatch) {
-            return res.status(400).json({
-                success: false,
-                message: "Current password is incorrect.",
-            });
-        }
-        user.password = await bcrypt.hash(
-            newPassword,
-            10
-        );
-        user.passwordUpdatedAt = new Date();
-        await user.save();
-        res.status(200).json({
-            success: true,
-            message: "Password updated successfully.",
-        });
-        
-    } catch (error) {
-         console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Server error.",
-        });
+  try {
+    const { currentPassword, newPassword, confirmPassword, } = req.body;
+    if ( !currentPassword || !newPassword || !confirmPassword ) {
+      return res.status(400).json({
+        message: "All password fields are required.",
+      });
     }
-}
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        message: "New passwords do not match.",
+      });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        message: "Password must be at least 6 characters long.",
+      });
+    }
+    const user = await User.findById(req.user._id).select(
+      "+password"
+    );
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    const isMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Current password is incorrect.",
+      });
+    }
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      10
+    );
+    user.password = hashedPassword;
+    user.passwordUpdatedAt = new Date();
+    await user.save();
+    res.status(200).json({
+      message: "Password changed successfully.",
+    });
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).json({
+      message: "Unable to change password.",
+    });
+  }
+};
 export const changePin = async (req, res) => {
-    try {
-        const {
-            currentPin,
-            newPin,
-            confirmPin,
-        } = req.body;
-        const user = await User.findById(req.user._id).select("+pin");// Cause pin and password are hidden in database
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found.",
-            });
-        }
-        // Current PIN check
-        const isMatch = await bcrypt.compare(
-            currentPin,
-            user.pin
-        );
-        if (!isMatch) {
-            return res.status(400).json({
-                success: false,
-                message: "Current PIN is incorrect.",
-            });
-        }
-        // Confirmation check
-        if (newPin !== confirmPin) {
-            return res.status(400).json({
-                success: false,
-                message: "PINs do not match.",
-            });
-        }
-        // Length check
-        if (!/^\d{4}$/.test(String(newPin))) {
-            return res.status(400).json({
-                success: false,
-                message: "PIN must contain exactly 4 digits.",
-            });
-        }
-        // Hash new PIN
-        user.pin = await bcrypt.hash( String(newPin), 12 );
-        user.pinUpdatedAt = new Date();
-        await user.save();
-        res.status(200).json({
-            success: true,
-            message: "PIN updated successfully.",
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Server Error",
-        });
+  try {
+    const { currentPin, newPin, confirmPin, } = req.body;
+    if (!currentPin || !newPin || !confirmPin) {
+      return res.status(400).json({
+        message: "All PIN fields are required.",
+      });
     }
+    if (newPin !== confirmPin) {
+      return res.status(400).json({
+        message: "New PINs do not match.",
+      });
+    }
+    if (!/^\d{4}$/.test(String(newPin))) {
+      return res.status(400).json({
+        message: "PIN must contain exactly 4 digits.",
+      });
+    }
+    const user = await User.findById(req.user._id).select(
+      "+pin"
+    );
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    const isMatch = await bcrypt.compare(
+      String(currentPin),
+      user.pin
+    );
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Current PIN is incorrect.",
+      });
+    }
+    const hashedPin = await bcrypt.hash(
+      String(newPin),
+      12
+    );
+    user.pin = hashedPin;
+    user.pinUpdatedAt = new Date();
+    await user.save();
+    res.status(200).json({
+      message: "PIN changed successfully.",
+    });
+  } catch (error) {
+    console.error("Change PIN error:", error);
+    res.status(500).json({
+      message: "Unable to change PIN.",
+    });
+  }
 };
