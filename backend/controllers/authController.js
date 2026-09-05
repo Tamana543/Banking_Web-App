@@ -55,9 +55,9 @@ export const loginUser = async (req, res) => {
       });
     }
     // Find user
-    const user = await User.findOne({
-      email: email.toLowerCase().trim(),
-    });
+   const user = await User.findOne({
+        email: email.toLowerCase().trim(),
+    }).select("+password");
     if (user && user.isLocked) {
       return res.status(403).json({
         success: false,
@@ -73,11 +73,8 @@ export const loginUser = async (req, res) => {
             }
             // Compare password
             const isMatch = await bcrypt.compare(password, user.password);
-        console.log("Password Match:", isMatch);
             if (!isMatch) {
-                console.log("Before Increment:", user.failedLoginAttempts);
             user.failedLoginAttempts += 1;
-            console.log("After Increment:", user.failedLoginAttempts);
             if (user.failedLoginAttempts >= 5) {
                 user.isLocked = true;
             }
@@ -275,7 +272,7 @@ export const changePassword = async (req, res) => {
                     "Password must be at least 6 characters.",
             });
         }
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user._id).select("+password");
         const isMatch = await bcrypt.compare(
             currentPassword,
             user.password
@@ -312,7 +309,7 @@ export const changePin = async (req, res) => {
             newPin,
             confirmPin,
         } = req.body;
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user._id).select("+pin");// Cause pin and password are hidden in database
         if (!user) {
             return res.status(404).json({
                 success: false,

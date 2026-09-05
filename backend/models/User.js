@@ -21,10 +21,12 @@ const userSchema = new mongoose.Schema(
           password: {
                type: String,
                required: true,
+               select: false,
           },
           pin: {
                     type: String,
                     required: true,
+                    select: false,
                },
           balance: {
                type: Number,
@@ -66,7 +68,8 @@ const userSchema = new mongoose.Schema(
           passwordUpdatedAt: {
                type: Date,
                default: null,
-          },pinUpdatedAt: {
+          },
+          pinUpdatedAt: {
                type: Date,
                default: null,
           },
