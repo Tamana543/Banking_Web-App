@@ -137,15 +137,74 @@ phase 11 — Savings Features
 * Goal completion notifications✔️
 * Savings analytics ✔️
 
-phase 12 — Security
+Phase 12 — Security & Authentication 
+12.1 Authentication Foundation
+* Audit authentication middleware
+* Audit JWT generation/verification
+* Audit protected API routes
+* Audit password hashing
+* Audit authentication errors
+12.2 Session & Token Management
 * Session management
-* PIN validation
-* Protected API routes
-* Secure password storage
-* Authentication middleware
+* JWT expiration
+* Expired-token handling
+* Automatic logout
+* Invalid-token handling
+* Client session cleanup
+12.3 Authorization
 * User authorization
-* Role-based access (User/Admin)
-* fix the logout issue (when user logged in and logged out it can go back to login with back btn from browser)
+* User-owned resource protection
+* Prevent ID manipulation
+* Role-based access control
+* User role
+* Admin role
+* Admin-only API routes
+* Admin-only frontend routes
+12.4 PIN Security
+* PIN validation
+* Secure PIN storage
+* Server-side PIN verification
+* Sensitive-action PIN protection
+* Failed-attempt protection
+* Rate limiting
+12.5 Password Security
+* Secure password storage audit
+* Password response protection
+* Password-change security
+* Password validation
+* Authentication error review
+12.6 Logout Security
+* Fix browser Back button issue
+* Protected-route revalidation
+* Client token cleanup
+* Prevent authenticated UI restoration
+* Verify API rejection after logout
+12.7 API Security Hardening
+* Input validation
+* Rate limiting
+* CORS review
+* Security headers
+* Error exposure review
+* HTTP status-code review
+* Environment/secrets audit
+12.8 Existing Feature Security Audit
+* Transactions
+* Transfers
+* Loans
+* Savings Goals
+* Savings Contributions
+* Profile
+* Password Change
+* PIN-protected actions
+12.9 Security Testing
+* Test unauthorized API access
+* Test expired JWT
+* Test logout + browser Back
+* Test User A → User B access attempts
+* Test invalid PIN
+* Test invalid password
+* Test malformed requests
+* Test Admin/User permissions
 
 phase 13 — Admin Dashboard
 * Admin authentication
