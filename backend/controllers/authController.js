@@ -176,60 +176,61 @@ export const uploadAvatar = async (req, res) => {
   }
 };
 export const updateProfile = async (req, res) => {
-    try {
-        const {
-            firstName,
-            lastName,
-            email,
-        } = req.body;
-        const user = await User.findById(req.user._id);
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found.",
-            });
-        }
-        // duplicate email checker (for peofile udpated)\
-        const existingUser = await User.findOne({
-              email: email.toLowerCase().trim(),
-          });
-          if (
-              existingUser &&
-              String(existingUser._id) !== String(user._id)
-          ) {
-              return res.status(400).json({
-                  success: false,
-                  message: "Email already exists.",
-              });
-          }
-          
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.email = email.toLowerCase().trim();
-        await user.save();
-        res.status(200).json({
-            success: true,
-            message: "Profile updated successfully.",
-            user: {
-                id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                balance: user.balance,
-                currency: user.currency,
-                role: user.role,
-                avatar: user.avatar,
-                isVerified: user.isVerified,
-                createdAt: user.createdAt,
-            },
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Server Error",
-        });
+  try {
+    const { firstName, lastName, email } = req.body;
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
     }
+    const normalizedEmail = email?.trim().toLowerCase();
+    if (
+      normalizedEmail &&
+      normalizedEmail !== user.email
+    ) {
+      const existingUser = await User.findOne({
+        email: normalizedEmail,
+        _id: { $ne: user._id },
+      });
+      if (existingUser) {
+        return res.status(400).json({
+          message: "An account with this email already exists.",
+        });
+      }
+      user.email = normalizedEmail;
+    }
+    if (firstName !== undefined) {
+      user.firstName = firstName.trim();
+    }
+    if (lastName !== undefined) {
+      user.lastName = lastName.trim();
+    }
+    await user.save();
+    res.status(200).json({
+      message: "Profile updated successfully.",
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        balance: user.balance,
+        currency: user.currency,
+        role: user.role,
+        avatar: user.avatar,
+        isVerified: user.isVerified,
+        createdAt: user.createdAt,
+        lastLogin: user.lastLogin,
+        passwordUpdatedAt: user.passwordUpdatedAt,
+        pinUpdatedAt: user.pinUpdatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("Profile update error:", error);
+    res.status(500).json({
+      message: "Unable to update profile.",
+    });
+  }
 };
 export const changePassword = async (req, res) => {
     try {
