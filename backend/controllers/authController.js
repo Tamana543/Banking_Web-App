@@ -1,102 +1,24 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
-export const registerUser = async (req,res)=>{
-     try {
-          const {firstName,lastName,email,password,pin} = req.body;
-          // passwrd hash generator
-          const hashedPassword = await bcrypt.hash(password,10) ;
-           const hashedPin = await bcrypt.hash(String(pin), 12);
-          // User Creation 
-          const user = await User.create({
-               firstName, 
-               lastName,
-               email, 
-               password: hashedPassword,
-               pin : hashedPin,
-          })
-          const token = generateToken(user._id)
-          res.status(201).json({
-               success : true,
-               message : "Account created successfully.",
-               token,
-               user : {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    balance: user.balance,
-                    currency: user.currency,
-                    role: user.role,
-                    avatar: user.avatar,
-                    isVerified: user.isVerified,
-                    createdAt:user.createdAt,
-                    lastLogin:user.lastLogin,
-                    passwordUpdatedAt:user.passwordUpdatedAt,
-                    pinUpdatedAt:user.pinUpdatedAt,
-               },
-          });
-     } catch (error) {
-          console.error(`error from registerUser ${error}`)
-          res.status(500).json({
-          success: false,
-          message: "Server Error",
-    });
-     }
-}
-export const loginUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    // Check for missing fields
-    if (!email || !password) {
+    const { firstName, lastName, email, password, pin, } = req.body;
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = await User.findOne({
+      email: normalizedEmail,
+    });
+    if (existingUser) {
       return res.status(400).json({
-        success: false,
-        message: "Email and password are required.",
+        message: "An account with this email already exists.",
       });
     }
-    // Find user
-   const user = await User.findOne({
-        email: email.toLowerCase().trim(),
-    }).select("+password");
-    if (user && user.isLocked) {
-      return res.status(403).json({
-        success: false,
-        message:
-          "Your account has been locked after multiple failed login attempts.",
-  });
-}
-    if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password.",
-            });
-            }
-            // Compare password
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-            user.failedLoginAttempts += 1;
-            if (user.failedLoginAttempts >= 5) {
-                user.isLocked = true;
-            }
-            user.lastLogin = new Date();
-            await user.save();
-            return res.status(401).json({
-                success: false,
-                message: user.isLocked
-                ? "Your account has been locked after 5 failed login attempts."
-                : "Invalid email or password.",
-                lastLogin: user.lastLogin,
-            });
-        }
-    // Generate JWT
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPin = await bcrypt.hash(String(pin), 12);
+    const user = await User.create({ firstName, lastName, email: normalizedEmail, password: hashedPassword, pin: hashedPin, });
     const token = generateToken(user._id);
-    user.failedLoginAttempts = 0;
-    user.isLocked = false;
-    user.lastLogin = new Date()
-    await user.save();
-    // Send response
-    res.status(200).json({
-      success: true,
+    res.status(201).json({
+      message: "Registration successful.",
       token,
       user: {
         id: user._id,
@@ -106,19 +28,91 @@ export const loginUser = async (req, res) => {
         balance: user.balance,
         currency: user.currency,
         role: user.role,
-        avatar:user.avatar,
-        isVerified:user.isVerified,
-        createdAt:user.createdAt,
+        avatar: user.avatar,
+        isVerified: user.isVerified,
+        createdAt: user.createdAt,
         lastLogin: user.lastLogin,
         passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt
+        pinUpdatedAt: user.pinUpdatedAt,
       },
     });
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("Registration error:", error);
     res.status(500).json({
-      success: false,
-      message: "Server error.",
+      message: "Registration failed.",
+    });
+  }
+};
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required.",
+      });
+    }
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await User.findOne({
+      email: normalizedEmail,
+    }).select("+password");
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+    if (user.isLocked) {
+      return res.status(403).json({
+        message: "Your account is temporarily locked. Please try again later.",
+      });
+    }
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
+    if (!isMatch) {
+      user.failedLoginAttempts += 1;
+      if (user.failedLoginAttempts >= 5) {
+        user.isLocked = true;
+      }
+      await user.save();
+      if (user.isLocked) {
+        return res.status(403).json({
+          message:
+            "Too many failed login attempts. Your account has been locked.",
+        });
+      }
+      return res.status(401).json({
+        message: "Invalid email or password.",
+      });
+    }
+    user.failedLoginAttempts = 0;
+    user.isLocked = false;
+    user.lastLogin = new Date();
+    await user.save();
+    const token = generateToken(user._id);
+    res.status(200).json({
+      message: "Login successful.",
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        balance: user.balance,
+        currency: user.currency,
+        role: user.role,
+        avatar: user.avatar,
+        isVerified: user.isVerified,
+        createdAt: user.createdAt,
+        lastLogin: user.lastLogin,
+        passwordUpdatedAt: user.passwordUpdatedAt,
+        pinUpdatedAt: user.pinUpdatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({
+      message: "Login failed.",
     });
   }
 };

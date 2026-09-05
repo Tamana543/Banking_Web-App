@@ -146,7 +146,7 @@ Phase 12 — Security & Authentication
 * Audit authentication errors
 12.2 Session & Token Management
 * Session management
-* JWT expiration
+* JWT expiration  ✔️
 * Expired-token handling
 * Automatic logout
 * Invalid-token handling
