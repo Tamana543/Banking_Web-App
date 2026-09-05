@@ -118,66 +118,62 @@ export const loginUser = async (req, res) => {
 };
 // Logic : the request okay (valid from JWT side) ? success : 401 Unauthorized
 export const getCurrentUser = async (req, res) => {
-    try {
-        const user = await User.findById(req.user._id);
-        if (!user) {
-            return res.status(404).json({
-                success:false,
-                message:"User not found.",
-            });
-        }
-        res.status(200).json({
-            success:true,
-            user:{
-                id:user._id,
-                firstName:user.firstName,
-                lastName:user.lastName,
-                email:user.email,
-                balance:user.balance,
-                currency:user.currency,
-                role:user.role,
-                avatar:user.avatar,
-                isVerified:user.isVerified,
-                createdAt:user.createdAt,
-                lastLogin: user.lastLogin,
-                lastLogin:user.lastLogin,
-                passwordUpdatedAt:user.passwordUpdatedAt,
-                pinUpdatedAt:user.pinUpdatedAt
-            }
-        });
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
     }
-    catch(error){
-        console.error(error);
-        res.status(500).json({
-            success:false,
-            message:"Server error.",
-        });
-    }
+    res.status(200).json({
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        balance: user.balance,
+        currency: user.currency,
+        role: user.role,
+        avatar: user.avatar,
+        isVerified: user.isVerified,
+        createdAt: user.createdAt,
+        lastLogin: user.lastLogin,
+        passwordUpdatedAt: user.passwordUpdatedAt,
+        pinUpdatedAt: user.pinUpdatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("Get current user error:", error);
+    res.status(500).json({
+      message: "Unable to retrieve user information.",
+    });
+  }
 };
 export const uploadAvatar = async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({
-                success: false,
-                message: "Please choose an image.",
-            });
-        }
-        const user = await User.findById(req.user._id);
-        const avatarPath = `/uploads/avatars/${req.file.filename}`;
-        user.avatar = avatarPath;
-        await user.save();
-        res.status(200).json({
-            success: true,
-            message: "Profile photo updated.",
-            avatar: avatarPath,
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Avatar upload failed.",
-        });
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "No avatar file was uploaded.",
+      });
     }
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    user.avatar = `/uploads/${req.file.filename}`;
+    await user.save();
+    res.status(200).json({
+      message: "Avatar updated successfully.",
+      avatar: user.avatar,
+    });
+  } catch (error) {
+    console.error("Avatar upload error:", error);
+    res.status(500).json({
+      message: "Unable to update avatar.",
+    });
+  }
 };
 export const updateProfile = async (req, res) => {
     try {
