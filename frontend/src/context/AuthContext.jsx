@@ -3,8 +3,11 @@ const AuthContext = createContext();
 const getTokenExpiration = (jwtToken) => {
   try {
     const payload = JSON.parse(atob(jwtToken.split(".")[1]));
-    return payload.exp ? payload.exp * 1000 : null;
-  } catch (error) {
+    if (!payload.exp) {
+      return null;
+    }
+    return payload.exp * 1000;
+  } catch {
     return null;
   }
 };
@@ -61,7 +64,7 @@ export function AuthProvider({ children }) {
       setUser(parsedUser);
       setToken(storedToken);
       startLogoutTimer(storedToken);
-    } catch (error) {
+    } catch {
       clearAuth();
     }
     setAuthLoading(false);
