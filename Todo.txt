@@ -152,10 +152,10 @@ Phase 12 — Security & Authentication
 * Invalid-token handling✔️
 * Client session cleanup ✔️
 12.3 Authorization
-* User authorization
-* User-owned resource protection
-* Prevent ID manipulation
-* Role-based access control
+* User authorization ✔️
+* User-owned resource protection✔️
+* Prevent ID manipulation✔️ 
+* Role-based access control (start from here )
 * User role
 * Admin role
 * Admin-only API routes
