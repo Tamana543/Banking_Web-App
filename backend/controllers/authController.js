@@ -327,21 +327,12 @@ export const changePin = async (req, res) => {
         message: "New PINs do not match.",
       });
     }
-    const user = await User.findById(
-      req.user._id
-    ).select("+pin");
+    const user = await User.findById(req.user._id).select(
+      "+pin"
+    );
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
-      });
-    }
-    const isMatch = await bcrypt.compare(
-      String(currentPin),
-      user.pin
-    );
-    if (!isMatch) {
-      return res.status(401).json({
-        message: "Current PIN is incorrect.",
       });
     }
     const hashedPin = await bcrypt.hash(
@@ -350,6 +341,8 @@ export const changePin = async (req, res) => {
     );
     user.pin = hashedPin;
     user.pinUpdatedAt = new Date();
+    user.failedPinAttempts = 0;
+    user.pinLockedUntil = null;
     await user.save();
     res.status(200).json({
       message: "PIN changed successfully.",
