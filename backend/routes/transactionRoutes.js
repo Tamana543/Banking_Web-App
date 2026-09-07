@@ -1,12 +1,13 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import verifyPin from "../middleware/pinMiddleware.js";
+import pinRateLimiter from "../middleware/pinRateLimiter.js";
 import { depositMoney, getTransactions, transferMoney, withdrawMoney, applyLoan, addMoneyToSavingsGoal, } from "../controllers/transactionController.js";
 const router = express.Router();
 router.post( "/deposit", protect, depositMoney );
-router.post( "/transfer", protect, verifyPin(), transferMoney );
-router.post( "/withdraw", protect, verifyPin(), withdrawMoney );
-router.post( "/loan", protect, verifyPin(), applyLoan );
-router.post( "/savings-contribution", protect, verifyPin(), addMoneyToSavingsGoal );
+router.post( "/transfer", protect, pinRateLimiter, verifyPin(), transferMoney );
+router.post( "/withdraw", protect, pinRateLimiter, verifyPin(), withdrawMoney );
+router.post( "/loan", protect, pinRateLimiter, verifyPin(), applyLoan );
+router.post( "/savings-contribution", protect, pinRateLimiter, verifyPin(), addMoneyToSavingsGoal );
 router.get( "/", protect, getTransactions );
 export default router;
