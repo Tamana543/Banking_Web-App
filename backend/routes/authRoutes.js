@@ -1,13 +1,14 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import verifyPin from "../middleware/pinMiddleware.js";
+import pinRateLimiter from "../middleware/pinRateLimiter.js";
 import { registerUser, loginUser, getCurrentUser, uploadAvatar, updateProfile, changePassword, changePin, } from "../controllers/authController.js";
 const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get( "/me", protect, getCurrentUser );
 router.post( "/avatar", protect, uploadAvatar );
-router.put( "/profile", protect, updateProfile);
+router.put( "/profile", protect, updateProfile );
 router.put( "/change-password", protect, changePassword );
-router.put( "/change-pin", protect, verifyPin("currentPin"), changePin );
+router.put( "/change-pin", protect, pinRateLimiter, verifyPin("currentPin"), changePin );
 export default router;
