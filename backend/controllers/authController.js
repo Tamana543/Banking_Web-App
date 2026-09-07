@@ -4,6 +4,11 @@ import generateToken from "../utils/generateToken.js";
 export const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password, pin, } = req.body;
+    if (!pin || !/^\d{4}$/.test(String(pin))) {
+      return res.status(400).json({
+        message: "PIN must contain exactly 4 digits.",
+      });
+    }
     const normalizedEmail = email.trim().toLowerCase();
     const existingUser = await User.findOne({
       email: normalizedEmail,
@@ -13,8 +18,14 @@ export const registerUser = async (req, res) => {
         message: "An account with this email already exists.",
       });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedPin = await bcrypt.hash(String(pin), 12);
+    const hashedPassword = await bcrypt.hash(
+      password,
+      10
+    );
+    const hashedPin = await bcrypt.hash(
+      String(pin),
+      12
+    );
     const user = await User.create({ firstName, lastName, email: normalizedEmail, password: hashedPassword, pin: hashedPin, });
     const token = generateToken(user._id);
     res.status(201).json({
@@ -62,7 +73,8 @@ export const loginUser = async (req, res) => {
     }
     if (user.isLocked) {
       return res.status(403).json({
-        message: "Your account is temporarily locked. Please try again later.",
+        message:
+          "Your account is temporarily locked. Please try again later.",
       });
     }
     const isMatch = await bcrypt.compare(
@@ -177,7 +189,7 @@ export const uploadAvatar = async (req, res) => {
 };
 export const updateProfile = async (req, res) => {
   try {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email, } = req.body;
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).json({
@@ -195,7 +207,8 @@ export const updateProfile = async (req, res) => {
       });
       if (existingUser) {
         return res.status(400).json({
-          message: "An account with this email already exists.",
+          message:
+            "An account with this email already exists.",
         });
       }
       user.email = normalizedEmail;
@@ -247,12 +260,13 @@ export const changePassword = async (req, res) => {
     }
     if (newPassword.length < 6) {
       return res.status(400).json({
-        message: "Password must be at least 6 characters long.",
+        message:
+          "Password must be at least 6 characters long.",
       });
     }
-    const user = await User.findById(req.user._id).select(
-      "+password"
-    );
+    const user = await User.findById(
+      req.user._id
+    ).select("+password");
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
@@ -287,9 +301,25 @@ export const changePassword = async (req, res) => {
 export const changePin = async (req, res) => {
   try {
     const { currentPin, newPin, confirmPin, } = req.body;
-    if (!currentPin || !newPin || !confirmPin) {
+    if ( !currentPin || !newPin || !confirmPin ) {
       return res.status(400).json({
         message: "All PIN fields are required.",
+      });
+    }
+    if (
+      !/^\d{4}$/.test(String(currentPin))
+    ) {
+      return res.status(400).json({
+        message:
+          "Current PIN must contain exactly 4 digits.",
+      });
+    }
+    if (
+      !/^\d{4}$/.test(String(newPin))
+    ) {
+      return res.status(400).json({
+        message:
+          "PIN must contain exactly 4 digits.",
       });
     }
     if (newPin !== confirmPin) {
@@ -297,14 +327,9 @@ export const changePin = async (req, res) => {
         message: "New PINs do not match.",
       });
     }
-    if (!/^\d{4}$/.test(String(newPin))) {
-      return res.status(400).json({
-        message: "PIN must contain exactly 4 digits.",
-      });
-    }
-    const user = await User.findById(req.user._id).select(
-      "+pin"
-    );
+    const user = await User.findById(
+      req.user._id
+    ).select("+pin");
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
