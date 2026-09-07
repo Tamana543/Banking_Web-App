@@ -155,7 +155,7 @@ Phase 12 — Security & Authentication
 * User authorization ✔️
 * User-owned resource protection✔️
 * Prevent ID manipulation✔️ 
-12.4 PIN Security
+12.4 PIN Security (Test the pin )
 * PIN validation
 * Secure PIN storage
 * Server-side PIN verification
