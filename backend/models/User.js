@@ -61,6 +61,14 @@ const userSchema = new mongoose.Schema(
                type: Date,
                default: null,
           },
+          failedPinAttempts: {
+               type: Number,
+               default: 0,
+          },
+          pinLockedUntil: {
+               type: Date,
+               default: null,
+          },
           lastLogin: {
                type: Date,
                default: null,
