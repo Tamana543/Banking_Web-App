@@ -155,11 +155,6 @@ Phase 12 — Security & Authentication
 * User authorization ✔️
 * User-owned resource protection✔️
 * Prevent ID manipulation✔️ 
-* Role-based access control (start from here )
-* User role
-* Admin role
-* Admin-only API routes
-* Admin-only frontend routes
 12.4 PIN Security
 * PIN validation
 * Secure PIN storage
@@ -216,6 +211,11 @@ phase 13 — Admin Dashboard
 * Dashboard statistics
 * Platform analytics
 * Loan repayment tracking
+* Role-based access control (start from here )
+* User role
+* Admin role
+* Admin-only API routes
+* Admin-only frontend routes
 
 phase 14 — Export Features
 * Download account statement
