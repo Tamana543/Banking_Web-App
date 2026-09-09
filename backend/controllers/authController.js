@@ -1,21 +1,63 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import { validatePassword } from "../utils/passwordPolicy.js";
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_LOCK_DURATION = 15 * 60 * 1000;
+const publicUser = (user) => ({
+  id: user._id,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  email: user.email,
+  balance: user.balance,
+  currency: user.currency,
+  role: user.role,
+  avatar: user.avatar,
+  isVerified: user.isVerified,
+  createdAt: user.createdAt,
+  lastLogin: user.lastLogin,
+  passwordUpdatedAt: user.passwordUpdatedAt,
+  pinUpdatedAt: user.pinUpdatedAt,
+});
+const normalizeEmail = (email) =>
+  email.trim().toLowerCase();
+const isValidEmail = (email) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 export const registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, pin, } = req.body;
-    if (!pin || !/^\d{4}$/.test(String(pin))) {
+    const { firstName, lastName, email, password, confirmPassword, pin, } = req.body;
+    if ( typeof firstName !== "string" || !firstName.trim() || typeof lastName !== "string" || !lastName.trim() || typeof email !== "string" || !isValidEmail(email) ) {
+      return res.status(400).json({
+        message: "Please provide valid registration details.",
+      });
+    }
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      return res.status(400).json({
+        message: passwordError,
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        message: "Passwords do not match.",
+      });
+    }
+    if (
+      typeof pin !== "string" ||
+      !/^\d{4}$/.test(pin)
+    ) {
       return res.status(400).json({
         message: "PIN must contain exactly 4 digits.",
       });
     }
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = normalizeEmail(email);
     const existingUser = await User.findOne({
       email: normalizedEmail,
     });
     if (existingUser) {
       return res.status(400).json({
-        message: "An account with this email already exists.",
+        message:
+          "An account with this email already exists.",
       });
     }
     const hashedPassword = await bcrypt.hash(
@@ -23,33 +65,31 @@ export const registerUser = async (req, res) => {
       10
     );
     const hashedPin = await bcrypt.hash(
-      String(pin),
+      pin,
       12
     );
-    const user = await User.create({ firstName, lastName, email: normalizedEmail, password: hashedPassword, pin: hashedPin, });
-    const token = generateToken(user._id);
-    res.status(201).json({
+    const user = await User.create({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: normalizedEmail,
+      password: hashedPassword,
+      pin: hashedPin,
+    });
+    const token = generateToken(user);
+    return res.status(201).json({
       message: "Registration successful.",
       token,
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        balance: user.balance,
-        currency: user.currency,
-        role: user.role,
-        avatar: user.avatar,
-        isVerified: user.isVerified,
-        createdAt: user.createdAt,
-        lastLogin: user.lastLogin,
-        passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message:
+          "An account with this email already exists.",
+      });
+    }
     console.error("Registration error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Registration failed.",
     });
   }
