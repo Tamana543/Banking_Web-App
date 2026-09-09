@@ -164,7 +164,7 @@ Phase 12 — Security & Authentication
 * Rate limiting ✔️
 * frontend pin integration ✔️
 12.5 Password Security 
-* Secure password storage audit
+* Secure password storage audit (Avator func- authController )
 * Password response protection
 * Password-change security
 * Password validation
