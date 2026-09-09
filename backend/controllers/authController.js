@@ -97,25 +97,37 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
+    if ( typeof email !== "string" || !email.trim() || typeof password !== "string" || !password ) {
       return res.status(400).json({
         message: "Email and password are required.",
       });
     }
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = normalizeEmail(email);
     const user = await User.findOne({
       email: normalizedEmail,
-    }).select("+password");
+    }).select("+password +sessionVersion");
     if (!user) {
       return res.status(401).json({
         message: "Invalid email or password.",
       });
     }
-    if (user.isLocked) {
+    const now = new Date();
+    if ( user.isLocked && user.lockUntil && user.lockUntil > now ) {
       return res.status(403).json({
         message:
           "Your account is temporarily locked. Please try again later.",
       });
+    }
+    if ( user.isLocked && user.lockUntil && user.lockUntil <= now ) {
+      user.isLocked = false;
+      user.lockUntil = null;
+      user.failedLoginAttempts = 0;
+      await user.save();
+    }
+    if (user.isLocked && !user.lockUntil) {
+      user.isLocked = false;
+      user.failedLoginAttempts = 0;
+      await user.save();
     }
     const isMatch = await bcrypt.compare(
       password,
@@ -123,14 +135,17 @@ export const loginUser = async (req, res) => {
     );
     if (!isMatch) {
       user.failedLoginAttempts += 1;
-      if (user.failedLoginAttempts >= 5) {
+      if ( user.failedLoginAttempts >= MAX_LOGIN_ATTEMPTS ) {
         user.isLocked = true;
+        user.lockUntil = new Date(
+          Date.now() + LOGIN_LOCK_DURATION
+        );
       }
       await user.save();
       if (user.isLocked) {
         return res.status(403).json({
           message:
-            "Too many failed login attempts. Your account has been locked.",
+            "Too many failed login attempts. Please try again later.",
         });
       }
       return res.status(401).json({
@@ -139,31 +154,18 @@ export const loginUser = async (req, res) => {
     }
     user.failedLoginAttempts = 0;
     user.isLocked = false;
+    user.lockUntil = null;
     user.lastLogin = new Date();
     await user.save();
-    const token = generateToken(user._id);
-    res.status(200).json({
+    const token = generateToken(user);
+    return res.status(200).json({
       message: "Login successful.",
       token,
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        balance: user.balance,
-        currency: user.currency,
-        role: user.role,
-        avatar: user.avatar,
-        isVerified: user.isVerified,
-        createdAt: user.createdAt,
-        lastLogin: user.lastLogin,
-        passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("Login error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Login failed.",
     });
   }
@@ -177,27 +179,14 @@ export const getCurrentUser = async (req, res) => {
         message: "User not found.",
       });
     }
-    res.status(200).json({
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        balance: user.balance,
-        currency: user.currency,
-        role: user.role,
-        avatar: user.avatar,
-        isVerified: user.isVerified,
-        createdAt: user.createdAt,
-        lastLogin: user.lastLogin,
-        passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt,
-      },
+    return res.status(200).json({
+      user: publicUser(user),
     });
   } catch (error) {
     console.error("Get current user error:", error);
-    res.status(500).json({
-      message: "Unable to retrieve user information.",
+    return res.status(500).json({
+      message:
+        "Unable to retrieve user information.",
     });
   }
 };
