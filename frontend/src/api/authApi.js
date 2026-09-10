@@ -1,124 +1,131 @@
 const API_URL = "http://localhost:5000/api/auth";
-export const loginUser = async (email, password) => {
-  const response = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
+const getToken = () =>
+  localStorage.getItem("token");
+const parseResponse = async (response,fallbackMessage) => {
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Login failed");
+    throw new Error(
+      data.message || fallbackMessage
+    );
   }
   return data;
 };
-export const registerUser = async (userData) => {
-  const response = await fetch(`${API_URL}/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
-  const data = await response.json();
-  if (!response.ok) {
-  console.log("Registration response:", data);
-  alert(JSON.stringify(data, null, 2));
-  throw new Error(data.message || "Registration failed");
-}
-  return data;
+export const loginUser = async ( email, password ) => {
+    const response = await fetch(
+      `${API_URL}/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
+    return parseResponse(
+      response,
+      "Login failed."
+    );
 };
-export const getCurrentUser = async () => {
-  const token =
-    localStorage.getItem("token");
-  const response = await fetch(
-    `${API_URL}/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+export const registerUser = async ( userData ) => {
+  const response = await fetch( `${API_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", },
+      body: JSON.stringify(userData),
     }
   );
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-  return data;
+  return parseResponse(
+    response,
+    "Registration failed."
+  );
 };
-export const uploadAvatar = async (file) => {
-    const formData = new FormData();
-    formData.append("avatar", file);
+export const getCurrentUser = async () => {
     const response = await fetch(
-        "http://localhost:5000/api/auth/avatar",
-        {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: formData,
-        }
+      `${API_URL}/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
     );
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.message);
+    return parseResponse(
+      response,
+      "Unable to retrieve user information."
+    );
+  };
+export const uploadAvatar = async (
+  file
+) => {
+  const formData = new FormData();
+  formData.append("avatar", file);
+  const response = await fetch(
+    `${API_URL}/avatar`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: formData,
     }
-    return data;
+  );
+  return parseResponse(
+    response,
+    "Unable to upload avatar."
+  );
 };
-export const updateProfile = async (profileData) => {
-    const response = await fetch(
-        `${API_URL}/profile`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(profileData),
-        }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.message);
+export const updateProfile = async (
+  profileData
+) => {
+  const response = await fetch(
+    `${API_URL}/profile`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type":
+          "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(
+        profileData
+      ),
     }
-    return data;
+  );
+  return parseResponse(
+    response,
+    "Unable to update profile."
+  );
 };
-export const changePassword = async (passwordData) => {
-    const response = await fetch(
-        `${API_URL}/change-password`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(passwordData),
-        }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.message);
+export const changePassword = async ( passwordData ) => {
+  const response = await fetch(
+    `${API_URL}/change-password`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type":
+          "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify(
+        passwordData
+      ),
     }
-    return data;
+  );
+  return parseResponse(
+    response,
+    "Unable to change password."
+  );
 };
-export const changePin = async (pinData) => {
-    const response = await fetch(
-        `${API_URL}/change-pin`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(pinData),
-        }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.message);
+export const changePin = async ( pinData ) => {
+  const response = await fetch(
+    `${API_URL}/change-pin`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${getToken()}`, },
+      body: JSON.stringify(pinData),
     }
-    return data;
+  );
+  return parseResponse( response, "Unable to change PIN." );
 };
