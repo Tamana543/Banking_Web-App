@@ -292,9 +292,16 @@ export const updateProfile = async (req, res) => {
 export const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword, confirmPassword, } = req.body;
-    if ( !currentPassword || !newPassword || !confirmPassword ) {
+    if ( typeof currentPassword !== "string" || !currentPassword || typeof newPassword !== "string" || typeof confirmPassword !== "string" ) {
       return res.status(400).json({
         message: "All password fields are required.",
+      });
+    }
+    const passwordError =
+      validatePassword(newPassword);
+    if (passwordError) {
+      return res.status(400).json({
+        message: passwordError,
       });
     }
     if (newPassword !== confirmPassword) {
@@ -302,15 +309,9 @@ export const changePassword = async (req, res) => {
         message: "New passwords do not match.",
       });
     }
-    if (newPassword.length < 6) {
-      return res.status(400).json({
-        message:
-          "Password must be at least 6 characters long.",
-      });
-    }
     const user = await User.findById(
       req.user._id
-    ).select("+password");
+    ).select("+password +sessionVersion");
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
@@ -325,19 +326,31 @@ export const changePassword = async (req, res) => {
         message: "Current password is incorrect.",
       });
     }
-    const hashedPassword = await bcrypt.hash(
+    const isSamePassword = await bcrypt.compare(
+      newPassword,
+      user.password
+    );
+    if (isSamePassword) {
+      return res.status(400).json({
+        message:
+          "New password must be different from the current password.",
+      });
+    }
+    user.password = await bcrypt.hash(
       newPassword,
       10
     );
-    user.password = hashedPassword;
     user.passwordUpdatedAt = new Date();
+    user.sessionVersion =
+      (user.sessionVersion ?? 0) + 1;
     await user.save();
-    res.status(200).json({
-      message: "Password changed successfully.",
+    return res.status(200).json({
+      message:
+        "Password changed successfully. Please log in again.",
     });
   } catch (error) {
     console.error("Change password error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unable to change password.",
     });
   }
@@ -371,9 +384,9 @@ export const changePin = async (req, res) => {
         message: "New PINs do not match.",
       });
     }
-    const user = await User.findById(req.user._id).select(
-      "+pin"
-    );
+    const user = await User.findById(
+      req.user._id
+    ).select("+pin");
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
@@ -388,12 +401,12 @@ export const changePin = async (req, res) => {
     user.failedPinAttempts = 0;
     user.pinLockedUntil = null;
     await user.save();
-    res.status(200).json({
+    return res.status(200).json({
       message: "PIN changed successfully.",
     });
   } catch (error) {
     console.error("Change PIN error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unable to change PIN.",
     });
   }
