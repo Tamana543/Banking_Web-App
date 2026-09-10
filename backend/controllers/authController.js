@@ -205,71 +205,86 @@ export const uploadAvatar = async (req, res) => {
     }
     user.avatar = `/uploads/${req.file.filename}`;
     await user.save();
-    res.status(200).json({
+    return res.status(200).json({
       message: "Avatar updated successfully.",
       avatar: user.avatar,
     });
   } catch (error) {
     console.error("Avatar upload error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unable to update avatar.",
     });
   }
 };
 export const updateProfile = async (req, res) => {
   try {
-    const { firstName, lastName, email, } = req.body;
+    const { firstName, lastName, email } = req.body;
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).json({
         message: "User not found.",
       });
     }
-    const normalizedEmail = email?.trim().toLowerCase();
-    if (
-      normalizedEmail &&
-      normalizedEmail !== user.email
-    ) {
-      const existingUser = await User.findOne({
-        email: normalizedEmail,
-        _id: { $ne: user._id },
-      });
-      if (existingUser) {
+    if (email !== undefined) {
+      if (
+        typeof email !== "string" ||
+        !isValidEmail(email)
+      ) {
         return res.status(400).json({
-          message:
-            "An account with this email already exists.",
+          message: "Please enter a valid email.",
         });
       }
-      user.email = normalizedEmail;
+      const normalizedEmail = normalizeEmail(email);
+      if (normalizedEmail !== user.email) {
+        const existingUser = await User.findOne({
+          email: normalizedEmail,
+          _id: { $ne: user._id },
+        });
+        if (existingUser) {
+          return res.status(400).json({
+            message:
+              "An account with this email already exists.",
+          });
+        }
+        user.email = normalizedEmail;
+      }
     }
     if (firstName !== undefined) {
+      if (
+        typeof firstName !== "string" ||
+        !firstName.trim()
+      ) {
+        return res.status(400).json({
+          message: "First name is required.",
+        });
+      }
       user.firstName = firstName.trim();
     }
     if (lastName !== undefined) {
+      if (
+        typeof lastName !== "string" ||
+        !lastName.trim()
+      ) {
+        return res.status(400).json({
+          message: "Last name is required.",
+        });
+      }
       user.lastName = lastName.trim();
     }
     await user.save();
-    res.status(200).json({
+    return res.status(200).json({
       message: "Profile updated successfully.",
-      user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        balance: user.balance,
-        currency: user.currency,
-        role: user.role,
-        avatar: user.avatar,
-        isVerified: user.isVerified,
-        createdAt: user.createdAt,
-        lastLogin: user.lastLogin,
-        passwordUpdatedAt: user.passwordUpdatedAt,
-        pinUpdatedAt: user.pinUpdatedAt,
-      },
+      user: publicUser(user),
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message:
+          "An account with this email already exists.",
+      });
+    }
     console.error("Profile update error:", error);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unable to update profile.",
     });
   }
