@@ -171,9 +171,9 @@ Phase 12 — Security & Authentication
 * Authentication error review✔️
 12.6 Logout Security
 * Fix browser Back button issue
-* Protected-route revalidation
-* Client token cleanup
-* Prevent authenticated UI restoration
+* Protected-route revalidation ✔️
+* Client token cleanup ✔️
+* Prevent authenticated UI restoration ✔️
 * Verify API rejection after logout
 12.7 API Security Hardening
 * Input validation
