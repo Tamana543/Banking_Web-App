@@ -1,23 +1,24 @@
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
+import { isValidPositiveAmount,isValidEmail,isValidText,isValidObjectId } from "../utils/inputValidation.js";
 export const depositMoney = async (req, res) => {
   try {
     const { amount } = req.body;
-    const amountNumber = Number(amount)
-    if (!amountNumber || amountNumber <= 0) {
+    if (!isValidPositiveAmount(amount)) {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid amount.",
       });
     }
+    const amountNumber = Number(amount);
     const user = await User.findById(req.user._id);
-    user.balance += Number(amount);
+    user.balance += amountNumber;
     await user.save();
     const transaction = await Transaction.create({
       user: user._id,
       type: "deposit",
-      amount,
+      amount : amountNumber,
       description: "Account Deposit",
       status: "completed",
     });
@@ -54,33 +55,21 @@ export const getTransactions = async (req,res)=>{
   }
 };
 export const transferMoney = async (req,res)=>{
-  /**
-   * Conditions for transfer : 
-   Sender must exist
-  Receiver must exist
-  Sender cannot transfer to themselves
-  Amount must be greater than 0
-  Sender must have enough balance
-  Deduct sender balance
-  Add receiver balance
-  Create sender transaction
-  Create receiver transaction
-   */
   try {
-    const { recipientEmail, amount } = req.body;
+   const { recipientEmail, amount } = req.body;
+    if (!isValidEmail(recipientEmail)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid recipient email.",
+      });
+    }
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid transfer amount.",
+      });
+    }
     const amountNumber = Number(amount);
-    if (!recipientEmail || !amountNumber) {
-      return res.status(400).json({
-        success: false,
-        message: "Recipient email and amount are required.",
-      });
-    }
-    if (amountNumber <= 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Amount must be greater than zero.",
-      });
-    }
      const sender = await User.findById(req.user._id);
     const receiver = await User.findOne({
       email: recipientEmail.toLowerCase().trim(),
@@ -145,13 +134,13 @@ export const transferMoney = async (req,res)=>{
 export const withdrawMoney = async(req,res)=>{
   try {
      const { amount } = req.body;
-    const amountNumber = Number(amount);
-    if (!amountNumber || amountNumber <= 0) {
+    if (!isValidPositiveAmount(amount)) {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid amount.",
       });
     }
+    const amountNumber = Number(amount);
       const user = await User.findById(req.user._id);
     if (user.balance < amountNumber) {
       return res.status(400).json({
