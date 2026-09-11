@@ -176,7 +176,7 @@ Phase 12 — Security & Authentication
 * Prevent authenticated UI restoration ✔️
 * Verify API rejection after logout ✔️
 12.7 API Security Hardening
-* Input validation
+* Input validation (continue with transactionController file loan validation 2.4)
 * Rate limiting
 * CORS review
 * Security headers
