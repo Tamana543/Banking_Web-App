@@ -102,7 +102,7 @@ phase 9 — Profile
 * Display user information ✔️
 * Member since ✔️
 * Profile picture ✔️
-* Upload avatar ✔️
+* Upload avatar ✔️ ( see 12.10 — currently broken, route has no multer middleware)
 * Edit profile ✔️
 * Change password ✔️
 * Success notifications ✔️
@@ -120,7 +120,7 @@ phase 10 — Notifications & UX
 
 Phase 10.5
 * settings page (Notifications and Banking performance will be added next ) ✔️
-* remove duplicated code ✔️
+* remove duplicated code ✔️ ( see 12.10/12.11 — audit found several leftover duplicate files, not fully done)
 * reusable components ✔️ 
 * improve UI consistency ✔️  
 * animations ✔️ 
@@ -159,7 +159,7 @@ Phase 12 — Security & Authentication
 * PIN validation ✔️
 * Secure PIN storage ✔️ 
 * Server-side PIN verification ✔️ 
-* Sensitive-action PIN protection ✔️
+* Sensitive-action PIN protection ✔️ ( see 12.10 — one route breaks this: savings-goals/:id/contribute has no PIN check)
 * Failed-attempt protection ✔️ 
 * Rate limiting ✔️
 * frontend pin integration ✔️
@@ -174,24 +174,24 @@ Phase 12 — Security & Authentication
 * Protected-route revalidation ✔️
 * Client token cleanup ✔️
 * Prevent authenticated UI restoration ✔️
-* Verify API rejection after logout ✔️
+* Verify API rejection after logout ✔️ ( see 12.10 — logout doesn't bump sessionVersion, so a captured token still works after "logout" until it expires)
 12.7 API Security Hardening
-* Input validation (continue with transactionController file loan validation 2.4)
+* Input validation (continue with transactionController file loan validation 2.4) — see 12.10 for the specific bug found (applyLoan NaN exploit)
 * Rate limiting
 * CORS review
 * Security headers
 * Error exposure review
 * HTTP status-code review
-* Environment/secrets audit
+* Environment/secrets audit — see 12.10, .env is not in .gitignore
 12.8 Existing Feature Security Audit
-* Transactions
-* Transfers
-* Loans
-* Savings Goals
-* Savings Contributions
-* Profile
-* Password Change
-* PIN-protected actions
+* Transactions — done, see 12.10 for findings
+* Transfers — done, see 12.10 for findings
+* Loans — done, see 12.10 for findings
+* Savings Goals — done, see 12.10 for findings
+* Savings Contributions — done, see 12.10, critical exploit found
+* Profile — done, see 12.10 for findings
+* Password Change — done, no issues found
+* PIN-protected actions — done, see 12.10 for one gap found
 12.9 Security Testing
 * Test unauthorized API access
 * Test expired JWT
@@ -201,6 +201,44 @@ Phase 12 — Security & Authentication
 * Test invalid password
 * Test malformed requests
 * Test Admin/User permissions
+
+12.10 — Backend Fixes (from Claude code audit, Sept 2026)
+work through in this order — top of list first:
+
+*   Move "cors" from root package.json into backend/package.json (npm install cors --save inside backend/)
+*   Add .env (or backend/.env) to the root .gitignore — it is not excluded right now
+*   Rotate JWT_SECRET and MongoDB credentials, in case .env was ever committed to GitHub history before the .gitignore fix
+*   Fix free-money exploit: savingsGoalControllers.addSavingsContribution (route: POST /api/savings-goals/:id/contribute) never deducts user.balance and has no PIN check — either delete this route or rebuild it to match transactionController.addMoneyToSavingsGoal
+*   Fix applyLoan NaN bug: swap the inline amount check for isValidPositiveAmount(amount) — a non-numeric amount currently corrupts a user's balance to NaN permanently
+*   Add transaction atomicity (mongoose session/withTransaction, or guarded atomic $inc) to depositMoney, withdrawMoney, transferMoney, applyLoan, addMoneyToSavingsGoal — right now concurrent requests can bypass balance checks (race condition)
+*   Loans currently credit balance instantly at request time even though status is "pending" and the response says "Loan approved" — decide whether approval should gate the balance credit (ties into Phase 13 admin approval)
+*   Avatar upload is broken end-to-end: POST /api/auth/avatar has no multer middleware attached, so req.file is always undefined. Wire uploadMiddleware.js into the route, and consolidate with the correct logic already sitting unused in uploadController.js
+*   Delete middleware/protect.js — unused, weaker duplicate of authMiddleware.js (no sessionVersion check)
+*   Delete middleware/validateRegister.js — unused, and its password policy conflicts with the one actually in use (utils/passwordPolicy.js)
+*   Delete controllers/uploadController.js — unused duplicate of authController.uploadAvatar, has leftover console.logs
+*   If validateRegister.js is kept instead of deleted: add try/catch around the User.findOne call, and remove the console.log("Existing user:", existingUser) debug line
+*   Add a file size limit (limits: { fileSize }) to uploadMiddleware.js's multer config
+*   Change addMoneyToSavingsGoal's recorded transaction type from "withdrawal" to something savings-specific, so Analytics categories stay accurate
+*   Add a length cap to the loan purpose field (like isValidText's 500-char limit used elsewhere)
+*   Add min: 0 to User.balance in the schema as defense-in-depth
+*   Consider bumping sessionVersion on logout too (not just password change), so a captured/stolen token can't keep working after the user logs out
+
+12.11 — Frontend Fixes (from Claude code audit, Sept 2026)
+work through in this order — top of list first:
+
+*   Move "jspdf" and "qrcode" from root package.json into frontend/package.json (npm install jspdf qrcode --save inside frontend/)
+*   Fix folder-casing mismatch: components/Landing/ (capital L) vs. LandingPage.jsx's 8 imports from "../components/landing/..." (lowercase) — works locally on Windows/Mac, will fail to build on Vercel/Render's case-sensitive filesystem
+*   Fix Dashboard.jsx deposit/withdraw: useApiAction.execute only accepts a plain string message, not an { successMessage, onSuccess } object — right now the toast shows "[object Object]" and the balance/modal never refresh after a successful deposit or withdrawal
+*   Fix useTransactions.js: showToast.error(...) doesn't exist (showToast is a function, not an object) — every failed transaction load throws silently instead of showing an error toast
+*   Fix ReceiptModal.jsx: the on-screen "Recipient" row displays the amount instead of receipt.recipient (the downloaded PDF gets this right, only the on-screen modal is wrong)
+*   Fix StatsCards.jsx: the "Transactions" count is run through currency formatting (shows "$12.00" instead of "12"); also fix the "Total Deposits" card using a bare <> fragment instead of <h3> like its sibling cards
+*   Delete components/ProtectedRoute.jsx — unused duplicate of routes/ProtectedRoute.jsx (the one actually wired into AppRoutes.jsx)
+*   Delete components/common/AlertMessage.jsx — unused, superseded by the Toast system
+*   Consolidate the hardcoded http://localhost:5000 (appears in authApi.js, transactionApi.js, savingsGoalApi.js, Profile.jsx, DashboardHeader.jsx) into one shared API base URL / env var before deploying
+*   Fix typo "First me is required." → "First name is required." in Register.jsx
+*   Decide whether deleting a savings goal (which refunds balance) should require a PIN like every other balance-changing action
+*   index.html references /favicon.svg, which doesn't exist anywhere in the project — add a real favicon or fix the reference
+*   BalanceCard.jsx shows a hardcoded "+12.4% this month" and a fake card number as static placeholder data — fine for now, but flag before this is mistaken for real calculated data
 
 phase 13 — Admin Dashboard
 * Admin authentication
@@ -276,4 +314,4 @@ phase 19 — Real-Time Features
 * Online users indicator
 
 phase 20 — AgentAI
-* add your first AI agent 
+* add your first AI agent
