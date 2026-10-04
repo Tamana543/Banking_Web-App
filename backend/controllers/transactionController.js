@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
 import { isValidPositiveAmount,isValidEmail,isValidText,isValidObjectId } from "../utils/inputValidation.js";
 export const depositMoney = async (req, res) => {
+  const session = await mongoose.startSession();
   try {
     const { amount } = req.body;
     if (!isValidPositiveAmount(amount)) {
@@ -12,16 +14,23 @@ export const depositMoney = async (req, res) => {
       });
     }
     const amountNumber = Number(amount);
-    const user = await User.findById(req.user._id);
+    session.startTransaction();
+    const user = await User.findById(req.user._id).session(session);
     user.balance += amountNumber;
-    await user.save();
-    const transaction = await Transaction.create({
-      user: user._id,
-      type: "deposit",
-      amount : amountNumber,
-      description: "Account Deposit",
-      status: "completed",
-    });
+    await user.save({ session });
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "deposit",
+          amount: amountNumber,
+          description: "Account Deposit",
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
     res.status(200).json({
       success: true,
       message: "Deposit successful.",
@@ -29,11 +38,14 @@ export const depositMoney = async (req, res) => {
       transaction,
     });
   } catch (error) {
+    await session.abortTransaction();
     console.error("Deposit Error:", error);
     res.status(500).json({
       success: false,
       message: "Server error.",
     });
+  } finally {
+    session.endSession();
   }
 };
 export const getTransactions = async (req,res)=>{
