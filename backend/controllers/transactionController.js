@@ -254,10 +254,7 @@ export const applyLoan = async(req,res)=>{
                     "You already have an active loan.",
             });
         }
-        user.balance += amountNumber;
-        await user.save({ session });
-        const [transaction] =
-            await Transaction.create(
+                const [transaction] = await Transaction.create(
               [
                 {
                   user: userId,
@@ -269,9 +266,9 @@ export const applyLoan = async(req,res)=>{
               ],
               { session }
             );
-        await session.commitTransaction();
+                await session.commitTransaction();
         res.status(201).json({
-            message: "Loan approved.",
+            message: "Loan request submitted. It is pending admin approval.",
             transaction,
         });
 } catch (error) {

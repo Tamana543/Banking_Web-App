@@ -68,7 +68,7 @@ function Loan() {
           purpose,
           pin
         ),
-      "Loan approved successfully."
+      "Loan request submitted. It is pending admin approval."
     );
     if (!data) return;
     setLoanAmount("");
