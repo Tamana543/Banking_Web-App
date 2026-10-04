@@ -175,11 +175,12 @@ export const applyLoan = async(req,res)=>{
 try {
    const userId = req.user.id;
         const { amount, purpose } = req.body;
-        if (!amount || Number(amount) <= 0) {
+        if (!isValidPositiveAmount(amount)) {
             return res.status(400).json({
                 message: "Invalid loan amount.",
             });
         }
+        const amountNumber = Number(amount);
         if (!purpose || purpose.trim() === "") {
             return res.status(400).json({
                 message: "Loan purpose is required.",
@@ -192,8 +193,8 @@ try {
             });
         }
         // max loan two times greater than balance 
-        const maximumLoan = user.balance * 2;
-        if (amount > maximumLoan) {
+          const maximumLoan = user.balance * 2;
+          if (amountNumber > maximumLoan) {
             return res.status(400).json({
                 message:
                     `Maximum loan allowed is $${maximumLoan.toLocaleString()}.`,
@@ -212,13 +213,13 @@ try {
                     "You already have an active loan.",
             });
         }
-        user.balance += Number(amount);
+               user.balance += amountNumber;
         await user.save();
         const transaction =
             await Transaction.create({
                 user: userId,
                 type: "loan",
-                amount,
+                amount: amountNumber,
                 description: purpose,
                 status: "pending",
             });
