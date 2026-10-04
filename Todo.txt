@@ -207,7 +207,7 @@ work through in this order — top of list first:
 
 *   Move "cors" from root package.json into backend/package.json (npm install cors --save inside backend/) ✔️  
 *   Add .env (or backend/.env) to the root .gitignore — it is not excluded right now ✔️
-*   Rotate JWT_SECRET and MongoDB credentials, in case .env was ever committed to GitHub history before the .gitignore fix
+*   Rotate JWT_SECRET and MongoDB credentials, in case .env was ever committed to GitHub history before the .gitignore fix✔️ 
 *   Fix free-money exploit: savingsGoalControllers.addSavingsContribution (route: POST /api/savings-goals/:id/contribute) never deducts user.balance and has no PIN check — either delete this route or rebuild it to match transactionController.addMoneyToSavingsGoal
 *   Fix applyLoan NaN bug: swap the inline amount check for isValidPositiveAmount(amount) — a non-numeric amount currently corrupts a user's balance to NaN permanently
 *   Add transaction atomicity (mongoose session/withTransaction, or guarded atomic $inc) to depositMoney, withdrawMoney, transferMoney, applyLoan, addMoneyToSavingsGoal — right now concurrent requests can bypass balance checks (race condition)
