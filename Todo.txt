@@ -202,7 +202,7 @@ Phase 12 — Security & Authentication
 * Test malformed requests
 * Test Admin/User permissions
 
-12.10 — Backend Fixes (from Claude code audit, Sept 2026)
+12.10 — Backend Fixes
 work through in this order — top of list first:
 
 *   Move "cors" from root package.json into backend/package.json (npm install cors --save inside backend/)
