@@ -190,6 +190,29 @@ export const getCurrentUser = async (req, res) => {
     });
   }
 };
+export const logoutUser = async (req, res) => {
+  try {
+    const user = await User.findById(
+      req.user._id
+    ).select("+sessionVersion");
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    user.sessionVersion =
+      (user.sessionVersion ?? 0) + 1;
+    await user.save();
+    return res.status(200).json({
+      message: "Logged out successfully.",
+    });
+  } catch (error) {
+    console.error("Logout error:", error);
+    return res.status(500).json({
+      message: "Unable to log out.",
+    });
+  }
+};
 export const uploadAvatar = async (req, res) => {
   try {
     if (!req.file) {
