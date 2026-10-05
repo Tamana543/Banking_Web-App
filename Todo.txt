@@ -212,7 +212,7 @@ work through in this order — top of list first:
 *   Fix applyLoan NaN bug: swap the inline amount check for isValidPositiveAmount(amount) — a non-numeric amount currently corrupts a user's balance to NaN permanently ✔️
 *   Add transaction atomicity (mongoose session/withTransaction, or guarded atomic $inc) to depositMoney, withdrawMoney, transferMoney, applyLoan, addMoneyToSavingsGoal — right now concurrent requests can bypass balance checks (race condition)✔️
 *   Loans currently credit balance instantly at request time even though status is "pending" and the response says "Loan approved" — decide whether approval should gate the balance credit (ties into Phase 13 admin approval) ✔️
-*   Avatar upload is broken end-to-end: POST /api/auth/avatar has no multer middleware attached, so req.file is always undefined. Wire uploadMiddleware.js into the route, and consolidate with the correct logic already sitting unused in uploadController.js
+*   Avatar upload is broken end-to-end: POST /api/auth/avatar has no multer middleware attached, so req.file is always undefined. Wire uploadMiddleware.js into the route, and consolidate with the correct logic already sitting unused in uploadController.js ✔️ 
 *   Delete middleware/protect.js — unused, weaker duplicate of authMiddleware.js (no sessionVersion check)
 *   Delete middleware/validateRegister.js — unused, and its password policy conflicts with the one actually in use (utils/passwordPolicy.js)
 *   Delete controllers/uploadController.js — unused duplicate of authController.uploadAvatar, has leftover console.logs
