@@ -214,7 +214,7 @@ work through in this order — top of list first:
 *   Loans currently credit balance instantly at request time even though status is "pending" and the response says "Loan approved" — decide whether approval should gate the balance credit (ties into Phase 13 admin approval) ✔️
 *   Avatar upload is broken end-to-end: POST /api/auth/avatar has no multer middleware attached, so req.file is always undefined. Wire uploadMiddleware.js into the route, and consolidate with the correct logic already sitting unused in uploadController.js ✔️ 
 *   Delete middleware/protect.js — unused, weaker duplicate of authMiddleware.js (no sessionVersion check)
-*   Delete middleware/validateRegister.js — unused, and its password policy conflicts with the one actually in use (utils/passwordPolicy.js)
+*   Delete middleware/validateRegister.js — unused, and its password policy conflicts with the one actually in use (utils/passwordPolicy.js)✔️
 *   Delete controllers/uploadController.js — unused duplicate of authController.uploadAvatar, has leftover console.logs
 *   If validateRegister.js is kept instead of deleted: add try/catch around the User.findOne call, and remove the console.log("Existing user:", existingUser) debug line
 *   Add a file size limit (limits: { fileSize }) to uploadMiddleware.js's multer config

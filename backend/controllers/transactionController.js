@@ -218,9 +218,9 @@ export const applyLoan = async(req,res)=>{
             });
         }
         const amountNumber = Number(amount);
-        if (!purpose || purpose.trim() === "") {
+        if (!isValidText(purpose, 500)) {
             return res.status(400).json({
-                message: "Loan purpose is required.",
+                message: "Loan purpose is required and must be under 500 characters.",
             });
         }
         session.startTransaction();
