@@ -224,7 +224,6 @@ work through in this order — top of list first:
 *   Consider bumping sessionVersion on logout too (not just password change), so a captured/stolen token can't keep working after the user logs out ✔️
 
 12.11 — Frontend Fixes 
-work through in this order — top of list first:
 
 *   Move "jspdf" and "qrcode" from root package.json into frontend/package.json (npm install jspdf qrcode --save inside frontend/)
 *   Fix folder-casing mismatch: components/Landing/ (capital L) vs. LandingPage.jsx's 8 imports from "../components/landing/..." (lowercase) — works locally on Windows/Mac, will fail to build on Vercel/Render's case-sensitive filesystem
