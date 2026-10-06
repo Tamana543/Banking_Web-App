@@ -55,21 +55,18 @@ function Dashboard() {
       );
       return;
     }
-    await execute(
+    
+        const data = await execute(
       () =>
         depositMoney(
           Number(depositAmount)
         ),
-      {
-        successMessage:
-          "Deposit completed successfully.",
-        onSuccess: async () => {
-          await refreshDashboard();
-          setDepositAmount("");
-          setShowDepositModal(false);
-        },
-      }
+      "Deposit completed successfully."
     );
+    if (!data) return;
+    await refreshDashboard();
+    setDepositAmount("");
+    setShowDepositModal(false);
   };
   // Withdraw
   const handleWithdraw = async () => {
@@ -87,23 +84,19 @@ function Dashboard() {
       );
       return;
     }
-    await execute(
+       const data = await execute(
       () =>
         withdrawMoney(
           Number(withdrawAmount),
           withdrawPin
         ),
-      {
-        successMessage:
-          "Withdrawal completed successfully.",
-        onSuccess: async () => {
-          await refreshDashboard();
-          setWithdrawAmount("");
-          setWithdrawPin("");
-          setShowWithdrawModal(false);
-        },
-      }
+      "Withdrawal completed successfully."
     );
+    if (!data) return;
+    await refreshDashboard();
+    setWithdrawAmount("");
+    setWithdrawPin("");
+    setShowWithdrawModal(false);
   };
   const closeWithdrawModal = () => {
     if (loading) return;
