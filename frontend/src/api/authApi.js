@@ -56,6 +56,8 @@ export const getCurrentUser = async () => {
       "Unable to retrieve user information."
     );
   };
+export const logoutUser = async () => { const response = await fetch( `${API_URL}/logout`, { method: "POST", headers: { Authorization: `Bearer ${getToken()}`, }, } ); return parseResponse( response, "Logout failed." ); };
+
 export const uploadAvatar = async (
   file
 ) => {

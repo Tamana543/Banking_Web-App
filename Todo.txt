@@ -216,12 +216,12 @@ work through in this order — top of list first:
 *   Delete middleware/protect.js — unused, weaker duplicate of authMiddleware.js (no sessionVersion check)
 *   Delete middleware/validateRegister.js — unused, and its password policy conflicts with the one actually in use (utils/passwordPolicy.js)✔️
 *   Delete controllers/uploadController.js — unused duplicate of authController.uploadAvatar, has leftover console.logs✔️
-*   If validateRegister.js is kept instead of deleted: add try/catch around the User.findOne call, and remove the console.log("Existing user:", existingUser) debug line ( not done yet work on fixing it )
-*   Add a file size limit (limits: { fileSize }) to uploadMiddleware.js's multer config 
-*   Change addMoneyToSavingsGoal's recorded transaction type from "withdrawal" to something savings-specific, so Analytics categories stay accurate
-*   Add a length cap to the loan purpose field (like isValidText's 500-char limit used elsewhere)
-*   Add min: 0 to User.balance in the schema as defense-in-depth
-*   Consider bumping sessionVersion on logout too (not just password change), so a captured/stolen token can't keep working after the user logs out
+*   If validateRegister.js is kept instead of deleted: add try/catch around the User.findOne call, and remove the console.log("Existing user:", existingUser) debug line ✔️
+*   Add a file size limit (limits: { fileSize }) to uploadMiddleware.js's multer config  ✔️
+*   Change addMoneyToSavingsGoal's recorded transaction type from "withdrawal" to something savings-specific, so Analytics categories stay accurate ✔️
+*   Add a length cap to the loan purpose field (like isValidText's 500-char limit used elsewhere) ✔️
+*   Add min: 0 to User.balance in the schema as defense-in-depth ✔️
+*   Consider bumping sessionVersion on logout too (not just password change), so a captured/stolen token can't keep working after the user logs out ✔️
 
 12.11 — Frontend Fixes 
 work through in this order — top of list first:

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, } from "react";
+import { logoutUser } from "../api/authApi";
 const AuthContext = createContext();
 const getTokenExpiration = (jwtToken) => {
   try {
@@ -86,4 +87,10 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{ user, token, login, logout, setUser, authLoading, }} > {children} </AuthContext.Provider>
   );
 }
+  const logout = async () => {
+    try {
+      await logoutUser();
+    } catch {}
+    clearAuth();
+  };
 export const useAuth = () => useContext(AuthContext);
