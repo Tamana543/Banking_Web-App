@@ -12,7 +12,7 @@ function useTransactions() {
       const data = await getTransactions();
       setTransactions(data.transactions);
     } catch (error) {
-      showToast.error(handleApiError(error));
+      showToast(handleApiError(error), "error");
     } finally {
       setLoading(false);
     }

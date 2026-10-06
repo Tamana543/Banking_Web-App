@@ -228,7 +228,7 @@ work through in this order — top of list first:
 *   Move "jspdf" and "qrcode" from root package.json into frontend/package.json ✔️
 *   Fix folder-casing mismatch: components/Landing/ (capital L) vs. LandingPage.jsx's 8 imports from "../components/landing/..." ✔️
 *   Fix Dashboard.jsx deposit/withdraw: useApiAction.execute only accepts a plain string message ✔️
-*   Fix useTransactions.js: showToast.error(...) doesn't exist (showToast is a function, not an object) — every failed transaction load throws silently instead of showing an error toast
+*   Fix useTransactions.js: showToast.error(...) doesn't exist ✔️
 *   Fix ReceiptModal.jsx: the on-screen "Recipient" row displays the amount instead of receipt.recipient (the downloaded PDF gets this right, only the on-screen modal is wrong)
 *   Fix StatsCards.jsx: the "Transactions" count is run through currency formatting (shows "$12.00" instead of "12"); also fix the "Total Deposits" card using a bare <> fragment instead of <h3> like its sibling cards
 *   Delete components/ProtectedRoute.jsx — unused duplicate of routes/ProtectedRoute.jsx (the one actually wired into AppRoutes.jsx)
