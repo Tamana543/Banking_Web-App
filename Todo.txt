@@ -226,7 +226,7 @@ work through in this order — top of list first:
 12.11 — Frontend Fixes 
 
 *   Move "jspdf" and "qrcode" from root package.json into frontend/package.json ✔️
-*   Fix folder-casing mismatch: components/Landing/ (capital L) vs. LandingPage.jsx's 8 imports from "../components/landing/..." (lowercase) — works locally on Windows/Mac, will fail to build on Vercel/Render's case-sensitive filesystem
+*   Fix folder-casing mismatch: components/Landing/ (capital L) vs. LandingPage.jsx's 8 imports from "../components/landing/..." ✔️
 *   Fix Dashboard.jsx deposit/withdraw: useApiAction.execute only accepts a plain string message, not an { successMessage, onSuccess } object — right now the toast shows "[object Object]" and the balance/modal never refresh after a successful deposit or withdrawal
 *   Fix useTransactions.js: showToast.error(...) doesn't exist (showToast is a function, not an object) — every failed transaction load throws silently instead of showing an error toast
 *   Fix ReceiptModal.jsx: the on-screen "Recipient" row displays the amount instead of receipt.recipient (the downloaded PDF gets this right, only the on-screen modal is wrong)
