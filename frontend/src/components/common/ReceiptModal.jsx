@@ -252,15 +252,15 @@ function ReceiptModal({
           </button>
           </div>
         </div>
-        <div className="receipt-row">
+                <div className="receipt-row">
           <span>Recipient</span>
-          <strong>
-              ${Number(receipt.amount).toLocaleString()}
-            </strong>
+          <strong>{receipt.recipient}</strong>
         </div>
         <div className="receipt-row">
           <span>Amount</span>
-          <strong>${receipt.amount}</strong>
+          <strong>
+            ${Number(receipt.amount).toLocaleString()}
+          </strong>
         </div>
         <div className="receipt-row">
           <span>Status</span>
