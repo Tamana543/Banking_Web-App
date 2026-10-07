@@ -53,7 +53,7 @@ function StatsCards({
     >
       
       <div className="stat-card income">
-        <>Total Deposits</>
+        <h3>Total Deposits</h3>
         <p
           className="stat-value"
           aria-label={`Total deposits: ${currency} ${formatAmount(totalIncome)}`}
@@ -85,7 +85,7 @@ function StatsCards({
           className="stat-value"
           aria-label={`Total number of transactions: ${currency} ${totalTransactions}`}
         >
-           {currency} {formatAmount(totalTransactions)}
+           {totalTransactions}
         </p>
       </div>
     </section>
