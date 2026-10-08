@@ -234,7 +234,7 @@ work through in this order — top of list first:
 *   Delete components/ProtectedRoute.jsx — unused duplicate of routes/ProtectedRoute.jsx (the one actually wired into AppRoutes.jsx) ✔️
 *   Delete components/common/AlertMessage.jsx — unused, superseded by the Toast system ✔️
 *   Consolida(appears in authApi.js, transactionApi.js, ) ✔️
-*   Fix typo "First me is required." → "First name is required." in Register.jsx
+*   Fix typo "First me is required." → "First name is required." in Register.jsx ✔️
 *   Decide whether deleting a savings goal (which refunds balance) should require a PIN like every other balance-changing action
 *   index.html references /favicon.svg, which doesn't exist anywhere in the project — add a real favicon or fix the reference
 *   BalanceCard.jsx shows a hardcoded "+12.4% this month" and a fake card number as static placeholder data — fine for now, but flag before this is mistaken for real calculated data

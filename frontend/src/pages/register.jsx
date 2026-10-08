@@ -25,7 +25,7 @@ function Register() {
     const newErrors = { firstName: "", lastName: "", email: "", password: "", confirmPassword: "", pin: "", form: "", };
     if (isEmpty(formData.firstName)) {
       newErrors.firstName =
-        "First me is required.";
+        " First name is required.";
     }
     if (isEmpty(formData.lastName)) {
       newErrors.lastName =
