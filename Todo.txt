@@ -233,7 +233,7 @@ work through in this order — top of list first:
 *   Fix StatsCards.jsx: the "Transactions" count is run through currency formatting (shows "$12.00" instead of "12"); also fix the "Total Deposits" card using a bare <> fragment instead of <h3> like its sibling cards ✔️
 *   Delete components/ProtectedRoute.jsx — unused duplicate of routes/ProtectedRoute.jsx (the one actually wired into AppRoutes.jsx) ✔️
 *   Delete components/common/AlertMessage.jsx — unused, superseded by the Toast system ✔️
-*   Consolidate the hardcoded http://localhost:5000 (appears in authApi.js, transactionApi.js, savingsGoalApi.js, Profile.jsx, DashboardHeader.jsx) into one shared API base URL / env var before deploying (for the next change, do all remained small changes together and finish cleaning process)
+*   Consolida(appears in authApi.js, transactionApi.js, )
 *   Fix typo "First me is required." → "First name is required." in Register.jsx
 *   Decide whether deleting a savings goal (which refunds balance) should require a PIN like every other balance-changing action
 *   index.html references /favicon.svg, which doesn't exist anywhere in the project — add a real favicon or fix the reference
