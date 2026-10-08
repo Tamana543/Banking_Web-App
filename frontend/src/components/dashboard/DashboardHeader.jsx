@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../config";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/dashboard/header.css"
 function DashboardHeader() {
@@ -61,7 +62,7 @@ const quote =
        <div className="profile-avatar">
           {user?.avatar ? (
             <img
-              src={`http://localhost:5000${user.avatar}`}
+              src={`${API_BASE_URL}${user.avatar}`}
               alt={`${firstName} ${lastName}'s profile`}
             />
           ) : (

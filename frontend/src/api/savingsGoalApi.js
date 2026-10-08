@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:5000/api/savings-goals";
+import { API_BASE_URL } from "../config";
+const API_URL = `${API_BASE_URL}/api/savings-goals`;
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
   return {
@@ -43,7 +44,7 @@ export const createSavingsGoal = async ( name, targetAmount, deadline ) => {
 export const addSavingsContribution = async ( goalId, amount, pin ) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/transactions/savings-contribution",
+            `${API_BASE_URL}/api/transactions/savings-contribution`,
       {
         goalId,
         amount,

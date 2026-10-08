@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -300,7 +301,7 @@ function Profile() {
           <div className="profile-avatar">
             <label htmlFor="avatarUpload">
               {user?.avatar ? (
-                <img src={`http://localhost:5000${user.avatar}`} alt={`${user?.firstName || "User"} profile`} />
+                <img src={`${API_BASE_URL}${user.avatar}`} alt={`${user?.firstName || "User"} profile`} />
               ) : (
                 <span> {user?.firstName?.charAt( 0 )} </span>
               )}
