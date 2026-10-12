@@ -178,7 +178,7 @@ Phase 12 — Security & Authentication
 12.7 API Security Hardening
 * Input validation ✔️
 * Rate limiting ✔️
-* CORS review
+* CORS review (Do this next, now go for sleep :) 
 * Security headers
 * Error exposure review
 * HTTP status-code review
