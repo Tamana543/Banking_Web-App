@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import dns from "node:dns";
 import cors from "cors"
 import path from "path";
+import helmet from "helmet";
 // routes
 import authRouter from "./routes/authRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js"
@@ -13,6 +14,7 @@ dotenv.config();
 connectDB();
 const app = express();
 app.set("trust proxy", 1); // to stop proxies 
+app.use( helmet({ crossOriginResourcePolicy: { policy: "cross-origin" }, }) );
 app.use(
   cors({
     origin: "http://localhost:5173",
