@@ -12,6 +12,7 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 dotenv.config();
 connectDB();
 const app = express();
+app.set("trust proxy", 1); // to stop proxies 
 app.use(
   cors({
     origin: "http://localhost:5173",
