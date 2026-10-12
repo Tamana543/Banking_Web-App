@@ -176,7 +176,7 @@ Phase 12 — Security & Authentication
 * Prevent authenticated UI restoration ✔️
 * Verify API rejection after logout ✔️ ( see 12.10 — logout doesn't bump sessionVersion, so a captured token still works after "logout" until it expires)
 12.7 API Security Hardening
-* Input validation (continue with transactionController file loan validation 2.4) — see 12.10 for the specific bug found (applyLoan NaN exploit)
+* Input validation ✔️
 * Rate limiting
 * CORS review
 * Security headers
