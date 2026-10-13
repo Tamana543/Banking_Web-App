@@ -193,8 +193,8 @@ Phase 12 — Security & Authentication
 * Password Change ✔️
 * PIN-protected actions ✔️
 12.9 Security Testing
-* Test unauthorized API access
-* Test expired JWT
+* Test unauthorized API access ✔️
+* Test expired JWT ✔️
 * Test logout + browser Back
 * Test User A → User B access attempts
 * Test invalid PIN
