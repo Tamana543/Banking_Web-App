@@ -83,10 +83,10 @@ export const registerUser = async (req, res) => {
     });
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).json({
-        message:
-          "An account with this email already exists.",
-      });
+      return res.status(409).json({
+      message:
+        "An account with this email already exists.",
+    });
     }
     console.error("Registration error:", error);
     return res.status(500).json({
@@ -301,10 +301,10 @@ export const updateProfile = async (req, res) => {
     });
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).json({
-        message:
-          "An account with this email already exists.",
-      });
+     return res.status(409).json({
+      message:
+        "An account with this email already exists.",
+    });
     }
     console.error("Profile update error:", error);
     return res.status(500).json({
