@@ -31,8 +31,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 // APIs 
 app.use("/api/auth", authRouter);
 app.use("/api/transactions", transactionRoutes);
@@ -56,6 +56,8 @@ app.use((err, req, res, next) => {
   }
   if (err.message === "Images only.") {
     return res.status(400).json({ message: "Only image files are allowed." });
+  }  if (err.type === "entity.too.large") {
+    return res.status(413).json({ message: "Request body is too large." });
   }
   console.error("Unhandled error:", err);
   res.status(500).json({ message: "Server error." });
