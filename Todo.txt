@@ -178,9 +178,9 @@ Phase 12 — Security & Authentication
 12.7 API Security Hardening
 * Input validation ✔️
 * Rate limiting ✔️
-* CORS review (Do this next, now go for sleep :) 
-* Security headers
-* Error exposure review
+* CORS review ✔️ 
+* Security headers ✔️
+* Error exposure review ✔️ 
 * HTTP status-code review
 * Environment/secrets audit — see 12.10, .env is not in .gitignore
 12.8 Existing Feature Security Audit

@@ -273,9 +273,10 @@ export const applyLoan = async(req,res)=>{
         });
 } catch (error) {
   await session.abortTransaction();
+  console.error("Apply Loan Error:", error);
   res.status(500).json({
-    message:error.message,
-  })
+    message: "Server error.",
+  });
 } finally {
   session.endSession();
 }

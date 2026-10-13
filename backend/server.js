@@ -41,6 +41,25 @@ app.use( "/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
 });
+// unknown routes
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found." });
+});
+
+// global error handler
+app.use((err, req, res, next) => {
+  if (err.type === "entity.parse.failed") {
+    return res.status(400).json({ message: "Invalid JSON in request body." });
+  }
+  if (err.code === "LIMIT_FILE_SIZE") {
+    return res.status(400).json({ message: "Image is too large. Maximum size is 2MB." });
+  }
+  if (err.message === "Images only.") {
+    return res.status(400).json({ message: "Only image files are allowed." });
+  }
+  console.error("Unhandled error:", err);
+  res.status(500).json({ message: "Server error." });
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
