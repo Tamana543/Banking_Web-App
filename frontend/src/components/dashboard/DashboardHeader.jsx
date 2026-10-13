@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "../config";
+
+import { API_BASE_URL } from "../../config";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/dashboard/header.css"
 function DashboardHeader() {
