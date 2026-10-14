@@ -292,6 +292,12 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
         message: "Please provide a valid amount.",
       });
     }
+        if (!isValidObjectId(goalId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid savings goal.",
+      });
+    }
     session.startTransaction();
     // logged-in user
     const user = await User.findById(req.user._id).session(session);

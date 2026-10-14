@@ -1,6 +1,6 @@
 import SavingsGoal from "../models/SavingsGoal.js";
 import User from "../models/User.js";
-
+import { isValidObjectId } from "../utils/inputValidation.js";
 export const createSavingsGoal = async (req, res) => {
   try {
     const { name, targetAmount, deadline } = req.body;
@@ -152,6 +152,12 @@ export const addSavingsContribution = async (req, res) => {
 };
 export const deleteSavingsGoal = async (req, res) => {
   try {
+        if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid savings goal.",
+      });
+    }
     const savingsGoal = await SavingsGoal.findOne({
       _id: req.params.id,
       user: req.user._id,
