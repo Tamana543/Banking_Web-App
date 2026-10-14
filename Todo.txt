@@ -195,10 +195,10 @@ Phase 12 — Security & Authentication
 12.9 Security Testing
 * Test unauthorized API access ✔️
 * Test expired JWT ✔️
-* Test logout + browser Back
-* Test User A → User B access attempts
-* Test invalid PIN
-* Test invalid password
+* Test logout + browser Back  ✔️
+* Test User A → User B access attempts ✔️
+* Test invalid PIN ✔️
+* Test invalid password ✔️
 * Test malformed requests
 * Test Admin/User permissions
 
