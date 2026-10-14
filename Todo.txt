@@ -199,8 +199,8 @@ Phase 12 — Security & Authentication
 * Test User A → User B access attempts ✔️
 * Test invalid PIN ✔️
 * Test invalid password ✔️
-* Test malformed requests
-* Test Admin/User permissions
+* Test malformed requests ✔️ 
+* Test Admin/User permissions ( latter )
 
 12.10 — Backend Fixes
 work through in this order — top of list first:
