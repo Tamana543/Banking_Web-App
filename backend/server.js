@@ -9,6 +9,8 @@ import helmet from "helmet";
 import authRouter from "./routes/authRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js"
 import savingsGoalRoutes from "./routes/savingsGoalRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js";
+
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 dotenv.config();
 connectDB();
@@ -41,6 +43,7 @@ app.use( "/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
 });
+app.use("/api/admin", adminRoutes);
 // unknown routes
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found." });
