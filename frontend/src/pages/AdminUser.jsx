@@ -1,0 +1,65 @@
+import { useEffect, useState } from "react";
+import DashboardLayout from "../components/dashboard/DashboardLayout";
+import DashboardHeader from "../components/dashboard/DashboardHeader";
+import TransactionSkeleton from "../components/common/TransactionSkeleton";
+import { getAllUsers } from "../api/adminApi";
+import { useToast } from "../context/ToastContext";
+import handleApiError from "../util/handleApiError";
+import "../styles/dashboard/dashboard.css";
+import "../styles/recent-transacrions.css";
+function AdminUsers() {
+  const { showToast } = useToast();
+  const [users, setUsers] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await getAllUsers();
+        setUsers(data.users);
+        setTotal(data.total);
+      } catch (error) {
+        showToast(handleApiError(error), "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUsers();
+  }, []);
+  return (
+    <DashboardLayout>
+      <DashboardHeader />
+      <section className="recent-transactions" aria-labelledby="admin-users-title">
+        <h3 id="admin-users-title">All Users ({total})</h3>
+        {loading ? (
+          <TransactionSkeleton />
+        ) : users.length === 0 ? (
+          <div className="empty-state">
+            <h4>No users found</h4>
+          </div>
+        ) : (
+          <div className="transaction-list">
+            {users.map((u) => (
+              <div key={u._id} className="transaction-item">
+                <div className="transaction-main">
+                  <div className="transaction-category">
+                    <h4>{u.firstName} {u.lastName}</h4>
+                  </div>
+                  <span>{u.email}</span>
+                  <small className="transaction-date">
+                    Joined {new Date(u.createdAt).toLocaleDateString()}
+                  </small>
+                  <small className="transaction-reference">Role: {u.role}</small>
+                </div>
+                <div className="transaction-right">
+                  <strong>${Number(u.balance).toLocaleString()}</strong>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </DashboardLayout>
+  );
+}
+export default AdminUsers;
