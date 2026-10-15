@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-// if any error check the name of files as changed alot
 import LandingPage from "../pages/LandingPage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -13,6 +12,8 @@ import Analytics from "../pages/Analytics"
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import SavingsGoals from "../pages/SavingGoals";
+import AdminRoute from "./AdminRoute";
+import AdminUsers from "../pages/AdminUser";
 
 function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ function AppRoutes() {
         <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
         <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
         <Route path="/savings-goals" element={ <ProtectedRoute> <SavingsGoals /> </ProtectedRoute> } />
+        <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       
