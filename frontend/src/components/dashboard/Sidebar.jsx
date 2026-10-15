@@ -2,9 +2,12 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const firstNavLinkRef = useRef(null);
   useEffect(() => {
     if (sidebarOpen) {
@@ -35,6 +38,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
           <span>PRO</span>
         </div>
         <nav className="sidebar-nav" aria-label="Main navigation">
+                    {user?.role === "admin" && (
+            <NavLink to="/admin/users" onClick={() => setSidebarOpen(false)}>
+              <ShieldCheck size={20} aria-hidden="true" />
+              <span>Users</span>
+            </NavLink>
+          )}
           <NavLink ref={firstNavLinkRef} to="/dashboard" onClick={() => setSidebarOpen(false)}
           >
             <LayoutDashboard size={20} aria-hidden="true"
