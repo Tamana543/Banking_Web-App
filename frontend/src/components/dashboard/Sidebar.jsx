@@ -37,7 +37,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
           <h2>BANKIST</h2>
           <span>PRO</span>
         </div>
-        <nav className="sidebar-nav" aria-label="Main navigation">
+        <nav className={`sidebar-nav ${user?.role === "admin" ? "sidebar-nav-compact" : ""}`} aria-label="Main navigation">
                     {user?.role === "admin" && (
             <NavLink to="/admin/users" onClick={() => setSidebarOpen(false)}>
               <ShieldCheck size={20} aria-hidden="true" />

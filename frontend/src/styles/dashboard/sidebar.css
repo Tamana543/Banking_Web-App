@@ -42,7 +42,20 @@
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-right: -10px;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+}
+.sidebar-nav-compact {
+    gap: 8px;
+}
+.sidebar-nav-compact a {
+    padding: 12px 20px;
 }
 .sidebar-nav a {
     display: flex;
