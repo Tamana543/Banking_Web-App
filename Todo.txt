@@ -239,9 +239,9 @@ work through in this order — top of list first:
 
 
 phase 13 — Admin Dashboard
-* Admin authentication
-* View all users
-* View all transactions
+* Admin authentication ✔️ 
+* View all users ✔️  
+* View all transactions (check here )
 * View all loans ( and approval, updated the loan to * show as apprved stats or rejected)
 * User management
 * Account management
