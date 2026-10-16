@@ -30,14 +30,19 @@ const transactionSchema = new mongoose.Schema(
       default: "",
     },
 
-    status: {
+        status: {
       type: String,
-      enum: [
-        "pending",
-        "completed",
-        "failed",
-      ],
+      enum: ["pending", "completed", "failed", "approved", "rejected"],
       default: "completed",
+    },
+    reviewedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    reviewedAt: {
+      type: Date,
+      default: null,
     },
   },
   {
