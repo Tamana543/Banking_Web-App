@@ -36,7 +36,7 @@ function Analytics() {
     .filter(
       (transaction) =>
         transaction.type === "deposit" ||
-        transaction.type === "loan"
+        (transaction.type === "loan" && transaction.status === "approved")
     )
     .reduce(
       (sum, transaction) =>
@@ -67,7 +67,7 @@ function Analytics() {
     if (!monthlyMap[month]) {
       monthlyMap[month] = { month, income: 0, expense: 0, };
     }
-    if ( transaction.type === "deposit" || transaction.type === "loan" ) {
+        if ( transaction.type === "deposit" || (transaction.type === "loan" && transaction.status === "approved") ) {
       monthlyMap[month].income += Number(
         transaction.amount
       );
@@ -102,7 +102,7 @@ function Analytics() {
     {
       name: "Loans",
       value: transactions
-        .filter((t) => t.type === "loan")
+                .filter((t) => t.type === "loan" && t.status === "approved")
         .reduce(
           (sum, t) => sum + Number(t.amount),
           0
