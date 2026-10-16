@@ -245,7 +245,7 @@ export const applyLoan = async(req,res)=>{
             await Transaction.findOne({
                 user: userId,
                 type: "loan",
-                status: "pending",
+                status: { $in: ["pending", "approved"] },
             }).session(session);
         if (activeLoan) {
             await session.abortTransaction();
