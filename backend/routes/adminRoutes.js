@@ -1,8 +1,11 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import requireAdmin from "../middleware/adminMiddleware.js";
-import { getAllUsers } from "../controllers/adminController.js";
+import { getAllUsers, getAllLoans, approveLoan, rejectLoan } from "../controllers/adminController.js";
 const router = express.Router();
 router.use(protect, requireAdmin);
+router.get("/loans", getAllLoans);
+router.patch("/loans/:id/approve", approveLoan);
+router.patch("/loans/:id/reject", rejectLoan);
 router.get("/users", getAllUsers);
 export default router;
