@@ -115,3 +115,42 @@ export const approveLoan = async (req, res) => {
     session.endSession();
   }
 };
+
+export const rejectLoan = async (req, res) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid loan request.",
+      });
+    }
+    const loan = await Transaction.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        type: "loan",
+        status: "pending",
+        user: { $ne: req.user._id },
+      },
+      {
+        status: "rejected",
+        reviewedBy: req.user._id,
+        reviewedAt: new Date(),
+      },
+      { returnDocument: "after" }
+    );
+    if (!loan) {
+      return res.status(404).json({
+        success: false,
+        message: "Pending loan request not found, or it is your own request.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Loan request rejected.",
+      loan,
+    });
+  } catch (error) {
+    console.error("Admin reject loan error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
