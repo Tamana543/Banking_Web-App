@@ -55,3 +55,63 @@ export const getAllLoans = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const approveLoan = async (req, res) => {
+  const session = await mongoose.startSession();
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid loan request.",
+      });
+    }
+    session.startTransaction();
+    const loan = await Transaction.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        type: "loan",
+        status: "pending",
+        user: { $ne: req.user._id },
+      },
+      {
+        status: "approved",
+        reviewedBy: req.user._id,
+        reviewedAt: new Date(),
+      },
+      { returnDocument: "after", session }
+    );
+    if (!loan) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "Pending loan request not found, or it is your own request.",
+      });
+    }
+    const borrower = await User.findByIdAndUpdate(
+      loan.user,
+      { $inc: { balance: loan.amount } },
+      { session }
+    );
+    if (!borrower) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "Borrower account not found.",
+      });
+    }
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message: "Loan approved and funds credited.",
+      loan,
+    });
+  } catch (error) {
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    console.error("Admin approve loan error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  } finally {
+    session.endSession();
+  }
+};
