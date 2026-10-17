@@ -183,3 +183,12 @@
     font-size: 0.95rem;
     line-height: 1.5;
 }
+.admin-loan-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+.admin-loan-actions button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
