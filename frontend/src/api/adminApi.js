@@ -41,5 +41,21 @@ const reviewLoan = async (id, action) => {
   return data;
 };
 
+export const getAllTransactions = async ({ page = 1, type = "", status = "" } = {}) => {
+  const params = new URLSearchParams({ page });
+  if (type) params.set("type", type);
+  if (status) params.set("status", status);
+  const response = await fetch(`${API_URL}/transactions?${params}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
 export const approveLoan = (id) => reviewLoan(id, "approve");
 export const rejectLoan = (id) => reviewLoan(id, "reject");
