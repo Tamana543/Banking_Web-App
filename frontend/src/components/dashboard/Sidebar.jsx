@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
@@ -38,11 +38,17 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
           <span>PRO</span>
         </div>
         <nav className={`sidebar-nav ${user?.role === "admin" ? "sidebar-nav-compact" : ""}`} aria-label="Main navigation">
-                    {user?.role === "admin" && (
-            <NavLink to="/admin/users" onClick={() => setSidebarOpen(false)}>
-              <ShieldCheck size={20} aria-hidden="true" />
-              <span>Users</span>
-            </NavLink>
+                              {user?.role === "admin" && (
+            <>
+              <NavLink to="/admin/users" onClick={() => setSidebarOpen(false)}>
+                <ShieldCheck size={20} aria-hidden="true" />
+                <span>Users</span>
+              </NavLink>
+              <NavLink to="/admin/loans" onClick={() => setSidebarOpen(false)}>
+                <ClipboardCheck size={20} aria-hidden="true" />
+                <span>Loan Requests</span>
+              </NavLink>
+            </>
           )}
           <NavLink ref={firstNavLinkRef} to="/dashboard" onClick={() => setSidebarOpen(false)}
           >

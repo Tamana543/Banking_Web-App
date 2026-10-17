@@ -14,6 +14,7 @@ import Settings from "../pages/Settings";
 import SavingsGoals from "../pages/SavingGoals";
 import AdminRoute from "./AdminRoute";
 import AdminUsers from "../pages/AdminUser";
+import AdminLoans from "../pages/AdminLoans";
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
         <Route path="/transactions" element={ <ProtectedRoute><Transactions /></ProtectedRoute>} />
         <Route path="/transfer" element={<ProtectedRoute><Transfer/></ProtectedRoute>}/>
+        <Route path="/admin/loans" element={<AdminRoute><AdminLoans /></AdminRoute>} />
         <Route path="/loans" element={<ProtectedRoute><Loan/></ProtectedRoute>}/>
         <Route path="/analytics" element={<ProtectedRoute><Analytics/></ProtectedRoute>}/>
         <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
