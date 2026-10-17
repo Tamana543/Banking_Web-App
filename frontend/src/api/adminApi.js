@@ -13,3 +13,33 @@ export const getAllUsers = async () => {
   }
   return data;
 };
+export const getAllLoans = async (status) => {
+  const query = status ? `?status=${encodeURIComponent(status)}` : "";
+  const response = await fetch(`${API_URL}/loans${query}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
+const reviewLoan = async (id, action) => {
+  const response = await fetch(`${API_URL}/loans/${id}/${action}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
+export const approveLoan = (id) => reviewLoan(id, "approve");
+export const rejectLoan = (id) => reviewLoan(id, "reject");
