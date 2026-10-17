@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import Transaction from "../models/Transaction.js";
 import { isValidObjectId } from "../utils/inputValidation.js";
 const LOAN_STATUSES = ["pending", "approved", "rejected"];
+const TRANSACTION_TYPES = ["deposit", "withdrawal", "transfer", "loan"];
+const TRANSACTION_STATUSES = ["pending", "completed", "failed", "approved", "rejected"];
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -151,6 +153,53 @@ export const rejectLoan = async (req, res) => {
     });
   } catch (error) {
     console.error("Admin reject loan error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+export const getAllTransactions = async (req, res) => {
+  try {
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+    const filter = {};
+
+    if (req.query.type !== undefined) {
+      if (!TRANSACTION_TYPES.includes(req.query.type)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid type filter.",
+        });
+      }
+      filter.type = req.query.type;
+    }
+    if (req.query.status !== undefined) {
+      if (!TRANSACTION_STATUSES.includes(req.query.status)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid status filter.",
+        });
+      }
+      filter.status = req.query.status;
+    }
+
+    const [transactions, total] = await Promise.all([
+      Transaction.find(filter)
+        .populate("user", "firstName lastName email")
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit),
+      Transaction.countDocuments(filter),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      transactions,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    console.error("Admin get transactions error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
