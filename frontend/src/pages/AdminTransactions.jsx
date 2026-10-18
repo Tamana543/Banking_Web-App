@@ -149,3 +149,5 @@ function AdminTransactions() {
      </DashboardLayout>
   )
 }
+
+export default AdminTransactions;
