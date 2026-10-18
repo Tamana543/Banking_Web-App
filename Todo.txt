@@ -242,7 +242,7 @@ phase 13 — Admin Dashboard
 * Admin authentication ✔️ 
 * View all users ✔️  
 * View all loans ( and approval, updated the loan to * show as apprved stats or rejected)  ✔️
-* View all transactions (Create new file 4: to show the admintransactions.jsx )
+* View all transactions (✔️)
 * User management
 * Account management
 * Dashboard statistics
