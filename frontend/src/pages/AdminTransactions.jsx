@@ -17,4 +17,35 @@ const TYPE_LABELS = {
   loan: "Loan",
 };
 
-function AdminTransactions() {}
+function AdminTransactions() {
+  const { showToast } = useToast();
+  const [transactions, setTransactions] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [pages, setPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [typeFilter, setTypeFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllTransactions({
+          page,
+          type: typeFilter,
+          status: statusFilter,
+        });
+        setTransactions(data.transactions);
+        setTotal(data.total);
+        setPages(data.pages);
+      } catch (error) {
+        showToast(handleApiError(error), "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadTransactions();
+  }, [page, typeFilter, statusFilter]);
+
+}
