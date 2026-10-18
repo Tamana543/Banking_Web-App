@@ -48,7 +48,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
                 <ClipboardCheck size={20} aria-hidden="true" />
                 <span>Loan Requests</span>
               </NavLink>
-                            <NavLink to="/admin/transactions" onClick={() => setSidebarOpen(false)}>
+                            <NavLink to="/admin/transactions" className="nav-tight" onClick={() => setSidebarOpen(false)}>
                 <ReceiptText size={20} aria-hidden="true" />
                 <span>All Transactions</span>
               </NavLink>
