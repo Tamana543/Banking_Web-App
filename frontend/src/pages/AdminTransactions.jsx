@@ -47,5 +47,33 @@ function AdminTransactions() {
     };
     loadTransactions();
   }, [page, typeFilter, statusFilter]);
+  return (
+     <DashboardLayout>
+     <DashboardHeader/>
+     <section className="recent-transactions" aria-labelledby="admin-transactions-title">
+          <h3 id="admin-transactions-title">All Transactions ({total})</h3>
+        <div className="transaction-toolbar">
+          <div className="transaction-filter">
+            <select
+              aria-label="Filter by type"
+              value={typeFilter}
+              onChange={(e) => {
+                setTypeFilter(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="">All types</option>
+              <option value="deposit">Deposits</option>
+              <option value="withdrawal">Withdrawals</option>
+              <option value="transfer">Transfers</option>
+              <option value="loan">Loans</option>
+            </select>
+          </div>
 
+          
+          </div>
+     </section>
+
+     </DashboardLayout>
+  )
 }
