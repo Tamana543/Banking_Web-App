@@ -18,23 +18,47 @@ const ACTIONS = {
 
 function AdminUsers() {
   const { showToast } = useToast();
+  const { execute, loading: acting } = useApiAction();
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState(null);
+  const loadUsers = async () => {
+    try {
+      const data = await getAllUsers();
+      setUsers(data.users);
+      setTotal(data.total);
+    } catch (error) {
+      showToast(handleApiError(error), "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const data = await getAllUsers();
-        setUsers(data.users);
-        setTotal(data.total);
-      } catch (error) {
-        showToast(handleApiError(error), "error");
-      } finally {
-        setLoading(false);
-      }
-    };
     loadUsers();
   }, []);
+
+  const getStatus = (u) => {
+    const now = new Date();
+    if (u.isSuspended) {
+      return { label: "Suspended", className: "rejected" };
+    }
+    const loginLocked = u.isLocked && u.lockUntil && new Date(u.lockUntil) > now;
+    const pinLocked = u.pinLockedUntil && new Date(u.pinLockedUntil) > now;
+    if (loginLocked || pinLocked) {
+      return { label: "Locked", className: "pending" };
+    }
+    return { label: "Active", className: "completed" };
+  };
+
+  const handleAction = async () => {
+    const { user, action } = selected;
+    const config = ACTIONS[action];
+    await execute(() => config.run(user._id), config.success);
+    setSelected(null);
+    await loadUsers();
+  };
   return (
     <DashboardLayout>
       <DashboardHeader />
