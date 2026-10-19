@@ -37,6 +37,11 @@ const protect = async (req, res, next) => {
           "Your session is no longer valid. Please log in again.",
       });
     }
+      if (user.isSuspended) {
+      return res.status(403).json({
+        message: "Your account has been suspended.",
+      });
+    }
     req.user = user;
     next();
   } catch (error) {

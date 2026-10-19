@@ -12,7 +12,7 @@ export const getAllUsers = async (req, res) => {
     const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
     const [users, total] = await Promise.all([
       User.find()
-        .select("firstName lastName email role balance currency avatar isVerified createdAt lastLogin")
+        .select("firstName lastName email role balance currency avatar isVerified createdAt lastLogin isSuspended isLocked lockUntil pinLockedUntil")
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit),
