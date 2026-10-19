@@ -236,3 +236,35 @@ export const suspendUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const reactivateUser = async (req, res) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user.",
+      });
+    }
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, isSuspended: true },
+      {
+        $set: {
+          isSuspended: false,
+          suspendedAt: null,
+          suspendedBy: null,
+        },
+      },
+      { returnDocument: "after" }
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Suspended user account not found.",
+      });
+    }
+    res.status(200).json({ success: true, message: "Account reactivated." });
+  } catch (error) {
+    console.error("Admin reactivate user error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
