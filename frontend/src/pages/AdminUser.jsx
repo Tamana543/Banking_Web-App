@@ -2,11 +2,20 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import TransactionSkeleton from "../components/common/TransactionSkeleton";
-import { getAllUsers } from "../api/adminApi";
+import ActionModal from "../components/common/ActionModel";
+import useApiAction from "../hooks/useApiAction";
+import { getAllUsers, suspendUser, reactivateUser, unlockUser } from "../api/adminApi";
 import { useToast } from "../context/ToastContext";
 import handleApiError from "../util/handleApiError";
 import "../styles/dashboard/dashboard.css";
 import "../styles/recent-transacrions.css";
+
+const ACTIONS = {
+  suspend: { title: "Suspend Account", submitText: "Suspend", success: "Account suspended.", run: suspendUser, warning: "They will be signed out immediately and cannot log in until you reactivate the account.", },
+  reactivate: { title: "Reactivate Account", submitText: "Reactivate", success: "Account reactivated.", run: reactivateUser, warning: "They will be able to log in again.", },
+  unlock: { title: "Unlock Account", submitText: "Unlock", success: "Account unlocked.", run: unlockUser, warning: "This clears the login and PIN lockouts so they can try again right away.", },
+};
+
 function AdminUsers() {
   const { showToast } = useToast();
   const [users, setUsers] = useState([]);
