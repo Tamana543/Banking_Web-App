@@ -84,8 +84,43 @@ function AdminUsers() {
                   </small>
                   <small className="transaction-reference">Role: {u.role}</small>
                 </div>
-                <div className="transaction-right">
+                                <div className="transaction-right">
                   <strong>${Number(u.balance).toLocaleString()}</strong>
+                  <span className={`transaction-status ${getStatus(u).className}`}>
+                    {getStatus(u).label}
+                  </span>
+                  {u.role === "user" && (
+                    <div className="admin-loan-actions">
+                      {u.isSuspended ? (
+                        <button
+                          type="button"
+                          className="submit-btn"
+                          onClick={() => setSelected({ user: u, action: "reactivate" })}
+                        >
+                          Reactivate
+                        </button>
+                      ) : (
+                        <>
+                          {getStatus(u).label === "Locked" && (
+                            <button
+                              type="button"
+                              className="submit-btn"
+                              onClick={() => setSelected({ user: u, action: "unlock" })}
+                            >
+                              Unlock
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            className="cancel-btn"
+                            onClick={() => setSelected({ user: u, action: "suspend" })}
+                          >
+                            Suspend
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
