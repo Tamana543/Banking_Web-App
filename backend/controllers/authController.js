@@ -155,6 +155,11 @@ export const loginUser = async (req, res) => {
     user.failedLoginAttempts = 0;
     user.isLocked = false;
     user.lockUntil = null;
+    if (user.isSuspended) {
+      return res.status(403).json({
+        message: "Your account has been suspended. Please contact support.",
+      });
+    }
     user.lastLogin = new Date();
     await user.save();
     const token = generateToken(user);

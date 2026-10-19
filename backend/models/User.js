@@ -87,6 +87,19 @@ const userSchema = new mongoose.Schema(
                default: 0,
                select: false,
           },
+          isSuspended: {
+               type: Boolean,
+               default: false,
+          },
+          suspendedAt: {
+               type: Date,
+               default: null,
+          },
+          suspendedBy: {
+               type: mongoose.Schema.Types.ObjectId,
+               ref: "User",
+               default: null,
+          },
      }, {
           timestamps :true
      }
