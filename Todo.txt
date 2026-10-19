@@ -243,7 +243,7 @@ phase 13 — Admin Dashboard
 * View all users ✔️  
 * View all loans ( and approval, updated the loan to * show as apprved stats or rejected)  ✔️
 * View all transactions (✔️)
-* User management
+* User management (suspend, unlocking locked accounts, suspend message)
 * Account management
 * Dashboard statistics
 * Platform analytics
