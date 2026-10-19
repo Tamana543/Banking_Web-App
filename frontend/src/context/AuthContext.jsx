@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, } from "react";
-import { logoutUser } from "../api/authApi";
+import { logoutUser,getCurrentUser } from "../api/authApi";
 const AuthContext = createContext();
 const getTokenExpiration = (jwtToken) => {
   try {
@@ -46,6 +46,16 @@ export function AuthProvider({ children }) {
       clearAuth();
     }, remainingTime);
   };
+        getCurrentUser()
+        .then((data) => {
+          setUser(data.user);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        })
+        .catch((error) => {
+          if (error.status === 401 || error.status === 403) {
+            clearAuth();
+          }
+        });
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");

@@ -6,9 +6,9 @@ const getToken = () =>
 const parseResponse = async (response,fallbackMessage) => {
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(
-      data.message || fallbackMessage
-    );
+    const error = new Error(data.message || fallbackMessage);
+    error.status = response.status;
+    throw error;
   }
   return data;
 };
