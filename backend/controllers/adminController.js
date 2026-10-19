@@ -268,3 +268,37 @@ export const reactivateUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const unlockUser = async (req, res) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user.",
+      });
+    }
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          isLocked: false,
+          lockUntil: null,
+          failedLoginAttempts: 0,
+          failedPinAttempts: 0,
+          pinLockedUntil: null,
+        },
+      },
+      { returnDocument: "after" }
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    res.status(200).json({ success: true, message: "Account unlocked." });
+  } catch (error) {
+    console.error("Admin unlock user error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
