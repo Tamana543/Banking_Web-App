@@ -56,6 +56,22 @@ export const getAllTransactions = async ({ page = 1, type = "", status = "" } = 
   }
   return data;
 };
+const userAction = async (id, action) => {
+  const response = await fetch(`${API_URL}/users/${id}/${action}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
 
+export const suspendUser = (id) => userAction(id, "suspend");
+export const reactivateUser = (id) => userAction(id, "reactivate");
+export const unlockUser = (id) => userAction(id, "unlock");
 export const approveLoan = (id) => reviewLoan(id, "approve");
 export const rejectLoan = (id) => reviewLoan(id, "reject");
