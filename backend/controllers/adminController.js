@@ -203,3 +203,36 @@ export const getAllTransactions = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const suspendUser = async (req, res) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user.",
+      });
+    }
+    const user = await User.findOneAndUpdate(
+      { _id: req.params.id, role: "user", isSuspended: false },
+      {
+        $set: {
+          isSuspended: true,
+          suspendedAt: new Date(),
+          suspendedBy: req.user._id,
+        },
+        $inc: { sessionVersion: 1 },
+      },
+      { returnDocument: "after" }
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Active user account not found. Admin accounts cannot be suspended.",
+      });
+    }
+    res.status(200).json({ success: true, message: "Account suspended." });
+  } catch (error) {
+    console.error("Admin suspend user error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
