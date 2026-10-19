@@ -127,6 +127,17 @@ function AdminUsers() {
           </div>
         )}
       </section>
+            {selected && (
+        <ActionModal isOpen title={ACTIONS[selected.action].title} submitText={ACTIONS[selected.action].submitText} loading={acting} onClose={() => setSelected(null)} onSubmit={handleAction} >
+          <p>
+            <strong>Account</strong>
+            <br />
+            {selected.user.firstName} {selected.user.lastName} ({selected.user.email})
+          </p>
+          <br />
+          <p>{ACTIONS[selected.action].warning}</p>
+        </ActionModal>
+      )}
     </DashboardLayout>
   );
 }
