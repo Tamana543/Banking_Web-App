@@ -344,6 +344,33 @@ export const getUserDetails = async (req,res)=>{
           .select("name targetAmount currentAmount status")
           .sort({ createdAt: -1 }),
       ]);
+       if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    const stats = {
+      deposit: { count: 0, total: 0 },
+      withdrawal: { count: 0, total: 0 },
+      transfer: { count: 0, total: 0 },
+      loan: { count: 0, total: 0 },
+    };
+    totals.forEach((row) => {
+      if (stats[row._id]) {
+        stats[row._id] = { count: row.count, total: row.total };
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      user,
+      stats,
+      recentTransactions,
+      loans,
+      savingsGoals,
+    });
   } catch (error) {
     console.error("Admin get user details error:", error);
     res.status(500).json({ success: false, message: "Server error." });
