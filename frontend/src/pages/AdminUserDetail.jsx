@@ -19,3 +19,40 @@ const TYPE_LABELS = {
   transfer: "Transfer",
   loan: "Loan",
 };
+const money = (value) => `$${Number(value || 0).toLocaleString()}`;
+const formatDate = (value) => value ? new Date(value).toLocaleString() : "Never";
+
+function AdminUserDetail(){
+const { id } = useParams();
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  const { execute, loading: acting } = useApiAction();
+  const [details, setDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedAction, setSelectedAction] = useState(null);
+
+  const loadDetails = async () => {
+    try {
+      const data = await getUserDetails(id);
+      setDetails(data);
+    } catch (error) {
+      setDetails(null);
+      showToast(handleApiError(error), "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    loadDetails();
+  }, [id]);
+  const handleAction = async () => {
+    await execute(
+      () => ACTIONS[selectedAction].run(id),
+      ACTIONS[selectedAction].success
+    );
+    setSelectedAction(null);
+    await loadDetails();
+  };
+}
