@@ -4,19 +4,18 @@ import DashboardHeader from "../components/dashboard/DashboardHeader";
 import TransactionSkeleton from "../components/common/TransactionSkeleton";
 import ActionModal from "../components/common/ActionModel";
 import useApiAction from "../hooks/useApiAction";
-import { getAllUsers, suspendUser, reactivateUser, unlockUser } from "../api/adminApi";
+import { useNavigate } from "react-router-dom";
+import { getAllUsers } from "../api/adminApi";
+import { ACTIONS, getStatus } from "../util/adminUserActions";
 import { useToast } from "../context/ToastContext";
 import handleApiError from "../util/handleApiError";
 import "../styles/dashboard/dashboard.css";
 import "../styles/recent-transacrions.css";
 
-const ACTIONS = {
-  suspend: { title: "Suspend Account", submitText: "Suspend", success: "Account suspended.", run: suspendUser, warning: "They will be signed out immediately and cannot log in until you reactivate the account.", },
-  reactivate: { title: "Reactivate Account", submitText: "Reactivate", success: "Account reactivated.", run: reactivateUser, warning: "They will be able to log in again.", },
-  unlock: { title: "Unlock Account", submitText: "Unlock", success: "Account unlocked.", run: unlockUser, warning: "This clears the login and PIN lockouts so they can try again right away.", },
-};
+
 
 function AdminUsers() {
+    const navigate = useNavigate();
   const { showToast } = useToast();
   const { execute, loading: acting } = useApiAction();
   const [users, setUsers] = useState([]);
@@ -39,18 +38,7 @@ function AdminUsers() {
     loadUsers();
   }, []);
 
-  const getStatus = (u) => {
-    const now = new Date();
-    if (u.isSuspended) {
-      return { label: "Suspended", className: "rejected" };
-    }
-    const loginLocked = u.isLocked && u.lockUntil && new Date(u.lockUntil) > now;
-    const pinLocked = u.pinLockedUntil && new Date(u.pinLockedUntil) > now;
-    if (loginLocked || pinLocked) {
-      return { label: "Locked", className: "pending" };
-    }
-    return { label: "Active", className: "completed" };
-  };
+ 
 
   const handleAction = async () => {
     const { user, action } = selected;
@@ -84,14 +72,21 @@ function AdminUsers() {
                   </small>
                   <small className="transaction-reference">Role: {u.role}</small>
                 </div>
-                                <div className="transaction-right">
+                <div className="transaction-right">
                   <strong>${Number(u.balance).toLocaleString()}</strong>
                   <span className={`transaction-status ${getStatus(u).className}`}>
                     {getStatus(u).label}
                   </span>
-                  {u.role === "user" && (
-                    <div className="admin-loan-actions">
-                      {u.isSuspended ? (
+                  <div className="admin-loan-actions">
+                    <button
+                      type="button"
+                      className="cancel-btn"
+                      onClick={() => navigate(`/admin/users/${u._id}`)}
+                    >
+                      View
+                    </button>
+                    {u.role === "user" &&
+                      (u.isSuspended ? (
                         <button
                           type="button"
                           className="submit-btn"
@@ -118,9 +113,8 @@ function AdminUsers() {
                             Suspend
                           </button>
                         </>
-                      )}
-                    </div>
-                  )}
+                      ))}
+                  </div>
                 </div>
               </div>
             ))}
