@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import mongoose from "mongoose";
 import Transaction from "../models/Transaction.js";
+import SavingsGoal from "../models/SavingsGoal.js";
 import { isValidObjectId } from "../utils/inputValidation.js";
 const LOAN_STATUSES = ["pending", "approved", "rejected"];
 const TRANSACTION_TYPES = ["deposit", "withdrawal", "transfer", "loan"];
@@ -302,3 +303,49 @@ export const unlockUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const getUserDetails = async (req,res)=>{
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user.",
+      });
+    }
+    const userId = new mongoose.Types.ObjectId(req.params.id);
+
+    const [user, totals, recentTransactions, loans, savingsGoals] =
+      await Promise.all([
+        User.findById(userId).select(
+          "firstName lastName email role balance currency isVerified createdAt lastLogin isSuspended suspendedAt isLocked lockUntil pinLockedUntil"
+        ),
+        Transaction.aggregate([
+          {
+            $match: {
+              user: userId,
+              status: { $in: ["completed", "approved"] },
+            },
+          },
+          {
+            $group: {
+              _id: "$type",
+              count: { $sum: 1 },
+              total: { $sum: "$amount" },
+            },
+          },
+        ]), Transaction.find({ user: userId })
+          .sort({ createdAt: -1 })
+          .limit(10),
+        Transaction.find({ user: userId, type: "loan" })
+          .populate("reviewedBy", "firstName lastName")
+          .sort({ createdAt: -1 })
+          .limit(10),
+        SavingsGoal.find({ user: userId })
+          .select("name targetAmount currentAmount status")
+          .sort({ createdAt: -1 }),
+      ]);
+  } catch (error) {
+    console.error("Admin get user details error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+}
