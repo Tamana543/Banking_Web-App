@@ -259,3 +259,5 @@ const { id } = useParams();
      </DashboardLayout>
   )
 }
+
+export default AdminUserDetail;
