@@ -55,4 +55,38 @@ const { id } = useParams();
     setSelectedAction(null);
     await loadDetails();
   };
+  if (loading) {
+    return (
+      <DashboardLayout>
+        <DashboardHeader />
+        <TransactionSkeleton />
+      </DashboardLayout>
+    );
+  }
+
+  if (!details) {
+    return (
+      <DashboardLayout>
+        <DashboardHeader />
+        <div className="empty-state">
+          <h4>Account not found</h4>
+          <button
+            type="button"
+            className="profile-btn"
+            onClick={() => navigate("/admin/users")}
+          >
+            Back to Users
+          </button>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  const { user: u, stats, recentTransactions, loans, savingsGoals } = details;
+  const status = getStatus(u);
+  return(
+     <DashboardLayout>
+          
+     </DashboardLayout>
+  )
 }
