@@ -244,7 +244,7 @@ phase 13 — Admin Dashboard
 * View all loans ( and approval, updated the loan to * show as apprved stats or rejected)  ✔️
 * View all transactions (✔️)
 * User management (suspend, unlocking locked accounts, suspend message) ✔️
-* Account management (get into accounts informations, suspend reactive and unlock users in their own pages, edit someone's balance)
+* Account management (get into accounts informations, suspend reactive and unlock users in their own pages, edit someone's balance) (all done fix UI of the user's pages : git rid of that long section)
 * Dashboard statistics
 * Platform analytics
 * Loan repayment tracking
