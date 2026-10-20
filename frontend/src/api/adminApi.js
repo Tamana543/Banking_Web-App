@@ -1,6 +1,32 @@
 import { API_BASE_URL } from "../config";
 const API_URL = `${API_BASE_URL}/api/admin`;
 const getToken = () => localStorage.getItem("token");
+const reviewLoan = async (id, action) => {
+  const response = await fetch(`${API_URL}/loans/${id}/${action}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+const userAction = async (id, action) => {
+  const response = await fetch(`${API_URL}/users/${id}/${action}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
 export const getAllUsers = async () => {
   const response = await fetch(`${API_URL}/users?limit=100`, {
     headers: {
@@ -27,20 +53,6 @@ export const getAllLoans = async (status) => {
   return data;
 };
 
-const reviewLoan = async (id, action) => {
-  const response = await fetch(`${API_URL}/loans/${id}/${action}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-  return data;
-};
-
 export const getAllTransactions = async ({ page = 1, type = "", status = "" } = {}) => {
   const params = new URLSearchParams({ page });
   if (type) params.set("type", type);
@@ -56,9 +68,9 @@ export const getAllTransactions = async ({ page = 1, type = "", status = "" } = 
   }
   return data;
 };
-const userAction = async (id, action) => {
-  const response = await fetch(`${API_URL}/users/${id}/${action}`, {
-    method: "PATCH",
+
+export const getUserDetails = async (id) => {
+  const response = await fetch(`${API_URL}/users/${id}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
