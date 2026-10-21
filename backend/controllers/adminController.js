@@ -425,6 +425,43 @@ export const getPlatformStats = async (req, res) => {
         { $group: { _id: null, count: { $sum: 1 }, total: { $sum: "$amount" } } },
       ]),
     ]);
+    const month = {
+      deposit: { count: 0, total: 0 },
+      withdrawal: { count: 0, total: 0 },
+      transfer: { count: 0, total: 0 },
+      loan: { count: 0, total: 0 },
+    };
+    monthAgg.forEach((row) => {
+      if (month[row._id]) {
+        month[row._id] = { count: row.count, total: row.total };
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      users: {
+        total: totalUsers,
+        suspended: suspendedUsers,
+        locked: lockedUsers,
+        newThisMonth: newUsersThisMonth,
+        totalBalance: balanceAgg[0]?.total || 0,
+      },
+      transactions: {
+        total: totalTransactions,
+        today: transactionsToday,
+        month,
+      },
+      loans: {
+        pending: {
+          count: pendingLoanAgg[0]?.count || 0,
+          total: pendingLoanAgg[0]?.total || 0,
+        },
+        approved: {
+          count: approvedLoanAgg[0]?.count || 0,
+          total: approvedLoanAgg[0]?.total || 0,
+        },
+      },
+    });
   } catch (error) {
     console.error("Admin platform stats error:", error);
     res.status(500).json({ success: false, message: "Server error." });
