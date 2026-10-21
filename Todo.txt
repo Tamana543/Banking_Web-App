@@ -245,7 +245,7 @@ phase 13 — Admin Dashboard
 * View all transactions (✔️)
 * User management (suspend, unlocking locked accounts, suspend message) ✔️
 * Account management (get into accounts informations, suspend reactive and unlock users in their own pages, edit someone's balance) (✔️)
-* Dashboard statistics (Users, Money, Activity Loans)
+* Dashboard statistics (Users, Money, Activity Loans) (Users getting loggedout bug fix )
 * Platform analytics
 * Loan repayment tracking
 * Role-based access control (start from here )
