@@ -1,0 +1,27 @@
+.admin-section-title {
+    margin: 30px 0 16px;
+    color: white;
+}
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+.admin-stats-grid .stat-card {
+    margin-bottom: 0;
+}
+.admin-stat-value {
+    color: white;
+    font-size: 1.9rem;
+    font-weight: 700;
+}
+.admin-stat-hint {
+    display: block;
+    margin-top: 6px;
+    color: #9c9c9c;
+}
+.admin-card-btn {
+    margin-top: 14px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+}
