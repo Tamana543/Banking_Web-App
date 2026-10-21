@@ -180,3 +180,34 @@ label {
     color: var(--gold);
     font-weight: 600;
 }
+.profile-page.admin-detail .profile-card {
+    align-self: start;
+    position: sticky;
+    top: 30px;
+}
+.profile-page.admin-detail .profile-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+.profile-page.admin-detail .profile-details .profile-info {
+    min-width: 0;
+}
+.profile-page.admin-detail .profile-details .profile-info:last-child {
+    grid-column: 1 / -1;
+}
+.profile-page.admin-detail .info-row {
+    gap: 16px;
+}
+.profile-page.admin-detail .info-row span {
+    overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+    .profile-page.admin-detail .profile-card {
+        position: static;
+    }
+    .profile-page.admin-detail .profile-details {
+        grid-template-columns: 1fr;
+    }
+}

@@ -87,7 +87,7 @@ const { id } = useParams();
   return(
      <DashboardLayout>
        <DashboardHeader />
-      <section className="profile-page">
+      <section className="profile-page admin-detail">
         <div className="profile-card">
           <h2>{u.firstName} {u.lastName}</h2>
           <p>{u.email}</p>
