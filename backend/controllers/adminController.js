@@ -376,3 +376,16 @@ export const getUserDetails = async (req,res)=>{
     res.status(500).json({ success: false, message: "Server error." });
   }
 }
+
+export const getPlatformStats = async (req, res) => {
+  try {
+     const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const customers = { role: { $ne: "admin" } };
+    const [ totalUsers, suspendedUsers, lockedUsers, newUsersThisMonth, balanceAgg, totalTransactions, transactionsToday, monthAgg, pendingLoanAgg, approvedLoanAgg, ] = ;
+  } catch (error) {
+    console.error("Admin platform stats error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+}
