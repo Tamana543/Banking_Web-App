@@ -81,6 +81,18 @@ export const getUserDetails = async (id) => {
   }
   return data;
 };
+export const getPlatformStats = async () => {
+  const response = await fetch(`${API_URL}/stats`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
 
 export const suspendUser = (id) => userAction(id, "suspend");
 export const reactivateUser = (id) => userAction(id, "reactivate");
