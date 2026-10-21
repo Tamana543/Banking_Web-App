@@ -383,7 +383,48 @@ export const getPlatformStats = async (req, res) => {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const customers = { role: { $ne: "admin" } };
-    const [ totalUsers, suspendedUsers, lockedUsers, newUsersThisMonth, balanceAgg, totalTransactions, transactionsToday, monthAgg, pendingLoanAgg, approvedLoanAgg, ] = ;
+    const [ totalUsers, suspendedUsers, lockedUsers, newUsersThisMonth, balanceAgg, totalTransactions, transactionsToday, monthAgg, pendingLoanAgg, approvedLoanAgg, ] = await Promise.all([
+      User.countDocuments(customers),
+      User.countDocuments({ ...customers, isSuspended: true }),
+      User.countDocuments({
+        ...customers,
+        isSuspended: false,
+        $or: [
+          { lockUntil: { $gt: now } },
+          { pinLockedUntil: { $gt: now } },
+        ],
+      }),
+      User.countDocuments({ ...customers, createdAt: { $gte: startOfMonth } }),
+      User.aggregate([
+        { $match: customers },
+        { $group: { _id: null, total: { $sum: "$balance" } } },
+      ]),
+      Transaction.countDocuments(),
+      Transaction.countDocuments({ createdAt: { $gte: startOfToday } }),
+      Transaction.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: startOfMonth },
+            status: { $in: ["completed", "approved"] },
+          },
+        },
+        {
+          $group: {
+            _id: "$type",
+            count: { $sum: 1 },
+            total: { $sum: "$amount" },
+          },
+        },
+      ]),
+      Transaction.aggregate([
+        { $match: { type: "loan", status: "pending" } },
+        { $group: { _id: null, count: { $sum: 1 }, total: { $sum: "$amount" } } },
+      ]),
+      Transaction.aggregate([
+        { $match: { type: "loan", status: "approved" } },
+        { $group: { _id: null, count: { $sum: 1 }, total: { $sum: "$amount" } } },
+      ]),
+    ]);
   } catch (error) {
     console.error("Admin platform stats error:", error);
     res.status(500).json({ success: false, message: "Server error." });
