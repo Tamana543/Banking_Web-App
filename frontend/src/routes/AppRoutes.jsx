@@ -17,6 +17,7 @@ import AdminUsers from "../pages/AdminUser";
 import AdminLoans from "../pages/AdminLoans";
 import AdminTransactions from "../pages/AdminTransactions";
 import AdminUserDetail from "../pages/AdminUserDetail";
+import AdminDashboard from "../pages/AdminDashboard";
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> } />
         <Route path="/transactions" element={ <ProtectedRoute><Transactions /></ProtectedRoute>} />
         <Route path="/transfer" element={<ProtectedRoute><Transfer/></ProtectedRoute>}/>

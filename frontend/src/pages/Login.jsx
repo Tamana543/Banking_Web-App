@@ -66,7 +66,7 @@ function Login() {
         "Welcome back!",
         "success"
       );
-            navigate(data.user.role === "admin" ? "/admin/users" : "/dashboard");
+      navigate(data.user.role === "admin" ? "/admin" : "/dashboard");
     } catch (error) {
       const errorMessage = handleApiError(error);
       setErrors((prev) => ({

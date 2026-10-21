@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText,Gauge } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
@@ -40,6 +40,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
         <nav className={`sidebar-nav ${user?.role === "admin" ? "sidebar-nav-compact" : ""}`} aria-label="Main navigation">
                               {user?.role === "admin" && (
             <>
+                          <NavLink to="/admin" end onClick={() => setSidebarOpen(false)}>
+                <Gauge size={20} aria-hidden="true" />
+                <span>Overview</span>
+              </NavLink>
               <NavLink to="/admin/users" onClick={() => setSidebarOpen(false)}>
                 <ShieldCheck size={20} aria-hidden="true" />
                 <span>Users</span>
