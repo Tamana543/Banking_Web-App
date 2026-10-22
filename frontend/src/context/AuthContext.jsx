@@ -46,16 +46,6 @@ export function AuthProvider({ children }) {
       clearAuth();
     }, remainingTime);
   };
-        getCurrentUser()
-        .then((data) => {
-          setUser(data.user);
-          localStorage.setItem("user", JSON.stringify(data.user));
-        })
-        .catch((error) => {
-          if (error.status === 401 || error.status === 403) {
-            clearAuth();
-          }
-        });
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
@@ -75,6 +65,16 @@ export function AuthProvider({ children }) {
       setUser(parsedUser);
       setToken(storedToken);
       startLogoutTimer(storedToken);
+      getCurrentUser()
+        .then((data) => {
+          setUser(data.user);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        })
+        .catch((error) => {
+          if (error.status === 401 || error.status === 403) {
+            clearAuth();
+          }
+        });
     } catch {
       clearAuth();
     }
@@ -97,7 +97,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{ user, token, login, logout, setUser, authLoading, }} > {children} </AuthContext.Provider>
   );
 }
-  const logout = async () => {
+const logout = async () => {
     try {
       await logoutUser();
     } catch {}
