@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ResponsiveContainer, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, } from "recharts";
+import {ResponsiveContainer,BarChart,Bar,LineChart,Line,PieChart,Pie,Cell,XAxis,YAxis,CartesianGrid,Tooltip,Legend,} from "recharts";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { getPlatformAnalytics } from "../api/adminApi";
@@ -24,8 +24,8 @@ function AdminAnalytics() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-      const loadAnalytics = async () => {
+  useEffect(() => {
+    const loadAnalytics = async () => {
       try {
         setLoading(true);
         const result = await getPlatformAnalytics(days);
@@ -61,6 +61,31 @@ function AdminAnalytics() {
       </DashboardLayout>
     );
   }
+
+  const { series, typeCounts, loans } = data;
+
+  const totalNewUsers = series.reduce((sum, row) => sum + row.newUsers, 0);
+  const totalMoved = series.reduce(
+    (sum, row) => sum + row.deposits + row.withdrawals + row.transfers,
+    0
+  );
+  const totalTransactions = Object.values(typeCounts).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+
+  const typeData = [
+    { name: "Deposits", value: typeCounts.deposit },
+    { name: "Withdrawals", value: typeCounts.withdrawal },
+    { name: "Transfers", value: typeCounts.transfer },
+    { name: "Loans", value: typeCounts.loan },
+  ].filter((item) => item.value > 0);
+
+  const loanData = [
+    { name: "Pending", value: loans.pending.count },
+    { name: "Approved", value: loans.approved.count },
+    { name: "Rejected", value: loans.rejected.count },
+  ].filter((item) => item.value > 0);
 
   return (
     <DashboardLayout>
@@ -167,5 +192,6 @@ function AdminAnalytics() {
       </section>
     </DashboardLayout>
   );
-  
 }
+
+export default AdminAnalytics;

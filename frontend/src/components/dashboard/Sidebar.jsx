@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText,Gauge } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText,Gauge,TrendingUp } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
@@ -55,6 +55,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
                             <NavLink to="/admin/transactions" className="nav-tight" onClick={() => setSidebarOpen(false)}>
                 <ReceiptText size={20} aria-hidden="true" />
                 <span>All Transactions</span>
+              </NavLink>
+                            <NavLink to="/admin/analytics" onClick={() => setSidebarOpen(false)}>
+                <TrendingUp size={20} aria-hidden="true" />
+                <span>Trends</span>
               </NavLink>
             </>
           )}
