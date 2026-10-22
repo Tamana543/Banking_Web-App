@@ -253,6 +253,7 @@ phase 13 — Admin Dashboard
 * Admin role
 * Admin-only API routes
 * Admin-only frontend routes
+* Create an admin folder in pages and seperate all admin UIs 
 
 phase 14 — Export Features
 * Download account statement
