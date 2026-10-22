@@ -521,6 +521,55 @@ export const getPlatformAnalytics = async (req, res) => {
         },
       ]),
     ]);
+     const series = [];
+    for (let i = 0; i < days; i++) {
+      const d = new Date(since);
+      d.setUTCDate(since.getUTCDate() + i);
+      series.push({
+        date: d.toISOString().slice(0, 10),
+        newUsers: 0,
+        deposits: 0,
+        withdrawals: 0,
+        transfers: 0,
+      });
+    }
+    const indexByDate = Object.fromEntries(
+      series.map((row, i) => [row.date, i])
+    );
+
+    signups.forEach((row) => {
+      const i = indexByDate[row._id];
+      if (i !== undefined) series[i].newUsers = row.count;
+    });
+
+    const seriesKey = {
+      deposit: "deposits",
+      withdrawal: "withdrawals",
+      transfer: "transfers",
+    };
+    const typeCounts = { deposit: 0, withdrawal: 0, transfer: 0, loan: 0 };
+    moved.forEach((row) => {
+      const i = indexByDate[row._id.day];
+      if (i !== undefined && seriesKey[row._id.type]) {
+        series[i][seriesKey[row._id.type]] = row.total;
+      }
+      if (typeCounts[row._id.type] !== undefined) {
+        typeCounts[row._id.type] += row.count;
+      }
+    });
+
+    const loans = {
+      pending: { count: 0, total: 0 },
+      approved: { count: 0, total: 0 },
+      rejected: { count: 0, total: 0 },
+    };
+    loanStatuses.forEach((row) => {
+      if (loans[row._id]) {
+        loans[row._id] = { count: row.count, total: row.total };
+      }
+    });
+
+    res.status(200).json({ success: true, days, series, typeCounts, loans });
   }catch (error) {
     console.error("Admin platform analytics error:", error);
     res.status(500).json({ success: false, message: "Server error." });
