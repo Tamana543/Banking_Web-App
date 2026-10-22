@@ -6,6 +6,7 @@ import { isValidObjectId } from "../utils/inputValidation.js";
 const LOAN_STATUSES = ["pending", "approved", "rejected"];
 const TRANSACTION_TYPES = ["deposit", "withdrawal", "transfer", "loan"];
 const TRANSACTION_STATUSES = ["pending", "completed", "failed", "approved", "rejected"];
+const ALLOWED_RANGES = [7, 30, 90];
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -464,6 +465,64 @@ export const getPlatformStats = async (req, res) => {
     });
   } catch (error) {
     console.error("Admin platform stats error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+}
+
+export const getPlatformAnalytics = async (req, res) => {
+  try {
+    const days = Number(req.query.days ?? 30);
+    if (!ALLOWED_RANGES.includes(days)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid range.",
+      });
+    }
+    const since = new Date();
+    since.setUTCHours(0, 0, 0, 0);
+    since.setUTCDate(since.getUTCDate() - (days - 1));
+
+    const dayExpr = {
+      $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+    };
+    const [signups, moved, loanStatuses] = await Promise.all([
+      User.aggregate([
+        {
+          $match: {
+            role: { $ne: "admin" },
+            createdAt: { $gte: since },
+          },
+        },
+        { $group: { _id: dayExpr, count: { $sum: 1 } } },
+      ]),
+      Transaction.aggregate([
+        {
+          $match: {
+            createdAt: { $gte: since },
+            status: { $in: ["completed", "approved"] },
+          },
+        },
+        {
+          $group: {
+            _id: { day: dayExpr, type: "$type" },
+            total: { $sum: "$amount" },
+            count: { $sum: 1 },
+          },
+        },
+      ]),
+      Transaction.aggregate([
+        { $match: { type: "loan", createdAt: { $gte: since } } },
+        {
+          $group: {
+            _id: "$status",
+            count: { $sum: 1 },
+            total: { $sum: "$amount" },
+          },
+        },
+      ]),
+    ]);
+  }catch (error) {
+    console.error("Admin platform analytics error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
 }
