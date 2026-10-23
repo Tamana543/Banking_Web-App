@@ -6,14 +6,17 @@ import ActionModal from "../components/common/ActionModel";
 import useApiAction from "../hooks/useApiAction";
 import useTransactions from "../hooks/useTransactions";
 import { useToast } from "../context/ToastContext";
-import { applyLoan } from "../api/transactionApi";
-import {
-  isPositiveNumber,
-  isEmpty,
-} from "../util/validation";
+import { applyLoan,repayLoan } from "../api/transactionApi";
+import { useAuth } from "../context/AuthContext";
+import { isPositiveNumber, isEmpty, } from "../util/validation";
+
 import "../styles/loan.css";
 function Loan() {
   const { showToast } = useToast();
+    const { setUser } = useAuth();
+  const [repayAmount, setRepayAmount] = useState("");
+  const [repayPin, setRepayPin] = useState("");
+  const [showRepay, setShowRepay] = useState(false);
   const [loanAmount, setLoanAmount] =
     useState("");
   const [purpose, setPurpose] =
@@ -30,6 +33,12 @@ function Loan() {
     execute,
     loading,
   } = useApiAction();
+    const activeLoan = transactions.find(
+    (t) => t.type === "loan" && t.status === "approved" && !t.repaidAt
+  );
+  const owed = activeLoan
+    ? Math.round((activeLoan.amount - (activeLoan.repaidAmount || 0)) * 100) / 100
+    : 0;
   const openConfirmation = () => {
     if (!isPositiveNumber(loanAmount)) {
       showToast(
