@@ -416,6 +416,69 @@ export const repayLoan = async (req,res) => {
         message: "Please provide a valid amount.",
       });
     }
+    session.startTransaction();
+    const loan = await Transaction.findOne({
+      user: req.user._id,
+      type: "loan",
+      status: "approved",
+      repaidAt: null,
+    }).session(session);
+    if (!loan) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "You have no active loan to repay.",
+      });
+    }
+    const remaining =
+      Math.round((loan.amount - loan.repaidAmount) * 100) / 100;
+    if (amountNumber > remaining) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: `You only owe $${remaining.toFixed(2)}.`,
+      });
+    }
+    const user = await User.findById(req.user._id).session(session);
+    if (user.balance < amountNumber) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+    user.balance = Math.round((user.balance - amountNumber) * 100) / 100;
+    loan.repaidAmount =
+      Math.round((loan.repaidAmount + amountNumber) * 100) / 100;
+    const fullyRepaid = loan.repaidAmount >= loan.amount;
+    if (fullyRepaid) {
+      loan.repaidAmount = loan.amount;
+      loan.repaidAt = new Date();
+    }
+    await user.save({ session });
+    await loan.save({ session });
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "withdrawal",
+          amount: amountNumber,
+          description: fullyRepaid
+            ? "Loan repayment (paid in full)"
+            : "Loan repayment",
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message: fullyRepaid ? "Loan fully repaid." : "Repayment successful.",
+      balance: user.balance,
+      loan,
+      transaction,
+    });
   } catch (error) {
     if (session.inTransaction()) {
       await session.abortTransaction();
