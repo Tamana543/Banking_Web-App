@@ -78,3 +78,18 @@ export const applyLoan = async ( amount, purpose, pin ) => {
   }
   return data;
 };
+export const repayLoan = async (amount, pin) => {
+  const response = await fetch(`${API_URL}/loan/repay`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ amount, pin }),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
