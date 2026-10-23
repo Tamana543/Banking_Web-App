@@ -398,3 +398,34 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
     session.endSession();
   }
 }
+
+export const repayLoan = async (req,res) => {
+   const session = await mongoose.startSession();
+  try {
+     const { amount } = req.body;
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    const amountNumber = Math.round(Number(amount) * 100) / 100;
+    if (amountNumber <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+  } catch (error) {
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    console.error("Repay Loan Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
