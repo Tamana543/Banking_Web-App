@@ -38,15 +38,22 @@ export const getAllUsers = async (req, res) => {
 
 export const getAllLoans = async (req, res) => {
   try {
-    const filter = { type: "loan" };
-    if (req.query.status !== undefined) {
-      if (!LOAN_STATUSES.includes(req.query.status)) {
+      const status = req.query.status;
+    if (status !== undefined) {
+      if (status === "outstanding") {
+        filter.status = "approved";
+        filter.repaidAt = null;
+      } else if (status === "repaid") {
+        filter.status = "approved";
+        filter.repaidAt = { $ne: null };
+      } else if (LOAN_STATUSES.includes(status)) {
+        filter.status = status;
+      } else {
         return res.status(400).json({
           success: false,
           message: "Invalid status filter.",
         });
       }
-      filter.status = req.query.status;
     }
     const loans = await Transaction.find(filter)
       .populate("user", "firstName lastName email")
@@ -425,6 +432,20 @@ export const getPlatformStats = async (req, res) => {
         { $match: { type: "loan", status: "approved" } },
         { $group: { _id: null, count: { $sum: 1 }, total: { $sum: "$amount" } } },
       ]),
+            Transaction.aggregate([
+        { $match: { type: "loan", status: "approved", repaidAt: null } },
+        {
+          $group: {
+            _id: null,
+            count: { $sum: 1 },
+            total: {
+              $sum: {
+                $subtract: ["$amount", { $ifNull: ["$repaidAmount", 0] }],
+              },
+            },
+          },
+        },
+      ]),
     ]);
     const month = {
       deposit: { count: 0, total: 0 },
@@ -460,6 +481,10 @@ export const getPlatformStats = async (req, res) => {
         approved: {
           count: approvedLoanAgg[0]?.count || 0,
           total: approvedLoanAgg[0]?.total || 0,
+        },
+        outstanding: {
+          count: outstandingLoanAgg[0]?.count || 0,
+          total: outstandingLoanAgg[0]?.total || 0,
         },
       },
     });
