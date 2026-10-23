@@ -77,9 +77,9 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
                 new Date(
                   transaction.createdAt
                 ).toLocaleString();
+              const isRepaidLoan = transaction.type === "loan" && transaction.repaidAt;
+              const displayStatus = isRepaidLoan ? "repaid" : transaction.status;
               return (
-                // < 
-                // >
                 <div key={transaction._id}  className="transaction-item" onClick={() => openDetails(transaction) } aria-label={`View details for ${category.label}: ${transaction.description}`}>
                   <div className="transaction-main">
                     <div className="transaction-category">
@@ -98,10 +98,8 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
                     </small>
                   </div>
                   <div className="transaction-right">
-                    <p
-                      className={`transaction-status ${transaction.status.toLowerCase()}`}
-                    >
-                      {transaction.status}
+                    <p                       className={`transaction-status ${isRepaidLoan ? "completed" : transaction.status.toLowerCase()}`}>
+                      {displayStatus}
                     </p>
                     <strong>
                       ${transaction.amount}
