@@ -3,9 +3,9 @@ Keep in mind:
 do not forget to update the IP access of the MongoDB
 
 phase 1 — Project Foundation
-* Configure Vercel deployment
-* Configure Render deployment
-* fix the QR code url to deploy too it is now setted in loacal host
+* Configure Vercel deployment (set VITE_API_URL to the Render backend URL in Vercel's environment variables)
+* Configure Render deployment (set CLIENT_URL to the Vercel URL, no trailing slash; keep "trust proxy" on)
+* fix the QR code url to deploy too it is now setted in loacal host (check first: the receipt QR now holds receipt data, not a localhost link, so this may already be fine)
 * lazyloading feature
 * Connect MongoDB Atlas database✔️
 * Configure environment variables ✔️
@@ -17,7 +17,7 @@ phase 1 — Project Foundation
 
 phase 2 — Core Integration
 * Create responsive navigation
-* Finalize Protected Routes
+* Finalize Protected Routes ✔️
 * Create separate Login page ✔️
 * Create separate Register page ✔️
 * Create separate Dashboard page✔️
@@ -81,7 +81,7 @@ phase 6 — Transfers✔️
 
 phase 7 — Loans
 * Loan request system ✔️
-* Loan request improvements
+* Loan request improvements ✔️
 * Loan history section ✔️
 * Loan approval/loading animation ✔️
 * Pending loan status ✔️
@@ -102,7 +102,7 @@ phase 9 — Profile
 * Display user information ✔️
 * Member since ✔️
 * Profile picture ✔️
-* Upload avatar ✔️ ( see 12.10 — currently broken, route has no multer middleware)
+* Upload avatar ✔️
 * Edit profile ✔️
 * Change password ✔️
 * Success notifications ✔️
@@ -120,7 +120,7 @@ phase 10 — Notifications & UX
 
 Phase 10.5
 * settings page (Notifications and Banking performance will be added next ) ✔️
-* remove duplicated code ✔️ ( see 12.10/12.11 — audit found several leftover duplicate files, not fully done)
+* remove duplicated code ✔️
 * reusable components ✔️ 
 * improve UI consistency ✔️  
 * animations ✔️ 
@@ -159,7 +159,7 @@ Phase 12 — Security & Authentication
 * PIN validation ✔️
 * Secure PIN storage ✔️ 
 * Server-side PIN verification ✔️ 
-* Sensitive-action PIN protection ✔️ ( see 12.10 — one route breaks this: savings-goals/:id/contribute has no PIN check)
+* Sensitive-action PIN protection ✔️
 * Failed-attempt protection ✔️ 
 * Rate limiting ✔️
 * frontend pin integration ✔️
@@ -174,21 +174,21 @@ Phase 12 — Security & Authentication
 * Protected-route revalidation ✔️
 * Client token cleanup ✔️
 * Prevent authenticated UI restoration ✔️
-* Verify API rejection after logout ✔️ ( see 12.10 — logout doesn't bump sessionVersion, so a captured token still works after "logout" until it expires)
+* Verify API rejection after logout ✔️
 12.7 API Security Hardening
 * Input validation ✔️
 * Rate limiting ✔️
 * CORS review ✔️ 
 * Security headers ✔️
 * Error exposure review ✔️ 
-* HTTP status-code review
-* Environment/secrets audit — see 12.10, .env is not in .gitignore
+* HTTP status-code review ✔️
+* Environment/secrets audit ✔️
 12.8 Existing Feature Security Audit
 * Transactions ✔️
 * Transfers ✔️
 * Loans ✔️
 * Savings Goals ✔️
-* Savings Contributions ✔️ exploit found
+* Savings Contributions ✔️ (exploit found and fixed)
 * Profile ✔️
 * Password Change ✔️
 * PIN-protected actions ✔️
@@ -200,7 +200,7 @@ Phase 12 — Security & Authentication
 * Test invalid PIN ✔️
 * Test invalid password ✔️
 * Test malformed requests ✔️ 
-* Test Admin/User permissions ( latter )
+* Test Admin/User permissions (ready now, admin accounts exist: normal user on every /api/admin route = 403, no token = 401, admin = 200, normal user on /admin pages = redirect)
 
 12.10 — Backend Fixes
 work through in this order — top of list first:
@@ -218,7 +218,7 @@ work through in this order — top of list first:
 *   Delete controllers/uploadController.js — unused duplicate of authController.uploadAvatar, has leftover console.logs✔️
 *   If validateRegister.js is kept instead of deleted: add try/catch around the User.findOne call, and remove the console.log("Existing user:", existingUser) debug line ✔️
 *   Add a file size limit (limits: { fileSize }) to uploadMiddleware.js's multer config  ✔️
-*   Change addMoneyToSavingsGoal's recorded transaction type from "withdrawal" to something savings-specific, so Analytics categories stay accurate ✔️
+*   Change addMoneyToSavingsGoal's recorded transaction type from "withdrawal" to something savings-specific, so Analytics categories stay accurate (skipped on purpose to keep things simple — savings contributions still show as withdrawals)
 *   Add a length cap to the loan purpose field (like isValidText's 500-char limit used elsewhere) ✔️
 *   Add min: 0 to User.balance in the schema as defense-in-depth ✔️
 *   Consider bumping sessionVersion on logout too (not just password change), so a captured/stolen token can't keep working after the user logs out ✔️
@@ -233,10 +233,19 @@ work through in this order — top of list first:
 *   Fix StatsCards.jsx: the "Transactions" count is run through currency formatting (shows "$12.00" instead of "12"); also fix the "Total Deposits" card using a bare <> fragment instead of <h3> like its sibling cards ✔️
 *   Delete components/ProtectedRoute.jsx — unused duplicate of routes/ProtectedRoute.jsx (the one actually wired into AppRoutes.jsx) ✔️
 *   Delete components/common/AlertMessage.jsx — unused, superseded by the Toast system ✔️
-*   Consolida(appears in authApi.js, transactionApi.js, ) ✔️
+*   Replace the hardcoded http://localhost:5000 (authApi.js, transactionApi.js, savingsGoalApi.js, Profile.jsx, DashboardHeader.jsx) with one shared config (src/config.js + VITE_API_URL) ✔️
 *   Fix typo "First me is required." → "First name is required." in Register.jsx ✔️
 *   index.html references /favicon.svg, which doesn't exist anywhere in the project — add a real favicon or fix the reference✔️ 
 
+12.12 — Follow-ups (found along the way)
+
+*   Rotate JWT_SECRET and the MongoDB password once more — real values were pasted into the chat while debugging
+*   Incoming transfers leave no record for the receiver (only the sender gets a transaction) — the receiver's history, Analytics and admin totals miss that money
+*   Auto-logout in the middle of a session when the server rejects it (401), e.g. after an admin suspends the user — right now the screen only logs out on the next reload (the backend already blocks every request)
+*   Enforce one active loan per user at the database level (two requests at the exact same moment could both pass the check)
+*   Admin audit log (who suspended / unlocked / approved what, and when)
+*   Admin analytics group days in UTC — switch to the local time zone if it matters
+*   Admin Users list loads only the first 100 users — add page buttons if it ever grows
 
 phase 13 — Admin Dashboard
 * Admin authentication ✔️ 
@@ -244,16 +253,17 @@ phase 13 — Admin Dashboard
 * View all loans ( and approval, updated the loan to * show as apprved stats or rejected)  ✔️
 * View all transactions (✔️)
 * User management (suspend, unlocking locked accounts, suspend message) ✔️
-* Account management (get into accounts informations, suspend reactive and unlock users in their own pages, edit someone's balance) (✔️)
+* Account management (get into accounts informations, suspend reactive and unlock users in their own pages) (✔️)
 * Dashboard statistics (Users, Money, Activity Loans) (✔️)
 * Platform analytics (✔️)
-* Loan repayment tracking (✔️)
-* Role-based access control (start from here )
-* User role
-* Admin role
-* Admin-only API routes
-* Admin-only frontend routes
-* Create an admin folder in pages and seperate all admin UIs 
+* Loan repayment tracking (✔️) (flexible partial payments, no interest, PIN-protected)
+* Role-based access control ✔️
+* User role ✔️
+* Admin role ✔️
+* Admin-only API routes ✔️
+* Admin-only frontend routes ✔️
+* Create an admin folder in pages and seperate all admin UIs (AdminUsers, AdminLoans, AdminTransactions, AdminUserDetail, AdminDashboard, AdminAnalytics → pages/admin/, then fix the import paths and AppRoutes)
+* Edit someone's balance (admin balance adjustment — not built on purpose, only after the audit log from 12.12 exists)
 
 phase 14 — Export Features
 * Download account statement
