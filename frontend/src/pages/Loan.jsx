@@ -143,6 +143,32 @@ function Loan() {
           <button type="button" className="loan-btn" onClick={openConfirmation} disabled={loading} > Apply for Loan
           </button>
         </div>
+                {activeLoan && (
+          <div className="loan-card">
+            <h2>Repay Your Loan</h2>
+            <p>
+              You still owe ${owed.toLocaleString()} of $
+              {Number(activeLoan.amount).toLocaleString()}.
+            </p>
+            <input
+              type="number"
+              min="0.01"
+              step="0.01"
+              max={owed}
+              placeholder="Repayment Amount"
+              value={repayAmount}
+              onChange={(e) => setRepayAmount(e.target.value)}
+            />
+            <button
+              type="button"
+              className="loan-btn"
+              onClick={openRepayConfirmation}
+              disabled={loading}
+            >
+              Repay Loan
+            </button>
+          </div>
+        )}
         <TransactionList
           title="Loan History"
           transactions={transactions.filter(
@@ -171,6 +197,18 @@ function Loan() {
           <strong>Transaction PIN</strong>
         </label>
         <input id="loan-pin" type="password" inputMode="numeric" autoComplete="off" maxLength={4} placeholder="Enter 4-digit PIN" value={pin} onChange={(e) => { const value = e.target.value.replace(/\D/g, "").slice(0, 4);setPin(value); }} />
+      </ActionModal>
+            <ActionModal isOpen={showRepay} title="Confirm Loan Repayment" submitText="Repay" loading={loading} onClose={closeRepayConfirmation} onSubmit={handleRepay} >
+        <p>
+          <strong>Repayment Amount</strong>
+          <br />
+          ${Number(repayAmount).toLocaleString()}
+        </p>
+        <br />
+        <label htmlFor="repay-pin">
+          <strong>Transaction PIN</strong>
+        </label>
+        <input id="repay-pin" type="password" inputMode="numeric" autoComplete="off" maxLength={4} placeholder="Enter 4-digit PIN" value={repayPin} onChange={(e) => setRepayPin(e.target.value.replace(/\D/g, "").slice(0, 4)) } />
       </ActionModal>
     </DashboardLayout>
   );
