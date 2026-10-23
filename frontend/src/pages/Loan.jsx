@@ -86,6 +86,49 @@ function Loan() {
     setShowConfirm(false);
     await loadTransactions();
   };
+    const openRepayConfirmation = () => {
+    if (!isPositiveNumber(repayAmount)) {
+      showToast("Enter a valid repayment amount.", "error");
+      return;
+    }
+    if (Number(repayAmount) > owed) {
+      showToast(`You only owe $${owed.toLocaleString()}.`, "error");
+      return;
+    }
+    setRepayPin("");
+    setShowRepay(true);
+  };
+  const closeRepayConfirmation = () => {
+    if (loading) return;
+    setShowRepay(false);
+    setRepayPin("");
+  };
+  const handleRepay = async () => {
+    if (!/^\d{4}$/.test(repayPin)) {
+      showToast("PIN must contain exactly 4 digits.", "error");
+      return;
+    }
+    const data = await execute(
+      () => repayLoan(Number(repayAmount), repayPin),
+      "Repayment successful."
+    );
+    if (!data) return;
+    setUser((currentUser) => ({
+      ...currentUser,
+      balance: data.balance,
+    }));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...JSON.parse(storedUser), balance: data.balance })
+      );
+    }
+    setRepayAmount("");
+    setRepayPin("");
+    setShowRepay(false);
+    await loadTransactions();
+  };
   return (
     <DashboardLayout>
       <DashboardHeader />
