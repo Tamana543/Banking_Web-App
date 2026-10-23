@@ -38,6 +38,7 @@ export const getAllUsers = async (req, res) => {
 
 export const getAllLoans = async (req, res) => {
   try {
+      const filter = { type: "loan" };
       const status = req.query.status;
     if (status !== undefined) {
       if (status === "outstanding") {
@@ -391,7 +392,7 @@ export const getPlatformStats = async (req, res) => {
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const customers = { role: { $ne: "admin" } };
-    const [ totalUsers, suspendedUsers, lockedUsers, newUsersThisMonth, balanceAgg, totalTransactions, transactionsToday, monthAgg, pendingLoanAgg, approvedLoanAgg, ] = await Promise.all([
+    const [ totalUsers, suspendedUsers, lockedUsers, newUsersThisMonth, balanceAgg, totalTransactions, transactionsToday, monthAgg, pendingLoanAgg, approvedLoanAgg,outstandingLoanAgg ] = await Promise.all([
       User.countDocuments(customers),
       User.countDocuments({ ...customers, isSuspended: true }),
       User.countDocuments({
