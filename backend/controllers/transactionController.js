@@ -242,10 +242,13 @@ export const applyLoan = async(req,res)=>{
         }
         // if there is an other loan do not give the new one
          const activeLoan =
-            await Transaction.findOne({
+              await Transaction.findOne({
                 user: userId,
                 type: "loan",
-                status: { $in: ["pending", "approved"] },
+                $or: [
+                    { status: "pending" },
+                    { status: "approved", repaidAt: null },
+                ],
             }).session(session);
         if (activeLoan) {
             await session.abortTransaction();

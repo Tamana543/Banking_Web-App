@@ -44,6 +44,15 @@ const transactionSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    repaidAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    repaidAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
