@@ -247,7 +247,7 @@ phase 13 — Admin Dashboard
 * Account management (get into accounts informations, suspend reactive and unlock users in their own pages, edit someone's balance) (✔️)
 * Dashboard statistics (Users, Money, Activity Loans) (✔️)
 * Platform analytics (✔️)
-* Loan repayment tracking
+* Loan repayment tracking (Flexible repayments, status, PIN, construction safety , User side, Admin side)
 * Role-based access control (start from here )
 * User role
 * Admin role
