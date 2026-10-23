@@ -192,8 +192,12 @@ const { id } = useParams();
             ) : (
               loans.map((loan) => (
                 <div key={loan._id} className="info-row">
-                  <span>{loan.description} ({loan.status})</span>
-                  <strong>{money(loan.amount)}</strong>
+                  <span>
+                    {loan.description} ({loan.status}
+                    {loan.status === "approved"
+                      ? `, repaid ${money(loan.repaidAmount)}`
+                      : ""})
+                  </span>                  <strong>{money(loan.amount)}</strong>
                 </div>
               ))
             )}

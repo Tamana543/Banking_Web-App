@@ -59,6 +59,8 @@ function AdminLoans() {
           >
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
+            <option value="outstanding">Outstanding</option>
+            <option value="repaid">Repaid</option>
             <option value="rejected">Rejected</option>
             <option value="">All</option>
           </select>
@@ -85,6 +87,12 @@ function AdminLoans() {
                   {loan.reviewedBy && (
                     <small className="transaction-reference">
                       Reviewed by {loan.reviewedBy.firstName} {loan.reviewedBy.lastName}
+                    </small>
+                  )}
+                  {loan.status === "approved" && (
+                    <small className="transaction-reference">
+                      Repaid ${Number(loan.repaidAmount || 0).toLocaleString()} of ${Number(loan.amount).toLocaleString()}
+                      {loan.repaidAt ? " · fully repaid" : ""}
                     </small>
                   )}
                 </div>

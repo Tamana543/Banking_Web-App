@@ -112,6 +112,11 @@ function AdminDashboard() {
               value={money(stats.loans.approved.total)}
               hint={`${stats.loans.approved.count} loans approved`}
             />
+            <StatCard
+              label="Outstanding loans"
+              value={money(stats.loans.outstanding.total)}
+              hint={`${stats.loans.outstanding.count} loans being repaid`}
+            />
           </div>
         </>
       )}
