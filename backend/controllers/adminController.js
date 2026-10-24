@@ -19,6 +19,7 @@ const LOAN_STATUSES = ["pending", "approved", "rejected"];
 const TRANSACTION_TYPES = ["deposit", "withdrawal", "transfer", "loan"];
 const TRANSACTION_STATUSES = ["pending", "completed", "failed", "approved", "rejected"];
 const ALLOWED_RANGES = [7, 30, 90];
+const AUDIT_ACTIONS = [ "loan_approved", "loan_rejected", "user_suspended", "user_reactivated", "user_unlocked",];
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -646,3 +647,42 @@ export const getPlatformAnalytics = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 }
+
+export const getAuditLogs = async (req, res) => {
+  try {
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+    const filter = {};
+
+    if (req.query.action !== undefined) {
+      if (!AUDIT_ACTIONS.includes(req.query.action)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid action filter.",
+        });
+      }
+      filter.action = req.query.action;
+    }
+
+    const [logs, total] = await Promise.all([
+      AuditLog.find(filter)
+        .populate("admin", "firstName lastName email")
+        .populate("targetUser", "firstName lastName email")
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit),
+      AuditLog.countDocuments(filter),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      logs,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    console.error("Admin get audit logs error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
