@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import DashboardLayout from "../components/dashboard/DashboardLayout";
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import TransactionSkeleton from "../components/common/TransactionSkeleton";
-import ActionModal from "../components/common/ActionModel";
-import useApiAction from "../hooks/useApiAction";
+import DashboardLayout from "../../components/dashboard/DashboardLayout";
+import DashboardHeader from "../../components/dashboard/DashboardHeader";
+import TransactionSkeleton from "../../components/common/TransactionSkeleton";
+import ActionModal from "../../components/common/ActionModel";
+import useApiAction from "../../hooks/useApiAction";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../api/adminApi";
-import { ACTIONS, getStatus } from "../util/adminUserActions";
-import { useToast } from "../context/ToastContext";
-import handleApiError from "../util/handleApiError";
+import { getAllUsers } from "../../api/adminApi";
+import { ACTIONS, getStatus } from "../../util/adminUserActions";
+import { useToast } from "../../context/ToastContext";
+import handleApiError from "../../util/handleApiError";
 import "../styles/dashboard/dashboard.css";
 import "../styles/recent-transacrions.css";
 
