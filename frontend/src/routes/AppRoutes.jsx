@@ -15,12 +15,12 @@ import SavingsGoals from "../pages/SavingGoals";
 
 // Admin routes 
 import AdminRoute from "./AdminRoute";
-import AdminUsers from "../pages/AdminUser";
-import AdminLoans from "../pages/AdminLoans";
-import AdminTransactions from "../pages/AdminTransactions";
-import AdminUserDetail from "../pages/AdminUserDetail";
-import AdminDashboard from "../pages/AdminDashboard";
-import AdminAnalytics from "../pages/AdminAnalytics";
+import AdminUsers from "../pages/admin/AdminUser";
+import AdminLoans from "../pages/admin/AdminLoans";
+import AdminTransactions from "../pages/admin/AdminTransactions";
+import AdminUserDetail from "../pages/admin/AdminUserDetail";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminAnalytics from "../pages/admin/AdminAnalytics";
 
 function AppRoutes() {
   return (

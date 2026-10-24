@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {ResponsiveContainer,BarChart,Bar,LineChart,Line,PieChart,Pie,Cell,XAxis,YAxis,CartesianGrid,Tooltip,Legend,} from "recharts";
-import DashboardLayout from "../../components/dashboard/DashboardLayout";
-import DashboardHeader from "../../components/dashboard/DashboardHeader";
-import { getPlatformAnalytics } from "../../api/adminApi";
-import { useToast } from "../../context/ToastContext";
-import handleApiError from "../../util/handleApiError";
-import "../styles/analytics.css";
-import "../styles/recent-transacrions.css";
+import DashboardLayout from "../../../components/dashboard/DashboardLayout";
+import DashboardHeader from "../../../components/dashboard/DashboardHeader";
+import { getPlatformAnalytics } from "../../../api/adminApi";
+import { useToast } from "../../../context/ToastContext";
+import handleApiError from "../../../util/handleApiError";
+import "../../styles/analytics.css";
+import "../../styles/recent-transacrions.css";
 
 const TYPE_COLORS = ["#d4af37", "#8b1e1e", "#4f46e5", "#22c55e"];
 const LOAN_COLORS = {
