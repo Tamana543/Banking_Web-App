@@ -262,7 +262,7 @@ phase 13 — Admin Dashboard
 * Admin role ✔️
 * Admin-only API routes ✔️
 * Admin-only frontend routes ✔️
-* Create an admin folder in pages and seperate all admin UIs (AdminUsers, AdminLoans, AdminTransactions, AdminUserDetail, AdminDashboard, AdminAnalytics → pages/admin/, then fix the import paths and AppRoutes)
+* Create an admin folder in pages and seperate all admin UIs (✔️)
 * Edit someone's balance (admin balance adjustment — not built on purpose, only after the audit log from 12.12 exists)
 
 phase 14 — Export Features

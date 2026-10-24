@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {ResponsiveContainer,BarChart,Bar,LineChart,Line,PieChart,Pie,Cell,XAxis,YAxis,CartesianGrid,Tooltip,Legend,} from "recharts";
-import DashboardLayout from "../../../components/dashboard/DashboardLayout";
-import DashboardHeader from "../../../components/dashboard/DashboardHeader";
-import { getPlatformAnalytics } from "../../../api/adminApi";
-import { useToast } from "../../../context/ToastContext";
-import handleApiError from "../../../util/handleApiError";
+import DashboardLayout from "../../components/dashboard/DashboardLayout"
+import DashboardHeader from "../../components/dashboard/DashboardHeader"
+import { getPlatformAnalytics } from "../../api/adminApi";
+import { useToast } from "../../context/ToastContext";
+import handleApiError from "../../util/handleApiError";
 import "../../styles/analytics.css";
 import "../../styles/recent-transacrions.css";
 

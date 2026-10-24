@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "../../../components/dashboard/DashboardLayout";
-import DashboardHeader from "../../../components/dashboard/DashboardHeader";
-import TransactionSkeleton from "../../../components/common/TransactionSkeleton";
-import { getPlatformStats } from "../../../api/adminApi";
-import { useToast } from "../../../context/ToastContext";
-import handleApiError from "../../../util/handleApiError";
+import DashboardLayout from "../../components/dashboard/DashboardLayout";
+import DashboardHeader from "../../components/dashboard/DashboardHeader";
+import TransactionSkeleton from "../../components/common/TransactionSkeleton";
+import { getPlatformStats } from "../../api/adminApi";
+import { useToast } from "../../context/ToastContext";
+import handleApiError from "../../util/handleApiError";
 import "../../styles/dashboard/dashboard.css";
 import "../../styles/dashboard/stats-card.css";
 import "../../styles/components/modal.css";
