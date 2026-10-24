@@ -3,6 +3,18 @@ import mongoose from "mongoose";
 import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
 import { isValidObjectId } from "../utils/inputValidation.js";
+import AuditLog from "../models/AuditLog.js";
+const recordAudit = async (entry, session = null) => {
+  if (session) {
+    await AuditLog.create([entry], { session });
+    return;
+  }
+  try {
+    await AuditLog.create(entry);
+  } catch (error) {
+    console.error("Audit log write failed:", error);
+  }
+};
 const LOAN_STATUSES = ["pending", "approved", "rejected"];
 const TRANSACTION_TYPES = ["deposit", "withdrawal", "transfer", "loan"];
 const TRANSACTION_STATUSES = ["pending", "completed", "failed", "approved", "rejected"];
