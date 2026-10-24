@@ -123,6 +123,15 @@ export const approveLoan = async (req, res) => {
         message: "Borrower account not found.",
       });
     }
+    await recordAudit(
+      {
+        admin: req.user._id,
+        action: "loan_approved",
+        targetUser: loan.user,
+        details: `Approved loan of $${loan.amount} for ${borrower.email}`,
+      },
+      session
+    );
     await session.commitTransaction();
     res.status(200).json({
       success: true,
@@ -168,6 +177,12 @@ export const rejectLoan = async (req, res) => {
         message: "Pending loan request not found, or it is your own request.",
       });
     }
+    await recordAudit({
+      admin: req.user._id,
+      action: "loan_rejected",
+      targetUser: loan.user,
+      details: `Rejected loan request of $${loan.amount}`,
+    });
     res.status(200).json({
       success: true,
       message: "Loan request rejected.",
@@ -252,6 +267,12 @@ export const suspendUser = async (req, res) => {
         message: "Active user account not found. Admin accounts cannot be suspended.",
       });
     }
+    await recordAudit({
+      admin: req.user._id,
+      action: "user_suspended",
+      targetUser: user._id,
+      details: `Suspended ${user.email}`,
+    });
     res.status(200).json({ success: true, message: "Account suspended." });
   } catch (error) {
     console.error("Admin suspend user error:", error);
@@ -284,6 +305,12 @@ export const reactivateUser = async (req, res) => {
         message: "Suspended user account not found.",
       });
     }
+    await recordAudit({
+      admin: req.user._id,
+      action: "user_reactivated",
+      targetUser: user._id,
+      details: `Reactivated ${user.email}`,
+    });
     res.status(200).json({ success: true, message: "Account reactivated." });
   } catch (error) {
     console.error("Admin reactivate user error:", error);
@@ -318,6 +345,12 @@ export const unlockUser = async (req, res) => {
         message: "User not found.",
       });
     }
+    await recordAudit({
+      admin: req.user._id,
+      action: "user_unlocked",
+      targetUser: user._id,
+      details: `Unlocked ${user.email}`,
+    });
     res.status(200).json({ success: true, message: "Account unlocked." });
   } catch (error) {
     console.error("Admin unlock user error:", error);
