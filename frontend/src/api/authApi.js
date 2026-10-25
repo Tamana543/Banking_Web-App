@@ -1,8 +1,6 @@
 import { API_BASE_URL } from "../config";
 const API_URL = `${API_BASE_URL}/api/auth`;
-
-const getToken = () =>
-  localStorage.getItem("token");
+const getToken = () => localStorage.getItem("token");
 const parseResponse = async (response,fallbackMessage) => {
   const data = await response.json();
   if (!response.ok) {
@@ -12,6 +10,7 @@ const parseResponse = async (response,fallbackMessage) => {
   }
   return data;
 };
+
 export const loginUser = async ( email, password ) => {
     const response = await fetch(
       `${API_URL}/login`,
@@ -58,8 +57,9 @@ export const getCurrentUser = async () => {
       "Unable to retrieve user information."
     );
   };
-export const logoutUser = async () => { const response = await fetch( `${API_URL}/logout`, { method: "POST", headers: { Authorization: `Bearer ${getToken()}`, }, } ); return parseResponse( response, "Logout failed." ); };
-
+export const logoutUser = async () => { 
+  const response = await fetch( `${API_URL}/logout`, { method: "POST", headers: { Authorization: `Bearer ${getToken()}`, }, } ); return parseResponse( response, "Logout failed." ); 
+};
 export const uploadAvatar = async (
   file
 ) => {
@@ -133,3 +133,18 @@ export const changePin = async ( pinData ) => {
   );
   return parseResponse( response, "Unable to change PIN." );
 };
+
+export const getAuditLogs = async ({ page = 1, action = "" } = {}) => {
+  const params = new URLSearchParams({ page });
+  if (action) params.set("action", action);
+  const response = await fetch(`${API_URL}/audit-logs?${params}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+}
