@@ -8,3 +8,22 @@ import handleApiError from "../../util/handleApiError";
 import "../../styles/dashboard/dashboard.css";
 import "../../styles/recent-transacrions.css";
 import "../../styles/components/modal.css";
+
+const ACTIONS = {
+  loan_approved: { label: "Loan approved", badge: "Approved", style: "approved" },
+  loan_rejected: { label: "Loan rejected", badge: "Rejected", style: "rejected" },
+  user_suspended: { label: "Account suspended", badge: "Suspended", style: "rejected" },
+  user_reactivated: { label: "Account reactivated", badge: "Reactivated", style: "completed" },
+  user_unlocked: { label: "Account unlocked", badge: "Unlocked", style: "pending" },
+};
+
+function AdminAuditLog(){
+ const { showToast } = useToast();
+  const [logs, setLogs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [pages, setPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [actionFilter, setActionFilter] = useState("");
+  const [loading, setLoading] = useState(true);
+}
+export default AdminAuditLog;
