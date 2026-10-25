@@ -1,7 +1,7 @@
 import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import requireAdmin from "../middleware/adminMiddleware.js";
-import { getAllUsers, getAllLoans, approveLoan, rejectLoan,getAllTransactions,suspendUser,reactivateUser,unlockUser,getUserDetails,getPlatformStats,getPlatformAnalytics } from "../controllers/adminController.js";
+import { getAllUsers, getAllLoans, approveLoan, rejectLoan,getAllTransactions,suspendUser,reactivateUser,unlockUser,getUserDetails,getPlatformStats,getPlatformAnalytics, getAuditLogs } from "../controllers/adminController.js";
 const router = express.Router();
 router.use(protect, requireAdmin);
 router.get("/loans", getAllLoans);
@@ -13,6 +13,7 @@ router.patch("/users/:id/unlock", unlockUser);
 router.get("/users/:id", getUserDetails);
 router.get("/transactions", getAllTransactions);
 router.get("/analytics", getPlatformAnalytics);
+router.get("/audit-logs", getAuditLogs);
 router.get("/stats", getPlatformStats);
 router.get("/users", getAllUsers);
 export default router;
