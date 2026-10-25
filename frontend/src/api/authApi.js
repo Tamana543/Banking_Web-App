@@ -134,17 +134,4 @@ export const changePin = async ( pinData ) => {
   return parseResponse( response, "Unable to change PIN." );
 };
 
-export const getAuditLogs = async ({ page = 1, action = "" } = {}) => {
-  const params = new URLSearchParams({ page });
-  if (action) params.set("action", action);
-  const response = await fetch(`${API_URL}/audit-logs?${params}`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
-  return data;
-}
+
