@@ -25,5 +25,28 @@ function AdminAuditLog(){
   const [page, setPage] = useState(1);
   const [actionFilter, setActionFilter] = useState("");
   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+    const loadLogs = async () => {
+      try {
+        setLoading(true);
+        const data = await getAuditLogs({ page, action: actionFilter });
+        setLogs(data.logs);
+        setTotal(data.total);
+        setPages(data.pages);
+      } catch (error) {
+        showToast(handleApiError(error), "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadLogs();
+  }, [page, actionFilter]);
+
+  return(
+     <DashboardLayout>
+          <DashboardHeader/>
+     </DashboardLayout>
+  )
 }
 export default AdminAuditLog;
