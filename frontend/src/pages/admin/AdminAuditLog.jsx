@@ -46,6 +46,59 @@ function AdminAuditLog(){
   return(
      <DashboardLayout>
           <DashboardHeader/>
+          <section className="recent-transactions" aria-labelledby="admin-audit-title">
+               <h3 id="admin-audit-title">Activity Log ({total})</h3>
+          <div className="transaction-toolbar">
+               <div className="transaction-filter">
+                    <select aria-label="Filter by action" value={actionFilter} onChange={(e) => { setActionFilter(e.target.value); setPage(1); }} >
+                    <option value="">All actions</option>
+                    <option value="loan_approved">Loan approved</option>
+                    <option value="loan_rejected">Loan rejected</option>
+                    <option value="user_suspended">Account suspended</option>
+                    <option value="user_reactivated">Account reactivated</option>
+                    <option value="user_unlocked">Account unlocked</option>
+                    </select>
+               </div>
+          </div>
+           {loading ? (
+          <TransactionSkeleton />
+        ) : logs.length === 0 ? (
+          <div className="empty-state">
+            <h4>No admin activity yet</h4>
+          </div>
+        ) : (
+          <div className="transaction-list">
+            {logs.map((log) => {
+              const info = ACTIONS[log.action] || {
+                label: log.action,
+                badge: log.action,
+                style: "pending",
+              };
+              return (
+                <div key={log._id} className="transaction-item">
+                  <div className="transaction-main">
+                    <div className="transaction-category">
+                      <h4>{info.label}</h4>
+                    </div>
+                    <span>{log.details}</span>
+                    <small className="transaction-date">
+                      {new Date(log.createdAt).toLocaleString()}
+                    </small>
+                    <small className="transaction-reference">
+                      By {log.admin?.firstName} {log.admin?.lastName}
+                    </small>
+                  </div>
+                  <div className="transaction-right">
+                    <span className={`transaction-status ${info.style}`}>
+                      {info.badge}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+          </section>
      </DashboardLayout>
   )
 }
