@@ -83,6 +83,26 @@ export function AuthProvider({ children }) {
       clearLogoutTimer();
     };
   }, []);
+  useEffect(() => {
+    if (!token) return;
+
+    const checkSession = () => {
+      getCurrentUser().catch((error) => {
+        if (error.status === 401 || error.status === 403) {
+          clearAuth();
+        }
+      });
+    };
+
+    const interval = setInterval(checkSession, 60000);
+    window.addEventListener("focus", checkSession);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", checkSession);
+    };
+  }, [token]);
+
   const login = (userData, jwtToken) => {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", jwtToken);
