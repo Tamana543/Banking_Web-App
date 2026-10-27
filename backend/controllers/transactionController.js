@@ -124,6 +124,14 @@ export const transferMoney = async (req,res)=>{
           description: `Transfer sent to ${receiver.email}`,
           status: "completed",
         },
+        ,
+        {
+          user: receiver._id,
+          type: "deposit",
+          amount: amountNumber,
+          description: `Transfer received from ${sender.email}`,
+          status: "completed",
+        },
       ],
       { session }
     );
