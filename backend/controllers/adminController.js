@@ -167,6 +167,7 @@ export const rejectLoan = async (req, res) => {
       },
       {
         status: "rejected",
+        isActiveLoan : false,
         reviewedBy: req.user._id,
         reviewedAt: new Date(),
       },

@@ -273,6 +273,7 @@ export const applyLoan = async(req,res)=>{
                   amount: amountNumber,
                   description: purpose,
                   status: "pending",
+                  isActiveLoan: true,
                 },
               ],
               { session }
@@ -284,6 +285,11 @@ export const applyLoan = async(req,res)=>{
         });
 } catch (error) {
   await session.abortTransaction();
+    if (error.code === 11000) {
+    return res.status(409).json({
+      message: "You already have an active loan.",
+    });
+  }
   console.error("Apply Loan Error:", error);
   res.status(500).json({
     message: "Server error.",
@@ -462,6 +468,7 @@ export const repayLoan = async (req,res) => {
     if (fullyRepaid) {
       loan.repaidAmount = loan.amount;
       loan.repaidAt = new Date();
+      loan.isActiveLoan = false;
     }
     await user.save({ session });
     await loan.save({ session });
