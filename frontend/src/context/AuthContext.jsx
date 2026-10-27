@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, } from "react";
-import { logoutUser,getCurrentUser } from "../api/authApi";
+import { logoutUser, getCurrentUser } from "../api/authApi";
 const AuthContext = createContext();
 const getTokenExpiration = (jwtToken) => {
   try {
@@ -102,7 +102,6 @@ export function AuthProvider({ children }) {
       window.removeEventListener("focus", checkSession);
     };
   }, [token]);
-
   const login = (userData, jwtToken) => {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", jwtToken);
@@ -110,17 +109,16 @@ export function AuthProvider({ children }) {
     setToken(jwtToken);
     startLogoutTimer(jwtToken);
   };
-  const logout = () => {
+  const logout = async () => {
+    const request = logoutUser();
     clearAuth();
+    try {
+      await request;
+    } catch {
+    }
   };
   return (
     <AuthContext.Provider value={{ user, token, login, logout, setUser, authLoading, }} > {children} </AuthContext.Provider>
   );
 }
-const logout = async () => {
-    try {
-      await logoutUser();
-    } catch {}
-    clearAuth();
-  };
 export const useAuth = () => useContext(AuthContext);
