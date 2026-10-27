@@ -53,12 +53,19 @@ const transactionSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+        isActiveLoan: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   }
 );
-
+transactionSchema.index(
+  { user: 1 },
+  { unique: true, partialFilterExpression: { isActiveLoan: true } }
+);
 const Transaction = mongoose.model(
   "Transaction",
   transactionSchema
