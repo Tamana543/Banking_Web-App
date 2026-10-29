@@ -26,7 +26,7 @@ function AdminUsers() {
   const [pages, setPages] = useState(1);
   const loadUsers = async () => {
     try {
-      const data = await getAllUsers();
+      const data = await getAllUsers(page);
       setUsers(data.users);
       setTotal(data.total);
       setPages(data.pages)
