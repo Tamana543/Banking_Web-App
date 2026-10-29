@@ -207,3 +207,28 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 58px;
+    padding: 0 26px;
+    background: rgba(20, 20, 20, 0.82);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 18px;
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+.export-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.18);
+    color: white;
+}
+.export-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

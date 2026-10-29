@@ -102,6 +102,10 @@ function Transactions() {
           <option value="loan">Loans</option>
         </select>
       </div>
+      <button type="button" className="export-btn" onClick={handleExport} disabled={sortedTransactions.length === 0} >
+        <Download size={18} aria-hidden="true" />
+        Export CSV
+      </button>
     </div>
     <TransactionList
       title="Transaction History"
