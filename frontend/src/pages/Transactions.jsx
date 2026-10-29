@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { Download } from "lucide-react";
+import { useToast } from "../context/ToastContext";
+import { downloadCsv, formatCsvDate } from "../util/exportCsv";
+import { generateTransactionId } from "../util/transactionId";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import TransactionList from "../components/dashboard/TransactionList";
@@ -12,6 +16,7 @@ function Transactions() {
     const [filter, setFilter] = useState("all");
     const [sortBy, setSortBy] = useState("newest");
     const { transactions, loading, } = useTransactions();
+    const { showToast } = useToast();
   
      
   const filteredTransactions = transactions.filter((transaction) => {
@@ -47,6 +52,20 @@ function Transactions() {
           }
       }
   );
+    const handleExport = () => {
+    const headers = ["Date", "Reference", "Type", "Description", "Amount", "Status"];
+    const rows = sortedTransactions.map((t) => [
+      formatCsvDate(t.createdAt),
+      generateTransactionId(t._id),
+      t.type,
+      t.description || "",
+      Number(t.amount).toFixed(2),
+      t.type === "loan" && t.repaidAt ? "repaid" : t.status,
+    ]);
+    const today = formatCsvDate(new Date()).slice(0, 10);
+    downloadCsv(`bankist-transactions-${today}.csv`, headers, rows);
+    showToast(`Exported ${rows.length} transactions.`, "success");
+  };
  return (
   <DashboardLayout>
     <DashboardHeader />
