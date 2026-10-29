@@ -27,8 +27,8 @@ const userAction = async (id, action) => {
   }
   return data;
 };
-export const getAllUsers = async () => {
-  const response = await fetch(`${API_URL}/users?limit=100`, {
+export const getAllUsers = async (page=1) => {
+  const response = await fetch(`${API_URL}/users?page=${page}&limit=20`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
