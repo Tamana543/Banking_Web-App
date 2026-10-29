@@ -30,8 +30,7 @@ const { id } = useParams();
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedAction, setSelectedAction] = useState(null);
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
+ 
   
   const loadDetails = async () => {
     try {

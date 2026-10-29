@@ -15,18 +15,21 @@ import "../../styles/recent-transacrions.css";
 
 
 function AdminUsers() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { showToast } = useToast();
   const { execute, loading: acting } = useApiAction();
   const [users, setUsers] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
   const loadUsers = async () => {
     try {
       const data = await getAllUsers();
       setUsers(data.users);
       setTotal(data.total);
+      setPages(data.pages)
     } catch (error) {
       showToast(handleApiError(error), "error");
     } finally {
@@ -36,7 +39,7 @@ function AdminUsers() {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [page]);
 
  
 
@@ -118,6 +121,17 @@ function AdminUsers() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+                {pages > 1 && (
+          <div className="admin-pagination">
+            <button type="button" className="cancel-btn" disabled={page <= 1} onClick={() => setPage((p) => p - 1)} >
+              Previous
+            </button>
+            <span>Page {page} of {pages}</span>
+            <button type="button" className="cancel-btn" disabled={page >= pages} onClick={() => setPage((p) => p + 1)} >
+              Next
+            </button>
           </div>
         )}
       </section>
