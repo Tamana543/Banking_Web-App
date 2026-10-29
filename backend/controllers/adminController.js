@@ -551,14 +551,57 @@ export const getPlatformAnalytics = async (req, res) => {
         message: "Invalid range.",
       });
     }
-    const since = new Date();
-    since.setUTCHours(0, 0, 0, 0);
-    since.setUTCDate(since.getUTCDate() - (days - 1));
+
+    let timezone = "UTC";
+    if (req.query.tz !== undefined) {
+      try {
+        if (typeof req.query.tz !== "string") {
+          throw new Error("Invalid time zone.");
+        }
+        new Intl.DateTimeFormat("en-US", { timeZone: req.query.tz });
+        timezone = req.query.tz;
+      } catch {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid time zone.",
+        });
+      }
+    }
+
+    const todayLocal = new Intl.DateTimeFormat("en-CA", {
+      timeZone: timezone,
+    }).format(new Date());
+    const base = new Date(`${todayLocal}T12:00:00Z`);
+
+    const series = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(base);
+      d.setUTCDate(base.getUTCDate() - i);
+      series.push({
+        date: d.toISOString().slice(0, 10),
+        newUsers: 0,
+        deposits: 0,
+        withdrawals: 0,
+        transfers: 0,
+      });
+    }
+    const indexByDate = Object.fromEntries(
+      series.map((row, i) => [row.date, i])
+    );
+
+    // loose lower bound, one day earlier than needed, so it is safe for every time zone
+    const since = new Date(`${series[0].date}T00:00:00Z`);
+    since.setUTCDate(since.getUTCDate() - 1);
 
     const dayExpr = {
-      $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+      $dateToString: {
+        format: "%Y-%m-%d",
+        date: "$createdAt",
+        timezone,
+      },
     };
-    const [signups, moved, loanStatuses] = await Promise.all([
+
+    const [signups, moved, loanRows] = await Promise.all([
       User.aggregate([
         {
           $match: {
@@ -587,28 +630,13 @@ export const getPlatformAnalytics = async (req, res) => {
         { $match: { type: "loan", createdAt: { $gte: since } } },
         {
           $group: {
-            _id: "$status",
+            _id: { day: dayExpr, status: "$status" },
             count: { $sum: 1 },
             total: { $sum: "$amount" },
           },
         },
       ]),
     ]);
-     const series = [];
-    for (let i = 0; i < days; i++) {
-      const d = new Date(since);
-      d.setUTCDate(since.getUTCDate() + i);
-      series.push({
-        date: d.toISOString().slice(0, 10),
-        newUsers: 0,
-        deposits: 0,
-        withdrawals: 0,
-        transfers: 0,
-      });
-    }
-    const indexByDate = Object.fromEntries(
-      series.map((row, i) => [row.date, i])
-    );
 
     signups.forEach((row) => {
       const i = indexByDate[row._id];
@@ -623,7 +651,8 @@ export const getPlatformAnalytics = async (req, res) => {
     const typeCounts = { deposit: 0, withdrawal: 0, transfer: 0, loan: 0 };
     moved.forEach((row) => {
       const i = indexByDate[row._id.day];
-      if (i !== undefined && seriesKey[row._id.type]) {
+      if (i === undefined) return;
+      if (seriesKey[row._id.type]) {
         series[i][seriesKey[row._id.type]] = row.total;
       }
       if (typeCounts[row._id.type] !== undefined) {
@@ -636,18 +665,22 @@ export const getPlatformAnalytics = async (req, res) => {
       approved: { count: 0, total: 0 },
       rejected: { count: 0, total: 0 },
     };
-    loanStatuses.forEach((row) => {
-      if (loans[row._id]) {
-        loans[row._id] = { count: row.count, total: row.total };
+    loanRows.forEach((row) => {
+      if (indexByDate[row._id.day] === undefined) return;
+      if (loans[row._id.status]) {
+        loans[row._id.status].count += row.count;
+        loans[row._id.status].total += row.total;
       }
     });
 
-    res.status(200).json({ success: true, days, series, typeCounts, loans });
-  }catch (error) {
+    res
+      .status(200)
+      .json({ success: true, days, timezone, series, typeCounts, loans });
+  } catch (error) {
     console.error("Admin platform analytics error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
-}
+};
 
 export const getAuditLogs = async (req, res) => {
   try {
