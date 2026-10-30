@@ -266,9 +266,9 @@ phase 13 — Admin Dashboard
 * Edit someone's balance (✔️)
 
 phase 14 — Export Features
-* Download account statement (Export CSV button,exports what is showing, protects against CSV formula injection.)
-* Export transactions as CSV
-* Generate PDF statement
+* Download account statement (Export CSV button,exports what is showing, protects against CSV formula injection.)(✔️)
+* Export transactions as CSV  (✔️)
+* Generate PDF statement 
 * Download transaction history
 * Print account summary
 
