@@ -73,6 +73,41 @@ function Transactions() {
     downloadCsv(`bankist-transactions-${today}.csv`, headers, rows);
     showToast(`Exported ${rows.length} transactions.`, "success");
   };
+    const openStatement = () => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 30);
+    setStatementFrom(formatCsvDate(start).slice(0, 10));
+    setStatementTo(formatCsvDate(end).slice(0, 10));
+    setShowStatement(true);
+  };
+
+  const handleStatement = async () => {
+    if (!statementFrom || !statementTo) {
+      showToast("Choose both dates.", "error");
+      return;
+    }
+    if (statementFrom > statementTo) {
+      showToast("The start date must be before the end date.", "error");
+      return;
+    }
+    try {
+      setGenerating(true);
+      const data = await getCurrentUser();
+      const count = generateStatementPdf({
+        user: data.user,
+        transactions,
+        from: statementFrom,
+        to: statementTo,
+      });
+      showToast(`Statement ready (${count} transactions).`, "success");
+      setShowStatement(false);
+    } catch (error) {
+      showToast(handleApiError(error), "error");
+    } finally {
+      setGenerating(false);
+    }
+  };
  return (
   <DashboardLayout>
     <DashboardHeader />
