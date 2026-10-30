@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Download } from "lucide-react";
+import { Download,FileText } from "lucide-react";
 import { useToast } from "../context/ToastContext";
 import { downloadCsv, formatCsvDate } from "../util/exportCsv";
 import { generateTransactionId } from "../util/transactionId";
@@ -8,6 +8,10 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import TransactionList from "../components/dashboard/TransactionList";
 import useTransactions from "../hooks/useTransactions";
 import { getTransactions } from "../api/transactionApi";
+import ActionModal from "../components/common/ActionModel";
+import { getCurrentUser } from "../api/authApi";
+import handleApiError from "../util/handleApiError";
+import { generateStatementPdf } from "../util/statementPdf";
 import "../styles/dashboard/dashboard.css";
 function Transactions() {
   // states 
@@ -17,7 +21,10 @@ function Transactions() {
     const [sortBy, setSortBy] = useState("newest");
     const { transactions, loading, } = useTransactions();
     const { showToast } = useToast();
-  
+    const [showStatement, setShowStatement] = useState(false);
+    const [statementFrom, setStatementFrom] = useState("");
+    const [statementTo, setStatementTo] = useState("");
+    const [generating, setGenerating] = useState(false);
      
   const filteredTransactions = transactions.filter((transaction) => {
     const search = searchTerm.toLowerCase();
