@@ -125,12 +125,7 @@ function Transactions() {
         </select>
       </div>
       <div className="transaction-search">
-        <input
-          type="text"
-          placeholder="Search transactions..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <input type="text" placeholder="Search transactions..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
       <div className="transaction-filter">
         <select
@@ -144,16 +139,30 @@ function Transactions() {
           <option value="loan">Loans</option>
         </select>
       </div>
-      <button type="button" className="export-btn" onClick={handleExport} disabled={sortedTransactions.length === 0} >
-        <Download size={18} aria-hidden="true" />
-        Export CSV
-      </button>
+           <div className="export-actions">
+        <button type="button" className="export-btn" onClick={handleExport} disabled={sortedTransactions.length === 0} >
+          <Download size={18} aria-hidden="true" />
+          Export CSV
+        </button>
+        <button type="button" className="export-btn" onClick={openStatement} disabled={loading} >
+          <FileText size={18} aria-hidden="true" />
+          PDF Statement
+        </button>
+      </div>
     </div>
-    <TransactionList
-      title="Transaction History"
-      transactions={sortedTransactions}
-    loading={loading}
-    />
+    <TransactionList title="Transaction History" transactions={sortedTransactions} loading={loading} />
+      <ActionModal isOpen={showStatement} title="Download Account Statement" submitText="Download PDF" loading={generating} onClose={() => { if (!generating) setShowStatement(false); }} onSubmit={handleStatement} >
+      <label htmlFor="statement-from">
+        <strong>From</strong>
+      </label>
+      <input id="statement-from" type="date" max={statementTo || undefined} value={statementFrom} onChange={(e) => setStatementFrom(e.target.value)} style={{ colorScheme: "dark" }} />
+      <br />
+      <br />
+      <label htmlFor="statement-to">
+        <strong>To</strong>
+      </label>
+      <input id="statement-to" type="date" min={statementFrom || undefined} max={formatCsvDate(new Date()).slice(0, 10)} value={statementTo} onChange={(e) => setStatementTo(e.target.value)} style={{ colorScheme: "dark" }} />
+    </ActionModal>
   </DashboardLayout>
 );
 }
