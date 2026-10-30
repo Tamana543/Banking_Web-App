@@ -60,3 +60,35 @@ export const generateStatementPdf = ({ user, transactions, from, to }) => {
   const width = doc.internal.pageSize.getWidth();
   const height = doc.internal.pageSize.getHeight();
   const bottom = height - 22;
+  
+  doc.setFillColor(17, 17, 17);
+  doc.rect(0, 0, width, 42, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(28);
+  doc.setTextColor(...GOLD);
+  doc.text("BANKIST PRO", width / 2, 18, { align: "center" });
+  doc.setFontSize(10);
+  doc.setTextColor(230);
+  doc.text("PREMIUM DIGITAL BANKING", width / 2, 29, { align: "center" });
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.8);
+  doc.line(18, 48, 192, 48);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.setTextColor(20);
+  doc.text("Account Statement", 20, 62);
+
+  const info = (label, value, x, y) => {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.text(label, x, y);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(20);
+    doc.text(safe(value), x, y + 6);
+  };
+  info("ACCOUNT HOLDER", `${user.firstName} ${user.lastName}`, 20, 74);
+  info("EMAIL", user.email, 20, 90);
+  info("STATEMENT PERIOD", `${formatDate(start)} to ${formatDate(end)}`, 112, 74);
+  info("GENERATED ON", formatDate(new Date()), 112, 90);
