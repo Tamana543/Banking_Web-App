@@ -92,3 +92,37 @@ export const generateStatementPdf = ({ user, transactions, from, to }) => {
   info("EMAIL", user.email, 20, 90);
   info("STATEMENT PERIOD", `${formatDate(start)} to ${formatDate(end)}`, 112, 74);
   info("GENERATED ON", formatDate(new Date()), 112, 90);
+
+   let y = 108;
+  doc.setDrawColor(220);
+  doc.setFillColor(248, 247, 242);
+  doc.roundedRect(18, y, 174, 52, 3, 3, "FD");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(20);
+  doc.text("SUMMARY", 24, y + 9);
+
+  const summaryRow = (label, value, labelX, valueX, rowY) => {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(90);
+    doc.text(label, labelX, rowY);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(20);
+    doc.text(value, valueX, rowY, { align: "right" });
+  };
+  summaryRow("Current balance", money(user.balance), 24, 100, y + 20);
+  summaryRow(`Deposits (${count("deposit")})`, money(total("deposit")), 24, 100, y + 30);
+  summaryRow(`Withdrawals (${count("withdrawal")})`, money(total("withdrawal")), 24, 100, y + 40);
+  summaryRow(`Transfers sent (${count("transfer")})`, money(total("transfer")), 108, 186, y + 20);
+  summaryRow(`Loans approved (${count("loan")})`, money(total("loan")), 108, 186, y + 30);
+  summaryRow("Transactions listed", String(list.length), 108, 186, y + 40);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(130);
+  doc.text(
+    "Totals count completed and approved transactions only. Current balance is as of the time of download.",
+    18,
+    y + 58
+  );
