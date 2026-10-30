@@ -232,3 +232,13 @@
     opacity: 0.4;
     cursor: not-allowed;
 }
+.transaction-toolbar {
+    flex-wrap: wrap;
+}
+.transaction-toolbar .transaction-search {
+    min-width: 220px;
+}
+.export-actions {
+    display: flex;
+    gap: 12px;
+}
