@@ -25,7 +25,8 @@ function Transactions() {
     const [statementFrom, setStatementFrom] = useState("");
     const [statementTo, setStatementTo] = useState("");
     const [generating, setGenerating] = useState(false);
-     
+    const [printMode, setPrintMode] = useState(false);
+
   const filteredTransactions = transactions.filter((transaction) => {
     const search = searchTerm.toLowerCase();
     const matchesSearch =
@@ -79,10 +80,11 @@ function Transactions() {
     start.setDate(start.getDate() - 30);
     setStatementFrom(formatCsvDate(start).slice(0, 10));
     setStatementTo(formatCsvDate(end).slice(0, 10));
+    setPrintMode(false);
     setShowStatement(true);
   };
 
-  const handleStatement = async () => {
+    const handleStatement = async () => {
     if (!statementFrom || !statementTo) {
       showToast("Choose both dates.", "error");
       return;
@@ -91,6 +93,7 @@ function Transactions() {
       showToast("The start date must be before the end date.", "error");
       return;
     }
+    const printWindow = printMode ? window.open("", "_blank") : null;
     try {
       setGenerating(true);
       const data = await getCurrentUser();
@@ -99,10 +102,18 @@ function Transactions() {
         transactions,
         from: statementFrom,
         to: statementTo,
+        mode: printMode ? "print" : "download",
+        printWindow,
       });
-      showToast(`Statement ready (${count} transactions).`, "success");
+      showToast(
+        printMode
+          ? "Statement opened for printing."
+          : `Statement ready (${count} transactions).`,
+        "success"
+      );
       setShowStatement(false);
     } catch (error) {
+      if (printWindow) printWindow.close();
       showToast(handleApiError(error), "error");
     } finally {
       setGenerating(false);
@@ -151,7 +162,7 @@ function Transactions() {
       </div>
     </div>
     <TransactionList title="Transaction History" transactions={sortedTransactions} loading={loading} />
-      <ActionModal isOpen={showStatement} title="Download Account Statement" submitText="Download PDF" loading={generating} onClose={() => { if (!generating) setShowStatement(false); }} onSubmit={handleStatement} >
+      <ActionModal isOpen={showStatement} title="Account Statement" submitText={printMode ? "Print" : "Download PDF"} loading={generating} onClose={() => { if (!generating) setShowStatement(false); }} onSubmit={handleStatement} >
       <label htmlFor="statement-from">
         <strong>From</strong>
       </label>
