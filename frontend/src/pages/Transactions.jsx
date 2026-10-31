@@ -173,6 +173,25 @@ function Transactions() {
         <strong>To</strong>
       </label>
       <input id="statement-to" type="date" min={statementFrom || undefined} max={formatCsvDate(new Date()).slice(0, 10)} value={statementTo} onChange={(e) => setStatementTo(e.target.value)} style={{ colorScheme: "dark" }} />
+            <br />
+      <br />
+      <label htmlFor="statement-print">
+        <input
+          id="statement-print"
+          type="checkbox"
+          checked={printMode}
+          onChange={(e) => setPrintMode(e.target.checked)}
+          style={{
+            width: "18px",
+            height: "18px",
+            padding: 0,
+            margin: "0 10px 0 0",
+            verticalAlign: "middle",
+            accentColor: "#d4af37",
+          }}
+        />
+        Open for printing instead of downloading
+      </label>
     </ActionModal>
   </DashboardLayout>
 );
