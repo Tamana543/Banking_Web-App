@@ -268,9 +268,9 @@ phase 13 — Admin Dashboard
 phase 14 — Export Features
 * Download account statement (Export CSV button,exports what is showing, protects against CSV formula injection.)(✔️)
 * Export transactions as CSV  (✔️)
-* Generate PDF statement 
-* Download transaction history
-* Print account summary
+* Generate PDF statement  (✔️)
+* Download transaction history (✔️)
+* Print account summary (✔️)
 
 phase 15 — Landing Page Improvements
 * Modern homepage redesign
