@@ -36,7 +36,8 @@ const formatDate = (value) =>
     year: "numeric",
   });
 
-export const generateStatementPdf = ({ user, transactions, from, to }) => {
+export const generateStatementPdf = ({ user, transactions, from, to ,mode = "download",
+  printWindow = null,}) => {
   const start = new Date(`${from}T00:00:00`);
   const end = new Date(`${to}T23:59:59.999`);
 
@@ -196,6 +197,17 @@ export const generateStatementPdf = ({ user, transactions, from, to }) => {
     doc.text(`Page ${i} of ${pageCount}`, 192, height - 12, { align: "right" });
   }
 
-  doc.save(`bankist-statement-${from}-to-${to}.pdf`);
+    const filename = `bankist-statement-${from}-to-${to}.pdf`;
+  if (mode === "print") {
+    doc.autoPrint();
+    const url = doc.output("bloburl");
+    if (printWindow && !printWindow.closed) {
+      printWindow.location.href = url;
+    } else {
+      doc.save(filename);
+    }
+  } else {
+    doc.save(filename);
+  }
   return list.length;
 };
