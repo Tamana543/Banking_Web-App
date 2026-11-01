@@ -74,6 +74,9 @@ function Navbar() {
                     <a href="#statistics">
                         Statistics
                     </a>
+                    <a href="#faq">
+                        FAQ
+                    </a>
                     <a href="#cta">
                          Get Started
                     </a>
@@ -94,21 +97,11 @@ function Navbar() {
                 </div>
                 {/* Mobile hamburger */}
                 <div className="landing-mobile-toggle">
-                    <HamburgerButton
-                        ref={menuButtonRef}
-                        sidebarOpen={menuOpen}
-                        onClick={() => setMenuOpen(!menuOpen) }
-                        aria-expanded={menuOpen}
-                        aria-controls="landing-mobile-menu"
-                    />
+                    <HamburgerButton ref={menuButtonRef} sidebarOpen={menuOpen} onClick={() => setMenuOpen(!menuOpen) } aria-expanded={menuOpen} aria-controls="landing-mobile-menu" />
                 </div>
             </header>
             <nav
-            ref={menuRef}
-                className={`mobile-menu ${menuOpen ? "mobile-menu-open" : ""}`}
-                aria-hidden={!menuOpen}
-                aria-label="Mobile navigation"
-            >
+            ref={menuRef} className={`mobile-menu ${menuOpen ? "mobile-menu-open" : ""}`} aria-hidden={!menuOpen} aria-label="Mobile navigation" >
                 <div className="mobile-menu-header">
                     <div className="landing-logo">
                         <span className="logo-gold">
@@ -118,61 +111,42 @@ function Navbar() {
                             {" "}PRO
                         </span>
                     </div>
-                    <button
-                        type="button"
-                        className="mobile-menu-close"
-                        onClick={closeMenu}
-                        aria-label="Close navigation menu"
-                    >
+                    <button type="button" className="mobile-menu-close" onClick={closeMenu} aria-label="Close navigation menu" >
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <nav className="mobile-menu-links" aria-label="Mobile navigation">
-                    <a
-                        ref={firstMenuLinkRef}
-                        href="#features"
-                        onClick={closeMenu}
+                    <a ref={firstMenuLinkRef} href="#features" onClick={closeMenu}
                     >
                         Features
                     </a>
-                    <a
-                        href="#services"
-                        onClick={closeMenu}
+                    <a href="#services" onClick={closeMenu}
                     >
                         Services
                     </a>
-                    <a
-                        href="#testimonials"
-                        onClick={closeMenu}
+                    <a href="#testimonials" onClick={closeMenu}
                     >
                         Reviews
                     </a>
-                    <a
-                        href="#statistics"
-                        onClick={closeMenu}
+                    <a href="#statistics" onClick={closeMenu}
                     >
                         Statistics
                     </a>
-                    <a
-                        href="#cta"
-                        onClick={closeMenu}
+                    <a href="#faq" onClick={closeMenu}
+                    >
+                        FAQ
+                    </a>
+                    <a href="#cta" onClick={closeMenu}
                     >
                         CTA
                     </a>
                 </nav>
                 <div className="mobile-menu-actions">
-                    <Link
-                        to="/login"
-                        className="mobile-login"
-                        onClick={closeMenu}
+                    <Link to="/login" className="mobile-login" onClick={closeMenu}
                     >
                         Login
                     </Link>
-                    <Link
-                        to="/register"
-                        className="mobile-open-account"
-                        onClick={closeMenu}
-                        ref={lastMenuLinkRef}
+                    <Link to="/register" className="mobile-open-account" onClick={closeMenu} ref={lastMenuLinkRef}
                     >
                         Open Account
                     </Link>

@@ -4,6 +4,7 @@ import Features from "../components/landing/Features";
 import Services from "../components/landing/Services";
 import Statistics from "../components/landing/Statistics";
 import Testimonials from "../components/landing/Testimonials";
+import FAQ from "../components/landing/FAQ";
 import CTA from "../components/landing/CTA";
 import Footer from "../components/landing/Footer";
 
@@ -18,6 +19,7 @@ function LandingPage() {
       <Services />
       <Testimonials />
       <Statistics />
+      <FAQ />
       <CTA />
       <Footer />
     </main>

@@ -107,3 +107,4 @@ function FAQ() {
     </section>
   );
 }
+export default FAQ;
