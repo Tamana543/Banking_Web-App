@@ -38,3 +38,38 @@ const faqs = [
       "After repeated wrong passwords the account locks for a short time and unlocks by itself. If it's urgent, an administrator can unlock it for you.",
   },
 ];
+
+function FAQ() {
+   const sectionRef = useRef(null);
+  const [openIndex, setOpenIndex] = useState(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) {
+      section.classList.add("faq-visible");
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add("faq-visible");
+          observer.unobserve(section);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+  return(
+    <section  ref={sectionRef} className="faq-section" id="faq" aria-labelledby="faq-heading">
+
+    </section>
+  );
+}
