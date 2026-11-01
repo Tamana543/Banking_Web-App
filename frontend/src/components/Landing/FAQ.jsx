@@ -71,9 +71,7 @@ function FAQ() {
        <div className="faq-heading">
           <span className="faq-label">QUESTIONS</span>
           <h2 id="faq-heading">
-            Good to know
-            <br />
-            <span>before you start.</span>
+            Good to know <span>before you start.</span>
           </h2>
           <p>
             Quick answers about accounts, security, loans and your data.
