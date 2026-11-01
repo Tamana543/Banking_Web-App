@@ -277,7 +277,7 @@ phase 15 — Landing Page Improvements
 * Improved footer (✔️)
 * Features section redesign (✔️)
 * Call-to-action sections (✔️)
-* FAQ section
+* FAQ section (✔️)
 * Real testimonials
 * Pricing section
 * Contact form
