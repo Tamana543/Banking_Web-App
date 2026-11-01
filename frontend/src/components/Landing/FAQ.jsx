@@ -69,7 +69,42 @@ function FAQ() {
   }, []);
   return(
     <section  ref={sectionRef} className="faq-section" id="faq" aria-labelledby="faq-heading">
-
+       <div className="faq-heading">
+          <span className="faq-label">QUESTIONS</span>
+          <h2 id="faq-heading">
+            Good to know
+            <br />
+            <span>before you start.</span>
+          </h2>
+          <p>
+            Quick answers about accounts, security, loans and your data.
+          </p>
+      </div>
+      <div className="faq-list">
+          {faqs.map((item, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <div
+                key={item.question}
+                className={`faq-item ${isOpen ? "open" : ""}`}
+              >
+                <h3>
+                  <button type="button" id={`faq-button-${index}`} className="faq-question" aria-expanded={isOpen} aria-controls={`faq-panel-${index}`} onClick={() => setOpenIndex(isOpen ? -1 : index)} >
+                    <span>{item.question}</span>
+                    <span className="faq-icon" aria-hidden="true">
+                      +
+                    </span>
+                  </button>
+                </h3>
+                <div id={`faq-panel-${index}`} role="region" aria-labelledby={`faq-button-${index}`} aria-hidden={!isOpen} className="faq-answer" >
+                  <div className="faq-answer-inner">
+                    <p>{item.answer}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+      </div>
     </section>
   );
 }
