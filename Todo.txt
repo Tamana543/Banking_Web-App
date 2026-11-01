@@ -273,15 +273,15 @@ phase 14 — Export Features
 * Print account summary (✔️)
 
 phase 15 — Landing Page Improvements
-* Modern homepage redesign
+* Modern homepage redesign (✔️)
+* Improved footer (✔️)
+* Features section redesign (✔️)
+* Call-to-action sections (✔️)
 * Real testimonials
 * FAQ section
 * Pricing section
-* Features section redesign
 * Contact form
 * Newsletter subscription
-* Improved footer
-* Call-to-action sections
 
 phase 16 — Advanced Features
 * Multi-currency support
