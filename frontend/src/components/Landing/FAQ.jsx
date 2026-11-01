@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/landing/faq.css";
-
 const faqs = [
   {
     question: "Is Bankist Pro a real bank?",
