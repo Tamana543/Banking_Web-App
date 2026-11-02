@@ -741,3 +741,29 @@ export const getContactMessages = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error." });
   }
 };
+
+export const markMessageRead = async (req, res) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid message.",
+      });
+    }
+    const message = await ContactMessage.findByIdAndUpdate(
+      req.params.id,
+      { isRead: true },
+      { returnDocument: "after" }
+    );
+    if (!message) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found.",
+      });
+    }
+    res.status(200).json({ success: true, message: "Marked as read." });
+  } catch (error) {
+    console.error("Admin mark message read error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
