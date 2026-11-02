@@ -4,6 +4,9 @@ import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
 import { isValidObjectId } from "../utils/inputValidation.js";
 import AuditLog from "../models/AuditLog.js";
+import ContactMessage from "../models/ContactMessage.js";
+import Subscriber from "../models/Subscriber.js";
+
 const recordAudit = async (entry, session = null) => {
   if (session) {
     await AuditLog.create([entry], { session });
@@ -717,6 +720,24 @@ export const getAuditLogs = async (req, res) => {
     });
   } catch (error) {
     console.error("Admin get audit logs error:", error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+export const getContactMessages = async (req, res) => {
+  try {
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+
+    const [messages, total, unread] = await Promise.all([
+      ContactMessage.find() .sort({ createdAt: -1 }) .skip((page - 1) * limit) .limit(limit),
+      ContactMessage.countDocuments(),
+      ContactMessage.countDocuments({ isRead: false }),
+    ]);
+
+    res.status(200).json({ success: true, messages, total, unread, page, pages: Math.ceil(total / limit), });
+  } catch (error) {
+    console.error("Admin get messages error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
 };

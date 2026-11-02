@@ -10,6 +10,7 @@ import authRouter from "./routes/authRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js"
 import savingsGoalRoutes from "./routes/savingsGoalRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 dotenv.config();
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
   res.send("Bankist API Running...");
 });
 app.use("/api/admin", adminRoutes);
+app.use("/api/public", publicRoutes);
 // unknown routes
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found." });
