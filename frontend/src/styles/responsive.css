@@ -177,6 +177,17 @@
     .hamburger-btn.active span:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
+    /* contact */
+    .contact-section {
+        padding: 80px 6%;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .contact-info h2 {
+        font-size: 2.2rem;
+    }
 }
 @media (max-width: 768px) {
     .analytics-card {
@@ -476,6 +487,7 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+
     .feature-card {
         opacity: 1;
         transform: none;
@@ -566,5 +578,10 @@
     }
     .hamburger-btn:hover {
         transform: none;
+    }
+    /* contact  */
+     .contact-card,
+    .newsletter-card {
+        transition: none;
     }
 }
