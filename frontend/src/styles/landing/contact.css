@@ -82,3 +82,72 @@
 .contact-field {
     margin-bottom: 20px;
 }
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ddd;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.contact-form input,
+.contact-form textarea,
+.newsletter-form input {
+    width: 100%;
+    padding: 16px 18px;
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-form input:focus,
+.contact-form textarea:focus,
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+.contact-count {
+    display: block;
+    margin-top: 6px;
+    color: #777;
+    font-size: 0.8rem;
+    text-align: right;
+}
+.contact-btn {
+    padding: 16px 28px;
+    background: var(--gold);
+    border: none;
+    border-radius: 14px;
+    color: #111;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+.contact-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
+}
+.contact-btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
+.contact-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.contact-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
