@@ -280,7 +280,7 @@ phase 15 — Landing Page Improvements
 * FAQ section (✔️)
 * Real testimonials (✔️)
 * Pricing section (✔️)
-* Contact form
+* Contact form (frontend step ..)
 * Newsletter subscription
 
 phase 16 — Advanced Features
