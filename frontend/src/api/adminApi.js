@@ -126,6 +126,46 @@ export const getAuditLogs = async ({ page = 1, action = "" } = {}) => {
   return data;
 }
 
+export const getContactMessages = async (page = 1) => {
+  const response = await fetch(`${API_URL}/messages?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
+export const markMessageRead = async (id) => {
+  const response = await fetch(`${API_URL}/messages/${id}/read`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
+export const getSubscribers = async (page = 1) => {
+  const response = await fetch(`${API_URL}/subscribers?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
+
 export const suspendUser = (id) => userAction(id, "suspend");
 export const reactivateUser = (id) => userAction(id, "reactivate");
 export const unlockUser = (id) => userAction(id, "unlock");

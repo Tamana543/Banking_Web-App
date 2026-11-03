@@ -7,6 +7,7 @@ import Testimonials from "../components/landing/Testimonials";
 import FAQ from "../components/landing/FAQ";
 import CTA from "../components/landing/CTA";
 import Footer from "../components/landing/Footer";
+import Contact from "../components/landing/Contact";
 
 
 function LandingPage() {
@@ -20,6 +21,7 @@ function LandingPage() {
       <Testimonials />
       <Statistics />
       <FAQ />
+      <Contact />
       <CTA />
       <Footer />
     </main>

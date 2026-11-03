@@ -48,6 +48,7 @@ function Footer() {
           <Link to="/register">Create Account</Link>
           <Link to="/#features">Features</Link>
           <Link to="/#services">Services</Link>
+          <Link to="/#contact">Contact</Link>
         </div>
       </div>
       <div className="footer-bottom">
