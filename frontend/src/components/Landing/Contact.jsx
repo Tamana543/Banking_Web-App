@@ -116,6 +116,57 @@ function Contact() {
                     </span>
                     </div>
                </div>
+                         <div className="contact-card">
+                    <form className="contact-form" onSubmit={handleContact} noValidate>
+                    <div className="contact-field">
+                    <label htmlFor="contact-name">Name</label>
+                    <input
+                         id="contact-name"
+                         type="text"
+                         autoComplete="name"
+                         maxLength={80}
+                         value={form.name}
+                         onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    />
+                    </div>
+                    <div className="contact-field">
+                    <label htmlFor="contact-email">Email</label>
+                    <input
+                         id="contact-email"
+                         type="email"
+                         autoComplete="email"
+                         maxLength={254}
+                         value={form.email}
+                         onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    />
+                    </div>
+                    <div className="contact-field">
+                    <label htmlFor="contact-message">Message</label>
+                    <textarea
+                         id="contact-message"
+                         maxLength={MAX_MESSAGE}
+                         value={form.message}
+                         onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    />
+                    <span className="contact-count">
+                         {form.message.length}/{MAX_MESSAGE}
+                    </span>
+                    </div>
+                    <input
+                    type="text"
+                    name="website"
+                    className="contact-hp"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    value={form.website}
+                    onChange={(e) => setForm({ ...form, website: e.target.value })}
+                    />
+                    <button type="submit" className="contact-btn" disabled={sending}>
+                    {sending ? "Sending..." : "Send Message"}
+                    </button>
+                    </form>
+               </div>
            </div>
      </section>
   )
