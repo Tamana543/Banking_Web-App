@@ -22,6 +22,7 @@ import AdminUserDetail from "../pages/admin/AdminUserDetail";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminAnalytics from "../pages/admin/AdminAnalytics";
 import AdminAuditLog from "../pages/admin/AdminAuditLog";
+import AdminMessages from "../pages/admin/AdminMessages";
 
 function AppRoutes() {
   return (
@@ -45,6 +46,7 @@ function AppRoutes() {
         <Route path="/admin/transactions" element={<AdminRoute><AdminTransactions /></AdminRoute>} />
         <Route path="/admin/analytics" element={<AdminRoute><AdminAnalytics /></AdminRoute>} />
         <Route path="/admin/activity" element={<AdminRoute><AdminAuditLog /></AdminRoute>} />
+        <Route path="/admin/messages" element={<AdminRoute><AdminMessages /></AdminRoute>} />
         
         <Route path="*" element={<NotFound />} />
       </Routes>

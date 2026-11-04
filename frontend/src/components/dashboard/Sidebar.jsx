@@ -64,6 +64,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
                   <History size={20} aria-hidden="true" />
                   <span>Activity Log</span>
               </NavLink>
+              <NavLink to="/admin/messages" onClick={() => setSidebarOpen(false)}>
+                <Mail size={20} aria-hidden="true" />
+                <span>Messages</span>
+              </NavLink>
             </>
           )}
           <NavLink ref={firstNavLinkRef} to="/dashboard" onClick={() => setSidebarOpen(false)}
