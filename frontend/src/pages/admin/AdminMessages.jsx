@@ -102,13 +102,7 @@ function AdminMessages(){
                           Reply
                         </a>
                         {!m.isRead && (
-                          <button
-                            type="button"
-                            className="submit-btn"
-                            onClick={() => handleMarkRead(m._id)}
-                          >
-                            Mark as read
-                          </button>
+                          <button type="button" className="submit-btn" onClick={() => handleMarkRead(m._id)} > Mark as read </button>
                         )}
                       </div>
                     </div>
@@ -126,6 +120,19 @@ function AdminMessages(){
                     </div>
                   </div>
                 ))}
+          </div>
+        )}
+        {pages > 1 && (
+          <div className="admin-pagination">
+            <button type="button" className="cancel-btn" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}
+            >
+              Previous
+            </button>
+            <span>Page {page} of {pages}</span>
+            <button type="button" className="cancel-btn" disabled={page >= pages} onClick={() => setPage((p) => p + 1)}
+            >
+              Next
+            </button>
           </div>
         )}
           </section>
