@@ -25,3 +25,12 @@
     padding: 8px 16px;
     font-size: 0.85rem;
 }
+.admin-message-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.admin-loan-actions a.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
