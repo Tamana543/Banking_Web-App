@@ -46,5 +46,29 @@ function AdminMessages(){
   };
 
   const title = view === "messages" ? `Messages (${total})${unread ? ` · ${unread} unread` : ""}` : `Subscribers (${total})`;
+
+  return(
+     <DashboardLayout>
+          <DashboardHeader/>
+          <section className="recent-transactions" aria-labelledby="admin-messages-title">
+                <h3 id="admin-messages-title">{title}</h3>
+        <div className="transaction-toolbar">
+          <div className="transaction-filter">
+            <select
+              aria-label="Choose a list"
+              value={view}
+              onChange={(e) => {
+                setView(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="messages">Messages</option>
+              <option value="subscribers">Newsletter subscribers</option>
+            </select>
+          </div>
+        </div>
+          </section>
+     </DashboardLayout>
+  )
 }
 export default AdminMessages;
