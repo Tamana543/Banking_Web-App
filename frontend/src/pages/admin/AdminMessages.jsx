@@ -67,6 +67,67 @@ function AdminMessages(){
             </select>
           </div>
         </div>
+        {loading ? (
+          <TransactionSkeleton />
+        ) : items.length === 0 ? (
+          <div className="empty-state">
+            <h4>{view === "messages" ? "No messages yet" : "No subscribers yet"}</h4>
+          </div>
+        ) : (
+          <div className="transaction-list">
+            {view === "messages"
+              ? items.map((m) => (
+                  <div key={m._id} className="transaction-item">
+                    <div className="transaction-main">
+                      <div className="transaction-category">
+                        <h4>{m.name}</h4>
+                      </div>
+                      <span>{m.email}</span>
+                      <span className="admin-message-text">{m.message}</span>
+                      <small className="transaction-date">
+                        {new Date(m.createdAt).toLocaleString()}
+                      </small>
+                    </div>
+                    <div className="transaction-right">
+                      <span
+                        className={`transaction-status ${m.isRead ? "completed" : "pending"}`}
+                      >
+                        {m.isRead ? "Read" : "Unread"}
+                      </span>
+                      <div className="admin-loan-actions">
+                        <a
+                          className="cancel-btn"
+                          href={`mailto:${encodeURIComponent(m.email)}`}
+                        >
+                          Reply
+                        </a>
+                        {!m.isRead && (
+                          <button
+                            type="button"
+                            className="submit-btn"
+                            onClick={() => handleMarkRead(m._id)}
+                          >
+                            Mark as read
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              : items.map((s) => (
+                  <div key={s._id} className="transaction-item">
+                    <div className="transaction-main">
+                      <div className="transaction-category">
+                        <h4>{s.email}</h4>
+                      </div>
+                      <small className="transaction-date">
+                        Subscribed {new Date(s.createdAt).toLocaleString()}
+                      </small>
+                    </div>
+                  </div>
+                ))}
+          </div>
+        )}
           </section>
      </DashboardLayout>
   )
