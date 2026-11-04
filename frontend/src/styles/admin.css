@@ -27,7 +27,7 @@
 }
 .admin-message-text {
     white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    overflow-wrap:break-word
 }
 .admin-loan-actions a.cancel-btn {
     display: inline-flex;

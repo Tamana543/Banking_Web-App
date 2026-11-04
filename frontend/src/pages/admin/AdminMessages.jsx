@@ -83,7 +83,9 @@ function AdminMessages(){
                         <h4>{m.name}</h4>
                       </div>
                       <span>{m.email}</span>
+                      <br/>
                       <span className="admin-message-text">{m.message}</span>
+                      <br/>
                       <small className="transaction-date">
                         {new Date(m.createdAt).toLocaleString()}
                       </small>
