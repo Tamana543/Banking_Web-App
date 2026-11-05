@@ -280,8 +280,8 @@ phase 15 — Landing Page Improvements
 * FAQ section (✔️)
 * Real testimonials (✔️)
 * Pricing section (✔️)
-* Contact form (frontend step ..)(15)
-* Newsletter subscription
+* Contact form (✔️)
+* Newsletter subscription (✔️)
 
 phase 16 — Advanced Features
 * Multi-currency support
