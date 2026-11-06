@@ -93,3 +93,18 @@ export const repayLoan = async (amount, pin) => {
   }
   return data;
 };
+export const updateTransactionTags = async (id, tags) => {
+  const response = await fetch(`${API_URL}/${id}/tags`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ tags }),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};
