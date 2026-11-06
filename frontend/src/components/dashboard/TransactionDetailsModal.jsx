@@ -136,12 +136,27 @@ function TransactionDetailsModal({ transaction, isOpen, onClose, onTagsUpdated, 
                </strong>
           </div>
 
-        <button
-          className="transaction-close-btn"
-          onClick={onClose}
-        >
-          Close
-        </button>
+        <button className="transaction-close-btn" onClick={onClose} > Close </button>
+                    <div className="detail-row detail-tags">
+          <span>Tags</span>
+          <div className="tag-editor">
+            <div className="tag-list">
+              {tags.length === 0 && (
+                <small className="tag-empty">No tags yet</small>
+              )}
+              {tags.map((tag) => (
+                <span key={tag} className="tag-chip">
+                  {tag}
+                  <button type="button" className="tag-remove" aria-label={`Remove tag ${tag}`} disabled={savingTags} onClick={() => removeTag(tag)} > × </button>
+                </span>
+              ))}
+            </div>
+            <div className="tag-input-row">
+              <input type="text" value={tagInput} maxLength={20} placeholder="Add a tag, e.g. groceries" aria-label="New tag" disabled={savingTags} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }} />
+              <button type="button" className="tag-add" onClick={addTag} disabled={savingTags || !tagInput.trim()} > Add </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
