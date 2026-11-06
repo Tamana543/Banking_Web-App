@@ -509,3 +509,60 @@ export const repayLoan = async (req,res) => {
     session.endSession();
   }
 }
+export const updateTransactionTags = async (req,res) => {
+  try {
+     if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid transaction.",
+      });
+    }
+    const { tags } = req.body;
+    if (!Array.isArray(tags)) {
+      return res.status(400).json({
+        success: false,
+        message: "Tags must be a list.",
+      });
+    }
+    if (tags.length > MAX_TAGS) {
+      return res.status(400).json({
+        success: false,
+        message: `You can add up to ${MAX_TAGS} tags.`,
+      });
+    }
+    const cleaned = [];
+    for (const tag of tags) {
+      if (typeof tag !== "string") {
+        return res.status(400).json({
+          success: false,
+          message: "Each tag must be text.",
+        });
+      }
+      const value = tag.trim().toLowerCase().replace(/\s+/g, " ");
+      if (!value) continue;
+      if (value.length > MAX_TAG_LENGTH || !/^[a-z0-9 _-]+$/.test(value)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Tags can use letters, numbers, spaces, - and _ (up to 20 characters).",
+        });
+      }
+      if (!cleaned.includes(value)) cleaned.push(value);
+    }
+    const transaction = await Transaction.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id },
+      { tags: cleaned },
+      { returnDocument: "after" }
+    );
+    if (!transaction) {
+      return res.status(404).json({
+        success: false,
+        message: "Transaction not found.",
+      });
+    }
+    res.status(200).json({ success: true, transaction });
+  } catch (error) {
+    console.error("Update tags error:", error)
+    res.status(500).json({success: false, message: "Sever Error"})
+  }
+}
