@@ -64,6 +64,22 @@ function TransactionDetailsModal({ transaction, isOpen, onClose, onTagsUpdated, 
       setSavingTags(false);
     }
   };
+  const addTag = () => {
+    const value = tagInput.trim().toLowerCase();
+    if (!value) return;
+    if (tags.includes(value)) {
+      setTagInput("");
+      return;
+    }
+    if (tags.length >= 5) {
+      showToast("You can add up to 5 tags.", "error");
+      return;
+    }
+    setTagInput("");
+    saveTags([...tags, value]);
+  };
+
+  const removeTag = (tag) => saveTags(tags.filter((t) => t !== tag));
   const category = getCategory(transaction.type);
   return (
     <div className="modal-overlay" onClick={onClose} >
