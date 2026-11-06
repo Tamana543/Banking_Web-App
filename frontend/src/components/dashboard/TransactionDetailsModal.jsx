@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { updateTransactionTags } from "../../api/transactionApi";
+import { useToast } from "../../context/ToastContext";
+import handleApiError from "../../util/handleApiError";
 import "../../styles/components/transaction_details_modal.css"
 import { generateTransactionId } from "../../util/transactionId";
 
@@ -35,8 +39,31 @@ const getCategory = (type) => {
             };
     }
 };
-function TransactionDetailsModal({ transaction, isOpen, onClose, }) {
+function TransactionDetailsModal({ transaction, isOpen, onClose, onTagsUpdated, }) {
+  const { showToast } = useToast();
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+  const [savingTags, setSavingTags] = useState(false);
+
+  useEffect(() => {
+    setTags(transaction?.tags || []);
+    setTagInput("");
+  }, [transaction]);
+
   if (!isOpen || !transaction) return null;
+
+  const saveTags = async (nextTags) => {
+    try {
+      setSavingTags(true);
+      const data = await updateTransactionTags(transaction._id, nextTags);
+      setTags(data.transaction.tags);
+      onTagsUpdated?.(data.transaction);
+    } catch (error) {
+      showToast(handleApiError(error), "error");
+    } finally {
+      setSavingTags(false);
+    }
+  };
   const category = getCategory(transaction.type);
   return (
     <div className="modal-overlay" onClick={onClose} >
