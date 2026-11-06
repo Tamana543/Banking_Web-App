@@ -109,6 +109,98 @@
 .category-text.default {
     color: var(--gold);
 }
+.detail-row.detail-tags {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+.tag-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px 5px 12px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 999px;
+    color: var(--gold);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.tag-chip-small {
+    padding: 2px 10px;
+    font-size: 0.75rem;
+}
+.tag-list-inline {
+    margin-top: 6px;
+}
+.tag-remove {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.tag-remove:hover:not(:disabled) {
+    background: rgba(212, 175, 55, 0.25);
+}
+.tag-remove:focus-visible,
+.tag-add:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+.tag-empty {
+    color: #777;
+}
+.tag-input-row {
+    display: flex;
+    gap: 10px;
+}
+.tag-input-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 14px;
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+    color: white;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+.tag-input-row input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+.tag-add {
+    padding: 10px 18px;
+    background: var(--gold);
+    border: none;
+    border-radius: 12px;
+    color: #111;
+    font-weight: 700;
+    cursor: pointer;
+}
+.tag-add:disabled,
+.tag-remove:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 @keyframes transactionModalPop {
     from {
         opacity: 0;
