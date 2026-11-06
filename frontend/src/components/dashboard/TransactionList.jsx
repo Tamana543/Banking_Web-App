@@ -3,7 +3,7 @@ import TransactionDetailsModal from "./TransactionDetailsModal";
 import "../../styles/recent-transacrions.css";
 import TransactionSkeleton from "../common/TransactionSkeleton";
 import { generateTransactionId } from "../../util/transactionId";
-function TransactionList({ transactions = [], title = "Recent Activity", loading = false, }) {
+function TransactionList({ transactions = [], title = "Recent Activity", loading = false,onTransactionUpdated, }) {
   const [selectedTransaction, setSelectedTransaction] =
     useState(null);
   const [showDetails, setShowDetails] =
@@ -15,6 +15,10 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
   const closeDetails = () => {
     setShowDetails(false);
     setSelectedTransaction(null);
+  };
+    const handleTagsUpdated = (updated) => {
+    setSelectedTransaction(updated);
+    onTransactionUpdated?.(updated);
   };
   const getCategory = (type) => {
     switch (type) {
@@ -111,7 +115,7 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
           </div>
         )}
       </section>
-      <TransactionDetailsModal transaction={selectedTransaction} isOpen={showDetails} onClose={closeDetails} />
+      <TransactionDetailsModal transaction={selectedTransaction} isOpen={showDetails} onClose={closeDetails} onTagsUpdated={handleTagsUpdated} />
     </>
   );
 }
