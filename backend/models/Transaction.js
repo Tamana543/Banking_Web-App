@@ -53,7 +53,11 @@ const transactionSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-        isActiveLoan: {
+    tags: {
+      type: [String],
+      default: [],
+    },
+    isActiveLoan: {
       type: Boolean,
       default: false,
     },

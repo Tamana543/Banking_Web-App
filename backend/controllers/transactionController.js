@@ -3,6 +3,9 @@ import User from "../models/User.js";
 import Transaction from "../models/Transaction.js";
 import SavingsGoal from "../models/SavingsGoal.js";
 import { isValidPositiveAmount,isValidEmail,isValidText,isValidObjectId } from "../utils/inputValidation.js";
+const MAX_TAGS = 5;
+const MAX_TAG_LENGTH = 20;
+
 export const depositMoney = async (req, res) => {
   const session = await mongoose.startSession();
   try {
@@ -412,7 +415,6 @@ export const addMoneyToSavingsGoal = async (req,res)=>{
     session.endSession();
   }
 }
-
 export const repayLoan = async (req,res) => {
    const session = await mongoose.startSession();
   try {
