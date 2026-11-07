@@ -161,4 +161,82 @@ const startThis = new Date(now.getFullYear(), now.getMonth(), 1);
       action: "Go to Loans",
     });
   }
+  if (pendingLoan) {
+    tips.push({
+      id: "loan-pending",
+      level: "info",
+      text: "Your loan request is waiting for an administrator to review it.",
+      to: "/loans",
+      action: "View loans",
+    });
+  }
+  if (change !== null && change >= 30 && spentThis - spentLast >= 10) {
+    tips.push({
+      id: "spending-up",
+      level: "warning",
+      text: `Your spending is up ${change}% compared with last month. Take a look at where it went.`,
+      to: "/transactions",
+      action: "Review transactions",
+    });
+  }
+  if (balance >= 100 && activeGoals.length === 0) {
+    tips.push({
+      id: "idle-balance",
+      level: "info",
+      text: `You have ${money(balance)} sitting in your balance. A savings goal can help you set some of it aside.`,
+      to: "/savings-goals",
+      action: "Create a goal",
+    });
+  }
+  const nearGoal = activeGoals.find((g) => {
+    const target = Number(g.targetAmount || 0);
+    return target > 0 && Number(g.currentAmount || 0) / target >= 0.8;
+  });
+  if (nearGoal) {
+    const target = Number(nearGoal.targetAmount);
+    const current = Number(nearGoal.currentAmount || 0);
+    tips.push({
+      id: "goal-near",
+      level: "good",
+      text: `"${nearGoal.name}" is ${Math.round((current / target) * 100)}% complete, just ${money(target - current)} to go.`,
+      to: "/savings-goals",
+      action: "View goals",
+    });
+  }
+  if (savedThis > 0) {
+    tips.push({
+      id: "saved",
+      level: "good",
+      text: `Nice work: you've set aside ${money(savedThis)} this month.`,
+    });
+  }
+  const untagged = spendingThis.filter((t) => !(t.tags || []).length).length;
+  if (untagged >= 5) {
+    tips.push({
+      id: "untagged",
+      level: "info",
+      text: `${untagged} of this month's expenses have no tag. Tag them to see where your money goes.`,
+      to: "/transactions",
+      action: "Tag transactions",
+    });
+  }
+  if (balance < 20) {
+    tips.push({
+      id: "low-balance",
+      level: "warning",
+      text: `Your balance is low (${money(balance)}).`,
+      to: "/dashboard",
+      action: "Add money",
+    });
+  }
+  if (tips.length === 0) {
+    tips.push({
+      id: "all-good",
+      level: "info",
+      text: "Nothing to flag right now. Keep it up.",
+    });
+  }
+
+  tips.sort((a, b) => LEVEL_ORDER[a.level] - LEVEL_ORDER[b.level]);
+  return { facts, tips: tips.slice(0, 4) };
 }
