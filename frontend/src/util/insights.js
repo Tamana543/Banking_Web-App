@@ -61,4 +61,47 @@ const startThis = new Date(now.getFullYear(), now.getMonth(), 1);
   }
 
   const net = moneyIn - spentThis;
+  const tagTotals = {};
+  spendingThis.forEach((t) =>
+    (t.tags || []).forEach((tag) => {
+      tagTotals[tag] = (tagTotals[tag] || 0) + Number(t.amount);
+    })
+  );
+  const topTag = Object.entries(tagTotals).sort((a, b) => b[1] - a[1])[0];
+
+  const typeTotals = {};
+  spendingThis.forEach((t) => {
+    typeTotals[t.type] = (typeTotals[t.type] || 0) + Number(t.amount);
+  });
+  const topType = Object.entries(typeTotals).sort((a, b) => b[1] - a[1])[0];
+
+  let topFact;
+  if (topTag) {
+    topFact = {
+      id: "top",
+      label: "Top spending tag",
+      value: topTag[0],
+      detail: `${money(topTag[1])} this month`,
+    };
+  } else if (topType) {
+    topFact = {
+      id: "top",
+      label: "Top spending type",
+      value: TYPE_LABELS[topType[0]] || topType[0],
+      detail: "Tag your transactions to see more detail",
+    };
+  } else {
+    topFact = {
+      id: "top",
+      label: "Top spending tag",
+      value: "None yet",
+      detail: "Nothing spent this month",
+    };
+  }
+
+  const largest = spendingThis.reduce(
+    (max, t) => (!max || Number(t.amount) > Number(max.amount) ? t : max),
+    null
+  );
+
 }
