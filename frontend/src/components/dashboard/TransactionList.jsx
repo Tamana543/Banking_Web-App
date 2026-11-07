@@ -100,6 +100,15 @@ function TransactionList({ transactions = [], title = "Recent Activity", loading
                     <small className="transaction-reference">
                       {transactionId}
                     </small>
+                    {transaction.tags?.length > 0 && (
+                      <span className="tag-list tag-list-inline">
+                        {transaction.tags.map((tag) => (
+                          <span key={tag} className="tag-chip tag-chip-small">
+                            {tag}
+                          </span>
+                        ))}
+                      </span>
+                    )}
                   </div>
                   <div className="transaction-right">
                     <p                       className={`transaction-status ${isRepaidLoan ? "completed" : transaction.status.toLowerCase()}`}>
