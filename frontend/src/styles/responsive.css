@@ -188,6 +188,10 @@
     .contact-info h2 {
         font-size: 2.2rem;
     }
+    /* Insight */
+     .insights-panel .insights-facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 @media (max-width: 768px) {
     .analytics-card {
@@ -474,6 +478,14 @@
     }
     .footer-bottom {
         padding-top: 20px;
+    }
+    /* insights */
+      .insights-panel .insights-facts {
+        grid-template-columns: 1fr;
+    }
+    .insight-tip {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
 }

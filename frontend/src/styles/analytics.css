@@ -302,3 +302,70 @@
     font-size: 0.82rem;
     line-height: 1.5;
 }
+/* Insight  */
+.insights-panel {
+    grid-column: 1 / -1;
+}
+.insights-panel .insights-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.insight-detail {
+    display: block;
+    margin-top: 8px;
+    color: #777;
+    font-size: 0.8rem;
+}
+.insights-subtitle {
+    margin: 28px 0 14px;
+    color: white;
+    font-size: 1.05rem;
+}
+.insight-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.insight-tip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #ccc;
+    line-height: 1.6;
+}
+.insight-tip.warning {
+    border-left-color: #ef4444;
+}
+.insight-tip.good {
+    border-left-color: #22c55e;
+}
+.insight-tip a {
+    flex-shrink: 0;
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.insight-tip a:hover {
+    text-decoration: underline;
+}
+.insight-tip a:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+.insight-note {
+    display: block;
+    margin-top: 18px;
+    color: #707070;
+    font-size: 0.8rem;
+}
+
