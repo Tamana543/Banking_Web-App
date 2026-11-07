@@ -284,7 +284,7 @@ phase 15 — Landing Page Improvements
 * Newsletter subscription (✔️)
 
 phase 16 — Advanced Features
-* Transaction tagging (tags in transaction details window, limits, edit tag only by owner, no pin, search box hangle tag, csv export with tags) (7c)
+* Transaction tagging (tags in transaction details window, limits, edit tag only by owner, no pin, search box hangle tag, csv export with tags) (✔️)
 * Financial insights
 * Smart account recommendations
 * Multi-currency support
