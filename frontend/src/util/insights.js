@@ -27,3 +27,38 @@ const inRange = (t, start, end) => {
 
 const TYPE_LABELS = { withdrawal: "Withdrawals", transfer: "Transfers" };
 const LEVEL_ORDER = { warning: 0, info: 1, good: 2 };
+
+export const buildInsights = ({transactions=[],savingsGoals=[],balance=0,now=new Date()})=>{
+const startThis = new Date(now.getFullYear(), now.getMonth(), 1);
+  const startNext = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const startLast = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+  const thisMonth = transactions.filter((t) => inRange(t, startThis, startNext));
+  const lastMonth = transactions.filter((t) => inRange(t, startLast, startThis));
+
+  const spendingThis = thisMonth.filter(isSpending);
+  const spentThis = sum(spendingThis);
+  const spentLast = sum(lastMonth.filter(isSpending));
+  const moneyIn = sum(thisMonth.filter(isMoneyIn));
+  const contributions = thisMonth.filter(
+    (t) => isSavingsContribution(t) && t.status === "completed"
+  );
+  const savedThis = sum(contributions);
+  const daysElapsed = now.getDate();
+
+  let change = null;
+  if (spentLast > 0) {
+    change = Math.round(((spentThis - spentLast) / spentLast) * 100);
+  }
+  let spendingDetail;
+  if (change === null) {
+    spendingDetail =
+      spentThis > 0 ? "No spending last month to compare" : "No spending yet this month";
+  } else if (change === 0) {
+    spendingDetail = "Same as last month";
+  } else {
+    spendingDetail = `${Math.abs(change)}% ${change > 0 ? "more" : "less"} than last month`;
+  }
+
+  const net = moneyIn - spentThis;
+}
