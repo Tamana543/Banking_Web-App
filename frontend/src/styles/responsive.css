@@ -78,6 +78,10 @@
     .savings-progress-label {
         align-self: flex-start;
     }
+    .dashboard-layout {
+    
+    grid-template-columns: 1fr !important;
+    }
     /* Profile page */
     .profile-page {
         grid-template-columns: 1fr !important;
@@ -194,6 +198,9 @@
     }
 }
 @media (max-width: 768px) {
+    .dashboard-layout {
+    grid-template-columns: 1fr;
+ }
     .analytics-card {
         padding: 20px;
     }

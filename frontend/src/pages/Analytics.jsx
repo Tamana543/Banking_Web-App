@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ResponsiveContainer, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from "recharts";
+import { ResponsiveContainer, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, } from "recharts";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import { getTransactions } from "../api/transactionApi";
 import { getSavingsGoals } from "../api/savingsGoalApi";
+import InsightsPanel from "../components/dashboard/InsightsPanel";
 import "../styles/analytics.css";
+import "../styles/responsive.css"
 function Analytics() {
   const [transactions, setTransactions] = useState([]);
   const [savingsGoals, setSavingsGoals] = useState([]);
@@ -228,6 +229,7 @@ function Analytics() {
           </div>
         ) : (
           <div className="analytics-grid">
+                        <InsightsPanel transactions={transactions} savingsGoals={savingsGoals} />
             <section className="analytics-card summary-card">
               <h3>Account Overview</h3>
               <div className="summary-list">
