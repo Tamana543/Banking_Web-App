@@ -103,5 +103,62 @@ const startThis = new Date(now.getFullYear(), now.getMonth(), 1);
     (max, t) => (!max || Number(t.amount) > Number(max.amount) ? t : max),
     null
   );
+  const facts = [
+    {
+      id: "spent",
+      label: "Spent this month",
+      value: money(spentThis),
+      detail: spendingDetail,
+    },
+    {
+      id: "in",
+      label: "Money in this month",
+      value: money(moneyIn),
+      detail: `Net ${net < 0 ? "-" : "+"}${money(Math.abs(net))}`,
+    },
+    {
+      id: "saved",
+      label: "Saved this month",
+      value: money(savedThis),
+      detail: `${contributions.length} contribution${contributions.length === 1 ? "" : "s"}`,
+    },
+    {
+      id: "daily",
+      label: "Daily average spending",
+      value: money(spentThis / daysElapsed),
+      detail: `Over ${daysElapsed} day${daysElapsed === 1 ? "" : "s"} so far`,
+    },
+    topFact,
+    {
+      id: "largest",
+      label: "Largest expense",
+      value: largest ? money(largest.amount) : "None yet",
+      detail: largest ? cut(describe(largest) || "No description", 40) : "No expenses this month",
+    },
+  ];
 
+  const tips = [];
+  const activeGoals = savingsGoals.filter((g) => g.status !== "completed");
+  const activeLoan = transactions.find(
+    (t) => t.type === "loan" && t.status === "approved" && !t.repaidAt
+  );
+  const pendingLoan = transactions.find(
+    (t) => t.type === "loan" && t.status === "pending"
+  );
+
+  if (activeLoan) {
+    const repaid = Number(activeLoan.repaidAmount || 0);
+    const owed = Math.max(Number(activeLoan.amount) - repaid, 0);
+    const percent = Math.round((repaid / Number(activeLoan.amount)) * 100);
+    tips.push({
+      id: "loan-active",
+      level: percent >= 80 ? "good" : "info",
+      text:
+        percent >= 80
+          ? `Almost there: you've repaid ${percent}% of your loan, ${money(owed)} to go.`
+          : `You owe ${money(owed)} on your loan (${percent}% repaid). Repaying it frees you to borrow again.`,
+      to: "/loans",
+      action: "Go to Loans",
+    });
+  }
 }
