@@ -19,7 +19,7 @@ function Transactions() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filter, setFilter] = useState("all");
     const [sortBy, setSortBy] = useState("newest");
-    const { transactions, loading, } = useTransactions();
+    const { transactions, loading,setTransactions } = useTransactions();
     const { showToast } = useToast();
     const [showStatement, setShowStatement] = useState(false);
     const [statementFrom, setStatementFrom] = useState("");
@@ -35,8 +35,7 @@ function Transactions() {
             .includes(search) ||
         transaction.description
             ?.toLowerCase()
-            .includes(search) ||
-        transaction.status
+            .includes(search) ||transaction.tags?.some((tag) => tag.includes(search)) ||transaction.status
             .toLowerCase()
             .includes(search);
     const matchesFilter =
@@ -61,7 +60,7 @@ function Transactions() {
       }
   );
     const handleExport = () => {
-    const headers = ["Date", "Reference", "Type", "Description", "Amount", "Status"];
+    const headers = ["Date", "Reference", "Type", "Description", "Amount", "Status", "Tags"];
     const rows = sortedTransactions.map((t) => [
       formatCsvDate(t.createdAt),
       generateTransactionId(t._id),
@@ -69,6 +68,7 @@ function Transactions() {
       t.description || "",
       Number(t.amount).toFixed(2),
       t.type === "loan" && t.repaidAt ? "repaid" : t.status,
+      (t.tags || []).join("; "),
     ]);
     const today = formatCsvDate(new Date()).slice(0, 10);
     downloadCsv(`bankist-transactions-${today}.csv`, headers, rows);
@@ -161,7 +161,8 @@ function Transactions() {
         </button>
       </div>
     </div>
-    <TransactionList title="Transaction History" transactions={sortedTransactions} loading={loading} />
+    <TransactionList title="Transaction History" transactions={sortedTransactions} loading={loading} onTransactionUpdated={(updated) => setTransactions((list) => list.map((t) => (t._id === updated._id ? updated : t)))
+      } />
       <ActionModal isOpen={showStatement} title="Account Statement" submitText={printMode ? "Print" : "Download PDF"} loading={generating} onClose={() => { if (!generating) setShowStatement(false); }} onSubmit={handleStatement} >
       <label htmlFor="statement-from">
         <strong>From</strong>
