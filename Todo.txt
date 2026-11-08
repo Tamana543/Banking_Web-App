@@ -287,7 +287,7 @@ phase 16 — Advanced Features
 * Transaction tagging (tags in transaction details window, limits, edit tag only by owner, no pin, search box hangle tag, csv export with tags) (✔️)
 * Financial insights (Month Galance, Suggestions, Data, spendng) (✔️)
 * Smart account recommendations (✔️)
-* Multi-currency support
+* Multi-currency support (This project use demo currency convertor)
 * Currency converter
 * Scheduled transfers
 
