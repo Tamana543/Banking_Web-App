@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { validatePassword } from "../utils/passwordPolicy.js";
+import { isSupportedCurrency } from "../utils/currencies.js";
+
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOGIN_LOCK_DURATION = 15 * 60 * 1000;
 const publicUser = (user) => ({
@@ -11,6 +13,7 @@ const publicUser = (user) => ({
   email: user.email,
   balance: user.balance,
   currency: user.currency,
+  displayCurrency: user.displayCurrency,
   role: user.role,
   avatar: user.avatar,
   isVerified: user.isVerified,
@@ -436,6 +439,31 @@ export const changePin = async (req, res) => {
     console.error("Change PIN error:", error);
     return res.status(500).json({
       message: "Unable to change PIN.",
+    });
+  }
+};
+
+export const updateDisplayCurrency = async (req, res) => {
+  try {
+    const { currency } = req.body;
+    if (!isSupportedCurrency(currency)) {
+      return res.status(400).json({
+        message: "Unsupported currency.",
+      });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { displayCurrency: currency },
+      { returnDocument: "after" }
+    );
+    return res.status(200).json({
+      message: "Display currency updated.",
+      user: publicUser(user),
+    });
+  } catch (error) {
+    console.error("Update display currency error:", error);
+    return res.status(500).json({
+      message: "Unable to update display currency.",
     });
   }
 };

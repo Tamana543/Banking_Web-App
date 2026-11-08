@@ -100,6 +100,10 @@ const userSchema = new mongoose.Schema(
                ref: "User",
                default: null,
           },
+          displayCurrency: {
+               type: String,
+               default: "USD",
+          },
      }, {
           timestamps :true
      }
