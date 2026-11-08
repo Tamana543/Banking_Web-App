@@ -41,6 +41,7 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use("/api/auth", authRouter);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/savings-goals", savingsGoalRoutes);
+app.use("/api/currency", currencyRoutes);
 app.use( "/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.get("/", (req, res) => {
   res.send("Bankist API Running...");
