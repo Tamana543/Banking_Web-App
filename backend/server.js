@@ -11,6 +11,7 @@ import transactionRoutes from "./routes/transactionRoutes.js"
 import savingsGoalRoutes from "./routes/savingsGoalRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js";
 import publicRoutes from "./routes/publicRoutes.js";
+import currencyRoutes from "./routes/currencyRoutes.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 dotenv.config();
