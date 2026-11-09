@@ -93,6 +93,29 @@ function Converter(){
                 </select>
               </div>
             </div>
+            {result !== null && (
+              <div className="converter-result" aria-live="polite">
+                <p>
+                  {formatCurrency(numeric, from, currencies)} is about
+                </p>
+                <h3>{formatCurrency(result, to, currencies)}</h3>
+                {unitRate !== null && (
+                  <small>
+                    1 {from} ={" "}
+                    {unitRate.toLocaleString("en-US", {
+                      maximumFractionDigits: unitRate < 0.01 ? 6 : 4,
+                    })}{" "}
+                    {to}
+                  </small>
+                )}
+              </div>
+            )}
+
+            <span className="converter-note">
+              {rates.note} Your balance and all transactions are always in USD.
+            </span>
+          </div>
+        )}
           </section>
      </DashboardLayout>
   )
