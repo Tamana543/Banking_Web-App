@@ -1,11 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
+import { useState } from "react";
+import { updateDisplayCurrency } from "../api/currencyApi";
 import DashboardLayout from "../components/dashboard/DashboardLayout";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
+import useRates from "../hooks/useRates";
+import handleApiError from "../util/handleApiError";
+
 import "../styles/settings.css";
 function Settings() {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+        const { logout, user, setUser } = useAuth();
+    const rates = useRates();
+    const { showToast } = useToast();
+    const [savingCurrency, setSavingCurrency] = useState(false);
+
+    const handleCurrencyChange = async (event) => {
+        try {
+            setSavingCurrency(true);
+            const data = await updateDisplayCurrency(event.target.value);
+            setUser(data.user);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            showToast("Display currency updated.", "success");
+        } catch (error) {
+            showToast(handleApiError(error), "error");
+        } finally {
+            setSavingCurrency(false);
+        }
+    };
   return (
     <DashboardLayout>
       <DashboardHeader />
