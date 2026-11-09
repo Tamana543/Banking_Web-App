@@ -52,6 +52,21 @@ function Settings() {
             </div>
             <span>›</span>
         </div>
+                <div className="setting-item">
+            <div>
+                <h4>Display currency</h4>
+                <p>Show an approximate balance in another currency</p>
+            </div>
+            <select className="setting-select" aria-label="Display currency" value={user?.displayCurrency || "USD"} onChange={handleCurrencyChange} disabled={savingCurrency} >
+                {Object.entries(rates?.currencies || { USD: { name: "US Dollar" } }).map(
+                    ([code, info]) => (
+                        <option key={code} value={code}>
+                            {code} - {info.name}
+                        </option>
+                    )
+                )}
+            </select>
+        </div>
         <div className="setting-item disabled">
             <div>
                 <h4> Notifications</h4>
