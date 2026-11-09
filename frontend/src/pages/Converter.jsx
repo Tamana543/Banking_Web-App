@@ -29,4 +29,72 @@ function Converter(){
     setTo(from);
   };
 
+  return(
+     <DashboardLayout>
+          <DashboardHeader/>
+          <section className="converter-page">
+               <h2>Currency Converter</h2>
+               <p className="converter-subtitle">
+               See roughly what an amount is worth in another currency.
+               </p>
+               {!rates ? (
+          <p>Loading rates...</p>
+        ) : (
+          <div className="converter-card">
+            <div className="converter-field converter-amount">
+              <label htmlFor="converter-amount">Amount</label>
+              <input
+                id="converter-amount"
+                type="number"
+                min="0"
+                max="1000000000000"
+                step="any"
+                inputMode="decimal"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+
+            <div className="converter-row">
+              <div className="converter-field">
+                <label htmlFor="converter-from">From</label>
+                <select
+                  id="converter-from"
+                  value={from}
+                  onChange={(e) => setFrom(e.target.value)}
+                >
+                  {codes.map((code) => (
+                    <option key={code} value={code}>
+                      {code} - {currencies[code].name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                type="button"
+                className="converter-swap"
+                onClick={swap}
+                aria-label="Swap currencies"
+              >
+                ⇄
+              </button>
+              <div className="converter-field">
+                <label htmlFor="converter-to">To</label>
+                <select
+                  id="converter-to"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                >
+                  {codes.map((code) => (
+                    <option key={code} value={code}>
+                      {code} - {currencies[code].name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </section>
+     </DashboardLayout>
+  )
+
 }
