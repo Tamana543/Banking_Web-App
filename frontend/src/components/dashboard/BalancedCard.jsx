@@ -1,13 +1,26 @@
 import { useAuth } from "../../context/AuthContext.jsx";
+import useRates from "../../hooks/useRates";
+import { convert, formatCurrency } from "../../util/currency";
 import "../../styles/dashboard/balance-card.css";
 import BalanceCardSkeleton from "../common/BalanceSkeleton";
+
 function BalanceCard({ loading = false }) {
   const { user } = useAuth();
+  const rates = useRates();
   if (loading) {
     return <BalanceCardSkeleton />;
   }
   const currency = user?.currency || "$";
   const balance = user?.balance ?? 0;
+    const displayCurrency = user?.displayCurrency || "USD";
+  const converted =
+    displayCurrency !== "USD" && rates
+      ? convert(balance, "USD", displayCurrency, rates.currencies)
+      : null;
+  const approx =
+    converted !== null
+      ? formatCurrency(converted, displayCurrency, rates.currencies)
+      : null;
   const formattedBalance = balance.toLocaleString(
     "en-US",
     {
@@ -47,6 +60,11 @@ function BalanceCard({ loading = false }) {
         >
           {currency} {formattedBalance}
         </p>
+        {approx && (
+          <p className="balance-approx" aria-label={`Approximately ${approx}`}>
+            ≈ {approx}
+          </p>
+        )}
         <p
           className="balance-growth"
           aria-label="Portfolio increased by 12.4 percent this month"

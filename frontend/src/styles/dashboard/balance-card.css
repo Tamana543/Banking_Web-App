@@ -104,3 +104,9 @@
     font-weight: 700;
     letter-spacing: 2px;
 }
+.balance-approx {
+    margin: 4px 0 0;
+    color: #b7b7b7;
+    font-size: 1rem;
+    font-weight: 500;
+}
