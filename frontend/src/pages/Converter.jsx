@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import useRates from "../hooks/useRates";
 import { convert, formatCurrency } from "../util/currency";
 import "../styles/converter.css";
+import "../styles/reponsive.css"
 
 function Converter(){
  const { user } = useAuth();
