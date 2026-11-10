@@ -426,6 +426,16 @@
     .landing-footer {
         padding: 65px 6% 25px;
     }
+    /* convertor */
+    .converter-row {
+        grid-template-columns: 1fr;
+    }
+    .converter-swap {
+        justify-self: center;
+    }
+    .converter-card {
+        padding: 22px;
+    }
     .footer-main {
         flex-direction: column;
         gap: 50px;
