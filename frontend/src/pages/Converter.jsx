@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import useRates from "../hooks/useRates";
 import { convert, formatCurrency } from "../util/currency";
 import "../styles/converter.css";
-import "../styles/reponsive.css"
+import "../styles/responsive.css";
 
 function Converter(){
  const { user } = useAuth();
@@ -44,16 +44,7 @@ function Converter(){
           <div className="converter-card">
             <div className="converter-field converter-amount">
               <label htmlFor="converter-amount">Amount</label>
-              <input
-                id="converter-amount"
-                type="number"
-                min="0"
-                max="1000000000000"
-                step="any"
-                inputMode="decimal"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
+              <input id="converter-amount" type="number" min="0" max="1000000000000" step="any" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
             </div>
 
             <div className="converter-row">
@@ -122,3 +113,4 @@ function Converter(){
   )
 
 }
+export default Converter

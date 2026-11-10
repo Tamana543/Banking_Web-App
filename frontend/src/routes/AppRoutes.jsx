@@ -12,6 +12,7 @@ import Analytics from "../pages/Analytics"
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import SavingsGoals from "../pages/SavingGoals";
+import Converter from "../pages/Converter";
 
 // Admin routes 
 import AdminRoute from "./AdminRoute";
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
         <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
         <Route path="/savings-goals" element={ <ProtectedRoute> <SavingsGoals /> </ProtectedRoute> } />
+        <Route path="/converter" element={<ProtectedRoute><Converter /></ProtectedRoute>} />
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/loans" element={<AdminRoute><AdminLoans /></AdminRoute>} />

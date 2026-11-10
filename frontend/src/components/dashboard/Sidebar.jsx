@@ -102,6 +102,10 @@ function Sidebar({ sidebarOpen, setSidebarOpen, }) {
             />
             <span>Analytics</span>
           </NavLink>
+          <NavLink to="/converter" onClick={() => setSidebarOpen(false)}>
+            <Coins size={20} aria-hidden="true" />
+            <span>Converter</span>
+          </NavLink>
           <NavLink to="/savings-goals" onClick={() => setSidebarOpen(false)} >
               <PiggyBank size={20} aria-hidden="true" />
               <span>Savings</span>
