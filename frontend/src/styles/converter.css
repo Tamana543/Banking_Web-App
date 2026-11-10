@@ -1,0 +1,48 @@
+.converter-page {
+    max-width: 760px;
+}
+.converter-page h2 {
+    margin: 0 0 8px;
+    color: white;
+    font-size: 2rem;
+}
+.converter-subtitle {
+    margin: 0 0 30px;
+    color: #888;
+}
+.converter-card {
+    padding: 32px;
+    background: #181818;
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 22px;
+}
+.converter-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: end;
+}
+.converter-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ddd;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.converter-field input,
+.converter-field select {
+    width: 100%;
+    padding: 16px 18px;
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.converter-field input:focus,
+.converter-field select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
