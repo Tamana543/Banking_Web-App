@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/dashboard/hamburger.css";
 import "../../styles/dashboard/sidebar.css";
-import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText,Gauge,TrendingUp,History,Mail } from "lucide-react";
+import { LayoutDashboard, ArrowRightLeft, Landmark, ChartColumn, UserRound, Settings,PiggyBank,ShieldCheck,ClipboardCheck,ReceiptText,Gauge,TrendingUp,History,Mail,Coins } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 function Sidebar({ sidebarOpen, setSidebarOpen, }) {
