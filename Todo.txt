@@ -287,8 +287,8 @@ phase 16 — Advanced Features
 * Transaction tagging (tags in transaction details window, limits, edit tag only by owner, no pin, search box hangle tag, csv export with tags) (✔️)
 * Financial insights (Month Galance, Suggestions, Data, spendng) (✔️)
 * Smart account recommendations (✔️)
-* Multi-currency support (This project use demo currency convertor)(Work on frontend css)
-* Currency converter
+* Multi-currency support (This project use demo currency convertor)(✔️)
+* Currency converter (✔️)
 * Scheduled transfers
 
 phase 17 — Portfolio Features
@@ -307,7 +307,7 @@ phase 17 — Portfolio Features
 
 phase 18 - Setting dashboard
 * Dark mode 
-* Currency
+* Currency (✔️)
 * Notification Perference
 * Logout 
 * Delete Account
