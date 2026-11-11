@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import "../styles/not-found.css";
+import "../styles/not-found.css"
 
 function NotFound(){
  const { user, token, authLoading } = useAuth();
