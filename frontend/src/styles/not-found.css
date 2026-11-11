@@ -36,3 +36,47 @@
     color: transparent;
     filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.25));
 }
+.not-found-card h1 {
+    margin: 18px 0 12px;
+    color: white;
+    font-size: 1.8rem;
+}
+.not-found-text {
+    color: #888;
+    line-height: 1.8;
+}
+.not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 32px;
+}
+.not-found-btn {
+    padding: 14px 28px;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 14px;
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.not-found-btn:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+    transform: translateY(-2px);
+}
+.not-found-btn.primary {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #111;
+    font-weight: 700;
+}
+.not-found-btn.primary:hover {
+    background: var(--gold);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
+}
+.not-found-btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 3px;
+}
