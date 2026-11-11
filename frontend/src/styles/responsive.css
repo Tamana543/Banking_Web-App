@@ -504,6 +504,14 @@
         flex-direction: column;
         align-items: flex-start;
     }
+    /* Not found */
+     .not-found-card {
+        padding: 36px 22px;
+    }
+    .not-found-btn {
+        width: 100%;
+        text-align: center;
+    }
     
 }
 /* To avoide unnecessary motions for the user with deisabled motion browsers :)) */
@@ -613,4 +621,12 @@
     .newsletter-card {
         transition: none;
     }
+    /* Not Found */
+    .not-found-card {
+        animation: none;
+    }
+    .not-found-btn {
+        transition: none;
+    }
+
 }
