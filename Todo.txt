@@ -313,7 +313,7 @@ phase 18 - Setting dashboard
 * Logout 
 * Delete Account
 * create a responsive css add all medias there 
-* fix the 404 page
+* fix the 404 page ( add the starts design )
 
 phase 19 — Real-Time Features
 * Live balance updates
