@@ -289,7 +289,7 @@ phase 16 — Advanced Features
 * Smart account recommendations (✔️)
 * Multi-currency support (This project use demo currency convertor)(✔️)
 * Currency converter (✔️)
-* Scheduled transfers
+
 
 phase 17 — Portfolio Features
 * README redesign
@@ -297,6 +297,7 @@ phase 17 — Portfolio Features
 * API documentation
 * Screenshots section
 * Live demo deployment
+* Scheduled transfers
 * Technical documentation
 * Installation guide
 * Feature showcase
