@@ -5,6 +5,8 @@
     padding: 40px 6%;
 }
 .not-found-card {
+     position: relative;
+    z-index: 1;
     width: 100%;
     max-width: 560px;
     padding: 50px 40px;
