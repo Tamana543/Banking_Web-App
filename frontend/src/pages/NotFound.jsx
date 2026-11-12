@@ -29,6 +29,14 @@ function NotFound(){
   }, []);
   return(
      <main className="not-found">
+            <div className="not-found-stars" aria-hidden="true">
+        {particles.map(([left, size, duration, delay], index) => (
+          <span key={`particle-${index}`} className="not-found-particle" style={{ left: `${left}%`, width: `${size}px`, height: `${size}px`, animationDuration: `${duration}s`, animationDelay: `${delay}s`, }} /> ))}
+        {twinkles.map(([top, left], index) => (
+          <span
+            key={`twinkle-${index}`}
+            className="not-found-twinkle"
+            style={{ top: `${top}%`, left: `${left}%`, animationDelay: `${index * 0.7}s`, }} /> ))} </div>
       <div className="not-found-card">
         <span className="not-found-label">ERROR 404</span>
         <p className="not-found-code" aria-hidden="true">
