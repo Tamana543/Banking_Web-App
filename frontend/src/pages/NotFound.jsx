@@ -3,6 +3,18 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../styles/not-found.css"
 
+// Animations
+const particles = [
+  [4, 5, 13, -2], [11, 8, 17, -9], [18, 6, 15, -5], [26, 10, 19, -13],
+  [33, 5, 12, -1], [41, 7, 16, -7], [49, 9, 18, -11], [57, 6, 14, -4],
+  [64, 8, 20, -16], [72, 5, 13, -8], [79, 10, 17, -3], [86, 7, 15, -12],
+  [92, 6, 19, -6], [97, 9, 12, -10],
+];
+const twinkles = [
+  [14, 18], [26, 78], [58, 9], [72, 88], [84, 34], [10, 58],
+];
+
+
 function NotFound(){
  const { user, token, authLoading } = useAuth();
   const loggedIn = Boolean(user && token);
