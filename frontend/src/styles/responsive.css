@@ -628,5 +628,13 @@
     .not-found-btn {
         transition: none;
     }
+    /* 404 page */
+       .not-found-particle {
+        display: none;
+    }
+    .not-found-twinkle {
+        animation: none;
+        opacity: 0.6;
+    }
 
 }
