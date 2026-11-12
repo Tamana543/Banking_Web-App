@@ -90,3 +90,43 @@
         transform: none;
     }
 }
+.not-found-stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+.not-found-particle {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 0 22px rgba(212, 175, 55, 0.25);
+    animation: notFoundRise linear infinite;
+}
+.not-found-twinkle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #e4c04b;
+    box-shadow: 0 0 8px #d4af37, 0 0 18px #d4af37;
+    animation: notFoundTwinkle 4s ease-in-out infinite;
+}
+@keyframes notFoundRise {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.85;
+    }
+    60% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-110vh) translateX(40px) scale(1.3);
+        opacity: 0;
+    }
+}
