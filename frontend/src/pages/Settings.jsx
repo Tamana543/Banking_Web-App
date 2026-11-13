@@ -168,9 +168,30 @@ function Settings() {
         <label htmlFor="delete-password">
           <strong>Password</strong>
         </label>
-        <input id="delete-password" type="password" autoComplete="current-password" value={deletePassword} onChange={(e) => setDeletePassword(e.targetvalue)} />
+        <input id="delete-password" type="password" autoComplete="current-password" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
         <br />
         <br />
+              <label htmlFor="delete-pin">
+          <strong>Transaction PIN</strong>
+        </label>
+        <input
+          id="delete-pin"
+          type="password"
+          inputMode="numeric"
+          autoComplete="off"
+          maxLength={4}
+          placeholder="Enter 4-digit PIN"
+          value={deletePin}
+          onChange={(e) =>
+            setDeletePin(e.target.value.replace(/\D/g, "").slice(0, 4))
+          }
+        />
+        <br />
+        <br />
+        <label htmlFor="delete-confirm">
+          <strong>Type DELETE to confirm</strong>
+        </label>
+        <input id="delete-confirm" type="text" autoComplete="off" value={deleteConfirm} onChange={(e) => setDeleteConfirm(e.target.value)} />
       </ActionModal>
     </DashboardLayout>
   );
