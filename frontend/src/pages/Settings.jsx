@@ -153,7 +153,25 @@ function Settings() {
             </div>
         )}
     </div>
-</section>
+ </section>
+ <ActionModal isOpen={showDelete} title="Delete Account" submitText="Delete my account" loading={deleting} onClose={closeDelete} onSubmit={handleDelete} >
+        <p>
+          This permanently deletes your account, savings goals and transaction
+          history. It can't be undone.
+        </p>
+        <br />
+        <p>
+          Before you can delete it, your balance must be $0 and you must have
+          no pending or unpaid loan.
+        </p>
+        <br />
+        <label htmlFor="delete-password">
+          <strong>Password</strong>
+        </label>
+        <input id="delete-password" type="password" autoComplete="current-password" value={deletePassword} onChange={(e) => setDeletePassword(e.targetvalue)} />
+        <br />
+        <br />
+      </ActionModal>
     </DashboardLayout>
   );
 }
