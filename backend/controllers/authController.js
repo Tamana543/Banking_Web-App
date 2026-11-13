@@ -1,8 +1,14 @@
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+import fs from "fs/promises";
+import path from "path";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { validatePassword } from "../utils/passwordPolicy.js";
 import { isSupportedCurrency } from "../utils/currencies.js";
+import Transaction from "../models/Transaction.js";
+import SavingsGoal from "../models/SavingsGoal.js";
+import Subscriber from "../models/Subscriber.js";
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOGIN_LOCK_DURATION = 15 * 60 * 1000;
@@ -443,7 +449,7 @@ export const changePin = async (req, res) => {
   }
 };
 
-export const updateDisplayCurrency = async (req, res) => {
+export const updateDisplayCurrency = async (req, res) =>{
   try {
     const { currency } = req.body;
     if (!isSupportedCurrency(currency)) {
@@ -467,3 +473,44 @@ export const updateDisplayCurrency = async (req, res) => {
     });
   }
 };
+
+export const deleteAccount = async (req,res) => {
+  const session = await mongoose.startSession();
+  try {
+    if (req.user.role === "admin") {
+      return res.status(403).json({
+        message: "Admin accounts can't be deleted from the app.",
+      });
+    }
+    const { password } = req.body;
+    if (typeof password !== "string" || !password) {
+      return res.status(400).json({
+        message: "Password is required.",
+      });
+    }
+    const user = await User.findById(req.user._id).select("+password");
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) {
+      return res.status(401).json({
+        message: "Password is incorrect.",
+      });
+    }
+
+    session.startTransaction();
+  } catch (error) {
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    console.error("Delete account error:", error);
+    return res.status(500).json({
+      message: "Unable to delete account.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
