@@ -137,7 +137,21 @@ function Settings() {
                 <p>Sign out of your account</p>
             </div>
             <span>›</span>
+        </div>
+        {user?.role !== "admin" && (
+            <div
+                className="setting-item logout"
+                role="button"
+                tabIndex={0}
+                onClick={openDelete}
+                onKeyDown={(e) => { if (e.key ==="Enter" || e.key === "") { epreventDefault(); openDelete(); } }} >
+                <div>
+                    <h4>Delete account</h4>
+                    <p>Permanently close your account and remove your data</p>
+                </div>
+                <span>›</span>
             </div>
+        )}
     </div>
 </section>
     </DashboardLayout>
