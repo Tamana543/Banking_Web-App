@@ -33,7 +33,32 @@ function Settings() {
     const closeDelete = () => {
         if (!deleting) setShowDelete(false);
     };
-    
+
+    const handleDelete = async () => {
+        if (!deletePassword) {
+            showToast("Enter your password.", "error");
+            return;
+        }
+        if (!/^\d{4}$/.test(deletePin)) {
+            showToast("PIN must contain exactly 4 digits.", "error");
+            return;
+        }
+        if (deleteConfirm !== "DELETE") {
+            showToast("Type DELETE to confirm.", "error");
+            return;
+        }
+        try {
+            setDeleting(true);
+            await deleteAccount(deletePassword, deletePin);
+            navigate("/", { replace: true });
+            showToast("Your account has been deleted.", "success");
+            logout();
+        } catch (error) {
+            showToast(handleApiError(error), "error");
+            setDeleting(false);
+        }
+    };
+
     const handleCurrencyChange = async (event) => {
         try {
             setSavingCurrency(true);
