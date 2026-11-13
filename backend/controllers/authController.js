@@ -530,7 +530,30 @@ export const deleteAccount = async (req,res) => {
 
     await SavingsGoal.deleteMany({ user: userId }, { session });
     await Transaction.deleteMany({ user: userId }, { session });
-    
+    await Transaction.updateMany(
+      { description: `Transfer sent to ${email}` },
+      { $set: { description: "Transfer sent to a deleted account" } },
+      { session }
+    );
+    await Transaction.updateMany(
+      { description: `Transfer received from ${email}` },
+      { $set: { description: "Transfer received from a deleted account" } },
+      { session }
+    );
+    await Subscriber.deleteMany({ email }, { session });
+    await User.deleteOne({ _id: userId }, { session });
+
+    await session.commitTransaction();
+
+    if (avatar && avatar.startsWith("/uploads/avatars/")) {
+      fs.unlink(
+        path.join(process.cwd(), "uploads", "avatars", path.basename(avatar))
+      ).catch(() => {});
+    }
+
+    return res.status(200).json({
+      message: "Your account has been deleted.",
+    });
   } catch (error) {
     if (session.inTransaction()) {
       await session.abortTransaction();
