@@ -502,6 +502,35 @@ export const deleteAccount = async (req,res) => {
     }
 
     session.startTransaction();
+
+    const fresh = await User.findById(user._id).session(session);
+    if (Math.round(fresh.balance * 100) > 0) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        message: "Withdraw your remaining balance before closing your account.",
+      });
+    }
+    const openLoan = await Transaction.findOne({
+      user: user._id,
+      type: "loan",
+      $or: [
+        { status: "pending" },
+        { status: "approved", repaidAt: null },
+      ],
+    }).session(session);
+    if (openLoan) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        message:
+          "You have a pending or unpaid loan. Resolve it before closing your account.",
+      });
+    }
+
+    const { _id: userId, email, avatar } = fresh;
+
+    await SavingsGoal.deleteMany({ user: userId }, { session });
+    await Transaction.deleteMany({ user: userId }, { session });
+    
   } catch (error) {
     if (session.inTransaction()) {
       await session.abortTransaction();
