@@ -134,4 +134,16 @@ export const changePin = async ( pinData ) => {
   return parseResponse( response, "Unable to change PIN." );
 };
 
+export const deleteAccount = async (password, pin) => {
+  const response = await fetch(`${API_URL}/delete-account`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ password, pin }),
+  });
+  return parseResponse(response, "Unable to delete account.");
+};
+
 
