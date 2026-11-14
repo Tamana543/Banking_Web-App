@@ -242,11 +242,11 @@ work through in this order — top of list first:
 *   Rotate JWT_SECRET and the MongoDB password once more — real values were pasted into the chat while debugging
 *   Incoming transfers leave no record for the receiver (only the sender gets a transaction) — the receiver's history, Analytics and admin totals miss that money ✔️
 *   Auto-logout in the middle of a session when the server rejects it (401), e.g. after an admin suspends the user — right now the screen only logs out on the next reload (the backend already blocks every request) ✔️
-*   Enforce one active loan per user at the database level (two requests at the exact same moment could both pass the check)
-*   Admin audit log (who suspended / unlocked / approved what, and when)
-*   Admin analytics group days in UTC — switch to the local time zone if it matters
-*   Admin Users list loads only the first 100 users — add page buttons if it ever grows 
-* waking up the server
+*   Enforce one active loan per user at the database level (✔️)
+*   Admin audit log (✔️)
+*   Admin analytics group days in UTC — switch to the local time zone if it matters ✔️
+*   Admin Users list loads only the first 100 users — add page buttons if it ever grows  ✔️ 
+* waking up the server ✔️
 
 phase 13 — Admin Dashboard
 * Admin authentication ✔️ 
