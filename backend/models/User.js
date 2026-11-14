@@ -46,6 +46,19 @@ const userSchema = new mongoose.Schema(
                type: String,
                default: "",
           },
+          avatarKey: {
+               type: String,
+               default: null,
+               index: true,
+          },
+          avatarType: {
+               type: String,
+               default: "",
+          },
+          avatarData: {
+               type: Buffer,
+               select: false,
+          },
           isVerified: {
                type: Boolean,
                default: false,
