@@ -1,29 +1,17 @@
 import multer from "multer";
-import path from "path";
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, "uploads/avatars");
-  },
-  filename(req, file, cb) {
-    const unique =
-      Date.now() +
-      "-" +
-      Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      unique + path.extname(file.originalname)
-    );
-  },
-});
+
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
+  if (ALLOWED_TYPES.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error("Images only."), false);
   }
 };
+
 export default multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter,
-  limits: { fileSize: 2 * 1024 * 1024 },
+  limits: { fileSize: 1024 * 1024 },
 });
