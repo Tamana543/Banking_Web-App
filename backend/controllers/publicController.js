@@ -1,7 +1,7 @@
 import ContactMessage from "../models/ContactMessage.js";
 import Subscriber from "../models/Subscriber.js";
+import User from "../models/User.js";
 import { isValidEmail, isValidText } from "../utils/inputValidation.js";
-
 export const sendContactMessage = async (req, res) => {
   try {
     const { name, email, message, website } = req.body;
@@ -72,5 +72,28 @@ export const subscribeNewsletter = async (req, res) => {
   } catch (error) {
     console.error("Newsletter error:", error);
     res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+export const getAvatar = async (req, res) => {
+  try {
+    const { key } = req.params;
+    if (!/^[a-f0-9]{32}$/.test(key)) {
+      return res.status(404).end();
+    }
+    const user = await User.findOne({ avatarKey: key }).select(
+      "+avatarData avatarType"
+    );
+    if (!user || !user.avatarData) {
+      return res.status(404).end();
+    }
+    res.set({
+      "Content-Type": user.avatarType,
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "Content-Security-Policy": "default-src 'none'; sandbox",
+    });
+    res.send(Buffer.from(user.avatarData));
+  } catch (error) {
+    console.error("Get avatar error:", error);
+    res.status(500).end();
   }
 };
