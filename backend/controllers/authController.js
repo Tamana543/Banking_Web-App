@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import fs from "fs/promises";
-import path from "path";
+// import fs from "fs/promises";
+// import path from "path";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { validatePassword } from "../utils/passwordPolicy.js";
@@ -474,95 +474,95 @@ export const updateDisplayCurrency = async (req, res) =>{
   }
 };
 
-export const deleteAccount = async (req,res) => {
-  const session = await mongoose.startSession();
-  try {
-    if (req.user.role === "admin") {
-      return res.status(403).json({
-        message: "Admin accounts can't be deleted from the app.",
-      });
-    }
-    const { password } = req.body;
-    if (typeof password !== "string" || !password) {
-      return res.status(400).json({
-        message: "Password is required.",
-      });
-    }
-    const user = await User.findById(req.user._id).select("+password");
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found.",
-      });
-    }
-    const passwordMatches = await bcrypt.compare(password, user.password);
-    if (!passwordMatches) {
-      return res.status(401).json({
-        message: "Password is incorrect.",
-      });
-    }
+// export const deleteAccount = async (req,res) => {
+//   const session = await mongoose.startSession();
+//   try {
+//     if (req.user.role === "admin") {
+//       return res.status(403).json({
+//         message: "Admin accounts can't be deleted from the app.",
+//       });
+//     }
+//     const { password } = req.body;
+//     if (typeof password !== "string" || !password) {
+//       return res.status(400).json({
+//         message: "Password is required.",
+//       });
+//     }
+//     const user = await User.findById(req.user._id).select("+password");
+//     if (!user) {
+//       return res.status(404).json({
+//         message: "User not found.",
+//       });
+//     }
+//     const passwordMatches = await bcrypt.compare(password, user.password);
+//     if (!passwordMatches) {
+//       return res.status(401).json({
+//         message: "Password is incorrect.",
+//       });
+//     }
 
-    session.startTransaction();
+//     session.startTransaction();
 
-    const fresh = await User.findById(user._id).session(session);
-    if (Math.round(fresh.balance * 100) > 0) {
-      await session.abortTransaction();
-      return res.status(400).json({
-        message: "Withdraw your remaining balance before closing your account.",
-      });
-    }
-    const openLoan = await Transaction.findOne({
-      user: user._id,
-      type: "loan",
-      $or: [
-        { status: "pending" },
-        { status: "approved", repaidAt: null },
-      ],
-    }).session(session);
-    if (openLoan) {
-      await session.abortTransaction();
-      return res.status(400).json({
-        message:
-          "You have a pending or unpaid loan. Resolve it before closing your account.",
-      });
-    }
+//     const fresh = await User.findById(user._id).session(session);
+//     if (Math.round(fresh.balance * 100) > 0) {
+//       await session.abortTransaction();
+//       return res.status(400).json({
+//         message: "Withdraw your remaining balance before closing your account.",
+//       });
+//     }
+//     const openLoan = await Transaction.findOne({
+//       user: user._id,
+//       type: "loan",
+//       $or: [
+//         { status: "pending" },
+//         { status: "approved", repaidAt: null },
+//       ],
+//     }).session(session);
+//     if (openLoan) {
+//       await session.abortTransaction();
+//       return res.status(400).json({
+//         message:
+//           "You have a pending or unpaid loan. Resolve it before closing your account.",
+//       });
+//     }
 
-    const { _id: userId, email, avatar } = fresh;
+    const { _id: userId, email} = fresh;
 
-    await SavingsGoal.deleteMany({ user: userId }, { session });
-    await Transaction.deleteMany({ user: userId }, { session });
-    await Transaction.updateMany(
-      { description: `Transfer sent to ${email}` },
-      { $set: { description: "Transfer sent to a deleted account" } },
-      { session }
-    );
-    await Transaction.updateMany(
-      { description: `Transfer received from ${email}` },
-      { $set: { description: "Transfer received from a deleted account" } },
-      { session }
-    );
-    await Subscriber.deleteMany({ email }, { session });
-    await User.deleteOne({ _id: userId }, { session });
+//     await SavingsGoal.deleteMany({ user: userId }, { session });
+//     await Transaction.deleteMany({ user: userId }, { session });
+//     await Transaction.updateMany(
+//       { description: `Transfer sent to ${email}` },
+//       { $set: { description: "Transfer sent to a deleted account" } },
+//       { session }
+//     );
+//     await Transaction.updateMany(
+//       { description: `Transfer received from ${email}` },
+//       { $set: { description: "Transfer received from a deleted account" } },
+//       { session }
+//     );
+//     await Subscriber.deleteMany({ email }, { session });
+//     await User.deleteOne({ _id: userId }, { session });
 
-    await session.commitTransaction();
+//     await session.commitTransaction();
 
-    if (avatar && avatar.startsWith("/uploads/avatars/")) {
-      fs.unlink(
-        path.join(process.cwd(), "uploads", "avatars", path.basename(avatar))
-      ).catch(() => {});
-    }
+//     if (avatar && avatar.startsWith("/uploads/avatars/")) {
+//       fs.unlink(
+//         path.join(process.cwd(), "uploads", "avatars", path.basename(avatar))
+//       ).catch(() => {});
+//     }
 
-    return res.status(200).json({
-      message: "Your account has been deleted.",
-    });
-  } catch (error) {
-    if (session.inTransaction()) {
-      await session.abortTransaction();
-    }
-    console.error("Delete account error:", error);
-    return res.status(500).json({
-      message: "Unable to delete account.",
-    });
-  } finally {
-    session.endSession();
-  }
-}
+//     return res.status(200).json({
+//       message: "Your account has been deleted.",
+//     });
+//   } catch (error) {
+//     if (session.inTransaction()) {
+//       await session.abortTransaction();
+//     }
+//     console.error("Delete account error:", error);
+//     return res.status(500).json({
+//       message: "Unable to delete account.",
+//     });
+//   } finally {
+//     session.endSession();
+//   }
+// }

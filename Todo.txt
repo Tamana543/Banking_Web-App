@@ -298,7 +298,7 @@ phase 17 - Setting dashboard
 * fix the 404 page (✔️)
 * Delete Account (✔️)
 
-phase 18 — Portfolio Features
+phase 18 — Portfolio Features (5: fix the whole file)
 * README redesign
 * Project architecture documentation
 * API documentation
