@@ -1,0 +1,48 @@
+import "../../styles/components/modal.css"
+import LoadingSpinner from "./LoadingSpinner";
+import { useEffect } from "react";
+
+function ActionModal({ isOpen, title, children, onClose, onSubmit, submitText, loading = false, }) {
+  
+  useEffect(() => {
+    const handleEsc = (e) => {
+        if (e.key === "Escape") {
+            onClose();
+        }
+    };
+    document.addEventListener(
+        "keydown",
+        handleEsc
+    );
+    return () =>
+        document.removeEventListener(
+            "keydown",
+            handleEsc
+        );
+}, [onClose]);
+if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="action-modal" onClick={(e) => e.stopPropagation()}>
+        <h2>{title}</h2>
+        <div className="modal-body">
+          {children}
+        </div>
+        <div className="modal-actions">
+          <button className="cancel-btn" onClick={onClose} disabled={loading} >
+                Cancel
+            </button>
+          <button className="submit-btn" onClick={onSubmit} disabled={loading}>
+                {loading ? (
+                    <LoadingSpinner size="small" />
+                ) : (
+                    submitText
+                )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+export default ActionModal;

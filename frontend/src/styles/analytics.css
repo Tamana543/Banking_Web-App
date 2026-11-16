@@ -1,0 +1,371 @@
+.analytics-page {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+.analytics-header {
+    margin-bottom: 8px;
+}
+.analytics-header h1 {
+    margin: 0 0 8px;
+    color: var(--gold);
+    font-size: 2rem;
+    line-height: 1.2;
+}
+.analytics-header p {
+    margin: 0;
+    color: #a7a7a7;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.analytics-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.analytics-card {
+    position: relative;
+    padding: 28px;
+    border: 1px solid rgba(212, 175, 55, 0.10);
+    border-radius: 24px;
+    background: rgba(20, 20, 20, 0.82);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.analytics-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.28);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.35);
+}
+.analytics-overview p {
+    margin: 0 0 10px;
+    color: #9a9a9a;
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
+}
+.analytics-overview h2 {
+    margin: 0;
+    color: var(--gold);
+    font-size: 2rem;
+    font-weight: 700;
+}
+.analytics-card.income h2 {
+    color: #65e57d;
+}
+.analytics-card.expense h2 {
+    color: #ff7a7a;
+}
+.analytics-card.balance h2 {
+    color: var(--gold);
+}
+.analytics-empty {
+    padding: 65px 40px;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 22px;
+    background: #181818;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+.analytics-empty h3 {
+    margin: 0 0 12px;
+    color: var(--gold);
+    font-size: 1.3rem;
+}
+.analytics-empty p {
+    margin: 0;
+    color: #9a9a9a;
+    line-height: 1.7;
+}
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+.analytics-grid > .analytics-card {
+    min-width: 0;
+}
+.analytics-grid > .analytics-card h3 {
+    margin: 0 0 20px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+}
+.summary-list div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 17px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    transition:background 0.25s ease,border-color 0.25s ease;
+}
+.summary-list div:hover {
+    background: rgba(212, 175, 55, 0.05);
+    border-color: rgba(212, 175, 55, 0.12);
+}
+.summary-list span {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+.summary-list strong {
+    color: var(--gold);
+    font-size: 1.05rem;
+}
+.analytics-grid
+.recharts-responsive-container {
+    width: 100%;
+}
+.analytics-grid .recharts-cartesian-grid-horizontal line,
+.analytics-grid .recharts-cartesian-grid-vertical line {
+    stroke: rgba(255, 255, 255, 0.06);
+}
+.analytics-grid .recharts-text {
+    fill: #777;
+    font-size: 0.75rem;
+}
+.analytics-grid .recharts-legend-item-text {
+    color: #aaa !important;
+    font-size: 0.8rem;
+}
+.analytics-grid .recharts-tooltip-wrapper {
+    outline: none;
+}
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 4px;
+}
+.insight-box {
+    padding: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.10);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.insight-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.35);
+    background: rgba(212, 175, 55, 0.04);
+}
+.insight-box p {
+    margin: 0 0 10px;
+    color: #9b9b9b;
+    font-size: 0.88rem;
+}
+.insight-box h2 {
+    margin: 0;
+    color: var(--gold);
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.analytics-grid > .analytics-card {
+    overflow: hidden;
+}
+.analytics-grid > .analytics-card::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    top: -100px;
+    right: -80px;
+    border-radius: 50%;
+    background: radial-gradient( circle, rgba(212, 175, 55, 0.08), transparent 70% );
+    pointer-events: none;
+}
+.analytics-loading {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.95rem;
+}
+.savings-analytics-card {
+    min-width: 0;
+}
+.savings-analytics-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+.savings-analytics-header h3 {
+    margin-bottom: 0 0 6px;
+}
+.savings-analytics-header p {
+    margin: 0;
+    color: #8f8f8f;
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+.savings-progress-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 11px;
+    background: rgba(212, 175, 55, 0.08);
+    color: var(--gold);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+.savings-analytics-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.savings-stat-box {
+    padding: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.09);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+}
+.savings-stat-box span {
+    display: block;
+    margin-bottom: 7px;
+    color: #929292;
+    font-size: 0.78rem;
+}
+.savings-stat-box strong {
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.savings-overall-progress {
+    margin-bottom: 20px;
+}
+.savings-progress-track {
+    width: 100%;
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+}
+.savings-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient( 90deg, #a9821c, var(--gold) );
+    transition: width 0.45s ease;
+}
+.savings-progress-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+    color: #888;
+    font-size: 0.74rem;
+}
+.savings-goals-chart {
+    margin-top: 4px;
+}
+.savings-goals-chart h4 {
+    margin: 0 0 10px;
+    color: #ddd;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.savings-analytics-empty {
+    padding: 28px 18px;
+    text-align: center;
+    border: 1px dashed rgba(212, 175, 55, 0.16);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.02);
+}
+.savings-analytics-empty h4 {
+    margin: 0 0 7px;
+    color: var(--gold);
+    font-size: 0.95rem;
+}
+.savings-analytics-empty p {
+    margin: 0;
+    color: #888;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+/* Insight  */
+.insights-panel {
+    grid-column: 1 / -1;
+}
+.insights-panel .insights-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.insight-detail {
+    display: block;
+    margin-top: 8px;
+    color: #777;
+    font-size: 0.8rem;
+}
+.insights-subtitle {
+    margin: 28px 0 14px;
+    color: white;
+    font-size: 1.05rem;
+}
+.insight-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.insight-tip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #ccc;
+    line-height: 1.6;
+}
+.insight-tip.warning {
+    border-left-color: #ef4444;
+}
+.insight-tip.good {
+    border-left-color: #22c55e;
+}
+.insight-tip a {
+    flex-shrink: 0;
+    color: var(--gold);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.insight-tip a:hover {
+    text-decoration: underline;
+}
+.insight-tip a:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+.insight-note {
+    display: block;
+    margin-top: 18px;
+    color: #707070;
+    font-size: 0.8rem;
+}
+

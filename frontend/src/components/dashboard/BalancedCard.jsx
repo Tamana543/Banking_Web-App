@@ -1,0 +1,89 @@
+import { useAuth } from "../../context/AuthContext.jsx";
+import useRates from "../../hooks/useRates";
+import { convert, formatCurrency } from "../../util/currency";
+import "../../styles/dashboard/balance-card.css";
+import BalanceCardSkeleton from "../common/BalanceSkeleton";
+
+function BalanceCard({ loading = false }) {
+  const { user } = useAuth();
+  const rates = useRates();
+  if (loading) {
+    return <BalanceCardSkeleton />;
+  }
+  const currency = user?.currency || "$";
+  const balance = user?.balance ?? 0;
+    const displayCurrency = user?.displayCurrency || "USD";
+  const converted =
+    displayCurrency !== "USD" && rates
+      ? convert(balance, "USD", displayCurrency, rates.currencies)
+      : null;
+  const approx =
+    converted !== null
+      ? formatCurrency(converted, displayCurrency, rates.currencies)
+      : null;
+  const formattedBalance = balance.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }
+  );
+  return (
+    <section
+      className="balance-card"
+      aria-labelledby="balance-card-title"
+    >
+      <div className="card-top">
+        <span className="bank-name">
+          BANKIST PRO
+        </span>
+        <span
+          className="currency-badge"
+          aria-label={`Account currency: ${currency}`}
+        >
+          {currency}
+        </span>
+      </div>
+      <div className="balance-content">
+        <span className="portfolio-tag">
+          PREMIUM ACCOUNT
+        </span>
+        <h2
+          id="balance-card-title"
+          className="balance-label"
+        >
+          Total Portfolio Value
+        </h2>
+        <p
+          className="balance-amount"
+          aria-label={`Current portfolio balance: ${currency} ${formattedBalance}`}
+        >
+          {currency} {formattedBalance}
+        </p>
+        {approx && (
+          <p className="balance-approx" aria-label={`Approximately ${approx}`}>
+            ≈ {approx}
+          </p>
+        )}
+        <p
+          className="balance-growth"
+          aria-label="Portfolio increased by 12.4 percent this month"
+        >
+          +12.4% this month
+        </p>
+      </div>
+      <div
+        className="card-bottom"
+        aria-hidden="true"
+      >
+        <p className="card-number">
+          •••• •••• •••• 4582
+        </p>
+        <span className="card-type">
+          VISA GOLD
+        </span>
+      </div>
+    </section>
+  );
+}
+export default BalanceCard;

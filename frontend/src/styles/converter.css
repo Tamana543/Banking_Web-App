@@ -1,0 +1,101 @@
+.converter-page {
+    max-width: 760px;
+}
+.converter-page h2 {
+    margin: 0 0 8px;
+    color: white;
+    font-size: 2rem;
+}
+.converter-subtitle {
+    margin: 0 0 30px;
+    color: #888;
+}
+.converter-card {
+    padding: 32px;
+    background: #181818;
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 22px;
+}
+.converter-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: end;
+}
+.converter-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ddd;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.converter-field input,
+.converter-field select {
+    width: 100%;
+    padding: 16px 18px;
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 14px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+}
+.converter-field input:focus,
+.converter-field select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+.converter-amount {
+    margin-bottom: 20px;
+}
+.converter-swap {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 2px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+.converter-swap:hover {
+    background: rgba(212, 175, 55, 0.22);
+    transform: rotate(180deg);
+}
+.converter-swap:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+.converter-result {
+    margin-top: 28px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 16px;
+}
+.converter-result p {
+    margin: 0 0 8px;
+    color: #9b9b9b;
+    font-size: 0.9rem;
+}
+.converter-result h3 {
+    margin: 0;
+    color: var(--gold);
+    font-size: 2rem;
+    overflow-wrap: anywhere;
+}
+.converter-result small {
+    display: block;
+    margin-top: 10px;
+    color: #888;
+}
+.converter-note {
+    display: block;
+    margin-top: 20px;
+    color: #707070;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}

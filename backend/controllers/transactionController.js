@@ -1,0 +1,568 @@
+import mongoose from "mongoose";
+import User from "../models/User.js";
+import Transaction from "../models/Transaction.js";
+import SavingsGoal from "../models/SavingsGoal.js";
+import { isValidPositiveAmount,isValidEmail,isValidText,isValidObjectId } from "../utils/inputValidation.js";
+const MAX_TAGS = 5;
+const MAX_TAG_LENGTH = 20;
+
+export const depositMoney = async (req, res) => {
+  const session = await mongoose.startSession();
+  try {
+    const { amount } = req.body;
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    const amountNumber = Number(amount);
+    session.startTransaction();
+    const user = await User.findById(req.user._id).session(session);
+    user.balance += amountNumber;
+    await user.save({ session });
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "deposit",
+          amount: amountNumber,
+          description: "Account Deposit",
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message: "Deposit successful.",
+      balance: user.balance,
+      transaction,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    console.error("Deposit Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+};
+export const getTransactions = async (req,res)=>{
+   try {
+    const transactions = await Transaction.find({
+      user: req.user._id,
+    }).sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      count: transactions.length,
+      transactions,
+    });
+  } catch (error) {
+    console.error("Get Transactions Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  }
+};
+export const transferMoney = async (req,res)=>{
+  const session = await mongoose.startSession();
+  try {
+   const { recipientEmail, amount } = req.body;
+    if (!isValidEmail(recipientEmail)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid recipient email.",
+      });
+    }
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid transfer amount.",
+      });
+    }
+    const amountNumber = Number(amount);
+    session.startTransaction();
+    const sender = await User.findById(req.user._id).session(session);
+    const receiver = await User.findOne({
+      email: recipientEmail.toLowerCase().trim(),
+    }).session(session);
+    if (!receiver) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "Recipient not found.",
+      });
+    }
+    if (String(sender._id) === String(receiver._id)) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "You cannot transfer money to yourself.",
+      });
+    }
+    if (sender.balance < amountNumber) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+     sender.balance -= amountNumber;
+    receiver.balance += amountNumber;
+
+    await sender.save({ session });
+    await receiver.save({ session });
+
+    const [senderTransaction] = await Transaction.create(
+      [
+        {
+          user: sender._id,
+          type: "transfer",
+          amount: amountNumber,
+          description: `Transfer sent to ${receiver.email}`,
+          status: "completed",
+        },
+        ,
+        {
+          user: receiver._id,
+          type: "deposit",
+          amount: amountNumber,
+          description: `Transfer received from ${sender.email}`,
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    // special ID generator 
+    const transactionId = `TX-${senderTransaction._id.toString().slice(-8).toUpperCase()}`;
+
+    await session.commitTransaction();
+
+       res.status(200).json({
+        success: true,
+        message: "Transfer successful.",
+        balance: sender.balance,
+        receipt: {
+            transactionId,
+            recipient: receiver.email,
+            amount: amountNumber,
+            status: "Completed",
+            date: senderTransaction.createdAt,
+        },
+      });
+  } catch (error) {
+    await session.abortTransaction();
+    console.error("Transfer Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
+export const withdrawMoney = async(req,res)=>{
+  const session = await mongoose.startSession();
+  try {
+     const { amount } = req.body;
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    const amountNumber = Number(amount);
+    session.startTransaction();
+    const user = await User.findById(req.user._id).session(session);
+    if (user.balance < amountNumber) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+    user.balance -= amountNumber
+    await user.save({ session });
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "withdrawal",
+          amount: amountNumber,
+          description: "Cash Withdrawal",
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message: "Withdrawal successful.",
+      balance: user.balance,
+      transaction,
+    });
+  } catch (error) {
+     await session.abortTransaction();
+     console.error("Withdraw Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
+export const applyLoan = async(req,res)=>{
+  const session = await mongoose.startSession();
+  try {
+   const userId = req.user.id;
+        const { amount, purpose } = req.body;
+        if (!isValidPositiveAmount(amount)) {
+            return res.status(400).json({
+                message: "Invalid loan amount.",
+            });
+        }
+        const amountNumber = Number(amount);
+        if (!isValidText(purpose, 500)) {
+            return res.status(400).json({
+                message: "Loan purpose is required and must be under 500 characters.",
+            });
+        }
+        session.startTransaction();
+        const user = await User.findById(userId).session(session);
+        if (!user) {
+            await session.abortTransaction();
+            return res.status(404).json({
+                message: "User not found.",
+            });
+        }
+        // max loan two times greater than balance 
+        const maximumLoan = user.balance * 2;
+        if (amountNumber > maximumLoan) {
+            await session.abortTransaction();
+            return res.status(400).json({
+                message:
+                    `Maximum loan allowed is $${maximumLoan.toLocaleString()}.`,
+            });
+        }
+        // if there is an other loan do not give the new one
+         const activeLoan =
+              await Transaction.findOne({
+                user: userId,
+                type: "loan",
+                $or: [
+                    { status: "pending" },
+                    { status: "approved", repaidAt: null },
+                ],
+            }).session(session);
+        if (activeLoan) {
+            await session.abortTransaction();
+            return res.status(400).json({
+                message:
+                    "You already have an active loan.",
+            });
+        }
+                const [transaction] = await Transaction.create(
+              [
+                {
+                  user: userId,
+                  type: "loan",
+                  amount: amountNumber,
+                  description: purpose,
+                  status: "pending",
+                  isActiveLoan: true,
+                },
+              ],
+              { session }
+            );
+                await session.commitTransaction();
+        res.status(201).json({
+            message: "Loan request submitted. It is pending admin approval.",
+            transaction,
+        });
+} catch (error) {
+  await session.abortTransaction();
+    if (error.code === 11000) {
+    return res.status(409).json({
+      message: "You already have an active loan.",
+    });
+  }
+  console.error("Apply Loan Error:", error);
+  res.status(500).json({
+    message: "Server error.",
+  });
+} finally {
+  session.endSession();
+}
+};
+export const addMoneyToSavingsGoal = async (req,res)=>{
+  const session = await mongoose.startSession();
+  try {
+    const { goalId, amount } = req.body;
+    const amountNumber = Number(amount);
+    if (!amountNumber || amountNumber <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+        if (!isValidObjectId(goalId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid savings goal.",
+      });
+    }
+    session.startTransaction();
+    // logged-in user
+    const user = await User.findById(req.user._id).session(session);
+    if (!user) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    // Users SavingGoals detection 
+     const savingsGoal = await SavingsGoal.findOne({
+      _id: goalId,
+      user: req.user._id,
+    }).session(session);
+    if (!savingsGoal) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "Savings goal not found.",
+      });
+    }
+    //no adding money to completed goal
+    if (savingsGoal.status === "completed") {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message:
+          "This savings goal has already been completed.",
+      });
+    }
+    // account balance checker
+    if (user.balance < amountNumber) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+    const remainingAmount = savingsGoal.targetAmount - savingsGoal.currentAmount;
+    // No contribution from exceeding target
+    if (amountNumber > remainingAmount) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: `You only need $${remainingAmount.toFixed(
+          2
+        )} to complete this goal.`,
+      });
+    }
+    user.balance -= amountNumber;
+    savingsGoal.currentAmount += amountNumber;
+    // Check if goal is now completed
+    if (
+      savingsGoal.currentAmount >= savingsGoal.targetAmount
+    ) {
+      savingsGoal.currentAmount = savingsGoal.targetAmount;
+      savingsGoal.status = "completed";
+    }
+     await user.save({ session });
+    await savingsGoal.save({ session });
+     // transaction records
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "withdrawal",
+          amount: amountNumber,
+          description: `Savings contribution: ${savingsGoal.name}`,
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message:
+        "Money added to savings goal successfully.",
+      balance: user.balance,
+      savingsGoal,
+      transaction,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    console.error(
+      "Add Money to Savings Goal Error:",
+      error
+    );
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
+export const repayLoan = async (req,res) => {
+   const session = await mongoose.startSession();
+  try {
+     const { amount } = req.body;
+    if (!isValidPositiveAmount(amount)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    const amountNumber = Math.round(Number(amount) * 100) / 100;
+    if (amountNumber <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid amount.",
+      });
+    }
+    session.startTransaction();
+    const loan = await Transaction.findOne({
+      user: req.user._id,
+      type: "loan",
+      status: "approved",
+      repaidAt: null,
+    }).session(session);
+    if (!loan) {
+      await session.abortTransaction();
+      return res.status(404).json({
+        success: false,
+        message: "You have no active loan to repay.",
+      });
+    }
+    const remaining =
+      Math.round((loan.amount - loan.repaidAmount) * 100) / 100;
+    if (amountNumber > remaining) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: `You only owe $${remaining.toFixed(2)}.`,
+      });
+    }
+    const user = await User.findById(req.user._id).session(session);
+    if (user.balance < amountNumber) {
+      await session.abortTransaction();
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient balance.",
+      });
+    }
+    user.balance = Math.round((user.balance - amountNumber) * 100) / 100;
+    loan.repaidAmount =
+      Math.round((loan.repaidAmount + amountNumber) * 100) / 100;
+    const fullyRepaid = loan.repaidAmount >= loan.amount;
+    if (fullyRepaid) {
+      loan.repaidAmount = loan.amount;
+      loan.repaidAt = new Date();
+      loan.isActiveLoan = false;
+    }
+    await user.save({ session });
+    await loan.save({ session });
+    const [transaction] = await Transaction.create(
+      [
+        {
+          user: user._id,
+          type: "withdrawal",
+          amount: amountNumber,
+          description: fullyRepaid
+            ? "Loan repayment (paid in full)"
+            : "Loan repayment",
+          status: "completed",
+        },
+      ],
+      { session }
+    );
+    await session.commitTransaction();
+    res.status(200).json({
+      success: true,
+      message: fullyRepaid ? "Loan fully repaid." : "Repayment successful.",
+      balance: user.balance,
+      loan,
+      transaction,
+    });
+  } catch (error) {
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    console.error("Repay Loan Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error.",
+    });
+  } finally {
+    session.endSession();
+  }
+}
+export const updateTransactionTags = async (req,res) => {
+  try {
+     if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid transaction.",
+      });
+    }
+    const { tags } = req.body;
+    if (!Array.isArray(tags)) {
+      return res.status(400).json({
+        success: false,
+        message: "Tags must be a list.",
+      });
+    }
+    if (tags.length > MAX_TAGS) {
+      return res.status(400).json({
+        success: false,
+        message: `You can add up to ${MAX_TAGS} tags.`,
+      });
+    }
+    const cleaned = [];
+    for (const tag of tags) {
+      if (typeof tag !== "string") {
+        return res.status(400).json({
+          success: false,
+          message: "Each tag must be text.",
+        });
+      }
+      const value = tag.trim().toLowerCase().replace(/\s+/g, " ");
+      if (!value) continue;
+      if (value.length > MAX_TAG_LENGTH || !/^[a-z0-9 _-]+$/.test(value)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Tags can use letters, numbers, spaces, - and _ (up to 20 characters).",
+        });
+      }
+      if (!cleaned.includes(value)) cleaned.push(value);
+    }
+    const transaction = await Transaction.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id },
+      { tags: cleaned },
+      { returnDocument: "after" }
+    );
+    if (!transaction) {
+      return res.status(404).json({
+        success: false,
+        message: "Transaction not found.",
+      });
+    }
+    res.status(200).json({ success: true, transaction });
+  } catch (error) {
+    console.error("Update tags error:", error)
+    res.status(500).json({success: false, message: "Sever Error"})
+  }
+}

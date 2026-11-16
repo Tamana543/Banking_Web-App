@@ -1,0 +1,125 @@
+import mongoose from "mongoose";
+const userSchema = new mongoose.Schema(
+     {
+          firstName :{
+               type: String,
+               required: true,
+               trim : true
+          },
+          lastName: {
+               type : String,
+               required : true,
+               trim : true
+          },
+          email : {
+               type : String,
+               required : true,
+               unique: true,
+               lowercase : true,
+               trim : true
+          },
+          password: {
+               type: String,
+               required: true,
+               select: false,
+          },
+          pin: {
+                    type: String,
+                    required: true,
+                    select: false,
+               },
+          balance: {
+               type: Number,
+               default: 0,
+                min: 0,
+          },
+          currency: {
+               type: String,
+               default: "$",
+          },
+          role: {
+               type: String,
+               enum: ["user", "admin"],
+               default: "user",
+          },
+          avatar: {
+               type: String,
+               default: "",
+          },
+          avatarKey: {
+               type: String,
+               default: null,
+               index: true,
+          },
+          avatarType: {
+               type: String,
+               default: "",
+          },
+          avatarData: {
+               type: Buffer,
+               select: false,
+          },
+          isVerified: {
+               type: Boolean,
+               default: false,
+          },
+          failedLoginAttempts: {
+               type: Number,
+               default: 0,
+          },
+           isLocked: {
+               type: Boolean,
+               default: false,
+          },
+          lockUntil: {
+               type: Date,
+               default: null,
+          },
+          failedPinAttempts: {
+               type: Number,
+               default: 0,
+          },
+          pinLockedUntil: {
+               type: Date,
+               default: null,
+          },
+          lastLogin: {
+               type: Date,
+               default: null,
+          },
+          passwordUpdatedAt: {
+               type: Date,
+               default: null,
+          },
+          pinUpdatedAt: {
+               type: Date,
+               default: null,
+          },
+          sessionVersion: {
+               type: Number,
+               default: 0,
+               select: false,
+          },
+          isSuspended: {
+               type: Boolean,
+               default: false,
+          },
+          suspendedAt: {
+               type: Date,
+               default: null,
+          },
+          suspendedBy: {
+               type: mongoose.Schema.Types.ObjectId,
+               ref: "User",
+               default: null,
+          },
+          displayCurrency: {
+               type: String,
+               default: "USD",
+          },
+     }, {
+          timestamps :true
+     }
+)
+const User = mongoose.model("User",userSchema);
+export default User;
