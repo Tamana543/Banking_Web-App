@@ -3,10 +3,6 @@ Keep in mind:
 do not forget to update the IP access of the MongoDB
 
 phase 1 — Project Foundation
-* Configure Vercel deployment (set VITE_API_URL to the Render backend URL in Vercel's environment variables)
-* Configure Render deployment (set CLIENT_URL to the Vercel URL, no trailing slash; keep "trust proxy" on)
-* fix the QR code url to deploy too it is now setted in loacal host (check first: the receipt QR now holds receipt data, not a localhost link, so this may already be fine)
-* lazyloading feature
 * Connect MongoDB Atlas database✔️
 * Configure environment variables ✔️
 * Setup project folder structure ✔️
@@ -299,11 +295,14 @@ phase 17 - Setting dashboard
 * Delete Account (✔️)
 
 phase 18 — Portfolio Features (5: fix the whole file)
+* Configure Vercel deployment (set VITE_API_URL to the Render backend URL in Vercel's environment variables)
+* Configure Render deployment (set CLIENT_URL to the Vercel URL, no trailing slash; keep "trust proxy" on)
+* fix the QR code url to deploy too it is now setted in loacal host (check first: the receipt QR now holds receipt data, not a localhost link, so this may already be fine)
+* lazyloading feature
 * README redesign
 * Project architecture documentation
 * API documentation
 * Screenshots section
-* Live demo deployment
 * Scheduled transfers
 * Technical documentation
 * Installation guide
