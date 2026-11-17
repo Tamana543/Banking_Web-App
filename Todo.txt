@@ -311,6 +311,7 @@ phase 18 — Portfolio Features
 * Portfolio integration
 * TransactionContext ( right shared repeate, instead of each page making its own API requests, similar to AuthContext )
 * Advanced filtering
+* fix the authetication page responsive too 
 
 phase 19 — Real-Time Features
 * Live balance updates
