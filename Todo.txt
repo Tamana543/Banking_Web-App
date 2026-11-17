@@ -295,8 +295,8 @@ phase 17 - Setting dashboard
 * Delete Account (✔️)
 
 phase 18 — Portfolio Features 
-* Configure Vercel deployment (set VITE_API_URL to the Render backend URL in Vercel's environment variables) (fix the vercel deployment )
-* Configure Render deployment (set CLIENT_URL to the Vercel URL, no trailing slash; keep "trust proxy" on) (change the Client URi )
+* Configure Vercel deployment (set VITE_API_URL to the Render backend URL in Vercel's environment variables) (✔️ for frontend)(https://banking-web-app-psi.vercel.app)
+* Configure Render deployment (set CLIENT_URL to the Vercel URL, no trailing slash; keep "trust proxy" on) (✔️ for backend )
 * fix the QR code url to deploy too it is now setted in loacal host (check first: the receipt QR now holds receipt data, not a localhost link, so this may already be fine)
 * lazyloading feature
 * README redesign
