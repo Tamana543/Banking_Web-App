@@ -91,7 +91,7 @@
     }
     /* login */
     .auth-page {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
     .auth-card {
         margin-left: 5%;
@@ -192,6 +192,10 @@
     .contact-info h2 {
         font-size: 2.2rem;
     }
+    .quick-actions button {
+   
+    height: 46px !important;
+}
     /* Insight */
      .insights-panel .insights-facts {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -437,7 +441,7 @@
         padding: 22px;
     }
     .footer-main {
-        flex-direction: column;
+       grid-template-columns: 2fr repeat(1, 1fr);
         gap: 50px;
         padding-bottom: 45px;
     }
